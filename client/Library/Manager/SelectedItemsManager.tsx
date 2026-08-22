@@ -3,8 +3,10 @@ import { saveAs } from "browser-filesaver";
 
 import { useState } from "react";
 import { Listable } from "../../../common/Listable";
+import { probablyUniqueString } from "../../../common/Toolbox";
 import { Button } from "../../Components/Button";
 import {
+  GetDefaultForLibrary,
   LibraryFriendlyNames,
   LibraryType,
   Libraries,
@@ -81,6 +83,23 @@ export function SelectedItemsManager(props: {
             fontAwesomeIcon="download"
             onClick={() => exportSelectedItems(selection, props.activeTab)}
           />
+          <Button
+            text="Duplicate"
+            fontAwesomeIcon="copy"
+            onClick={() =>
+              duplicateSelectedItems(
+                selection,
+                ActiveLibrary(props.libraries, props.activeTab),
+                props.activeTab
+              )
+            }
+            disabled={preloadedContentSelected}
+            tooltip={
+              preloadedContentSelected
+                ? "Cannot duplicate preloaded content."
+                : "Duplicate as new, independent items"
+            }
+          />
         </div>
       )}
       <ActivePrompt
@@ -117,6 +136,29 @@ async function exportSelectedItems(
       blob,
       `improved-initiative-${firstListingName}-${selection.selected.length}.json`
     );
+  }
+}
+
+async function duplicateSelectedItems(
+  selection: Selection<Listing<Listable>>,
+  library: Library<Listable>,
+  activeTab: LibraryType
+) {
+  const duplicates = await Promise.all(
+    selection.selected.map(async listing => {
+      const original = await listing.GetWithTemplate(
+        GetDefaultForLibrary(activeTab)
+      );
+      return {
+        ...original,
+        Id: probablyUniqueString(),
+        Name: `${original.Name} (Copy)`
+      };
+    })
+  );
+  selection.clearSelected();
+  for (const duplicate of duplicates) {
+    await library.SaveNewListing(duplicate);
   }
 }
 
