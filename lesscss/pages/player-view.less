@@ -219,6 +219,9 @@
 
   .inventory-display-popup {
     .suggestion-prompt();
+    position: fixed;
+    max-height: 80vh;
+    overflow-y: auto;
   }
 
   .inventory-display {
@@ -227,10 +230,14 @@
     ul {
       list-style-type: none;
       margin: 0;
+      column-count: 2;
+      column-gap: @medium-spacer;
     }
 
     li {
       padding: @medium-spacer;
+      background-color: var(--card-background-white);
+      break-inside: avoid;
 
       &:nth-child(2n-1) {
         background-color: var(--zebra-white);

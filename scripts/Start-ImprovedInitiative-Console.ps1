@@ -96,6 +96,7 @@ if ($Dev) {
 }
 
 if (-not $env:ALLOW_SERVER_SHUTDOWN) { $env:ALLOW_SERVER_SHUTDOWN = "true" }
+if (-not $env:ALLOW_SERVER_REBUILD) { $env:ALLOW_SERVER_REBUILD = "true" }
 
 if ($env:DB_CONNECTION_STRING) {
     Write-Host "Using external database from DB_CONNECTION_STRING." -ForegroundColor Cyan

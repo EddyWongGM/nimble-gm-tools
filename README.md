@@ -60,6 +60,7 @@ You can configure your instance of Improved Initiative with these settings. All 
 - `DB_CONNECTION_STRING` - Provide a DB connection string for session and user account storage. A local MongoDB instance will be used otherwise, persisted to disk under `LOCAL_DB_PATH` (not cleared on restart) so self-hosted data survives across app restarts.
 - `LOCAL_DB_PATH` - Where the local MongoDB instance (used when `DB_CONNECTION_STRING` isn't set) stores its data. Defaults to `./data/db`.
 - `ALLOW_SERVER_SHUTDOWN` - Set to "true" to add a "Shut Down Server" button (Settings > About) that gracefully stops the process, flushing the local database first. Only intended for a local, single-user instance - never enable on a shared/public deployment.
+- `ALLOW_SERVER_REBUILD` - Set to "true" to add a "Rebuild Client" button (Settings > About) that runs `npm run build` on the server and reports success or failure in the tab. Same local-only caveat as `ALLOW_SERVER_SHUTDOWN` - never enable on a shared/public deployment. Only works against a production instance (`npm start`) - refused under `npm run dev`, since that workflow's nodemon watches the same server files the build recompiles and would restart mid-request.
 - `METRICS_DB_CONNECTION_STRING` - Provide a DB connection string to write metrics to.
 - `PATREON_URL`, `PATREON_CLIENT_ID`, `PATREON_CLIENT_SECRET` - Configuration for Patreon integration
 - `GOOGLE_ANALYTICS_ID` - GA4 measurement ID used by the browser tag and Measurement Protocol events.
@@ -78,7 +79,9 @@ the launcher scripts in `scripts/`:
   window (output is logged to `data\start.log`). Since there's no window for
   Ctrl+C, stop it from the app's Settings > About tab instead ("Shut Down
   Server" - requires `ALLOW_SERVER_SHUTDOWN=true`, which both scripts set by
-  default).
+  default). The same tab also has a "Rebuild Client" button (requires
+  `ALLOW_SERVER_REBUILD=true`, also set by default) to pick up code changes
+  without needing a console at all.
 
 Both scripts load `.env` if present, so set `DEFAULT_ACCOUNT_LEVEL` there
 (e.g. to "epicinitiative") to skip the marketing landing page and go straight

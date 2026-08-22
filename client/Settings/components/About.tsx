@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button } from "../../Components/Button";
 import { env } from "../../Environment";
 import { Metrics } from "../../Utility/Metrics";
+import { RebuildServer } from "../../Utility/RebuildServer";
 import { ConfirmAndShutdownServer } from "../../Utility/ShutdownServer";
 import { TipCarousel } from "./TipCarousel";
 
@@ -10,8 +11,33 @@ interface AboutProps {
   reviewPrivacyPolicy: () => void;
 }
 
-export class About extends React.Component<AboutProps> {
+type RebuildStatus = "idle" | "building" | "success" | "error";
+
+interface AboutState {
+  rebuildStatus: RebuildStatus;
+  rebuildError?: string;
+}
+
+export class About extends React.Component<AboutProps, AboutState> {
+  public state: AboutState = { rebuildStatus: "idle" };
+
+  private rebuildServer = async () => {
+    this.setState({ rebuildStatus: "building", rebuildError: undefined });
+    try {
+      await RebuildServer();
+      this.setState({ rebuildStatus: "success" });
+    } catch (err) {
+      const status = err.response?.status;
+      const message =
+        status === 409
+          ? "A build is already in progress."
+          : err.response?.data?.output || err.message;
+      this.setState({ rebuildStatus: "error", rebuildError: message });
+    }
+  };
+
   public render() {
+    const { rebuildStatus, rebuildError } = this.state;
     return (
       <div className="tab-content about">
         <div>
@@ -72,6 +98,17 @@ export class About extends React.Component<AboutProps> {
             text="Repeat Tutorial"
             onClick={this.props.repeatTutorial}
           />
+          {env.CanRebuildServer && (
+            <Button
+              additionalClassNames="rebuild-server"
+              fontAwesomeIcon="hammer"
+              text={
+                rebuildStatus === "building" ? "Building…" : "Rebuild Client"
+              }
+              disabled={rebuildStatus === "building"}
+              onClick={this.rebuildServer}
+            />
+          )}
           {env.CanShutdownServer && (
             <Button
               additionalClassNames="shutdown-server"
@@ -81,6 +118,16 @@ export class About extends React.Component<AboutProps> {
             />
           )}
         </div>
+        {rebuildStatus === "success" && (
+          <p className="rebuild-status rebuild-status--success">
+            Build complete. Refresh to see changes.
+          </p>
+        )}
+        {rebuildStatus === "error" && (
+          <p className="rebuild-status rebuild-status--error">
+            Build failed: {rebuildError}
+          </p>
+        )}
         <div className="about__version">
           Version {process.env.VERSION || "unknown"}
         </div>

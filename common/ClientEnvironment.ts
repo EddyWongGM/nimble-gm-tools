@@ -12,4 +12,6 @@ export interface ClientEnvironment {
   SentryDSN: string | null;
   CanShutdownServer: boolean;
   ShutdownToken: string | null;
+  CanRebuildServer: boolean;
+  RebuildToken: string | null;
 }

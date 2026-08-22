@@ -14,7 +14,9 @@ export const env: ClientEnvironment = {
   GoogleAnalyticsId: "",
   SentryDSN: null,
   CanShutdownServer: false,
-  ShutdownToken: null
+  ShutdownToken: null,
+  CanRebuildServer: false,
+  RebuildToken: null
 };
 
 export function LoadEnvironment() {

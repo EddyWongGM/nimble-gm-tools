@@ -51,6 +51,7 @@ export class CombatantCommander {
   private selectedCombatantIds = ko.observableArray<string>([]);
   private latestRoll: RollResult;
   public InventoryDisplayedCombatantId = ko.observable<string>(null);
+  public InventoryDisplayedCombatantName = ko.observable<string>(null);
 
   constructor(private tracker: TrackerViewModel) {
     this.Commands = BuildCombatantCommandList(this);
@@ -695,22 +696,32 @@ export class CombatantCommander {
     const combatant = targetCombatantVM.Combatant;
 
     if (this.InventoryDisplayedCombatantId() === combatant.Id) {
-      this.tracker.Encounter.HidePlayerViewInventory();
-      this.InventoryDisplayedCombatantId(null);
-      this.tracker.EventLog.AddEvent(
-        `${combatant.DisplayName()}'s inventory hidden in Player View.`
-      );
+      this.DismissInventoryDisplay();
     } else {
       this.tracker.Encounter.DisplayPlayerViewInventory(
         combatant.DisplayName(),
         combatant.Items()
       );
       this.InventoryDisplayedCombatantId(combatant.Id);
+      this.InventoryDisplayedCombatantName(combatant.DisplayName());
       this.tracker.EventLog.AddEvent(
         `${combatant.DisplayName()}'s inventory shown in Player View.`
       );
     }
     return false;
+  };
+
+  public DismissInventoryDisplay = () => {
+    const combatantName = this.InventoryDisplayedCombatantName();
+    if (!combatantName) {
+      return;
+    }
+    this.tracker.Encounter.HidePlayerViewInventory();
+    this.InventoryDisplayedCombatantId(null);
+    this.InventoryDisplayedCombatantName(null);
+    this.tracker.EventLog.AddEvent(
+      `${combatantName}'s inventory hidden in Player View.`
+    );
   };
 
   public EditInitiative = () => {
