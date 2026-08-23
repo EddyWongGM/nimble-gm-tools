@@ -179,4 +179,6 @@ function resetEpicInitiativeEncounterFeatures(
   encounterState: EncounterState<PlayerViewCombatantState>
 ) {
   encounterState.BackgroundImageUrl = undefined;
+  encounterState.BackgroundImageFit = "cover";
+  encounterState.CombatantsHidden = false;
 }

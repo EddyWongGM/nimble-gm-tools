@@ -109,6 +109,9 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
           TemporaryBackgroundImageUrl={
             this.props.encounterState.BackgroundImageUrl
           }
+          TemporaryBackgroundImageFit={
+            this.props.encounterState.BackgroundImageFit
+          }
         />
         {modalVisible && (
           <div className="modal-blur" onClick={this.closeAllModals} />
@@ -140,27 +143,9 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
         {this.state.showInventoryDisplay && this.props.inventoryDisplay && (
           <InventoryDisplayPopup inventory={this.props.inventoryDisplay} />
         )}
-        <PlayerViewCombatantHeader
-          portraitColumnVisible={this.hasImages()}
-          acColumnVisible={acColumnVisible}
-          manaColumnVisible={manaColumnVisible}
-          resourcesColumnVisible={resourcesColumnVisible}
-          hitDiceColumnVisible={hitDiceColumnVisible}
-          woundsColumnVisible={woundsColumnVisible}
-          inventoryColumnVisible={inventoryColumnVisible}
-          goldColumnVisible={goldColumnVisible}
-        />
-        <ul className="combatants">
-          {this.props.encounterState.Combatants.map(combatant => (
-            <PlayerViewCombatant
-              showPortrait={this.showPortrait}
-              suggestDamage={this.openSuggestDamagePrompt}
-              suggestTag={
-                this.props.settings.AllowTagSuggestions &&
-                this.openSuggestTagPrompt
-              }
-              combatant={combatant}
-              areSuggestionsAllowed={this.props.settings.AllowPlayerSuggestions}
+        {!this.props.encounterState.CombatantsHidden && (
+          <>
+            <PlayerViewCombatantHeader
               portraitColumnVisible={this.hasImages()}
               acColumnVisible={acColumnVisible}
               manaColumnVisible={manaColumnVisible}
@@ -169,17 +154,41 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
               woundsColumnVisible={woundsColumnVisible}
               inventoryColumnVisible={inventoryColumnVisible}
               goldColumnVisible={goldColumnVisible}
-              reactionTrackerVisible={
-                this.props.settings.DisplayReactionTracker
-              }
-              colorVisible={this.props.settings.DisplayCombatantColor}
-              isActive={
-                this.props.encounterState.ActiveCombatantId == combatant.Id
-              }
-              key={combatant.Id}
             />
-          ))}
-        </ul>
+            <ul className="combatants">
+              {this.props.encounterState.Combatants.map(combatant => (
+                <PlayerViewCombatant
+                  showPortrait={this.showPortrait}
+                  suggestDamage={this.openSuggestDamagePrompt}
+                  suggestTag={
+                    this.props.settings.AllowTagSuggestions &&
+                    this.openSuggestTagPrompt
+                  }
+                  combatant={combatant}
+                  areSuggestionsAllowed={
+                    this.props.settings.AllowPlayerSuggestions
+                  }
+                  portraitColumnVisible={this.hasImages()}
+                  acColumnVisible={acColumnVisible}
+                  manaColumnVisible={manaColumnVisible}
+                  resourcesColumnVisible={resourcesColumnVisible}
+                  hitDiceColumnVisible={hitDiceColumnVisible}
+                  woundsColumnVisible={woundsColumnVisible}
+                  inventoryColumnVisible={inventoryColumnVisible}
+                  goldColumnVisible={goldColumnVisible}
+                  reactionTrackerVisible={
+                    this.props.settings.DisplayReactionTracker
+                  }
+                  colorVisible={this.props.settings.DisplayCombatantColor}
+                  isActive={
+                    this.props.encounterState.ActiveCombatantId == combatant.Id
+                  }
+                  key={combatant.Id}
+                />
+              ))}
+            </ul>
+          </>
+        )}
         {footerVisible && (
           <CombatFooter
             timerVisible={this.props.settings.DisplayTurnTimer}
@@ -204,6 +213,10 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
 
   private splashPortraitIfNeeded(previousActiveCombatantId) {
     if (!this.props.settings.SplashPortraits) {
+      return;
+    }
+
+    if (this.props.encounterState.CombatantsHidden) {
       return;
     }
 

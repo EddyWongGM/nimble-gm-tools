@@ -1,3 +1,4 @@
+import { env } from "../Environment";
 import { Command } from "./Command";
 import { EncounterCommander } from "./EncounterCommander";
 
@@ -136,5 +137,13 @@ export const BuildEncounterCommandList = (
       actionBinding: c.ShowSettings,
       fontAwesomeIcon: "cog",
       lockOnActionBar: true
-    })
+    }),
+    env.CanShutdownServer &&
+      new Command({
+        id: "shutdown-server",
+        description: "Shut Down Server",
+        actionBinding: c.ShutdownServer,
+        fontAwesomeIcon: "power-off",
+        defaultShowOnActionBar: false
+      })
   ].filter(c => c) as Command[];

@@ -21,3 +21,8 @@ public/webfonts/*
 .idea
 .codex/
 .codex-runtime/
+/data/
+
+# Self-hosted DM scene images (see plans/STORY_TELLING_PLAN.md) - personal
+# campaign content, not meant to be committed to the shared fork.
+/public/scenes/

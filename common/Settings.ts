@@ -51,6 +51,7 @@ export interface Settings {
     DisplayReactionTracker: boolean;
     PostCombatStats: PostCombatStatsOption;
     DisplayRestoreCombatants: boolean;
+    HideRollableUnderline: boolean;
   };
   PlayerView: PlayerViewSettings;
   StatBlock: {
@@ -84,7 +85,8 @@ export function getDefaultSettings(): Settings {
       DisplayCombatantColor: false,
       DisplayReactionTracker: false,
       PostCombatStats: PostCombatStatsOption.None,
-      DisplayRestoreCombatants: true
+      DisplayRestoreCombatants: true,
+      HideRollableUnderline: false
     },
     PlayerView: {
       ActiveCombatantOnTop: false,
@@ -111,7 +113,8 @@ export function getDefaultSettings(): Settings {
         mainBackground: "",
         backgroundUrl: ""
       },
-      CustomEncounterId: ""
+      CustomEncounterId: "",
+      SceneLibrary: []
     },
     StatBlock: {
       CustomFields: []

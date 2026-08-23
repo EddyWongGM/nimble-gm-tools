@@ -179,6 +179,14 @@ button.button {
   margin-bottom: -1px;
 }
 
+// "Hide underline on rollable stats and damage values" setting - only
+// .rollable loses its dashed underline; spell/condition reference links
+// (which look up a reference rather than roll dice) keep theirs.
+body.hide-rollable-underline .rollable {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
 .hidden-input {
   opacity: 0;
   overflow: hidden;

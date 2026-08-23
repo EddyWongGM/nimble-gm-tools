@@ -10,6 +10,7 @@ import { getDbConnectionString } from "./getDbConnectionString";
 import { GetPlayerViewManager } from "./playerviewmanager";
 import ConfigureRoutes from "./routes";
 import GetSessionMiddleware from "./session";
+import { shutdownServer } from "./shutdown";
 import ConfigureSockets from "./sockets";
 
 async function improvedInitiativeServer() {
@@ -31,6 +32,13 @@ async function improvedInitiativeServer() {
 
   await server.listen(defaultPort);
   console.log("Launched Improved Initiative server.");
+
+  process.on("SIGINT", shutdownServer);
+  process.on("SIGTERM", shutdownServer);
+  // nodemon (used by `npm run dev`) restarts on file changes by sending
+  // SIGUSR2, not SIGTERM - without this, every dev-mode restart hard-kills
+  // mongod instead of going through the graceful shutdown above.
+  process.on("SIGUSR2", shutdownServer);
 
   const io = new SocketIO.Server(server);
   ConfigureSockets(io, session, playerViews);

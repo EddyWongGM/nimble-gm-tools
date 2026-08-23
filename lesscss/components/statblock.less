@@ -139,6 +139,7 @@ input[type="number"].c-combatant-details__item-quantity {
 
   .c-statblock {
     flex-shrink: 0;
+    max-height: none;
     overflow: visible;
   }
 }
@@ -206,6 +207,12 @@ input[type="number"].c-combatant-details__item-quantity {
   h4 {
     display: flex;
     align-items: center;
+  }
+
+  // Section titles (Traits, Actions, Reactions, etc.) - a step down from the
+  // site-wide h4 size so they read as in-block dividers, not page headers.
+  h4.stat-label {
+    font-size: @font-size-body;
   }
 
   p:not(:last-child),

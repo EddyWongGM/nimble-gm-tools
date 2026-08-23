@@ -1,3 +1,5 @@
+import { SceneImageFit } from "./PlayerViewSettings";
+
 export interface EncounterSaveDefaults {
   Name: string;
   Path: string;
@@ -8,8 +10,10 @@ export interface EncounterState<T> {
   RoundCounter?: number;
   ElapsedSeconds?: number;
   BackgroundImageUrl?: string;
+  BackgroundImageFit?: SceneImageFit;
   SaveEncounterDefaults?: EncounterSaveDefaults | null;
   MonstersActFirst?: boolean;
+  CombatantsHidden?: boolean;
   Combatants: T[];
 }
 
@@ -19,8 +23,10 @@ export namespace EncounterState {
       ActiveCombatantId: null,
       RoundCounter: 0,
       ElapsedSeconds: 0,
+      BackgroundImageFit: "cover",
       SaveEncounterDefaults: null,
       MonstersActFirst: false,
+      CombatantsHidden: false,
       Combatants: []
     };
   }

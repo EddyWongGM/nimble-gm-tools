@@ -8,7 +8,8 @@ import {
   GetAppleBackspaceAlias,
   InitializeSettings,
   IsAppleBackspacePlatform,
-  SubscribeCommandsToSettingsChanges
+  SubscribeCommandsToSettingsChanges,
+  SubscribeToRollableUnderlineChanges
 } from "./Settings";
 
 const backspaceKeyCode = 8;
@@ -112,5 +113,47 @@ describe("Settings", () => {
 
     dispatchKeyDown(deleteKeyCode);
     expect(actionBinding).toHaveBeenCalledTimes(1);
+  });
+
+  describe("SubscribeToRollableUnderlineChanges", () => {
+    afterEach(() => {
+      document.body.classList.remove("hide-rollable-underline");
+    });
+
+    test("applies the body class immediately based on the current setting", () => {
+      CurrentSettings({
+        ...getDefaultSettings(),
+        TrackerView: {
+          ...getDefaultSettings().TrackerView,
+          HideRollableUnderline: true
+        }
+      });
+
+      SubscribeToRollableUnderlineChanges();
+
+      expect(
+        document.body.classList.contains("hide-rollable-underline")
+      ).toBe(true);
+    });
+
+    test("toggles the body class when the setting changes", () => {
+      CurrentSettings(getDefaultSettings());
+      SubscribeToRollableUnderlineChanges();
+      expect(
+        document.body.classList.contains("hide-rollable-underline")
+      ).toBe(false);
+
+      CurrentSettings({
+        ...getDefaultSettings(),
+        TrackerView: {
+          ...getDefaultSettings().TrackerView,
+          HideRollableUnderline: true
+        }
+      });
+
+      expect(
+        document.body.classList.contains("hide-rollable-underline")
+      ).toBe(true);
+    });
   });
 });

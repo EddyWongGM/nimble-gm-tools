@@ -29,7 +29,8 @@ import {
   UpdateLegacyCommandSettingsAndSave,
   CurrentSettings,
   SubscribeCommandsToSettingsChanges,
-  SubscribeToDarkModeChanges
+  SubscribeToDarkModeChanges,
+  SubscribeToRollableUnderlineChanges
 } from "./Settings/Settings";
 import { StatBlockEditorProps } from "./StatBlockEditor/StatBlockEditor";
 import { TextEnricher } from "./TextEnricher/TextEnricher";
@@ -86,6 +87,7 @@ export class TrackerViewModel {
     UpdateLegacyCommandSettingsAndSave(CurrentSettings(), allCommands);
     SubscribeCommandsToSettingsChanges(allCommands);
     SubscribeToDarkModeChanges();
+    SubscribeToRollableUnderlineChanges();
 
     this.subscribeToSocketMessages();
 

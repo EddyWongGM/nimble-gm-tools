@@ -14,6 +14,7 @@ import {
 } from "../../common/EncounterState";
 import { PersistentCharacter } from "../../common/PersistentCharacter";
 import { PlayerViewCombatantState } from "../../common/PlayerViewCombatantState";
+import { SceneImageFit } from "../../common/PlayerViewSettings";
 import { StatBlock } from "../../common/StatBlock";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { Combatant } from "../Combatant/Combatant";
@@ -40,6 +41,7 @@ import { ConvertStringsToNumbersWhereNeeded } from "../StatBlockEditor/ConvertSt
 
 export class Encounter {
   public TemporaryBackgroundImageUrl = ko.observable<string>(null);
+  public TemporaryBackgroundImageFit = ko.observable<SceneImageFit>("cover");
   public SaveEncounterDefaults = ko.observable<EncounterSaveDefaults | null>(
     null
   );
@@ -51,6 +53,12 @@ export class Encounter {
   public ToggleMonstersActFirst = () => {
     this.MonstersActFirst(!this.MonstersActFirst());
     this.SortByPhase();
+  };
+
+  public CombatantsHidden = ko.observable<boolean>(false);
+
+  public ToggleCombatantsHidden = () => {
+    this.CombatantsHidden(!this.CombatantsHidden());
   };
 
   constructor(
@@ -425,8 +433,10 @@ export class Encounter {
           .filter(c => !c.IsPendingRemoval())
           .map<CombatantState>(c => c.GetState()),
         BackgroundImageUrl: this.TemporaryBackgroundImageUrl(),
+        BackgroundImageFit: this.TemporaryBackgroundImageFit(),
         SaveEncounterDefaults: this.SaveEncounterDefaults(),
-        MonstersActFirst: this.MonstersActFirst()
+        MonstersActFirst: this.MonstersActFirst(),
+        CombatantsHidden: this.CombatantsHidden()
       };
     }
   );
@@ -455,7 +465,9 @@ export class Encounter {
         RoundCounter: this.EncounterFlow.CombatTimer.ElapsedRounds(),
         Combatants: this.getCombatantsForPlayerView(activeCombatantId),
         BackgroundImageUrl:
-          this.TemporaryBackgroundImageUrl() || defaultBackgroundUrl
+          this.TemporaryBackgroundImageUrl() || defaultBackgroundUrl,
+        BackgroundImageFit: this.TemporaryBackgroundImageFit(),
+        CombatantsHidden: this.CombatantsHidden()
       };
     }
   );
@@ -523,7 +535,11 @@ export class Encounter {
       encounterState.ElapsedSeconds || 0
     );
     this.TemporaryBackgroundImageUrl(encounterState.BackgroundImageUrl || null);
+    this.TemporaryBackgroundImageFit(
+      encounterState.BackgroundImageFit ?? "cover"
+    );
     this.SaveEncounterDefaults(encounterState.SaveEncounterDefaults || null);
+    this.CombatantsHidden(encounterState.CombatantsHidden ?? false);
   };
 
   public ClearEncounter = () => {
@@ -531,6 +547,7 @@ export class Encounter {
     this.CombatantCountsByName({});
     this.EncounterFlow.EndEncounter();
     this.SaveEncounterDefaults(null);
+    this.CombatantsHidden(false);
   };
 
   private getPlayerViewActiveCombatantId() {

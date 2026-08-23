@@ -127,6 +127,18 @@ export function SubscribeToDarkModeChanges() {
   CurrentSettings.subscribe(applyDarkModeToBody);
 }
 
+export function SubscribeToRollableUnderlineChanges() {
+  function applyHideRollableUnderlineToBody(settings: Settings) {
+    document.body.classList.toggle(
+      "hide-rollable-underline",
+      settings.TrackerView.HideRollableUnderline
+    );
+  }
+
+  applyHideRollableUnderlineToBody(CurrentSettings());
+  CurrentSettings.subscribe(applyHideRollableUnderlineToBody);
+}
+
 export function UpdateLegacyCommandSettingsAndSave(
   settings: Settings,
   commands: Command[]

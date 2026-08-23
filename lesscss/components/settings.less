@@ -47,6 +47,18 @@
       margin: @small-spacer;
       color: var(--text-faded);
     }
+
+    .rebuild-status {
+      margin: 0 @medium-spacer @medium-spacer;
+
+      &--success {
+        color: var(--green);
+      }
+
+      &--error {
+        color: var(--red);
+      }
+    }
   }
 
   .tips {
@@ -63,8 +75,15 @@
   }
 
   .commands {
-    flex-direction: row;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: @small-spacer;
+
+    .button,
+    .c-button {
+      margin: 0;
+      width: 100%;
+    }
   }
 
   .command-options-labels {

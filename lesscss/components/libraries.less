@@ -106,3 +106,84 @@
 .c-encounter-preview {
   margin: @larger-spacer;
 }
+
+// Overrides so the scene reveal card (shown in the center column when a DM
+// clicks a saved scene) can go full width, mirroring .prompt-spell.
+.prompt-scene {
+  flex-direction: inherit;
+  align-items: flex-start;
+  width: 100%;
+
+  > .c-button {
+    transform: translateX(-100%);
+    margin-left: 0;
+  }
+
+  .scene {
+    min-width: 100%;
+
+    h3 {
+      margin: 0 0 @medium-spacer;
+    }
+  }
+
+  .prompt-scene__image {
+    max-width: 100%;
+    max-height: 60vh;
+    border-radius: @border-radius;
+  }
+}
+
+.c-scene-library {
+  .c-scene-library__controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: @small-spacer;
+    margin-bottom: @medium-spacer;
+  }
+
+  .c-scene-library__empty {
+    padding: @medium-spacer;
+    color: var(--text-faded);
+  }
+
+  .c-scene-library__scene {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .c-scene-library__apply-button {
+    display: flex;
+    flex: 1;
+    flex-flow: row;
+    align-items: center;
+    overflow: hidden;
+    background: none;
+    border: none;
+    padding: @small-spacer;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .c-scene-library__thumbnail {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: @border-radius;
+    margin-right: @medium-spacer;
+    flex-shrink: 0;
+  }
+
+  .c-scene-library__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .c-scene-library__warning {
+    margin: @medium-spacer;
+    color: var(--text-faded);
+    font-style: italic;
+  }
+}

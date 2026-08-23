@@ -118,6 +118,6 @@
     "test": "jest --projects client/jest.config.js server/jest.config.js --runInBand",
     "lint": "eslint . --ext .ts,.tsx",
     "lint-and-fix": "eslint . --ext .ts,.tsx --fix",
-    "copy-fonts": "cp -r ./node_modules/@fortawesome/fontawesome-free/webfonts/ ./public/webfonts/"
+    "copy-fonts": "node -e \"require('fs').cpSync('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts', {recursive:true})\""
   }
 }

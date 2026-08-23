@@ -3,6 +3,12 @@ const appVersion = require("./package.json").version;
 
 module.exports = {
   entry: "./client/Index.ts",
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename]
+    }
+  },
   module: {
     rules: [
       {

@@ -363,6 +363,36 @@
   }
 }
 
+.p-save-scene {
+  flex-grow: 1;
+  label {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+  }
+  .p-save-scene__label {
+    flex-grow: 1;
+    flex-direction: row;
+  }
+  .p-save-scene__error {
+    color: var(--dark-red);
+    margin: @small-spacer;
+  }
+  .p-save-scene__warning {
+    color: var(--text-faded);
+    font-style: italic;
+    margin: @small-spacer;
+  }
+}
+
+// Stacked rather than side-by-side (the .prompt form's default row layout)
+// so "Save as Copy" isn't a misclick away from the normal submit button -
+// the two save modes are different enough in effect to want separation.
+.p-save-scene__submit-buttons {
+  align-items: stretch;
+}
+
 .p-standard-prompt {
   display: flex;
   flex-flow: row;

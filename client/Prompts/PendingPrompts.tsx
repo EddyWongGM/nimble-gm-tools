@@ -6,6 +6,7 @@ export interface PromptProps<T extends object> {
   children: React.ReactChild;
   autoFocusSelector: string;
   initialValues: T;
+  validate?: (values: T) => void | object | Promise<any>;
 }
 
 class Prompt<T extends object> extends React.Component<
@@ -19,6 +20,7 @@ class Prompt<T extends object> extends React.Component<
     return (
       <Formik
         initialValues={this.props.initialValues || {}}
+        validate={this.props.validate}
         onSubmit={values => {
           this.props.onSubmit(values);
         }}

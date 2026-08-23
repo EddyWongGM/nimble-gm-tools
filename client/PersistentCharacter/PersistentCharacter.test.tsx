@@ -96,6 +96,26 @@ describe("PersistentCharacterLibrary", () => {
     expect(listings[0].Meta().Name).toEqual("Persistent Character");
   });
 
+  it("Should finish loading (not hang) when there are no stored PersistentCharacters", async () => {
+    // Regression test: loadingFinished used to only fire once a listing with
+    // Origin "localAsync" existed, which never happened for an empty local
+    // store - permanently blocking anything waiting on it, such as
+    // restoring an autosaved encounter on startup.
+    let library: Library<PersistentCharacter>;
+    await act(async () => {
+      await new Promise<void>(done => {
+        render(
+          <PersistentCharacterLibraryHarness
+            setLibrary={r => (library = r)}
+            loadingFinished={done}
+          />
+        );
+      });
+    });
+
+    expect(library.GetAllListings()).toHaveLength(0);
+  });
+
   it("Should provide the latest version of a Persistent Character", async () => {
     let listing: Listing<PersistentCharacter>;
 

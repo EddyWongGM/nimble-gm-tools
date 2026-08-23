@@ -187,9 +187,9 @@ export const BuildCombatantCommandList: (
     defaultShowOnActionBar: false
   }),
   new Command({
-    id: "show-inventory",
-    description: "Show/Hide Inventory in Player View Popup",
-    actionBinding: () => c.ToggleInventoryDisplayToPlayers(),
+    id: "toggle-reveal-items",
+    description: "Hide/Reveal Inventory in Player View",
+    actionBinding: c.ToggleRevealedItems,
     fontAwesomeIcon: "gem",
     defaultShowOnActionBar: false
   }),
@@ -201,10 +201,10 @@ export const BuildCombatantCommandList: (
     defaultShowOnActionBar: false
   }),
   new Command({
-    id: "toggle-reveal-items",
-    description: "Hide/Reveal Inventory in Player View",
-    actionBinding: c.ToggleRevealedItems,
-    fontAwesomeIcon: "box-open",
+    id: "show-inventory",
+    description: "Show/Hide Inventory in Player View Popup",
+    actionBinding: () => c.ToggleInventoryDisplayToPlayers(),
+    fontAwesomeIcon: "gem",
     defaultShowOnActionBar: false
   }),
   new Command({

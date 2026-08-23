@@ -54,12 +54,27 @@ function StatBlockComponentNoError(props: StatBlockProps) {
   ];
 
   const powerTypes = [
-    { name: "Traits", data: statBlock.Traits },
-    { name: "Actions", data: statBlock.Actions },
-    { name: "Bonus Actions", data: statBlock.BonusActions },
-    { name: "Reactions", data: statBlock.Reactions },
-    { name: "Legendary Actions", data: statBlock.LegendaryActions },
-    { name: "Mythic Actions", data: statBlock.MythicActions }
+    { name: "Traits", displayName: "Traits", data: statBlock.Traits },
+    { name: "Actions", displayName: "Actions", data: statBlock.Actions },
+    {
+      name: "Bonus Actions",
+      displayName: "Bonus Actions",
+      data: statBlock.BonusActions
+    },
+    { name: "Reactions", displayName: "Reactions", data: statBlock.Reactions },
+    {
+      name: "Legendary Actions",
+      displayName: "Legendary Actions",
+      data: statBlock.LegendaryActions
+    },
+    {
+      // name stays "Mythic Actions" so the className (split on the space
+      // into "Mythic" + "Actions" tokens) keeps matching the shared
+      // .Actions styling in statblock.less - only the visible label changes.
+      name: "Mythic Actions",
+      displayName: "Other",
+      data: statBlock.MythicActions
+    }
   ];
 
   const headerEntries = (
@@ -187,7 +202,7 @@ function StatBlockComponentNoError(props: StatBlockProps) {
     .filter(powerType => powerType?.data?.length > 0)
     .map(powerType => (
       <div key={powerType.name} className={powerType.name}>
-        <h4 className="stat-label">{powerType.name}</h4>
+        <h4 className="stat-label">{powerType.displayName}</h4>
         {powerType.data.map((power, j) => (
           <div key={j + power.Name}>
             {power.Name?.length ? (

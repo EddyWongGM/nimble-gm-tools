@@ -28,6 +28,7 @@ export class AccountClient {
       .then(response => callBack(response.data))
       .catch(err => {
         console.error("Could not get account details", err);
+        callBack(null);
       });
 
     return true;

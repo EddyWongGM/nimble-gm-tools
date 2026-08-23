@@ -25,6 +25,8 @@ import { now } from "moment";
 import { Library } from "../Library/useLibrary";
 import { CurrentSettings } from "../Settings/Settings";
 import { RenameResult } from "../Library/RenameResult";
+import { SavedScene } from "../../common/PlayerViewSettings";
+import { SaveScenePrompt } from "../Prompts/SaveScenePrompt";
 
 const makeRenameCollisionError = (name: string, path: string, type: string) => {
   return `The ${type} named "${name}" already exists${
@@ -489,5 +491,63 @@ export class LibrariesCommander {
   private saveStatblockAsPersistentCharacter = (statBlock: StatBlock) => {
     const persistentCharacter = PersistentCharacter.Initialize(statBlock);
     this.libraries.PersistentCharacters.SaveNewListing(persistentCharacter);
+  };
+
+  public AddScene = (): void => {
+    const prompt = SaveScenePrompt(
+      null,
+      this.saveScene,
+      CurrentSettings().PlayerView.SceneLibrary.length,
+      this.sceneAutocompletePaths()
+    );
+    this.tracker.PromptQueue.Add(prompt);
+  };
+
+  public EditScene = (scene: SavedScene): void => {
+    const prompt = SaveScenePrompt(
+      scene,
+      this.saveScene,
+      CurrentSettings().PlayerView.SceneLibrary.length,
+      this.sceneAutocompletePaths()
+    );
+    this.tracker.PromptQueue.Add(prompt);
+  };
+
+  private sceneAutocompletePaths = (): string[] =>
+    _.uniq(
+      CurrentSettings()
+        .PlayerView.SceneLibrary.map(s => s.Path)
+        .filter(Boolean)
+    );
+
+  public DeleteScene = (sceneId: string): void => {
+    if (this.encounterCommander.ActiveSceneId() === sceneId) {
+      this.encounterCommander.DismissScene();
+    }
+
+    const settings = CurrentSettings();
+    settings.PlayerView.SceneLibrary = settings.PlayerView.SceneLibrary.filter(
+      s => s.Id !== sceneId
+    );
+    this.tracker.SaveUpdatedSettings(settings);
+    Metrics.TrackEvent(Metrics.Event.SceneDeleted);
+  };
+
+  private saveScene = (scene: SavedScene): void => {
+    const settings = CurrentSettings();
+    const sceneLibrary = settings.PlayerView.SceneLibrary;
+    const existingIndex = sceneLibrary.findIndex(s => s.Id === scene.Id);
+    if (existingIndex >= 0) {
+      sceneLibrary[existingIndex] = scene;
+    } else {
+      sceneLibrary.push(scene);
+    }
+    this.tracker.SaveUpdatedSettings(settings);
+
+    if (this.encounterCommander.ActiveSceneId() === scene.Id) {
+      this.encounterCommander.ShowScene(scene);
+    }
+
+    Metrics.TrackEvent(Metrics.Event.SceneSaved, { name: scene.Name });
   };
 }

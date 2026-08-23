@@ -225,16 +225,23 @@ export function useLibrary<T extends Listable>(
     [SaveEditedListing, setListings]
   );
 
+  // Whether the local store load has resolved, regardless of whether it
+  // found anything - unlike listings.some(Origin === "localAsync"), this
+  // still becomes true for an empty store, so callers waiting on
+  // signalLoadComplete("localAsync") aren't left waiting forever.
+  const [hasAttemptedLocalLoad, setHasAttemptedLocalLoad] =
+    React.useState(false);
+
   // Effects
   if (callbacks.signalLoadComplete) {
     React.useEffect(() => {
-      if (listings.some(l => l.Origin === "localAsync")) {
+      if (hasAttemptedLocalLoad) {
         callbacks.signalLoadComplete("localAsync");
       }
       if (listings.some(l => l.Origin === "account")) {
         callbacks.signalLoadComplete("account");
       }
-    }, [callbacks.signalLoadComplete, listings]);
+    }, [callbacks.signalLoadComplete, listings, hasAttemptedLocalLoad]);
   }
 
   React.useEffect(() => {
@@ -244,6 +251,7 @@ export function useLibrary<T extends Listable>(
           const listings = storedListables.map(makeListing);
           AddListings(listings, "localAsync");
         }
+        setHasAttemptedLocalLoad(true);
       }
     );
   }, [storeName, callbacks.createEmptyListing]);

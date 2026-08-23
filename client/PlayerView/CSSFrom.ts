@@ -1,9 +1,13 @@
 import * as Color from "color";
-import { PlayerViewCustomStyles } from "../../common/PlayerViewSettings";
+import {
+  PlayerViewCustomStyles,
+  SceneImageFit
+} from "../../common/PlayerViewSettings";
 
 export function CSSFrom(
   customStyles: PlayerViewCustomStyles,
-  temporaryBackgroundImageUrl?: string
+  temporaryBackgroundImageUrl?: string,
+  temporaryBackgroundImageFit?: SceneImageFit
 ): string {
   const declarations: string[] = [];
   if (customStyles.combatantText) {
@@ -59,6 +63,11 @@ export function CSSFrom(
         temporaryBackgroundImageUrl || customStyles.backgroundUrl
       }); }`
     );
+    if (temporaryBackgroundImageUrl) {
+      declarations.push(
+        `#playerview { background-size: ${temporaryBackgroundImageFit || "cover"}; }`
+      );
+    }
   }
   if (customStyles.font) {
     declarations.push(`* { font-family: "${customStyles.font}", sans-serif; }`);

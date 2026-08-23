@@ -1,7 +1,46 @@
+import axios from "axios";
+
+import { env } from "../Environment";
 import { Listing, ListingOrigin } from "../Library/Listing";
 import { LegacySynchronousLocalStore } from "../Utility/LegacySynchronousLocalStore";
 import { Store } from "../Utility/Store";
-import { getUnsyncedItemsFromListings } from "./AccountClient";
+import { AccountClient, getUnsyncedItemsFromListings } from "./AccountClient";
+
+describe("AccountClient.GetAccount", () => {
+  const previousHasStorage = env.HasStorage;
+
+  beforeEach(() => {
+    env.HasStorage = true;
+  });
+
+  afterEach(() => {
+    env.HasStorage = previousHasStorage;
+  });
+
+  test("Should call back with the account on success", async () => {
+    (axios.get as jest.Mock).mockResolvedValueOnce({ data: { userId: "1" } });
+    const callBack = jest.fn();
+
+    new AccountClient().GetAccount(callBack);
+    await flushPromises();
+
+    expect(callBack).toHaveBeenCalledWith({ userId: "1" });
+  });
+
+  test("Should call back with null instead of hanging when the request fails", async () => {
+    (axios.get as jest.Mock).mockRejectedValueOnce(new Error("network error"));
+    const callBack = jest.fn();
+
+    new AccountClient().GetAccount(callBack);
+    await flushPromises();
+
+    expect(callBack).toHaveBeenCalledWith(null);
+  });
+
+  function flushPromises() {
+    return new Promise(resolve => setImmediate(resolve));
+  }
+});
 
 async function fakeListing(
   id: string,

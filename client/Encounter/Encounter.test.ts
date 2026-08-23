@@ -26,6 +26,29 @@ describe("Encounter", () => {
     expect(encounter.Combatants()[0].StatBlock()).toEqual(statBlock);
   });
 
+  test("CombatantsHidden defaults to false and toggles via ToggleCombatantsHidden", () => {
+    expect(encounter.CombatantsHidden()).toBe(false);
+    expect(encounter.GetPlayerView().CombatantsHidden).toBe(false);
+
+    encounter.ToggleCombatantsHidden();
+
+    expect(encounter.CombatantsHidden()).toBe(true);
+    expect(encounter.GetPlayerView().CombatantsHidden).toBe(true);
+
+    encounter.ToggleCombatantsHidden();
+
+    expect(encounter.CombatantsHidden()).toBe(false);
+  });
+
+  test("TemporaryBackgroundImageFit defaults to cover and is reflected in GetPlayerView", () => {
+    expect(encounter.TemporaryBackgroundImageFit()).toBe("cover");
+    expect(encounter.GetPlayerView().BackgroundImageFit).toBe("cover");
+
+    encounter.TemporaryBackgroundImageFit("contain");
+
+    expect(encounter.GetPlayerView().BackgroundImageFit).toBe("contain");
+  });
+
   test("Combat should not be active", () => {
     expect(encounter.EncounterFlow.State()).toBe("inactive");
   });

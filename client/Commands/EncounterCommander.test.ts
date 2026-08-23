@@ -1,5 +1,6 @@
 import { PersistentCharacter } from "../../common/PersistentCharacter";
 import { SavedEncounter } from "../../common/SavedEncounter";
+import { SavedScene } from "../../common/PlayerViewSettings";
 import { StatBlock } from "../../common/StatBlock";
 import { Encounter } from "../Encounter/Encounter";
 import { InitializeTestSettings } from "../test/InitializeTestSettings";
@@ -256,6 +257,14 @@ describe("EncounterCommander", () => {
     expect(encounter.SaveEncounterDefaults()).toBeNull();
   });
 
+  test("ClearEncounter un-hides combatants left hidden from a previous encounter", () => {
+    encounter.CombatantsHidden(true);
+
+    encounterCommander.ClearEncounter();
+
+    expect(encounter.CombatantsHidden()).toBe(false);
+  });
+
   test("Restore Player Character HP", async () => {
     const persistentCharacter = PersistentCharacter.Initialize({
       ...StatBlock.Default(),
@@ -440,6 +449,145 @@ describe("EncounterCommander", () => {
       expect(lockedMonster.Hidden()).toBe(true);
       expect(companion.Hidden()).toBe(false);
       expect(player.Hidden()).toBe(false);
+    });
+  });
+
+  describe("ShowScene", () => {
+    function buildScene(overrides?: Partial<SavedScene>): SavedScene {
+      return {
+        Id: "scene-1",
+        Name: "Tavern",
+        ImageUrl: "http://example.com/tavern.png",
+        ...overrides
+      };
+    }
+
+    test("shows the scene as the background, hides combatants, and opens a card", () => {
+      encounterCommander.ShowScene(buildScene());
+
+      expect(encounter.TemporaryBackgroundImageUrl()).toBe(
+        "http://example.com/tavern.png"
+      );
+      expect(encounter.CombatantsHidden()).toBe(true);
+      expect(trackerViewModel.PromptQueue.GetPrompts().length).toBe(1);
+    });
+
+    test("defaults to cover when the scene has no Fit set", () => {
+      encounterCommander.ShowScene(buildScene());
+
+      expect(encounter.TemporaryBackgroundImageFit()).toBe("cover");
+    });
+
+    test("uses the scene's Fit when set", () => {
+      encounterCommander.ShowScene(buildScene({ Fit: "contain" }));
+
+      expect(encounter.TemporaryBackgroundImageFit()).toBe("contain");
+    });
+
+    test("dismissing the scene card resets Fit back to cover", () => {
+      encounterCommander.ShowScene(buildScene({ Fit: "contain" }));
+      const [, promptId] = trackerViewModel.PromptQueue.GetPrompts()[0];
+
+      trackerViewModel.PromptQueue.Remove(promptId);
+
+      expect(encounter.TemporaryBackgroundImageFit()).toBe("cover");
+    });
+
+    test("dismissing the scene card (checkmark) shows combatants again and clears the background", () => {
+      encounterCommander.ShowScene(buildScene());
+      const [prompt, promptId] = trackerViewModel.PromptQueue.GetPrompts()[0];
+
+      prompt.onSubmit(prompt.initialValues);
+      trackerViewModel.PromptQueue.Remove(promptId);
+
+      expect(encounter.CombatantsHidden()).toBe(false);
+      expect(encounter.TemporaryBackgroundImageUrl()).toBeNull();
+      expect(trackerViewModel.PromptQueue.GetPrompts().length).toBe(0);
+    });
+
+    test("cancelling the scene card (e.g. Escape) also shows combatants again and clears the background", () => {
+      encounterCommander.ShowScene(buildScene());
+      const [, promptId] = trackerViewModel.PromptQueue.GetPrompts()[0];
+
+      trackerViewModel.PromptQueue.Remove(promptId);
+
+      expect(encounter.CombatantsHidden()).toBe(false);
+      expect(encounter.TemporaryBackgroundImageUrl()).toBeNull();
+    });
+
+    test("showing a second scene replaces the card instead of stacking, and keeps combatants hidden", () => {
+      encounterCommander.ShowScene(buildScene({ Name: "Tavern" }));
+      encounterCommander.ShowScene(
+        buildScene({
+          Id: "scene-2",
+          Name: "Dungeon",
+          ImageUrl: "http://example.com/dungeon.png"
+        })
+      );
+
+      const prompts = trackerViewModel.PromptQueue.GetPrompts();
+      expect(prompts.length).toBe(1);
+      expect(encounter.CombatantsHidden()).toBe(true);
+      expect(encounter.TemporaryBackgroundImageUrl()).toBe(
+        "http://example.com/dungeon.png"
+      );
+    });
+
+    test("ActiveSceneId is set to the shown scene's Id", () => {
+      encounterCommander.ShowScene(buildScene());
+
+      expect(encounterCommander.ActiveSceneId()).toBe("scene-1");
+    });
+
+    test("ActiveSceneId updates when a second scene replaces the first", () => {
+      encounterCommander.ShowScene(buildScene({ Id: "scene-1" }));
+      encounterCommander.ShowScene(buildScene({ Id: "scene-2" }));
+
+      expect(encounterCommander.ActiveSceneId()).toBe("scene-2");
+    });
+
+    test("ActiveSceneId clears when the scene card is dismissed", () => {
+      encounterCommander.ShowScene(buildScene());
+      const [, promptId] = trackerViewModel.PromptQueue.GetPrompts()[0];
+
+      trackerViewModel.PromptQueue.Remove(promptId);
+
+      expect(encounterCommander.ActiveSceneId()).toBeNull();
+    });
+
+    test("ActiveSceneId clears when Clear Background is used", () => {
+      encounterCommander.ShowScene(buildScene());
+
+      encounterCommander.ApplyScene("");
+
+      expect(encounterCommander.ActiveSceneId()).toBeNull();
+    });
+
+    test("Clear Background while a scene is active removes its card and shows combatants again", () => {
+      encounterCommander.ShowScene(buildScene());
+      expect(trackerViewModel.PromptQueue.GetPrompts().length).toBe(1);
+
+      encounterCommander.ApplyScene("");
+
+      expect(trackerViewModel.PromptQueue.GetPrompts().length).toBe(0);
+      expect(encounter.CombatantsHidden()).toBe(false);
+      expect(encounter.TemporaryBackgroundImageUrl()).toBe("");
+    });
+
+    test("DismissScene removes the card, same as its checkmark", () => {
+      encounterCommander.ShowScene(buildScene());
+
+      encounterCommander.DismissScene();
+
+      expect(trackerViewModel.PromptQueue.GetPrompts().length).toBe(0);
+      expect(encounter.CombatantsHidden()).toBe(false);
+      expect(encounter.TemporaryBackgroundImageUrl()).toBeNull();
+      expect(encounterCommander.ActiveSceneId()).toBeNull();
+    });
+
+    test("DismissScene does nothing when no scene is active", () => {
+      expect(() => encounterCommander.DismissScene()).not.toThrow();
+      expect(trackerViewModel.PromptQueue.GetPrompts().length).toBe(0);
     });
   });
 

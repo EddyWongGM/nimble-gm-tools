@@ -43,6 +43,25 @@ describe("PlayerViewModel", () => {
     expect(playerView.getByText("Test Combatant 1")).toBeTruthy();
   });
 
+  test("CombatantsHidden hides the combatant list without losing encounter state", () => {
+    encounter.AddCombatantFromStatBlock({
+      ...StatBlock.Default(),
+      Name: "Test Combatant 1",
+      HP: { Value: 10, Notes: "" }
+    });
+    encounter.ToggleCombatantsHidden();
+
+    const playerView = render(
+      <PlayerView
+        {...playerViewProps}
+        encounterState={encounter.GetPlayerView()}
+      />
+    );
+
+    expect(playerView.queryByText("Test Combatant 1")).toBeFalsy();
+    expect(encounter.Combatants().length).toBe(1);
+  });
+
   test("Starting the encounter splashes combatant portraits when available", () => {
     encounter.AddCombatantFromStatBlock({
       ...StatBlock.Default(),
@@ -81,6 +100,45 @@ describe("PlayerViewModel", () => {
     );
 
     expect(playerView.queryByTestId("combatant-portrait")).toBeTruthy();
+  });
+
+  test("A scene reveal (CombatantsHidden) suppresses the splash portrait even when the active combatant changes", () => {
+    encounter.AddCombatantFromStatBlock({
+      ...StatBlock.Default(),
+      HP: { Value: 10, Notes: "" },
+      ImageURL: "http://combatant1.png"
+    });
+    encounter.AddCombatantFromStatBlock({
+      ...StatBlock.Default(),
+      HP: { Value: 10, Notes: "" },
+      ImageURL: "http://combatant2.png"
+    });
+    encounter.ToggleCombatantsHidden();
+
+    env.HasEpicInitiative = true;
+    const settings = CurrentSettings();
+    settings.PlayerView.DisplayPortraits = true;
+    settings.PlayerView.SplashPortraits = true;
+
+    const playerView = render(
+      <PlayerView
+        {...playerViewProps}
+        encounterState={encounter.GetPlayerView()}
+        settings={settings.PlayerView}
+      />
+    );
+
+    encounter.EncounterFlow.StartEncounter();
+
+    playerView.rerender(
+      <PlayerView
+        {...playerViewProps}
+        encounterState={encounter.GetPlayerView()}
+        settings={settings.PlayerView}
+      />
+    );
+
+    expect(playerView.queryByTestId("combatant-portrait")).toBeFalsy();
   });
 
   test("Making no change does not splash combatant portraits", () => {

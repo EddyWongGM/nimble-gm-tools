@@ -12,7 +12,11 @@ export const env: ClientEnvironment = {
   BaseUrl: "",
   PatreonLoginUrl: "http://www.patreon.com/",
   GoogleAnalyticsId: "",
-  SentryDSN: null
+  SentryDSN: null,
+  CanShutdownServer: false,
+  ShutdownToken: null,
+  CanRebuildServer: false,
+  RebuildToken: null
 };
 
 export function LoadEnvironment() {

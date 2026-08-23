@@ -55,7 +55,17 @@ Be especially cautious around:
 - Combat flow and initiative order.
 - Monster/spell/import workflows.
 - Saved encounters and localStorage/database compatibility.
-- Player View behavior and settings.
+- Player View behavior and settings. Note: the "Scenes" tab in the
+  Libraries panel (`SceneLibraryReferencePane.tsx`) looks like a sibling of
+  StatBlocks/PersistentCharacters/Encounters/Spells but is *not* backed by
+  the `Listing<T>`/IndexedDB library machinery those use — it reads and
+  writes `Settings.PlayerView.SceneLibrary` directly. `"Scenes"` is
+  deliberately excluded from the `LibraryType` union in
+  `client/Library/Libraries.ts`; only `LibraryReferencePanes.tsx`'s local
+  `SelectableTab` type and tab map know about it. Don't fold it into the
+  `Listing<T>` pattern (adding it to `LibraryType`) without re-adding the
+  `Store.Scenes` IndexedDB store and account-synced `Library<SavedScene>`
+  entry that decision was made to avoid.
 - Patreon login, account sync, and Epic Initiative rewards.
 - Nimble resource pools (Mana/Resources/Hit Dice/Wounds/Gold/Inventory) —
   each has its own sign convention, PC-vs-companion-vs-monster gating, and

@@ -120,6 +120,14 @@ export function OptionsSettings(props: {
           allowing you to restore them easily.
         </Info>
       </Toggle>
+      <Toggle fieldName="TrackerView.HideRollableUnderline">
+        Hide underline on rollable stats and damage values
+        <Info>
+          Removes the dashed underline from stats and damage values that roll
+          dice when clicked. Spell and condition reference links keep their
+          underline either way.
+        </Info>
+      </Toggle>
       <Dropdown
         fieldName="TrackerView.PostCombatStats"
         options={PostCombatStatsOption}

@@ -12,6 +12,12 @@ export function LeftColumn(props: {
   columnWidth: number;
 }): JSX.Element {
   const librariesVisible = useSubscription(props.tracker.LibrariesVisible);
+  const combatantsHidden = useSubscription(
+    props.tracker.Encounter.CombatantsHidden
+  );
+  const activeSceneId = useSubscription(
+    props.tracker.EncounterCommander.ActiveSceneId
+  );
 
   const combatantViewModels = useSubscription(
     props.tracker.CombatantViewModels
@@ -39,6 +45,14 @@ export function LeftColumn(props: {
         <LibraryReferencePanes
           librariesCommander={props.tracker.LibrariesCommander}
           libraries={props.tracker.Libraries}
+          applyScene={props.tracker.EncounterCommander.ApplyScene}
+          showScene={props.tracker.EncounterCommander.ShowScene}
+          dismissScene={props.tracker.EncounterCommander.DismissScene}
+          activeSceneId={activeSceneId}
+          combatantsHidden={combatantsHidden}
+          onToggleCombatantsHidden={
+            props.tracker.EncounterCommander.ToggleCombatantsHiddenInPlayerView
+          }
         />
       )}
       {librariesVisible || (

@@ -1,3 +1,4 @@
+import * as ko from "knockout";
 import * as _ from "lodash";
 
 import { CombatStats } from "../../common/CombatStats";
@@ -13,11 +14,39 @@ import { InitiativePrompt } from "../Prompts/InitiativePrompt";
 import { PlayerViewPrompt } from "../Prompts/PlayerViewPrompt";
 import { QuickAddPrompt } from "../Prompts/QuickAddPrompt";
 import { RollDicePrompt } from "../Prompts/RollDicePrompt";
+import { ScenePrompt } from "../Prompts/ScenePrompt";
 import { ToggleFullscreen } from "./ToggleFullscreen";
 import { PersistentCharacter } from "../../common/PersistentCharacter";
+import { SavedScene } from "../../common/PlayerViewSettings";
+import { ConfirmAndShutdownServer } from "../Utility/ShutdownServer";
 
 export class EncounterCommander {
-  constructor(private tracker: TrackerViewModel) {}
+  // Tracks the currently displayed scene reveal card, if any, so clicking a
+  // new scene replaces it instead of stacking cards, and so dismissing it
+  // (by the checkmark, by pressing Escape, or by the Dismiss Scene button
+  // in the Scenes tab) reliably un-hides combatants and clears the
+  // background, regardless of which path removed the prompt from the queue.
+  private currentScenePromptId: string | null = null;
+
+  // Lets the Scenes tab show a "Dismiss Scene" action on whichever scene's
+  // row is currently live, without threading the encounter state through it.
+  public ActiveSceneId = ko.observable<string | null>(null);
+
+  constructor(private tracker: TrackerViewModel) {
+    this.tracker.PromptQueue.GetPrompts.subscribe(prompts => {
+      if (
+        this.currentScenePromptId &&
+        !prompts.some(([, id]) => id === this.currentScenePromptId)
+      ) {
+        this.currentScenePromptId = null;
+        this.ActiveSceneId(null);
+        this.tracker.Encounter.CombatantsHidden(false);
+        this.tracker.Encounter.TemporaryBackgroundImageUrl(null);
+        this.tracker.Encounter.TemporaryBackgroundImageFit("cover");
+        Metrics.TrackEvent(Metrics.Event.SceneDismissed);
+      }
+    });
+  }
 
   public QuickAddStatBlock = (): void => {
     const prompt = QuickAddPrompt(
@@ -35,8 +64,7 @@ export class EncounterCommander {
     const prompt = PlayerViewPrompt(
       env.EncounterId,
       this.tracker.Encounter.TemporaryBackgroundImageUrl() ?? "",
-      backgroundImageUrl =>
-        this.tracker.Encounter.TemporaryBackgroundImageUrl(backgroundImageUrl),
+      this.ApplyScene,
       this.requestCustomEncounterIdAndUpdateEncounter
     );
     this.tracker.PromptQueue.Add(prompt);
@@ -44,6 +72,54 @@ export class EncounterCommander {
     Metrics.TrackEvent(Metrics.Event.PlayerViewLaunched, {
       id: env.EncounterId
     });
+  };
+
+  public ApplyScene = (imageUrl: string): void => {
+    // Removing an active scene's card here (rather than leaving it orphaned)
+    // triggers the same PromptQueue-subscribe cleanup DismissScene does -
+    // un-hiding combatants - before this method's own lines below set the
+    // final background/Fit/ActiveSceneId state.
+    if (this.currentScenePromptId) {
+      this.tracker.PromptQueue.Remove(this.currentScenePromptId);
+    }
+
+    this.tracker.Encounter.TemporaryBackgroundImageUrl(imageUrl);
+    this.tracker.Encounter.TemporaryBackgroundImageFit("cover");
+    this.ActiveSceneId(null);
+    Metrics.TrackEvent(Metrics.Event.SceneApplied);
+  };
+
+  public ShowScene = (scene: SavedScene): void => {
+    if (this.currentScenePromptId) {
+      this.tracker.PromptQueue.Remove(this.currentScenePromptId);
+    }
+
+    this.tracker.Encounter.TemporaryBackgroundImageUrl(scene.ImageUrl);
+    this.tracker.Encounter.TemporaryBackgroundImageFit(scene.Fit ?? "cover");
+    this.tracker.Encounter.CombatantsHidden(true);
+    this.ActiveSceneId(scene.Id);
+    this.currentScenePromptId = this.tracker.PromptQueue.Add(
+      ScenePrompt(scene)
+    );
+
+    Metrics.TrackEvent(Metrics.Event.SceneApplied, { name: scene.Name });
+  };
+
+  /** Dismisses the currently active scene's card, same as its checkmark. */
+  public DismissScene = (): void => {
+    if (this.currentScenePromptId) {
+      this.tracker.PromptQueue.Remove(this.currentScenePromptId);
+    }
+  };
+
+  public ToggleCombatantsHiddenInPlayerView = (): void => {
+    this.tracker.Encounter.ToggleCombatantsHidden();
+    this.tracker.EventLog.AddEvent(
+      this.tracker.Encounter.CombatantsHidden()
+        ? "Names hidden from player view."
+        : "Names shown in player view."
+    );
+    Metrics.TrackEvent(Metrics.Event.CombatantsHiddenInPlayerViewToggled);
   };
 
   private requestCustomEncounterIdAndUpdateEncounter = async (
@@ -76,6 +152,10 @@ export class EncounterCommander {
     NotifyTutorialOfAction("ShowSettings");
     this.tracker.SettingsVisible(true);
     Metrics.TrackEvent(Metrics.Event.SettingsOpened);
+  };
+
+  public ShutdownServer = (): void => {
+    ConfirmAndShutdownServer();
   };
 
   public ToggleToolbarWidth = (): void => {
@@ -325,9 +405,14 @@ export class EncounterCommander {
         })
     );
 
+    if (this.currentScenePromptId) {
+      this.tracker.PromptQueue.Remove(this.currentScenePromptId);
+    }
+
     this.tracker.Encounter.TemporaryBackgroundImageUrl(
       savedEncounter.BackgroundImageUrl
     );
+    this.tracker.Encounter.TemporaryBackgroundImageFit("cover");
 
     Metrics.TrackEvent(Metrics.Event.EncounterLoaded, {
       name: savedEncounter.Name,
