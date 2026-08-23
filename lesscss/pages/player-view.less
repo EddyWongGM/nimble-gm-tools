@@ -28,6 +28,14 @@
     flex-direction: row;
     padding: @large-spacer @medium-spacer @large-spacer @medium-spacer;
     border-left: @active-combatant-indicator-width solid transparent;
+
+    // Always a dark bar with light text, regardless of site theme - unlike
+    // the DM tracker's header, which deliberately inverts with the theme.
+    // In dark mode, --page-bg-inverted (the shared, theme-flipping value)
+    // becomes light, which washes out the bright per-stat icon colors
+    // (yellow/orange/gold) that are supposed to stand out here.
+    background-color: var(--grey);
+    color: var(--white);
   }
 
   .combatant__hp {
@@ -103,7 +111,7 @@
     flex-grow: 1;
 
     .tag {
-      .colors(var(--text-inverted), var(--red));
+      .colors(var(--white), var(--dark-red));
       margin-right: @large-spacer;
       padding: @medium-spacer;
       text-transform: uppercase;

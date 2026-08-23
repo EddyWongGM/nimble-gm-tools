@@ -277,9 +277,10 @@ export class LibrariesCommander {
   );
 
   public LoadEncounter = (
-    savedEncounter: EncounterState<CombatantState>
+    savedEncounter: EncounterState<CombatantState>,
+    hideOnAdd = false
   ): void => {
-    this.encounterCommander.LoadSavedEncounter(savedEncounter);
+    this.encounterCommander.LoadSavedEncounter(savedEncounter, hideOnAdd);
   };
 
   // TODO(encounter-library-collisions): Maybe reuse the rename collision checks and

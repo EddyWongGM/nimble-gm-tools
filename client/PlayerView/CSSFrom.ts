@@ -51,21 +51,23 @@ export function CSSFrom(
   }
   if (customStyles.mainBackground) {
     declarations.push(
-      `#playerview { background-color: ${customStyles.mainBackground}; }`
+      `#playerview, #playerview.dark-mode { background-color: ${customStyles.mainBackground}; }`
     );
     if (!customStyles.backgroundUrl) {
-      declarations.push(`#playerview { background-image: none; }`);
+      declarations.push(
+        `#playerview, #playerview.dark-mode { background-image: none; }`
+      );
     }
   }
   if (temporaryBackgroundImageUrl || customStyles.backgroundUrl) {
     declarations.push(
-      `#playerview { background-image: url(${
+      `#playerview, #playerview.dark-mode { background-image: url(${
         temporaryBackgroundImageUrl || customStyles.backgroundUrl
       }); }`
     );
     if (temporaryBackgroundImageUrl) {
       declarations.push(
-        `#playerview { background-size: ${temporaryBackgroundImageFit || "cover"}; }`
+        `#playerview, #playerview.dark-mode { background-size: ${temporaryBackgroundImageFit || "cover"}; }`
       );
     }
   }

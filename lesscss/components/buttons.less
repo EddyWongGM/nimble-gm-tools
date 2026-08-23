@@ -133,32 +133,84 @@ button.button {
   cursor: unset;
 }
 
-.c-button--apply-temporary-hp .fas {
-  color: rgb(200, 30, 30);
+// A small "+" badge in the corner of the base stat icon, so each
+// "apply temporary X" button reads as "add to <stat>" rather than every
+// stat sharing the same generic medkit glyph, distinguished only by color.
+.temporary-badge() {
+  position: relative;
+
+  &::after {
+    content: "\f067"; // fa-plus
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    font-size: 0.5em;
+  }
 }
 
-.c-button--apply-temporary-mana .fas {
-  color: rgb(0, 120, 220);
+.c-button--apply-temporary-hp {
+  .temporary-badge();
+
+  .fas {
+    color: var(--green);
+  }
+  &::after {
+    color: var(--green);
+  }
 }
 
-.c-button--apply-temporary-resources .fas {
-  color: rgb(230, 120, 20);
+.c-button--apply-temporary-mana {
+  .temporary-badge();
+
+  .fas {
+    color: var(--blue);
+  }
+  &::after {
+    color: var(--blue);
+  }
 }
 
-.c-button--apply-temporary-hit-dice .fas {
-  color: rgb(30, 150, 60);
+.c-button--apply-temporary-resources {
+  .temporary-badge();
+
+  .fas {
+    color: var(--yellow);
+  }
+  &::after {
+    color: var(--yellow);
+  }
 }
 
-.c-button--apply-temporary-wounds .fas {
-  color: rgb(200, 30, 180);
+.c-button--apply-temporary-hit-dice {
+  .temporary-badge();
+
+  .fas {
+    color: var(--orange);
+  }
+  &::after {
+    color: var(--orange);
+  }
+}
+
+.c-button--apply-temporary-wounds {
+  .temporary-badge();
+
+  .fas {
+    color: var(--wound-red);
+  }
+  &::after {
+    color: var(--wound-red);
+  }
 }
 
 .c-button--toggle-reveal-gold .fas {
-  color: rgb(212, 163, 42);
+  color: var(--gold);
 }
 
 .c-button--toggle-reveal-hit-dice .fas {
-  color: rgb(30, 150, 60);
+  color: var(--orange);
 }
 
 .c-button--reset-turns {

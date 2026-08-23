@@ -292,9 +292,9 @@ export function CombatantRow(props: CombatantRowProps) {
                 style={getHitDiceStyle()}
               >
                 <span
-                  className="combatant__mobile-icon fas fa-dice-d6"
+                  className="combatant__mobile-icon fas fa-dice-d20"
                   aria-hidden="true"
-                  style={{ color: "rgb(30,150,60)" }}
+                  style={{ color: "var(--orange)" }}
                 />
 
                 {renderHitDiceText(props)}
@@ -315,7 +315,7 @@ export function CombatantRow(props: CombatantRowProps) {
             </div>
           ) : (
             <span
-              className="combatant__mobile-icon fas fa-dice-d6"
+              className="combatant__mobile-icon fas fa-dice-d20"
               aria-hidden="true"
             />
           )}
@@ -342,8 +342,9 @@ export function CombatantRow(props: CombatantRowProps) {
                 style={getWoundsStyle(props)}
               >
                 <span
-                  className="combatant__mobile-icon fas fa-skull-crossbones"
+                  className="combatant__mobile-icon fas fa-skull"
                   aria-hidden="true"
+                  style={{ color: "var(--wound-red)" }}
                 />
 
                 {renderWoundsText(props)}
@@ -359,8 +360,9 @@ export function CombatantRow(props: CombatantRowProps) {
             </div>
           ) : (
             <span
-              className="combatant__mobile-icon fas fa-skull-crossbones"
+              className="combatant__mobile-icon fas fa-skull"
               aria-hidden="true"
+              style={{ color: "var(--wound-red)" }}
             />
           )}
         </td>
@@ -383,7 +385,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 style={getItemsStyle(props)}
               >
                 <span
-                  className="combatant__mobile-icon fas fa-gem"
+                  className="combatant__mobile-icon fas fa-dice-d6"
                   aria-hidden="true"
                 />
 
@@ -397,7 +399,7 @@ export function CombatantRow(props: CombatantRowProps) {
             </div>
           ) : (
             <span
-              className="combatant__mobile-icon fas fa-gem"
+              className="combatant__mobile-icon fas fa-dice-d6"
               aria-hidden="true"
             />
           )}
@@ -579,7 +581,7 @@ function CommandButton(props: { command: Command }) {
         )}
         {isHitDiceToggle && (
           <span className="fa-stack">
-            <i className="fas fa-dice-d6 fa-stack-2x"></i>
+            <i className="fas fa-dice-d20 fa-stack-2x"></i>
             <i className="fas fa-slash fa-stack-2x"></i>
           </span>
         )}
@@ -655,7 +657,7 @@ function getManaStyle(props: CombatantRowProps) {
   if (!maxMana) {
     return {};
   }
-  return { color: "rgb(0,120,220)" };
+  return { color: "var(--blue)" };
 }
 
 function renderManaText(props: CombatantRowProps) {
@@ -683,7 +685,7 @@ function getResourcesStyle(props: CombatantRowProps) {
   if (!maxResources) {
     return {};
   }
-  return { color: "rgb(230,120,20)" };
+  return { color: "var(--yellow)" };
 }
 
 function renderResourcesText(props: CombatantRowProps) {
@@ -707,7 +709,7 @@ function renderResourcesBarStyle(props: CombatantRowProps) {
 }
 
 function getHitDiceStyle() {
-  return { color: "rgb(200,30,30)" };
+  return { color: "var(--orange)" };
 }
 
 function renderHitDiceText(props: CombatantRowProps) {
@@ -736,7 +738,7 @@ function getItemsStyle(props: CombatantRowProps) {
   if (slotsUsed > maxSlots) {
     return { color: "rgb(200,30,30)" };
   }
-  return { color: "rgb(139,90,43)" };
+  return { color: "var(--text-face)" };
 }
 
 function renderItemsText(props: CombatantRowProps) {
@@ -746,7 +748,7 @@ function renderItemsText(props: CombatantRowProps) {
 }
 
 function getGoldStyle() {
-  return { color: "rgb(212,163,42)" };
+  return { color: "var(--gold)" };
 }
 
 function renderGoldText(props: CombatantRowProps) {
@@ -762,7 +764,7 @@ function getWoundsStyle(props: CombatantRowProps) {
   if (currentWounds === 0 && !props.combatantState.TemporaryWounds) {
     return { color: "rgba(200,30,180,0.4)" };
   }
-  return { color: "rgb(200,30,180)" };
+  return { color: "var(--wound-red)" };
 }
 
 function renderWoundsText(props: CombatantRowProps) {

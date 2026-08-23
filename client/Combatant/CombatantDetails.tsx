@@ -73,6 +73,15 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
       )
     : null;
 
+  const challengeOrLevel = statBlock.Challenge && (
+    <>
+      <span className="stat-label Level">
+        {statBlock.Player == "player" ? "Level" : "Challenge"}
+      </span>
+      <span className="stat-value">{statBlock.Challenge}</span>
+    </>
+  );
+
   return (
     <div className="c-combatant-details">
       <StatBlockHeader
@@ -83,6 +92,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         imageUrl={statBlock.ImageURL}
       />
       <div className="c-combatant-details__hp">
+        {!StatBlock.ActsInPlayerPhase(statBlock) && challengeOrLevel}
         <span className="stat-label CurrentHP">HP</span>
         <span>
           {currentHp}
@@ -111,14 +121,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             </span>
           </>
         )}
-        {statBlock.Challenge && (
-          <>
-            <span className="stat-label Level">
-              {statBlock.Player == "player" ? "Level" : "Challenge"}
-            </span>
-            <span className="stat-value">{statBlock.Challenge}</span>
-          </>
-        )}
+        {StatBlock.ActsInPlayerPhase(statBlock) && challengeOrLevel}
       </div>
       {(currentResources || currentHitDice || currentWounds) && (
         <div className="c-combatant-details__resources-wounds">
@@ -230,7 +233,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
                 {props.onToggleInventoryDisplayToPlayers && (
                   <span
                     className={
-                      "c-combatant-details__items-toggle fas fa-gem fa-clickable" +
+                      "c-combatant-details__items-toggle fas fa-dice-d6 fa-clickable" +
                       (props.isInventoryDisplayedToPlayers
                         ? " c-combatant-details__items-toggle--active"
                         : "")

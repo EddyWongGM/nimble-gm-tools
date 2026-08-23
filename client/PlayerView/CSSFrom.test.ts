@@ -41,4 +41,12 @@ describe("CSSFrom", () => {
     expect(css).not.toContain("background-image");
     expect(css).not.toContain("background-size");
   });
+
+  test("a temporary background also targets #playerview.dark-mode, so it isn't hidden behind the static dark-mode texture rule", () => {
+    const css = CSSFrom(customStyles, "http://example.com/scene.png");
+
+    expect(css).toContain(
+      "#playerview, #playerview.dark-mode { background-image: url(http://example.com/scene.png); }"
+    );
+  });
 });

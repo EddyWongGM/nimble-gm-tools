@@ -376,6 +376,42 @@
   }
 }
 
+.combatant__hitdice-inner .combatant__hp-bar,
+.stat-label.HitDice + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--orange);
+  }
+}
+
+.combatant__wounds-inner .combatant__hp-bar,
+.stat-label.Wounds + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--wound-red);
+  }
+}
+
+.combatant__mana-inner .combatant__hp-bar,
+.stat-label.Mana + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--blue);
+  }
+}
+
+.combatant__resources-inner .combatant__hp-bar,
+.stat-label.Resources + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--yellow);
+  }
+}
+
 .combatant__wounds {
   width: 4rem;
   justify-content: center;

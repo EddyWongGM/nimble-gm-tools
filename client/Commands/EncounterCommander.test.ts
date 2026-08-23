@@ -335,6 +335,15 @@ describe("EncounterCommander", () => {
     expect(encounter.Combatants()[1].DisplayName()).toEqual("Library Gregorr");
   });
 
+  test("LoadEncounter with hideOnAdd hides both non-persistent and persistent combatants, regardless of their saved Hidden state", async () => {
+    const savedEncounter = buildSavedEncounterWithPersistentCharacter();
+
+    await encounterCommander.LoadSavedEncounter(savedEncounter, true);
+
+    expect(encounter.Combatants()[0].Hidden()).toBe(true);
+    expect(encounter.Combatants()[1].Hidden()).toBe(true);
+  });
+
   describe("Nimble phase commands", () => {
     test("GroupAllMonsters does nothing with fewer than two monsters", () => {
       addCombatantFromStatBlock(encounter, {

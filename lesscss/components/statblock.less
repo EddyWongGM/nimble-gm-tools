@@ -62,10 +62,10 @@
 
 .c-combatant-details__items-toggle {
   margin-left: @small-spacer;
-  color: rgba(139, 90, 43, 0.4);
+  color: var(--text-faded);
 
   &.c-combatant-details__items-toggle--active {
-    color: rgb(139, 90, 43);
+    color: var(--text-face);
   }
 }
 
@@ -108,7 +108,12 @@ input[type="number"].c-combatant-details__item-quantity {
 }
 
 .c-combatant-details__item-remove {
-  margin-left: @small-spacer;
+  margin-left: @medium-spacer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--text-faded);
+  font-size: @font-size-mice;
 }
 
 .c-combatant-details > .HP.AC.speed.Challenge {
@@ -179,10 +184,33 @@ input[type="number"].c-combatant-details__item-quantity {
   }
 }
 
+// Smaller than the library/reference statblock's name (which keeps
+// @font-size-h3) - the right-pane combatant details panel is narrower and
+// a large name crowds the HP/AC/Mana row below it.
+.c-combatant-details .c-statblock-header .Name {
+  font-size: @font-size-large;
+}
+
 .stat-label {
   font-weight: bold;
   margin: 0 @small-spacer 0 0;
   color: var(--red);
+
+  &.HitDice {
+    color: var(--orange);
+  }
+
+  &.Resources {
+    color: var(--yellow);
+  }
+
+  &.Wounds {
+    color: var(--wound-red);
+  }
+
+  &.Mana {
+    color: var(--blue);
+  }
 }
 .stat-value + .stat-value,
 .stat-value__item + .stat-value__item {

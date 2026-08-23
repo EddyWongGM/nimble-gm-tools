@@ -94,7 +94,7 @@ while the character is in an active encounter).
 - Full contents reach players only on demand, via a DM-triggered popup
   (`InventoryDisplayPopup.tsx`, reusing the same transient-socket-event
   mechanism as the existing "Post-Combat Breakdown" popup), not
-  continuously synced. The DM toggles it per-combatant from a `fa-gem`
+  continuously synced. The DM toggles it per-combatant from a `fa-dice-d6`
   icon right in the details pane's Inventory header
   (`isInventoryDisplayedToPlayers`/`onToggleInventoryDisplayToPlayers`,
   wired in both `LeftColumn.tsx`'s active-combatant panel and
