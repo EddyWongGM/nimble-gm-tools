@@ -43,8 +43,12 @@ async function improvedInitiativeServer() {
   const io = new SocketIO.Server(server);
   ConfigureSockets(io, session, playerViews);
 
-  if (cluster.worker) {
-    console.log("Improved Initiative node %s running", cluster.worker.id);
+  // @types/node's cluster.d.ts omits `cluster.worker` (only `cluster.workers`
+  // is declared), even though it still exists at runtime - cast around the gap.
+  const currentWorker = (cluster as unknown as { worker?: cluster.Worker })
+    .worker;
+  if (currentWorker) {
+    console.log("Improved Initiative node %s running", currentWorker.id);
   }
 }
 
