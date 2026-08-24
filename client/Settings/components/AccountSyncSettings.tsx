@@ -1,5 +1,6 @@
 import { saveAs } from "browser-filesaver";
 import { forIn } from "lodash";
+import * as moment from "moment";
 import * as React from "react";
 
 import * as _ from "lodash";
@@ -157,7 +158,7 @@ export class AccountSyncSettings extends React.Component<
     this.setState({ syncError: "" });
     const asyncKeys = await Store.GetAllKeyPairs();
     const blob = LegacySynchronousLocalStore.ExportAll(asyncKeys);
-    saveAs(blob, "improved-initiative.json");
+    saveAs(blob, `nimble-gm-tools-${moment().format("YYYY-MM-DD")}.json`);
     this.props.accountClient.SaveAllUnsyncedItems(
       this.props.libraries,
       progressMessage => {
@@ -193,6 +194,14 @@ export class AccountSyncSettings extends React.Component<
             console.error(JSON.stringify(e));
           }
         })
+      );
+    }
+
+    if (account.settings) {
+      LegacySynchronousLocalStore.Save(
+        LegacySynchronousLocalStore.User,
+        "Settings",
+        account.settings
       );
     }
 

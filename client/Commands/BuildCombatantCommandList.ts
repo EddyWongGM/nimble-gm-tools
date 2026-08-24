@@ -76,7 +76,7 @@ export const BuildCombatantCommandList: (
     id: "spend-hit-dice",
     description: "Spend Hit Die",
     actionBinding: c.SpendHitDice,
-    fontAwesomeIcon: "dice-d20",
+    fontAwesomeIcon: "dice-d6",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -90,7 +90,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-hit-dice",
     description: "Apply Temporary Hit Dice",
     actionBinding: c.AddTemporaryHitDice,
-    fontAwesomeIcon: "dice-d20",
+    fontAwesomeIcon: "dice-d6",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -183,14 +183,14 @@ export const BuildCombatantCommandList: (
     id: "toggle-reveal-hit-dice",
     description: "Hide/Reveal Hit Dice in Player View",
     actionBinding: c.ToggleRevealedHitDice,
-    fontAwesomeIcon: "dice-d20",
+    fontAwesomeIcon: "dice-d6",
     defaultShowOnActionBar: false
   }),
   new Command({
     id: "toggle-reveal-items",
     description: "Hide/Reveal Inventory in Player View",
     actionBinding: c.ToggleRevealedItems,
-    fontAwesomeIcon: "dice-d6",
+    fontAwesomeIcon: "scroll",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -204,7 +204,7 @@ export const BuildCombatantCommandList: (
     id: "show-inventory",
     description: "Show/Hide Inventory in Player View Popup",
     actionBinding: () => c.ToggleInventoryDisplayToPlayers(),
-    fontAwesomeIcon: "dice-d6",
+    fontAwesomeIcon: "scroll",
     defaultShowOnActionBar: false
   }),
   new Command({

@@ -6,7 +6,6 @@ import { Store } from "./Store";
 const _prefix = "ImprovedInitiative";
 export namespace LegacySynchronousLocalStore {
   export const PersistentCharacters = "PersistentCharacters";
-  export const PlayerCharacters = "PlayerCharacters";
   export const SavedEncounters = "SavedEncounters";
   export const AutoSavedEncounters = "AutoSavedEncounters";
   export const User = "User";
@@ -123,7 +122,7 @@ export namespace LegacySynchronousLocalStore {
     reader.readAsText(file);
   }
 
-  function importList(listName: string, importSource: any) {
+  export function importList(listName: string, importSource: any) {
     const listKey = `${_prefix}.${listName}`;
     const listingsJSON = importSource[listKey];
     if (!listingsJSON) {
@@ -136,11 +135,20 @@ export namespace LegacySynchronousLocalStore {
       const listingJSON = importSource[fullKey];
       if (!listingJSON) {
         console.warn(`Couldn't import ${fullKey} from JSON`);
-      } else {
-        const listing: Listable = JSON.parse(listingJSON);
-        listing.LastUpdateMs = moment.now();
-        Save(listName, key, listing);
+        continue;
       }
+
+      const listing: Listable = JSON.parse(listingJSON);
+      const existing = Load<Listable>(listName, key);
+      if (
+        existing &&
+        (existing.LastUpdateMs ?? 0) >= (listing.LastUpdateMs ?? 0)
+      ) {
+        continue;
+      }
+
+      listing.LastUpdateMs = moment.now();
+      Save(listName, key, listing);
     }
   }
 

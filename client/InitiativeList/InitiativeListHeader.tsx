@@ -61,7 +61,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-bolt"
               title="Resources"
               aria-hidden="true"
-              style={{ color: "var(--yellow)" }}
+              style={{ color: "var(--magenta)" }}
             ></span>
           </th>
         )}
@@ -70,7 +70,7 @@ export function InitiativeListHeader(props: {
           <th className="combatant__hitdice">
             <span className="screen-reader-only">Hit Dice</span>
             <span
-              className="fas fa-dice-d20"
+              className="fas fa-dice-d6"
               title="Hit Dice"
               aria-hidden="true"
               style={{ color: "var(--orange)" }}
@@ -94,10 +94,10 @@ export function InitiativeListHeader(props: {
           <th className="combatant__items-slots">
             <span className="screen-reader-only">Inventory</span>
             <span
-              className="fas fa-dice-d6"
+              className="fas fa-scroll"
               title="Inventory"
               aria-hidden="true"
-              style={{ color: "var(--text-inverted)" }}
+              style={{ color: "var(--white)" }}
             ></span>
           </th>
         )}

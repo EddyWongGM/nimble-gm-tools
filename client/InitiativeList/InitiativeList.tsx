@@ -42,7 +42,7 @@ export function InitiativeList(props: {
   return (
     <div className="initiative-list">
       <div className="initiative-list__header">
-        <h2>Names by Initiative</h2>
+        <h2>Nimble GM Tools</h2>
         {encounterState.MonstersActFirst && (
           <span className="initiative-list__phase-indicator">
             Monsters act first

@@ -94,17 +94,28 @@ while the character is in an active encounter).
 - Full contents reach players only on demand, via a DM-triggered popup
   (`InventoryDisplayPopup.tsx`, reusing the same transient-socket-event
   mechanism as the existing "Post-Combat Breakdown" popup), not
-  continuously synced. The DM toggles it per-combatant from a `fa-dice-d6`
-  icon right in the details pane's Inventory header
-  (`isInventoryDisplayedToPlayers`/`onToggleInventoryDisplayToPlayers`,
-  wired in both `LeftColumn.tsx`'s active-combatant panel and
-  `SelectedCombatants.tsx`) — clicking it again dismisses the popup, no
-  separate close button needed on the player side.
+  continuously synced. The DM toggles it via the "Show/Hide Inventory in
+  Player View Popup" command (`CombatantCommander.ToggleInventoryDisplayToPlayers`
+  /`InventoryDisplayedCombatantId`/`DismissInventoryDisplay`) in the
+  combatant command list, or via a one-click shortcut on the "Add Item"
+  prompt itself (`fa-scroll` button in `ItemPrompt.tsx`, which also
+  dismisses that prompt) — clicking the command again dismisses the popup,
+  no separate close button needed on the player side. There is no
+  persistent on-screen indicator in the DM view that a popup is currently
+  showing; re-triggering the same toggle is the only way to dismiss it
+  short of the players closing it themselves.
+- The `fa-scroll` icon in the combatant details pane's Inventory header is
+  a *different*, DM-only action: it opens a dismissible read-only info card
+  (`InventoryCardPrompt.tsx`, queued the same way as spell/condition
+  reference cards) showing that combatant's contents. It does not push
+  anything to players.
+- Removing an item goes through a confirm-before-delete prompt
+  (`RemoveItemPrompt.tsx`) rather than deleting immediately.
 - Same hide/reveal-from-players toggle as Gold and Hit Dice
   (`RevealedItems`), defaulting hidden for new PCs. This is a distinct
   control from the popup toggle above: `RevealedItems` governs the passive
-  slot-count indicator, `isInventoryDisplayedToPlayers` governs the
-  on-demand full-contents popup.
+  slot-count indicator, the popup toggle governs the on-demand
+  full-contents popup.
 - Add/remove UI in the combatant details pane (`CombatantDetails.tsx`),
   modeled on `Tags`' inline-list-with-remove-button pattern plus a
   Gold-style signed-quantity prompt (`ItemPrompt.tsx`).
@@ -112,6 +123,8 @@ while the character is in an active encounter).
 Key files: [common/CombatantState.ts](common/CombatantState.ts),
 [client/Combatant/InventorySlots.ts](client/Combatant/InventorySlots.ts),
 [client/Prompts/ItemPrompt.tsx](client/Prompts/ItemPrompt.tsx),
+[client/Prompts/InventoryCardPrompt.tsx](client/Prompts/InventoryCardPrompt.tsx),
+[client/Prompts/RemoveItemPrompt.tsx](client/Prompts/RemoveItemPrompt.tsx),
 [client/PlayerView/components/InventoryDisplayPopup.tsx](client/PlayerView/components/InventoryDisplayPopup.tsx).
 
 **Not yet built:** a shared item library with predefined slot costs, to

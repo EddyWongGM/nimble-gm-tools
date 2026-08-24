@@ -29,7 +29,6 @@ interface LibraryReferencePaneProps<T extends Listable> {
   addNewText?: string;
   addNewItem: () => void;
   renderPreview: (item: T, isLoading: boolean) => JSX.Element;
-  showPreloadInfo?: boolean;
   showSortControl?: boolean;
   launchQuickAddPrompt?: () => void;
   onRenameFolder?: RenameFolder;
@@ -153,18 +152,6 @@ export class LibraryReferencePane<T extends Listable> extends React.Component<
           onScroll={this.handleListingsScroll}
         >
           {listingAndFolderComponents.slice(0, this.state.countOfItemsToRender)}
-          {this.props.showPreloadInfo && (
-            <li style={{ margin: 5, fontStyle: "italic" }}>
-              <p style={{ flexShrink: 1 }}>
-                Improved Initiative comes pre-loaded with statblocks from the{" "}
-                <a href="https://open5e.com/" target="_blank">
-                  Open5e API
-                </a>
-                . Visit the Content tab on the Settings pane to configure
-                preloaded content.
-              </p>
-            </li>
-          )}
           {this.props.launchQuickAddPrompt && (
             <li>
               <ListingButton

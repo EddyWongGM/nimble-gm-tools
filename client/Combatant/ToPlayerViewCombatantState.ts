@@ -197,7 +197,7 @@ function GetResourcesColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "var(--yellow)";
+  return "var(--magenta)";
 }
 
 function GetHitDiceDisplay(combatant: Combatant): string | undefined {

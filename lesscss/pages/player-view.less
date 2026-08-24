@@ -29,12 +29,9 @@
     padding: @large-spacer @medium-spacer @large-spacer @medium-spacer;
     border-left: @active-combatant-indicator-width solid transparent;
 
-    // Always a dark bar with light text, regardless of site theme - unlike
-    // the DM tracker's header, which deliberately inverts with the theme.
-    // In dark mode, --page-bg-inverted (the shared, theme-flipping value)
-    // becomes light, which washes out the bright per-stat icon colors
-    // (yellow/orange/gold) that are supposed to stand out here.
-    background-color: var(--grey);
+    // Always a black bar with white text, regardless of site theme, same
+    // as the DM tracker's header (see combatants.less).
+    background-color: var(--black);
     color: var(--white);
   }
 
@@ -70,6 +67,7 @@
   .combatant__inventory {
     flex-basis: 6%;
     align-items: center;
+    justify-content: center;
     margin-left: @larger-spacer;
   }
 
@@ -108,14 +106,23 @@
 
   .combatant__tags {
     flex-direction: row;
+    flex-wrap: wrap;
     flex-grow: 1;
+    flex-basis: 0;
+    row-gap: @extra-small-spacer;
 
     .tag {
-      .colors(var(--white), var(--dark-red));
+      // --dark-red flips from black (light mode) to a light khaki (dark
+      // mode), so the text needs to flip opposite it to stay readable.
+      .colors(var(--text-inverted), var(--dark-red));
       margin-right: @large-spacer;
-      padding: @medium-spacer;
+      margin-bottom: @extra-small-spacer;
+      // Vertical padding kept small so a tagged row's height still matches
+      // an untagged row's - only the tallest column should set row height.
+      padding: @small-spacer @medium-spacer;
       text-transform: uppercase;
       font-size: 0.75rem;
+      overflow-wrap: anywhere;
     }
   }
 
@@ -230,6 +237,17 @@
     position: fixed;
     max-height: 80vh;
     overflow-y: auto;
+    width: 40vw;
+    min-width: 24rem;
+
+    // Same parchment texture as the page background behind the center
+    // column, instead of a flat card fill.
+    background: var(--card-background-white) url("../img/paper-bg.jpg")
+      no-repeat center/cover;
+  }
+
+  &.dark-mode .inventory-display-popup {
+    background-image: url("../img/dark-texture.png");
   }
 
   .inventory-display {

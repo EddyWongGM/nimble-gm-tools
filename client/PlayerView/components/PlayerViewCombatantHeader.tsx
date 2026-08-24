@@ -27,12 +27,12 @@ export const PlayerViewCombatantHeader = (props: {
     )}
     {props.resourcesColumnVisible && (
       <div className="combatant__resources">
-        <span className="fas fa-bolt" style={{ color: "var(--yellow)" }} />
+        <span className="fas fa-bolt" style={{ color: "var(--magenta)" }} />
       </div>
     )}
     {props.hitDiceColumnVisible && (
       <div className="combatant__hitdice">
-        <span className="fas fa-dice-d20" style={{ color: "var(--orange)" }} />
+        <span className="fas fa-dice-d6" style={{ color: "var(--orange)" }} />
       </div>
     )}
     {props.woundsColumnVisible && (
@@ -45,10 +45,7 @@ export const PlayerViewCombatantHeader = (props: {
     )}
     {props.inventoryColumnVisible && (
       <div className="combatant__inventory">
-        <span
-          className="fas fa-dice-d6"
-          style={{ color: "var(--white)", position: "relative", top: "2px" }}
-        />
+        <span className="fas fa-scroll" style={{ color: "var(--white)" }} />
       </div>
     )}
     {props.acColumnVisible && (

@@ -5,6 +5,7 @@ import {
 } from "../../../common/PlayerViewSettings";
 import { useSubscription } from "../../Combatant/linkComponentToObservables";
 import { Button } from "../../Components/Button";
+import { FileUploadButton } from "../../Settings/components/FileUploadButton";
 import { Folder } from "../Components/Folder";
 import { CurrentSettings } from "../../Settings/Settings";
 
@@ -16,6 +17,8 @@ export interface SceneLibraryReferencePaneProps {
   addScene: () => void;
   editScene: (scene: SavedScene) => void;
   deleteScene: (sceneId: string) => void;
+  exportScenes: () => void;
+  importScenes: (file: File) => void;
   combatantsHidden: boolean;
   onToggleCombatantsHidden: () => void;
 }
@@ -162,6 +165,17 @@ export function SceneLibraryReferencePane(
           additionalClassNames="new"
           fontAwesomeIcon="plus"
           onClick={props.addScene}
+        />
+        <Button
+          text="Backup Scenes"
+          fontAwesomeIcon="file-export"
+          tooltip="Export your saved scenes to a JSON file"
+          onClick={props.exportScenes}
+        />
+        <FileUploadButton
+          acceptFileType=".json"
+          fontAwesomeIcon="file-import"
+          handleFile={props.importScenes}
         />
       </div>
     </div>

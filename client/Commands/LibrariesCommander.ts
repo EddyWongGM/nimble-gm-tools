@@ -1,3 +1,4 @@
+import { saveAs } from "browser-filesaver";
 import * as ko from "knockout";
 import * as _ from "lodash";
 
@@ -21,6 +22,7 @@ import { SaveEncounterPrompt } from "../Prompts/SaveEncounterPrompt";
 import { SpellPrompt } from "../Prompts/SpellPrompt";
 import { ConditionReferencePrompt } from "../Prompts/ConditionReferencePrompt";
 import { SavedEncounter } from "../../common/SavedEncounter";
+import * as moment from "moment";
 import { now } from "moment";
 import { Library } from "../Library/useLibrary";
 import { CurrentSettings } from "../Settings/Settings";
@@ -266,15 +268,18 @@ export class LibrariesCommander {
     return true;
   };
 
-  public GetSpellsByNameRegex = ko.pureComputed(
-    (): RegExp =>
-      concatenatedStringRegex(
-        this.libraries.Spells.GetAllListings() //TODO: Ensure that computed is updated with this
-          .map(s => s.Meta().Name)
-          .filter(n => n.length > 2),
-        { caseSensitive: true }
-      )
-  );
+  // Not a ko.pureComputed: Spells.GetAllListings() is backed by React state
+  // (useLibrary), which Knockout can't see as a dependency, so a computed
+  // here would cache whatever it saw on its first (pre-load) evaluation and
+  // never recompute as spells load in. TextEnricher already calls this fresh
+  // on every render, so a plain function keeps it correct for free.
+  public GetSpellsByNameRegex = (): RegExp =>
+    concatenatedStringRegex(
+      this.libraries.Spells.GetAllListings()
+        .map(s => s.Meta().Name)
+        .filter(n => n.length > 2),
+      { caseSensitive: true }
+    );
 
   public LoadEncounter = (
     savedEncounter: EncounterState<CombatantState>,
@@ -520,6 +525,48 @@ export class LibrariesCommander {
         .PlayerView.SceneLibrary.map(s => s.Path)
         .filter(Boolean)
     );
+
+  public ExportScenes = (): void => {
+    const scenes = CurrentSettings().PlayerView.SceneLibrary;
+    const blob = new Blob([JSON.stringify(scenes, null, 2)], {
+      type: "application/json"
+    });
+    saveAs(
+      blob,
+      `nimble-gm-tools-scenes-${moment().format("YYYY-MM-DD")}.json`
+    );
+  };
+
+  public ImportScenes = (file: File): void => {
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      let importedScenes: SavedScene[];
+      try {
+        importedScenes = JSON.parse(event.target.result);
+      } catch (error) {
+        alert(`There was a problem importing ${file.name}: ${error}`);
+        return;
+      }
+
+      if (!Array.isArray(importedScenes)) {
+        alert(`There was a problem importing ${file.name}: expected a list of scenes.`);
+        return;
+      }
+
+      const settings = CurrentSettings();
+      const sceneLibrary = settings.PlayerView.SceneLibrary;
+      for (const scene of importedScenes) {
+        const existingIndex = sceneLibrary.findIndex(s => s.Id === scene.Id);
+        if (existingIndex >= 0) {
+          sceneLibrary[existingIndex] = scene;
+        } else {
+          sceneLibrary.push(scene);
+        }
+      }
+      this.tracker.SaveUpdatedSettings(settings);
+    };
+    reader.readAsText(file);
+  };
 
   public DeleteScene = (sceneId: string): void => {
     if (this.encounterCommander.ActiveSceneId() === sceneId) {

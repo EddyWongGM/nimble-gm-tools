@@ -37,7 +37,6 @@ export function CenterColumn(props: {
       <CombatFooter
         encounter={props.tracker.Encounter}
         eventLog={props.tracker.EventLog}
-        combatantCommander={props.tracker.CombatantCommander}
       />
     </div>
   );

@@ -161,6 +161,10 @@
     overflow: hidden;
     background: none;
     border: none;
+    // Buttons don't inherit text color from the page by default (the
+    // browser's UA stylesheet gives them their own), so without this the
+    // scene name stays black regardless of theme.
+    color: var(--text-face);
     padding: @small-spacer;
     text-align: left;
     cursor: pointer;

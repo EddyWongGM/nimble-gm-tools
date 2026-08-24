@@ -37,6 +37,11 @@ type CombatantDragData = {
 
 export function CombatantRow(props: CombatantRowProps) {
   const displayName = getDisplayName(props);
+  const tooltipName = StatBlockNamespace.IsPlayerCharacter(
+    props.combatantState.StatBlock
+  )
+    ? `${displayName} (Hero)`
+    : displayName;
   const commandContext = React.useContext(CommandContext);
 
   const settings = React.useContext(SettingsContext);
@@ -120,7 +125,7 @@ export function CombatantRow(props: CombatantRowProps) {
 
       <td
         className="combatant__name"
-        title={displayName}
+        title={tooltipName}
         align="left"
         aria-current={isActive ? "true" : "false"}
       >
@@ -292,7 +297,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 style={getHitDiceStyle()}
               >
                 <span
-                  className="combatant__mobile-icon fas fa-dice-d20"
+                  className="combatant__mobile-icon fas fa-dice-d6"
                   aria-hidden="true"
                   style={{ color: "var(--orange)" }}
                 />
@@ -315,7 +320,7 @@ export function CombatantRow(props: CombatantRowProps) {
             </div>
           ) : (
             <span
-              className="combatant__mobile-icon fas fa-dice-d20"
+              className="combatant__mobile-icon fas fa-dice-d6"
               aria-hidden="true"
             />
           )}
@@ -385,7 +390,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 style={getItemsStyle(props)}
               >
                 <span
-                  className="combatant__mobile-icon fas fa-dice-d6"
+                  className="combatant__mobile-icon fas fa-scroll"
                   aria-hidden="true"
                 />
 
@@ -399,7 +404,7 @@ export function CombatantRow(props: CombatantRowProps) {
             </div>
           ) : (
             <span
-              className="combatant__mobile-icon fas fa-dice-d6"
+              className="combatant__mobile-icon fas fa-scroll"
               aria-hidden="true"
             />
           )}
@@ -581,7 +586,7 @@ function CommandButton(props: { command: Command }) {
         )}
         {isHitDiceToggle && (
           <span className="fa-stack">
-            <i className="fas fa-dice-d20 fa-stack-2x"></i>
+            <i className="fas fa-dice-d6 fa-stack-2x"></i>
             <i className="fas fa-slash fa-stack-2x"></i>
           </span>
         )}
@@ -685,7 +690,7 @@ function getResourcesStyle(props: CombatantRowProps) {
   if (!maxResources) {
     return {};
   }
-  return { color: "var(--yellow)" };
+  return { color: "var(--magenta)" };
 }
 
 function renderResourcesText(props: CombatantRowProps) {
@@ -759,10 +764,6 @@ function getWoundsStyle(props: CombatantRowProps) {
   const maxWounds = props.combatantState.StatBlock.Wounds?.Value;
   if (!maxWounds) {
     return {};
-  }
-  const currentWounds = props.combatantState.CurrentWounds ?? 0;
-  if (currentWounds === 0 && !props.combatantState.TemporaryWounds) {
-    return { color: "rgba(200,30,180,0.4)" };
   }
   return { color: "var(--wound-red)" };
 }

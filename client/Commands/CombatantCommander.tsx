@@ -1,7 +1,11 @@
 import * as ko from "knockout";
 import * as React from "react";
 
-import { CombatantState, TagState } from "../../common/CombatantState";
+import {
+  CombatantState,
+  InventoryItem,
+  TagState
+} from "../../common/CombatantState";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { Combatant } from "../Combatant/Combatant";
 import { CombatantDetails } from "../Combatant/CombatantDetails";
@@ -32,6 +36,8 @@ import { ConcentrationPrompt } from "../Prompts/ConcentrationPrompt";
 import { ShowDiceRollPrompt } from "../Prompts/RollDicePrompt";
 import { TagPrompt } from "../Prompts/TagPrompt";
 import { ItemPrompt } from "../Prompts/ItemPrompt";
+import { RemoveItemPrompt } from "../Prompts/RemoveItemPrompt";
+import { InventoryCardPrompt } from "../Prompts/InventoryCardPrompt";
 import { UpdateNotesPrompt } from "../Prompts/UpdateNotesPrompt";
 import { ApplyTemporaryHPPrompt } from "../Prompts/ApplyTemporaryHPPrompt";
 import { ApplyTemporaryManaPrompt } from "../Prompts/ApplyTemporaryManaPrompt";
@@ -660,6 +666,13 @@ export class CombatantCommander {
   public AddItem = (combatantVM?: CombatantViewModel) => {
     let targetCombatants: Combatant[] = [];
 
+    const singleTargetVM =
+      combatantVM instanceof CombatantViewModel
+        ? combatantVM
+        : this.HasOneSelected()
+          ? this.SelectedCombatants()[0]
+          : undefined;
+
     if (combatantVM instanceof CombatantViewModel) {
       targetCombatants = [combatantVM.Combatant];
     } else {
@@ -670,13 +683,32 @@ export class CombatantCommander {
       return;
     }
 
-    const prompt = ItemPrompt(targetCombatants, this.tracker.EventLog.AddEvent);
+    const prompt = ItemPrompt(
+      targetCombatants,
+      this.tracker.EventLog.AddEvent,
+      singleTargetVM &&
+        (() => this.ShowInventoryCard(singleTargetVM.Combatant))
+    );
     this.tracker.PromptQueue.Add(prompt);
     return false;
   };
 
   public AddItemTargeted = (combatantViewModel: CombatantViewModel) => {
     this.AddItem(combatantViewModel);
+  };
+
+  public PromptRemoveItem = (combatant: Combatant, item: InventoryItem) => {
+    const prompt = RemoveItemPrompt(
+      combatant,
+      item,
+      this.tracker.EventLog.AddEvent
+    );
+    this.tracker.PromptQueue.Add(prompt);
+  };
+
+  public ShowInventoryCard = (combatant: Combatant) => {
+    const prompt = InventoryCardPrompt(combatant);
+    this.tracker.PromptQueue.Add(prompt);
   };
 
   public ToggleInventoryDisplayToPlayers = (

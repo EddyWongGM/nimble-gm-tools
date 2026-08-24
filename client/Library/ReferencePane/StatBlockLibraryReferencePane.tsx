@@ -71,7 +71,6 @@ export class StatBlockLibraryReferencePane extends React.Component<
             isLoading={isLoading}
           />
         )}
-        showPreloadInfo
         showSortControl
       />
     );

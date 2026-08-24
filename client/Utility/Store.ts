@@ -114,7 +114,7 @@ export namespace Store {
     });
   }
 
-  async function importList(listName: string, importSource: any) {
+  export async function importList(listName: string, importSource: any) {
     const listingFullKeys = Object.keys(importSource).filter(k =>
       k.startsWith(listName + ".")
     );
@@ -123,13 +123,23 @@ export namespace Store {
       if (!listing) {
         console.warn(`Couldn't import ${fullKey} from JSON`);
         return;
-      } else {
-        listing.LastUpdateMs = moment.now();
-        const key = _.last(fullKey.split("."));
-        if (key) {
-          await Save(listName, key, listing);
-        }
       }
+
+      const key = _.last(fullKey.split("."));
+      if (!key) {
+        return;
+      }
+
+      const existing = await Load<Listable>(listName, key);
+      if (
+        existing &&
+        (existing.LastUpdateMs ?? 0) >= (listing.LastUpdateMs ?? 0)
+      ) {
+        return;
+      }
+
+      listing.LastUpdateMs = moment.now();
+      await Save(listName, key, listing);
     });
 
     return Promise.all(savePromises);
