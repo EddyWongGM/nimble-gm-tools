@@ -29,7 +29,7 @@ export function InitiativeListHeader(props: {
             className="fas fa-heart"
             title="Health"
             aria-hidden="true"
-            style={{ color: "rgb(200,30,30)" }}
+            style={{ color: "var(--green)" }}
           ></span>
         </th>
 
@@ -49,7 +49,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-tint"
               title="Mana"
               aria-hidden="true"
-              style={{ color: "rgb(0,120,220)" }}
+              style={{ color: "var(--blue)" }}
             ></span>
           </th>
         )}
@@ -61,7 +61,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-bolt"
               title="Resources"
               aria-hidden="true"
-              style={{ color: "rgb(230,120,20)" }}
+              style={{ color: "var(--magenta)" }}
             ></span>
           </th>
         )}
@@ -73,7 +73,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-dice-d6"
               title="Hit Dice"
               aria-hidden="true"
-              style={{ color: "rgb(30,150,60)" }}
+              style={{ color: "var(--orange)" }}
             ></span>
           </th>
         )}
@@ -82,10 +82,10 @@ export function InitiativeListHeader(props: {
           <th className="combatant__wounds">
             <span className="screen-reader-only">Wounds</span>
             <span
-              className="fas fa-skull-crossbones"
+              className="fas fa-skull"
               title="Wounds"
               aria-hidden="true"
-              style={{ color: "rgb(200,30,180)" }}
+              style={{ color: "var(--wound-red)" }}
             ></span>
           </th>
         )}
@@ -94,10 +94,10 @@ export function InitiativeListHeader(props: {
           <th className="combatant__items-slots">
             <span className="screen-reader-only">Inventory</span>
             <span
-              className="fas fa-gem"
+              className="fas fa-scroll"
               title="Inventory"
               aria-hidden="true"
-              style={{ color: "rgb(139,90,43)" }}
+              style={{ color: "var(--white)" }}
             ></span>
           </th>
         )}
@@ -109,7 +109,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-coins"
               title="Gold"
               aria-hidden="true"
-              style={{ color: "rgb(212,163,42)" }}
+              style={{ color: "var(--gold)" }}
             ></span>
           </th>
         )}

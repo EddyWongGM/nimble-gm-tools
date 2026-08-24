@@ -144,7 +144,7 @@ function GetManaColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "rgb(0,120,220)";
+  return "var(--blue)";
 }
 
 function GetResourcesDisplay(combatant: Combatant): string | undefined {
@@ -197,7 +197,7 @@ function GetResourcesColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "rgb(230,120,20)";
+  return "var(--magenta)";
 }
 
 function GetHitDiceDisplay(combatant: Combatant): string | undefined {
@@ -216,12 +216,13 @@ function GetHitDiceDisplay(combatant: Combatant): string | undefined {
   const hitDiceVerbosity = CurrentSettings().PlayerView.PlayerHPVerbosity;
   const temporaryHitDice = combatant.TemporaryHitDice();
   if (hitDiceVerbosity == "Actual HP") {
-    // Show the delta from max (e.g. "-1"), not the raw count - the max
-    // itself is DM-only information.
+    // Show the remaining count, not the max (the max itself is DM-only
+    // information) and not a delta from max - players want to know how
+    // many Hit Dice they have left to spend, not how many they've used.
     if (temporaryHitDice) {
-      return `${currentHitDice - maxHitDice}+${temporaryHitDice}`;
+      return `${currentHitDice}+${temporaryHitDice}`;
     }
-    return (currentHitDice - maxHitDice).toString();
+    return currentHitDice.toString();
   }
   if (hitDiceVerbosity == "Hide All") {
     return "";
@@ -258,7 +259,7 @@ function GetHitDiceColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "rgb(200,30,30)";
+  return "var(--orange)";
 }
 
 function GetWoundsDisplay(combatant: Combatant): string | undefined {
@@ -308,7 +309,7 @@ function GetWoundsColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "rgb(200,30,180)";
+  return "var(--wound-red)";
 }
 
 function GetGoldDisplay(combatant: Combatant): string | undefined {
@@ -324,7 +325,7 @@ function GetGoldColor(combatant: Combatant): string | undefined {
     return undefined;
   }
 
-  return "rgb(212,163,42)";
+  return "var(--gold)";
 }
 
 function GetInventoryDisplay(combatant: Combatant): string | undefined {
@@ -344,7 +345,7 @@ function GetInventoryColor(combatant: Combatant): string | undefined {
     return "rgb(200,30,30)";
   }
 
-  return "rgb(139,90,43)";
+  return "var(--text-face)";
 }
 
 function GetHPColor(combatant: Combatant) {

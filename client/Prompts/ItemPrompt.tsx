@@ -11,11 +11,13 @@ export interface ItemModel {
   stackable: boolean;
   quantity: string;
   slotCost: string;
+  showInventoryCard: boolean;
 }
 
 function ItemPromptFields(props: {
   targetDisplayNames: string;
   autoCompleteOptions: string[];
+  showInventoryCardShortcut: boolean;
 }) {
   return (
     <div className="add-item">
@@ -47,14 +49,68 @@ function ItemPromptFields(props: {
             )
           }
         </Field>
+        <SubmitButton />
+        {props.showInventoryCardShortcut && (
+          <SubmitButton
+            fontAwesomeIcon="scroll"
+            submitIntent={["showInventoryCard", true]}
+            tooltip="Show Inventory as a Card"
+          />
+        )}
       </div>
     </div>
   );
 }
 
+export function submitItemPrompt(
+  model: ItemModel,
+  targetCombatants: Combatant[],
+  targetDisplayNames: string,
+  logEvent: (message: string) => void,
+  onShowInventoryCard?: () => void
+): boolean {
+  if (model.showInventoryCard) {
+    onShowInventoryCard();
+    return true;
+  }
+
+  const itemName = model.itemName.trim();
+  if (itemName.length == 0) {
+    return true;
+  }
+
+  const quantityDelta = model.stackable ? parseInt(model.quantity) : 0;
+  const slotCost = parseInt(model.slotCost);
+
+  if (model.stackable && (isNaN(quantityDelta) || quantityDelta == 0)) {
+    return true;
+  }
+
+  for (const combatant of targetCombatants) {
+    combatant.ApplyItemChange(
+      itemName,
+      model.stackable,
+      quantityDelta,
+      isNaN(slotCost) ? 1 : slotCost
+    );
+  }
+
+  if (model.stackable) {
+    const verb = quantityDelta > 0 ? "Added" : "Removed";
+    logEvent(
+      `${verb} ${Math.abs(quantityDelta)} ${itemName} for ${targetDisplayNames}.`
+    );
+  } else {
+    logEvent(`Added ${itemName} for ${targetDisplayNames}.`);
+  }
+
+  return true;
+}
+
 export function ItemPrompt(
   targetCombatants: Combatant[],
-  logEvent: (message: string) => void
+  logEvent: (message: string) => void,
+  onShowInventoryCard?: () => void
 ): PromptProps<ItemModel> {
   const targetDisplayNames = targetCombatants
     .map(c => c.DisplayName())
@@ -69,53 +125,27 @@ export function ItemPrompt(
       itemName: "",
       stackable: false,
       quantity: "1",
-      slotCost: "1"
+      slotCost: "1",
+      showInventoryCard: false
     },
 
     autoFocusSelector: "input",
 
     children: (
-      <>
-        <ItemPromptFields
-          targetDisplayNames={targetDisplayNames}
-          autoCompleteOptions={autoCompleteOptions}
-        />
-        <SubmitButton />
-      </>
+      <ItemPromptFields
+        targetDisplayNames={targetDisplayNames}
+        autoCompleteOptions={autoCompleteOptions}
+        showInventoryCardShortcut={!!onShowInventoryCard}
+      />
     ),
 
-    onSubmit: (model: ItemModel) => {
-      const itemName = model.itemName.trim();
-      if (itemName.length == 0) {
-        return true;
-      }
-
-      const quantityDelta = model.stackable ? parseInt(model.quantity) : 0;
-      const slotCost = parseInt(model.slotCost);
-
-      if (model.stackable && (isNaN(quantityDelta) || quantityDelta == 0)) {
-        return true;
-      }
-
-      for (const combatant of targetCombatants) {
-        combatant.ApplyItemChange(
-          itemName,
-          model.stackable,
-          quantityDelta,
-          isNaN(slotCost) ? 1 : slotCost
-        );
-      }
-
-      if (model.stackable) {
-        const verb = quantityDelta > 0 ? "Added" : "Removed";
-        logEvent(
-          `${verb} ${Math.abs(quantityDelta)} ${itemName} for ${targetDisplayNames}.`
-        );
-      } else {
-        logEvent(`Added ${itemName} for ${targetDisplayNames}.`);
-      }
-
-      return true;
-    }
+    onSubmit: (model: ItemModel) =>
+      submitItemPrompt(
+        model,
+        targetCombatants,
+        targetDisplayNames,
+        logEvent,
+        onShowInventoryCard
+      )
   };
 }

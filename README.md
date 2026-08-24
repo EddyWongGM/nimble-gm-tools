@@ -71,11 +71,11 @@ You can configure your instance of Improved Initiative with these settings. All 
 To self-host this app for your own table (rather than developing on it), use
 the launcher scripts in `scripts/`:
 
-- `Start-ImprovedInitiative-Console.ps1` - Right-click and "Run with
+- `Start-NimbleGMTools-Console.ps1` - Right-click and "Run with
   PowerShell". Builds and starts a production instance in a visible window,
   and opens it in your browser once it's up. Stop it with Ctrl+C in that
   window, which shuts down cleanly and flushes the local database.
-- `Start-ImprovedInitiative-Hidden.ps1` - Same, but with no visible console
+- `Start-NimbleGMTools-Hidden.ps1` - Same, but with no visible console
   window (output is logged to `data\start.log`). Since there's no window for
   Ctrl+C, stop it from the app's Settings > About tab instead ("Shut Down
   Server" - requires `ALLOW_SERVER_SHUTDOWN=true`, which both scripts set by

@@ -1,7 +1,9 @@
+import Tippy from "@tippyjs/react";
 import * as React from "react";
 
 export function Tabs<TKey extends string>(props: {
   optionNamesById: Record<TKey, string>;
+  optionIconsById?: Partial<Record<TKey, string>>;
   selected?: TKey | string;
   onChoose: (option: TKey) => void;
 }) {
@@ -9,15 +11,28 @@ export function Tabs<TKey extends string>(props: {
     (key: TKey, i) => {
       const isSelected =
         props.selected == props.optionNamesById[key] || props.selected == key;
-      return (
+      const icon = props.optionIconsById?.[key];
+      const button = (
         <button
           type="button"
-          key={key}
+          key={icon ? undefined : key}
           className={isSelected ? "c-tab s-selected" : "c-tab"}
           onClick={() => props.onChoose(key)}
         >
-          {props.optionNamesById[key]}
+          {icon ? (
+            <span className={`fas fa-${icon}`} />
+          ) : (
+            props.optionNamesById[key]
+          )}
         </button>
+      );
+
+      return icon ? (
+        <Tippy key={key} content={props.optionNamesById[key]}>
+          {button}
+        </Tippy>
+      ) : (
+        button
       );
     }
   );

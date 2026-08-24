@@ -123,9 +123,6 @@ export class Metrics {
     const counts = {
       encounters: await Store.Count(Store.SavedEncounters),
       npc_statblocks: await Store.Count(Store.StatBlocks),
-      pc_statblocks: LegacySynchronousLocalStore.List(
-        LegacySynchronousLocalStore.PlayerCharacters
-      ).length,
       persistent_characters: await Store.Count(Store.PersistentCharacters),
       spells: await Store.Count(Store.Spells)
     };

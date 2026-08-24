@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    Checks whether an Improved Initiative server from this repo is still running
+    Checks whether a Nimble GM Tools server from this repo is still running
     in the background - typically a hidden session started by
-    Start-ImprovedInitiative-Hidden.ps1 that was never stopped from its Settings
+    Start-NimbleGMTools-Hidden.ps1 that was never stopped from its Settings
     menu ("Shut down this server"), since a hidden run has no console window or
     taskbar entry to remind you it's still there.
 .PARAMETER Stop
@@ -11,14 +11,14 @@
     embedded in the tracker page - the same mechanism the app's "Shut down
     this server" Settings button uses. Only works if that instance was
     started with ALLOW_SERVER_SHUTDOWN=true (the default for both
-    Start-ImprovedInitiative scripts). Without -Stop, this script still
+    Start-NimbleGMTools scripts). Without -Stop, this script still
     offers to shut it down - it just asks first (y/N) instead of doing so
     automatically, so it's safe to run unattended in a script or task.
 .EXAMPLE
-    .\Test-ImprovedInitiative-Session.ps1
+    .\Test-NimbleGMTools-Session.ps1
     Reports any leftover session and, if one is found, asks before stopping it.
 .EXAMPLE
-    .\Test-ImprovedInitiative-Session.ps1 -Stop
+    .\Test-NimbleGMTools-Session.ps1 -Stop
     Reports and gracefully shuts down any leftover session found, no prompt.
 #>
 
@@ -30,7 +30,7 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
-# Load .env the same way Start-ImprovedInitiative-Console.ps1 does, so the
+# Load .env the same way Start-NimbleGMTools-Console.ps1 does, so the
 # port(s) checked here match what a real launch would actually use. Real
 # environment variables already set take precedence, same as that script.
 $envFileValues = @{}
@@ -52,7 +52,7 @@ function Resolve-EnvValue {
     return $Default
 }
 
-# The production launch (Start-ImprovedInitiative-Console.ps1, no -Dev) always
+# The production launch (Start-NimbleGMTools-Console.ps1, no -Dev) always
 # serves directly on PORT. The dev workflow (-Dev) additionally fronts that
 # same server with a browser-sync proxy on BASE_URL's port - check both, since
 # either could be the one left running hidden.
@@ -91,11 +91,11 @@ foreach ($port in $portsToCheck) {
 }
 
 if (-not $found) {
-    Write-Host "No leftover Improved Initiative session found (checked port(s): $($portsToCheck -join ', '))." -ForegroundColor Green
+    Write-Host "No leftover Nimble GM Tools session found (checked port(s): $($portsToCheck -join ', '))." -ForegroundColor Green
     exit 0
 }
 
-Write-Host "Found process(es) listening on Improved Initiative's port(s):" -ForegroundColor Yellow
+Write-Host "Found process(es) listening on Nimble GM Tools's port(s):" -ForegroundColor Yellow
 $found | Format-Table Port, ProcessId, ProcessName, StartTime -AutoSize | Out-Host
 
 # A listening port alone doesn't confirm it's actually this app - request the
@@ -108,6 +108,8 @@ foreach ($port in ($found.Port | Select-Object -Unique)) {
     $url = "http://localhost:$port/"
     try {
         $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 3
+        # The served page itself still identifies as "Improved Initiative" (app branding is
+        # unchanged by this rename), so that's what's actually matched here.
         if ($response.Content -notmatch "Improved Initiative") { continue }
 
         $confirmedUrl = $url
@@ -130,7 +132,7 @@ foreach ($port in ($found.Port | Select-Object -Unique)) {
 }
 
 if (-not $confirmedUrl) {
-    Write-Host "The process(es) above are using Improved Initiative's port(s) but didn't answer as the app itself - check manually before assuming it's a leftover session." -ForegroundColor Yellow
+    Write-Host "The process(es) above are using Nimble GM Tools's port(s) but didn't answer as the app itself - check manually before assuming it's a leftover session." -ForegroundColor Yellow
     exit 0
 }
 

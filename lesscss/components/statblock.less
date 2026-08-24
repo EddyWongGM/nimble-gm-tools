@@ -58,14 +58,25 @@
 .c-combatant-details__items-header {
   flex-direction: row;
   align-items: center;
+  gap: @small-spacer;
+
+  // Reset the h4's block margins so it sits inline with the slot count
+  // and toggle icon, and match the uppercase/size treatment that
+  // .c-statblock h4.stat-label gives Actions/Reactions/Traits - this
+  // header lives outside that wrapper so it doesn't inherit it.
+  h4.stat-label {
+    margin: 0;
+    font-size: @font-size-body;
+    text-transform: uppercase;
+  }
 }
 
 .c-combatant-details__items-toggle {
   margin-left: @small-spacer;
-  color: rgba(139, 90, 43, 0.4);
+  color: var(--text-faded);
 
   &.c-combatant-details__items-toggle--active {
-    color: rgb(139, 90, 43);
+    color: var(--text-face);
   }
 }
 
@@ -103,12 +114,23 @@
 
 input[type="number"].c-combatant-details__item-quantity {
   width: 3em;
-  padding: @extra-small-spacer;
+  height: 1.3rem;
+  padding: 0 @extra-small-spacer;
   margin-left: @small-spacer;
+  font-size: inherit;
+  line-height: 1.3rem;
 }
 
 .c-combatant-details__item-remove {
-  margin-left: @small-spacer;
+  margin-left: auto;
+  padding-left: @medium-spacer;
+  border: none;
+  background: none;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  color: var(--wound-red);
+  font-size: 0.6rem;
 }
 
 .c-combatant-details > .HP.AC.speed.Challenge {
@@ -129,6 +151,39 @@ input[type="number"].c-combatant-details__item-quantity {
 
 .c-combatant-details {
   flex: 1;
+}
+
+.ability-scores() {
+  margin: @extra-small-spacer 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .Ability {
+    flex: 0 0 auto;
+    display: block;
+    text-align: left;
+    margin-right: @medium-spacer;
+  }
+
+  .stat-label {
+    display: inline-block;
+    text-align: center;
+    margin-right: @small-spacer;
+    font-size: @font-size-small;
+    text-transform: uppercase;
+  }
+
+  .modifier,
+  .score {
+    display: inline-block;
+    font-size: @font-size-small;
+    text-align: center;
+  }
+}
+
+.c-combatant-details > .Abilities {
+  .ability-scores();
 }
 
 .c-combatant-details__scrollable {
@@ -157,8 +212,15 @@ input[type="number"].c-combatant-details__item-quantity {
 }
 
 .c-statblock-header {
+  background-color: var(--surface-khaki);
+  padding: @small-spacer @medium-spacer;
+  margin-bottom: @small-spacer;
+  text-align: center;
+
   .Name {
+    margin-top: 0;
     font-size: @font-size-h3;
+    letter-spacing: 0.04em;
   }
 
   .StatBlockName {
@@ -179,6 +241,36 @@ input[type="number"].c-combatant-details__item-quantity {
   }
 }
 
+// Smaller than the library/reference statblock's name (which keeps
+// @font-size-h3) - the right-pane combatant details panel is narrower and
+// a large name crowds the HP/AC/Mana row below it.
+//
+// Name and Type sit on the same line when they fit; Type wraps to its own
+// line once a long Name crowds it out. Source (rarely populated here)
+// always gets its own full-width line below.
+.c-combatant-details .c-statblock-header {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  column-gap: @small-spacer;
+  row-gap: @extra-small-spacer;
+
+  .Name {
+    order: 1;
+    font-size: @font-size-large;
+  }
+
+  .Type {
+    order: 2;
+  }
+
+  .Source {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
 .stat-label {
   font-weight: bold;
   margin: 0 @small-spacer 0 0;
@@ -193,6 +285,21 @@ input[type="number"].c-combatant-details__item-quantity {
 
 .stat-value + .stat-label {
   margin-left: @small-spacer;
+}
+
+// Thin section-end rule instead of the site-wide flourish hr - matches the
+// subtle divider in the reference stat block instead of a heavy red bar.
+// Covers the combatant-details panel's own player-character divider
+// (CombatantDetails.tsx, above the ability scores) as well as every hr
+// inside the statblock itself.
+.c-combatant-details hr,
+.c-statblock hr {
+  height: 0;
+  background: none;
+  filter: none;
+  border: none;
+  border-top: 1px dashed var(--text-face);
+  margin: @medium-spacer 0;
 }
 
 .c-statblock {
@@ -213,7 +320,9 @@ input[type="number"].c-combatant-details__item-quantity {
   // site-wide h4 size so they read as in-block dividers, not page headers.
   h4.stat-label {
     font-size: @font-size-body;
+    text-transform: uppercase;
   }
+
 
   p:not(:last-child),
   li:not(:last-child) {
@@ -244,32 +353,7 @@ input[type="number"].c-combatant-details__item-quantity {
   }
 
   .Abilities {
-    margin: @extra-small-spacer 0;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-
-    .Ability {
-      flex: 0 0 auto;
-      display: block;
-      text-align: left;
-      margin-right: @medium-spacer;
-    }
-
-    .stat-label {
-      display: inline-block;
-      text-align: center;
-      margin-right: @small-spacer;
-      font-size: @font-size-small;
-      text-transform: uppercase;
-    }
-
-    .modifier,
-    .score {
-      display: inline-block;
-      font-size: @font-size-small;
-      text-align: center;
-    }
+    .ability-scores();
   }
 
   .keyword-sets,
@@ -318,6 +402,36 @@ input[type="number"].c-combatant-details__item-quantity {
       }
       div {
         display: block;
+      }
+    }
+  }
+
+  // Traits render as a single bordered card, each trait separated by a
+  // dashed rule and its name running inline with its description - matches
+  // the reference stat block layout. The card's own background/border
+  // reads as enough separation from what's above and Actions below, so no
+  // section hr is needed on either side.
+  .Traits {
+    background-color: var(--surface-khaki-light);
+    border: 1px solid var(--surface-khaki);
+    border-radius: @border-radius;
+    padding: @small-spacer @medium-spacer;
+    margin-top: @medium-spacer;
+    margin-bottom: @large-spacer;
+
+    > .stat-label {
+      margin-bottom: @extra-small-spacer;
+    }
+
+    > div {
+      display: block;
+      margin: 0;
+      padding: @small-spacer 0;
+      border-bottom: 1px dashed var(--text-faded);
+
+      &:last-of-type {
+        border-bottom: none;
+        padding-bottom: 0;
       }
     }
   }

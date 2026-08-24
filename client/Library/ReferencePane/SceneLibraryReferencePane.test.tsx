@@ -23,6 +23,8 @@ describe("SceneLibraryReferencePane", () => {
   let addScene: jest.Mock;
   let editScene: jest.Mock;
   let deleteScene: jest.Mock;
+  let exportScenes: jest.Mock;
+  let importScenes: jest.Mock;
   let onToggleCombatantsHidden: jest.Mock;
 
   beforeEach(() => {
@@ -32,6 +34,8 @@ describe("SceneLibraryReferencePane", () => {
     addScene = jest.fn();
     editScene = jest.fn();
     deleteScene = jest.fn();
+    exportScenes = jest.fn();
+    importScenes = jest.fn();
     onToggleCombatantsHidden = jest.fn();
   });
 
@@ -45,6 +49,8 @@ describe("SceneLibraryReferencePane", () => {
         addScene={addScene}
         editScene={editScene}
         deleteScene={deleteScene}
+        exportScenes={exportScenes}
+        importScenes={importScenes}
         combatantsHidden={false}
         onToggleCombatantsHidden={onToggleCombatantsHidden}
         {...overrides}
@@ -89,6 +95,30 @@ describe("SceneLibraryReferencePane", () => {
     fireEvent.click(view.getByText("Add Scene"));
 
     expect(addScene).toHaveBeenCalled();
+  });
+
+  test("clicking Backup Scenes invokes the exportScenes callback", () => {
+    InitializeTestSettings({ PlayerView: { SceneLibrary: [] } });
+
+    const view = renderPane();
+
+    fireEvent.click(view.getByText("Backup Scenes"));
+
+    expect(exportScenes).toHaveBeenCalled();
+  });
+
+  test("uploading a scenes JSON file invokes importScenes with the file", () => {
+    InitializeTestSettings({ PlayerView: { SceneLibrary: [] } });
+
+    const view = renderPane();
+
+    const file = new File(["[]"], "scenes.json", {
+      type: "application/json"
+    });
+    const input = view.container.querySelector('input[type="file"]');
+    fireEvent.change(input, { target: { files: [file] } });
+
+    expect(importScenes).toHaveBeenCalledWith(file);
   });
 
   test("deleting a scene asks for confirmation and calls deleteScene when confirmed", () => {

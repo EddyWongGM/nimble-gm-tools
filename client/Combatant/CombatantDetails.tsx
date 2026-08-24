@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 
-import { StatBlockComponent } from "../Components/StatBlock";
+import { AbilityScores, StatBlockComponent } from "../Components/StatBlock";
 import { StatBlock } from "../../common/StatBlock";
 import { InventoryItem } from "../../common/CombatantState";
 import { StatBlockHeader } from "../Components/StatBlockHeader";
@@ -17,10 +17,8 @@ interface CombatantDetailsProps {
   combatantViewModel: CombatantViewModel;
   displayMode: "default" | "active" | "status-only";
   key: string;
-  isInventoryDisplayedToPlayers?: boolean;
-  onToggleInventoryDisplayToPlayers?: (
-    combatantViewModel: CombatantViewModel
-  ) => void;
+  onRemoveItem?: (combatant: Combatant, item: InventoryItem) => void;
+  onShowInventoryCard?: (combatant: Combatant) => void;
 }
 
 export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
@@ -73,6 +71,15 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
       )
     : null;
 
+  const challengeOrLevel = statBlock.Challenge && (
+    <>
+      <span className="stat-label Level">
+        {statBlock.Player == "player" ? "Level" : "Challenge"}
+      </span>
+      <span className="stat-value">{statBlock.Challenge}</span>
+    </>
+  );
+
   return (
     <div className="c-combatant-details">
       <StatBlockHeader
@@ -82,7 +89,14 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         type={statBlock.Type}
         imageUrl={statBlock.ImageURL}
       />
+      {StatBlock.IsPlayerCharacter(statBlock) && (
+        <>
+          <AbilityScores statBlock={statBlock} />
+          <hr />
+        </>
+      )}
       <div className="c-combatant-details__hp">
+        {!StatBlock.ActsInPlayerPhase(statBlock) && challengeOrLevel}
         <span className="stat-label CurrentHP">HP</span>
         <span>
           {currentHp}
@@ -111,14 +125,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             </span>
           </>
         )}
-        {statBlock.Challenge && (
-          <>
-            <span className="stat-label Level">
-              {statBlock.Player == "player" ? "Level" : "Challenge"}
-            </span>
-            <span className="stat-value">{statBlock.Challenge}</span>
-          </>
-        )}
+        {StatBlock.ActsInPlayerPhase(statBlock) && challengeOrLevel}
       </div>
       {(currentResources || currentHitDice || currentWounds) && (
         <div className="c-combatant-details__resources-wounds">
@@ -205,15 +212,13 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
       )}
       <div className="c-combatant-details__scrollable">
         {props.displayMode !== "status-only" && (
-          <>
-            {StatBlock.IsPlayerCharacter(statBlock) && <hr />}
-            <StatBlockComponent
-              statBlock={statBlock}
-              displayMode={props.displayMode}
-              hideName
-              hideTopRow
-            />
-          </>
+          <StatBlockComponent
+            statBlock={statBlock}
+            displayMode={props.displayMode}
+            hideName
+            hideTopRow
+            hideAbilities
+          />
         )}
         {renderedNotes && (
           <div className="c-combatant-details__notes">{renderedNotes}</div>
@@ -223,26 +228,17 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             {props.displayMode === "status-only" && <hr />}
             <div className="c-combatant-details__items">
               <div className="c-combatant-details__items-header">
-                <span className="stat-label">Inventory</span>{" "}
+                <h4 className="stat-label">Inventory</h4>
                 <span className="stat-value">
                   ({inventorySlotsUsed}/{maxInventorySlots} slots)
                 </span>
-                {props.onToggleInventoryDisplayToPlayers && (
+                {props.onShowInventoryCard && (
                   <span
-                    className={
-                      "c-combatant-details__items-toggle fas fa-gem fa-clickable" +
-                      (props.isInventoryDisplayedToPlayers
-                        ? " c-combatant-details__items-toggle--active"
-                        : "")
-                    }
-                    title={
-                      props.isInventoryDisplayedToPlayers
-                        ? "Hide Inventory in Player View"
-                        : "Show Inventory to Players"
-                    }
+                    className="c-combatant-details__items-toggle fas fa-scroll fa-clickable"
+                    title="Show Inventory as a Card"
                     onClick={() =>
-                      props.onToggleInventoryDisplayToPlayers(
-                        props.combatantViewModel
+                      props.onShowInventoryCard(
+                        props.combatantViewModel.Combatant
                       )
                     }
                   />
@@ -258,6 +254,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
                     dragDropType={
                       "combatant-item-" + props.combatantViewModel.Combatant.Id
                     }
+                    onRemoveItem={props.onRemoveItem}
                   />
                 ))}
               </ul>
@@ -296,10 +293,14 @@ function ItemDetails(props: {
   index: number;
   combatant: Combatant;
   dragDropType: string;
+  onRemoveItem?: (combatant: Combatant, item: InventoryItem) => void;
 }) {
   const { item, index, combatant, dragDropType } = props;
 
-  const removeItem = () => combatant.RemoveItem(item);
+  const removeItem = () =>
+    props.onRemoveItem
+      ? props.onRemoveItem(combatant, item)
+      : combatant.RemoveItem(item);
 
   const onQuantityBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(e.target.value);

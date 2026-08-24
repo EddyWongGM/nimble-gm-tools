@@ -4,14 +4,11 @@ import { Encounter } from "../Encounter/Encounter";
 import { SettingsContext } from "../Settings/SettingsContext";
 import { useSubscription } from "../Combatant/linkComponentToObservables";
 import { EncounterDifficulty } from "../Widgets/DifficultyCalculator";
-import { CombatantCommander } from "../Commands/CombatantCommander";
-import { InventoryDisplayNotice } from "./InventoryDisplayNotice";
 import ReactMarkdown from "react-markdown";
 
 type CombatFooterProps = {
   eventLog: EventLog;
   encounter: Encounter;
-  combatantCommander: CombatantCommander;
 };
 
 export function CombatFooter(props: CombatFooterProps) {
@@ -21,9 +18,6 @@ export function CombatFooter(props: CombatFooterProps) {
     props.encounter.EncounterFlow.CombatTimer.ElapsedRounds
   );
   const encounterDifficulty = useSubscription(props.encounter.Difficulty);
-  const inventoryDisplayedCombatantName = useSubscription(
-    props.combatantCommander.InventoryDisplayedCombatantName
-  );
 
   const [fullLogVisible, setFullLogVisible] = React.useState(false);
   const togglerButtonCSS = fullLogVisible ? "fa-caret-down" : "fa-caret-up";
@@ -31,12 +25,6 @@ export function CombatFooter(props: CombatFooterProps) {
   return (
     <div className="combat-footer">
       {fullLogVisible && <FullEventLog eventsTail={allEvents.slice(1)} />}
-      {inventoryDisplayedCombatantName && (
-        <InventoryDisplayNotice
-          combatantName={inventoryDisplayedCombatantName}
-          onDismiss={props.combatantCommander.DismissInventoryDisplay}
-        />
-      )}
       <div className="footer-bar">
         <i
           className={"fa-clickable " + togglerButtonCSS}

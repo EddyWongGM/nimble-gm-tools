@@ -304,6 +304,25 @@
   }
 }
 
+.p-inventory-card {
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.p-inventory-card__items {
+  margin: @medium-spacer 0;
+  padding: 0;
+  column-count: 2;
+  column-gap: @large-spacer;
+
+  li {
+    list-style: none;
+    break-inside: avoid;
+  }
+}
+
 .s-roll-max {
   font-weight: bold;
 }

@@ -67,8 +67,13 @@ export class EncounterLibraryReferencePane extends React.Component<EncounterLibr
     </ul>
   );
 
-  private loadSavedEncounter = (listing: EncounterListing) => {
-    listing.GetAsyncWithUpdatedId(this.props.librariesCommander.LoadEncounter);
+  private loadSavedEncounter = (
+    listing: EncounterListing,
+    hideOnAdd: boolean
+  ) => {
+    listing.GetAsyncWithUpdatedId(savedEncounter =>
+      this.props.librariesCommander.LoadEncounter(savedEncounter, hideOnAdd)
+    );
     return true;
   };
 

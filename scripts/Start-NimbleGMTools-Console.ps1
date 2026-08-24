@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    Builds and starts Improved Initiative for local table use, and opens it in the browser, with
+    Builds and starts Nimble GM Tools for local table use, and opens it in the browser, with
     a visible PowerShell window. Right-click this file and choose "Run with PowerShell" to use it
-    directly. For a version with no visible window, see Start-ImprovedInitiative-Hidden.ps1.
+    directly. For a version with no visible window, see Start-NimbleGMTools-Hidden.ps1.
 .PARAMETER Dev
     Run the live-reload development workflow (npm run dev) instead of a production build + start.
     Use this while prepping content; prefer the default production mode during an actual session.
@@ -12,7 +12,7 @@
     closes the visible one. Since there's no console for Ctrl+C, stop the app from its Settings
     menu ("Shut down this server") instead. Output that would normally print to the console is
     logged to .\data\start.log so you can still diagnose a failed install/build. Right-clicking
-    Start-ImprovedInitiative-Hidden.ps1 does this for you without needing this switch.
+    Start-NimbleGMTools-Hidden.ps1 does this for you without needing this switch.
 .PARAMETER Relaunched
     Internal use only - marks the hidden child process so it doesn't relaunch itself again.
 #>
@@ -118,11 +118,11 @@ if ($lanAddresses -and -not $Dev) {
         Write-Host "  http://${ip}:$port" -ForegroundColor Cyan
     }
     Write-Host "If they can't connect, allow the port through Windows Firewall (run as Administrator):" -ForegroundColor Yellow
-    Write-Host "  New-NetFirewallRule -DisplayName 'Improved Initiative' -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -Profile Private" -ForegroundColor Yellow
+    Write-Host "  New-NetFirewallRule -DisplayName 'Nimble GM Tools' -Direction Inbound -Protocol TCP -LocalPort $port -Action Allow -Profile Private" -ForegroundColor Yellow
 }
 
 if (-not $Dev) {
-    Write-Host "Building Improved Initiative for production (npm run build)..." -ForegroundColor Cyan
+    Write-Host "Building Nimble GM Tools for production (npm run build)..." -ForegroundColor Cyan
     npm run build
     if (-not $?) {
         Write-Error "Build failed."
@@ -145,11 +145,11 @@ Start-Job -ScriptBlock {
 } -ArgumentList $baseUrl | Out-Null
 
 if ($Dev) {
-    Write-Host "Starting Improved Initiative in dev mode (npm run dev)..." -ForegroundColor Cyan
+    Write-Host "Starting Nimble GM Tools in dev mode (npm run dev)..." -ForegroundColor Cyan
     Write-Host "It will be available at $baseUrl" -ForegroundColor Cyan
     npm run dev
 } else {
-    Write-Host "Starting Improved Initiative (npm start)..." -ForegroundColor Cyan
+    Write-Host "Starting Nimble GM Tools (npm start)..." -ForegroundColor Cyan
     Write-Host "It will be available at $baseUrl" -ForegroundColor Cyan
     npm start
 }

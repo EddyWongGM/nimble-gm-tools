@@ -3,15 +3,29 @@
   --dark-green: #275439;
   --green-2: #339966;
 
-  --red: #802000;
-  --dark-red: #731a00;
-  --light-red: #ee4102;
-  --red-image-filter: hue-rotate(0deg);
+  // Formerly an oxblood red accent (headers, danger buttons, focus rings,
+  // active-combatant border, etc.) - kept the variable names since ~40
+  // call sites across the app reference them, but the values are now
+  // monochrome ink instead of a hue.
+  --red: #0d0d0d;
+  --dark-red: #000000;
+  --light-red: #364e59;
+  --red-image-filter: grayscale(1) brightness(0.3);
+
+  --wound-red: #c81e1e;
+  --blue: #0078dc;
+  --orange: #e67814;
+  --yellow: #ab9400;
+  --gold: #d4a32a;
+  --magenta: #a6267d;
 
   --white: #f7f5f3;
+  --off-white: #f2ecdf;
   --white-2: #e7e0da;
   --white-3: #ded6ce;
   --khaki: #c2b7a5;
+  --surface-khaki: #bfb897;
+  --surface-khaki-light: #d4cdbb;
 
   --black: #131b20;
   --grey: #1d2a2f;
@@ -29,7 +43,7 @@
   --hover-grey: var(--grey-2);
 
   --page-background-white: var(--white-2);
-  --card-background-white: var(--white);
+  --card-background-white: var(--off-white);
   --page-bg-inverted: var(--grey);
   --zebra-white: var(--white-2);
   --accent-white: var(--white-3);
@@ -54,10 +68,20 @@
 }
 
 .dark-mode {
-  --red: #f33b16;
-  --dark-red: #ae2509;
-  --light-red: #f44b2a;
-  --red-image-filter: brightness(175%) hue-rotate(-5deg);
+  --red: #e7e0da;
+  --dark-red: #c2b7a5;
+  --light-red: #ffffff;
+  --red-image-filter: grayscale(1) brightness(3);
+  --surface-khaki: #4a463a;
+  --surface-khaki-light: #38352c;
+
+  --wound-red: #f0453b;
+  --blue: #4da3ff;
+  --green: #57c98a;
+  --orange: #ff9a3d;
+  --yellow: #ffe135;
+  --gold: #ffd94d;
+  --magenta: #ec5fc0;
 
   --text-face: var(--white-2);
   --text-inverted: var(--black);
@@ -123,7 +147,23 @@
 }
 
 .c-toolbar {
-  .colors(var(--text-inverted), var(--page-bg-inverted));
+  // Always a black bar with white text, regardless of site theme - unlike
+  // other elements that deliberately invert with --page-bg-inverted, which
+  // in dark mode becomes light grey instead of black.
+  .colors(var(--white), var(--black));
+
+  // The command icons (apply-temporary-hp/mana/resources/etc., toggle-
+  // reveal-gold/hit-dice) are colored via these theme variables, which are
+  // normally dimmer in light mode to stand out against a lighter background.
+  // Since this bar is always black now, pin them to the brighter dark-mode
+  // values so the icons read the same regardless of site theme - matches
+  // the same fix applied to .combatant--header.
+  --green: #57c98a;
+  --blue: #4da3ff;
+  --orange: #ff9a3d;
+  --wound-red: #f0453b;
+  --gold: #ffd94d;
+  --magenta: #ec5fc0;
 }
 
 .tutorial .next,

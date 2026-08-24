@@ -88,6 +88,8 @@ export class LibraryReferencePanes extends React.Component<
           addScene={this.props.librariesCommander.AddScene}
           editScene={this.props.librariesCommander.EditScene}
           deleteScene={this.props.librariesCommander.DeleteScene}
+          exportScenes={this.props.librariesCommander.ExportScenes}
+          importScenes={this.props.librariesCommander.ImportScenes}
           combatantsHidden={this.props.combatantsHidden}
           onToggleCombatantsHidden={this.props.onToggleCombatantsHidden}
         />
@@ -122,6 +124,7 @@ export class LibraryReferencePanes extends React.Component<
         </div>
         <Tabs
           optionNamesById={tabNamesById}
+          optionIconsById={tabIconsById}
           onChoose={this.selectLibrary}
           selected={this.state.selectedLibrary}
         />
@@ -134,6 +137,14 @@ export class LibraryReferencePanes extends React.Component<
 const tabNamesById: Record<SelectableTab, string> = {
   ...LibraryFriendlyNames,
   Scenes: "Scenes"
+};
+
+const tabIconsById: Record<SelectableTab, string> = {
+  StatBlocks: "dragon",
+  PersistentCharacters: "user",
+  Encounters: "skull-crossbones",
+  Spells: "hat-wizard",
+  Scenes: "image"
 };
 
 function LibraryHeader(props: { selectedLibrary: SelectableTab }) {

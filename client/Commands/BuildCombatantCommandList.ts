@@ -5,6 +5,12 @@ export const BuildCombatantCommandList: (
   c: CombatantCommander
 ) => Command[] = c => [
   new Command({
+    id: "set-alias",
+    description: "Rename",
+    actionBinding: c.SetAlias,
+    fontAwesomeIcon: "i-cursor"
+  }),
+  new Command({
     id: "apply-damage",
     description: "Apply Damage",
     actionBinding: c.ApplyDamage,
@@ -21,7 +27,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-hp",
     description: "Apply Temporary HP",
     actionBinding: c.AddTemporaryHP,
-    fontAwesomeIcon: "medkit",
+    fontAwesomeIcon: "heart",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -42,7 +48,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-mana",
     description: "Apply Temporary Mana",
     actionBinding: c.AddTemporaryMana,
-    fontAwesomeIcon: "medkit",
+    fontAwesomeIcon: "tint",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -63,7 +69,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-resources",
     description: "Apply Temporary Resources",
     actionBinding: c.AddTemporaryResources,
-    fontAwesomeIcon: "medkit",
+    fontAwesomeIcon: "bolt",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -84,14 +90,14 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-hit-dice",
     description: "Apply Temporary Hit Dice",
     actionBinding: c.AddTemporaryHitDice,
-    fontAwesomeIcon: "medkit",
+    fontAwesomeIcon: "dice-d6",
     defaultShowOnActionBar: false
   }),
   new Command({
     id: "spend-wounds",
     description: "Add Wounds",
     actionBinding: c.SpendWounds,
-    fontAwesomeIcon: "skull-crossbones",
+    fontAwesomeIcon: "skull",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -105,7 +111,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-wounds",
     description: "Apply Wound Protection",
     actionBinding: c.AddTemporaryWounds,
-    fontAwesomeIcon: "medkit",
+    fontAwesomeIcon: "skull",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -142,12 +148,6 @@ export const BuildCombatantCommandList: (
     description: "Remove from Encounter",
     actionBinding: c.Remove,
     fontAwesomeIcon: "times"
-  }),
-  new Command({
-    id: "set-alias",
-    description: "Rename",
-    actionBinding: c.SetAlias,
-    fontAwesomeIcon: "i-cursor"
   }),
   new Command({
     id: "toggle-reaction",
@@ -190,7 +190,7 @@ export const BuildCombatantCommandList: (
     id: "toggle-reveal-items",
     description: "Hide/Reveal Inventory in Player View",
     actionBinding: c.ToggleRevealedItems,
-    fontAwesomeIcon: "gem",
+    fontAwesomeIcon: "scroll",
     defaultShowOnActionBar: false
   }),
   new Command({
@@ -204,7 +204,7 @@ export const BuildCombatantCommandList: (
     id: "show-inventory",
     description: "Show/Hide Inventory in Player View Popup",
     actionBinding: () => c.ToggleInventoryDisplayToPlayers(),
-    fontAwesomeIcon: "gem",
+    fontAwesomeIcon: "scroll",
     defaultShowOnActionBar: false
   }),
   new Command({

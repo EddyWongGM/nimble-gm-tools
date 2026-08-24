@@ -6,6 +6,8 @@ import { find } from "lodash";
 import { CombatantDetails } from "../Combatant/CombatantDetails";
 import { useVerticalResizerDrop } from "./VerticalResizer";
 import { CombatantViewModel } from "../Combatant/CombatantViewModel";
+import { Combatant } from "../Combatant/Combatant";
+import { InventoryItem } from "../../common/CombatantState";
 
 export function LeftColumn(props: {
   tracker: TrackerViewModel;
@@ -31,10 +33,6 @@ export function LeftColumn(props: {
     c => c.Combatant == activeCombatant
   );
 
-  const inventoryDisplayedCombatantId = useSubscription(
-    props.tracker.CombatantCommander.InventoryDisplayedCombatantId
-  );
-
   return (
     <div
       className="left-column"
@@ -58,14 +56,8 @@ export function LeftColumn(props: {
       {librariesVisible || (
         <ActiveCombatant
           activeCombatantViewModel={activeCombatantViewModel}
-          isInventoryDisplayedToPlayers={
-            !!activeCombatantViewModel &&
-            inventoryDisplayedCombatantId ===
-              activeCombatantViewModel.Combatant.Id
-          }
-          onToggleInventoryDisplayToPlayers={
-            props.tracker.CombatantCommander.ToggleInventoryDisplayToPlayers
-          }
+          onRemoveItem={props.tracker.CombatantCommander.PromptRemoveItem}
+          onShowInventoryCard={props.tracker.CombatantCommander.ShowInventoryCard}
         />
       )}
     </div>
@@ -74,10 +66,8 @@ export function LeftColumn(props: {
 
 function ActiveCombatant(props: {
   activeCombatantViewModel: CombatantViewModel;
-  isInventoryDisplayedToPlayers: boolean;
-  onToggleInventoryDisplayToPlayers: (
-    combatantViewModel: CombatantViewModel
-  ) => void;
+  onRemoveItem: (combatant: Combatant, item: InventoryItem) => void;
+  onShowInventoryCard: (combatant: Combatant) => void;
 }) {
   return (
     <div className="active-combatant">
@@ -89,10 +79,8 @@ function ActiveCombatant(props: {
           combatantViewModel={props.activeCombatantViewModel}
           displayMode="active"
           key={props.activeCombatantViewModel.Combatant.Id}
-          isInventoryDisplayedToPlayers={props.isInventoryDisplayedToPlayers}
-          onToggleInventoryDisplayToPlayers={
-            props.onToggleInventoryDisplayToPlayers
-          }
+          onRemoveItem={props.onRemoveItem}
+          onShowInventoryCard={props.onShowInventoryCard}
         />
       )}
       {!props.activeCombatantViewModel && (

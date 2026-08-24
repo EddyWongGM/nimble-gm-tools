@@ -440,7 +440,7 @@ describe("Combatant", () => {
       });
       combatant.ApplyHitDiceChange(1);
       expect(ToPlayerViewCombatantState(combatant).HitDiceDisplay).toEqual(
-        "-1"
+        "1"
       );
     });
 
@@ -568,7 +568,7 @@ describe("Combatant", () => {
         "3/10"
       );
       expect(ToPlayerViewCombatantState(combatant).InventoryColor).toEqual(
-        "rgb(139,90,43)"
+        "var(--text-face)"
       );
     });
 

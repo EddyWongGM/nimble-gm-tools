@@ -212,8 +212,22 @@
 }
 
 .combatant--header {
-  .colors(var(--text-inverted), var(--page-bg-inverted), var(--page-bg-inverted));
+  // Always a black bar with white text, regardless of site theme - unlike
+  // other elements that deliberately invert with --page-bg-inverted.
+  .colors(var(--white), var(--black), var(--black));
   padding: @medium-spacer;
+
+  // The per-stat icons (mana/hitdice/wounds/gold/etc.) are colored via
+  // inline styles referencing these theme variables, which are normally
+  // brighter in dark mode to stand out against a lighter background. Since
+  // this bar is always black now, pin them to the brighter dark-mode
+  // values so the icons read the same regardless of site theme.
+  --green: #57c98a;
+  --blue: #4da3ff;
+  --orange: #ff9a3d;
+  --wound-red: #f0453b;
+  --gold: #ffd94d;
+  --magenta: #ec5fc0;
 
   .fa-clickable {
     padding-left: @medium-spacer;
@@ -373,6 +387,42 @@
     display: flex;
     flex-flow: row;
     justify-content: flex-start;
+  }
+}
+
+.combatant__hitdice-inner .combatant__hp-bar,
+.stat-label.HitDice + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--orange);
+  }
+}
+
+.combatant__wounds-inner .combatant__hp-bar,
+.stat-label.Wounds + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--wound-red);
+  }
+}
+
+.combatant__mana-inner .combatant__hp-bar,
+.stat-label.Mana + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--blue);
+  }
+}
+
+.combatant__resources-inner .combatant__hp-bar,
+.stat-label.Resources + span .combatant__hp-bar {
+  background: var(--text-faded);
+
+  .combatant__hp-bar--filled {
+    background: var(--magenta);
   }
 }
 

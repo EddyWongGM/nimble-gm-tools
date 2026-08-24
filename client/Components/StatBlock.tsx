@@ -15,7 +15,31 @@ interface StatBlockProps {
   displayMode: "default" | "active";
   hideName?: boolean;
   hideTopRow?: boolean;
+  hideAbilities?: boolean;
   isLoading?: boolean;
+}
+
+export function AbilityScores(props: { statBlock: StatBlock }) {
+  const textEnricher = useContext(TextEnricherContext);
+  return (
+    <div className="Abilities">
+      {StatBlock.VisibleAbilityNames.map(abilityName => {
+        const abilityScore = props.statBlock.Abilities[abilityName];
+        const abilityModifier =
+          textEnricher.GetEnrichedModifierFromAbilityScore(abilityScore);
+        return (
+          <div className="Ability" key={abilityName}>
+            <div className="stat-label">
+              {StatBlock.AbilityDisplayNames[abilityName] || abilityName}
+            </div>
+            <span className={"modifier " + abilityName}>
+              {abilityModifier}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export function StatBlockComponent(props: StatBlockProps) {
@@ -92,6 +116,8 @@ function StatBlockComponentNoError(props: StatBlockProps) {
     </>
   );
 
+  const hasTraits = statBlock.Traits.length > 0;
+
   const statEntries = (
     <>
       {!props.hideTopRow && (
@@ -116,24 +142,8 @@ function StatBlockComponentNoError(props: StatBlockProps) {
         </div>
       )}
 
-      {StatBlock.IsPlayerCharacter(statBlock) && (
-        <div className="Abilities">
-          {StatBlock.VisibleAbilityNames.map(abilityName => {
-            const abilityScore = statBlock.Abilities[abilityName];
-            const abilityModifier =
-              textEnricher.GetEnrichedModifierFromAbilityScore(abilityScore);
-            return (
-              <div className="Ability" key={abilityName}>
-                <div className="stat-label">
-                  {StatBlock.AbilityDisplayNames[abilityName] || abilityName}
-                </div>
-                <span className={"modifier " + abilityName}>
-                  {abilityModifier}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+      {StatBlock.IsPlayerCharacter(statBlock) && !props.hideAbilities && (
+        <AbilityScores statBlock={statBlock} />
       )}
 
       {settings.StatBlock.CustomFields.length > 0 && (
@@ -194,7 +204,7 @@ function StatBlockComponentNoError(props: StatBlockProps) {
           ))}
       </div>
 
-      <hr />
+      {!(props.displayMode === "default" && hasTraits) && <hr />}
     </>
   );
 
@@ -214,7 +224,7 @@ function StatBlockComponentNoError(props: StatBlockProps) {
             </span>
           </div>
         ))}
-        <hr />
+        {powerType.name !== "Traits" && <hr />}
       </div>
     ));
 

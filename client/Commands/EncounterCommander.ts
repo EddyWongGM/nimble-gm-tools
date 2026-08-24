@@ -359,7 +359,8 @@ export class EncounterCommander {
   };
 
   public LoadSavedEncounter = async (
-    legacySavedEncounter: Record<string, any>
+    legacySavedEncounter: Record<string, any>,
+    hideOnAdd = false
   ): Promise<void> => {
     const savedEncounter = UpdateLegacySavedEncounter(legacySavedEncounter);
     this.tracker.Encounter.SaveEncounterDefaults({
@@ -376,9 +377,11 @@ export class EncounterCommander {
       c => c.IndexLabel
     );
 
-    nonCharacterCombatantsInLabelOrder.forEach(
-      this.tracker.Encounter.AddCombatantFromState
-    );
+    nonCharacterCombatantsInLabelOrder.forEach(c => {
+      this.tracker.Encounter.AddCombatantFromState(
+        hideOnAdd ? { ...c, Hidden: true } : c
+      );
+    });
 
     const persistentCharacters = savedEncounter.Combatants.filter(
       c => c.PersistentCharacterId
@@ -398,7 +401,7 @@ export class EncounterCommander {
           this.tracker.Encounter.AddCombatantFromPersistentCharacter(
             persistentCharacter,
             this.tracker.LibrariesCommander.UpdatePersistentCharacter,
-            pc.Hidden,
+            hideOnAdd || pc.Hidden,
             pc.Initiative
           );
           resolve();

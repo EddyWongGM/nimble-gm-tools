@@ -59,6 +59,13 @@
         color: var(--red);
       }
     }
+
+    // The disabled "Building…" state otherwise falls back to the generic
+    // disabled-button grey, which is low-contrast against the dark-mode
+    // disabled background.
+    .dark-mode & .rebuild-server.c-button--disabled {
+      color: var(--white);
+    }
   }
 
   .tips {
