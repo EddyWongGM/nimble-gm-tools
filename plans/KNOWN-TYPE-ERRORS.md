@@ -110,6 +110,53 @@ and all three import-statement edits) rather than chased further. Skipped
 in favor of `skipLibCheck`, which achieves the same "0 errors" outcome with
 none of that risk.
 
+**Chased further anyway (2026-08-24) - confirms this is the right call, not
+just caution.** Re-tried with the adapter fixed too (`import Adapter from
+"enzyme-adapter-react-16"`) to see whether that was the *only* remaining
+break. It wasn't:
+
+- Fixing `_(...)`/`Color(...)`/`new Awesomplete(...)` plus the adapter
+  surfaced a **new**, previously-hidden type error: `moment` used the same
+  `import * as moment from "moment"` then `moment(...)` pattern, in 12
+  files (`LibrariesCommander.ts`, `Store.ts`,
+  `LegacySynchronousLocalStore.ts`, `LocalDataSettings.tsx`,
+  `AccountSyncSettings.tsx`, `GetTimerReadout.ts`, `StatBlockEditor.tsx`,
+  `CombatFooter.tsx`, `useLibrary.ts`, and 3 `.test.ts`/`.test.tsx` files).
+  Switched all 12 to `import moment from "moment"` - this made
+  `tsc --noEmit -p client/tsconfig.json` exit 0 (both client and server
+  tsconfigs clean).
+- Ran the full Jest suite anyway, past the type-check. **14 of 56 suites
+  failed** (25 tests) with two more *new* runtime-interop breaks, neither
+  caught by `tsc`:
+  - `TypeError: localforage.createInstance is not a function` - same
+    `import * as X` + property-access pattern, but this time
+    esModuleInterop's `__importStar` copy evidently drops a method that
+    isn't a plain own-enumerable property on `localforage`'s CJS export.
+    Hit 8 client suites (`Store.test.ts`, `AccountClient.test.ts`,
+    `LocalDataSettings.test.tsx`, `AccountSyncSettings.test.tsx`, etc.)
+    through `Store.ts`.
+  - `TypeError: express is not a function` - same pattern, this time in
+    **server** code (`import * as express from "express"` called as
+    `express()`), breaking 3 server suites (`sockets.test.ts`,
+    `routes.shutdown.test.ts`, `routes.rebuild.test.ts`).
+
+  So the true list of packages needing a fix for `esModuleInterop` is at
+  least `lodash`, `color`, `awesomplete`, `moment` (12 call sites),
+  `enzyme-adapter-react-16`, `localforage`, and `express` - seven separate
+  packages across both client and server, discovered one at a time, each
+  only surfacing once the previous one was patched. `tsc` only ever caught
+  some of these (the type-level ones); the CJS-interop-shape breaks
+  (`localforage`, `express`, the original `enzyme-adapter` one) are
+  runtime-only and invisible to `tsc --noEmit` entirely - the only way to
+  find them is running the full suite after each fix.
+
+  **Conclusion: not a bounded fix, and `tsc` passing is not sufficient
+  evidence the flag is safe.** Reverted in full again (all 16 touched
+  files, including the 3 from the original attempt). `skipLibCheck`
+  remains the right call for these 5 errors - there is no reason to expect
+  the pattern stops at 7 packages; it was still finding new ones with each
+  round.
+
 ## Verification history
 
 - 2026-08-21: confirmed original 7 errors, all in `node_modules`, no change
@@ -126,3 +173,21 @@ none of that risk.
   confirmed it cascades into 100+ new errors, not a small one. Full Jest
   suite unchanged (420 passing, same 2 pre-existing
   `InitiativeList.test.tsx` failures).
+- 2026-08-24: re-tested `esModuleInterop` past the point the original
+  attempt stopped at (fixed the adapter + 12 `moment` call sites too, got
+  `tsc` to exit 0) to see if it was actually close to viable. It wasn't -
+  running the full suite past a clean `tsc` surfaced 2 more previously
+  undiscovered runtime-only interop breaks (`localforage`, `express`),
+  14/56 suites failing. Reverted in full; nothing left applied.
+- 2026-08-24: the "2 pre-existing `InitiativeList.test.tsx` failures" cited
+  throughout this doc's history are now gone, unrelated to any type-error
+  fix here - root-caused and removed. Both tests asserted a
+  `data-testid="encounter-state-icon"` pause/play icon that commit
+  `75203eeb` ("Convert to Nimble system") deliberately deleted from
+  `InitiativeListHeader.tsx` (dropped the whole initiative-score column) -
+  the tests were simply never updated to match, and the `encounterActive`
+  prop that fed that icon was still being threaded through
+  `InitiativeList.tsx` → `InitiativeListHeader.tsx` unused ever since.
+  Deleted `InitiativeList.test.tsx` (only contained those 2 stale tests)
+  and the dead `encounterActive` prop in both components. Full suite is
+  now 55/55 passing, 420/420 (was 420/422 with 2 failing).
