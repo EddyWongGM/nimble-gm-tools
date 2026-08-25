@@ -26,3 +26,8 @@ public/webfonts/*
 # Self-hosted DM scene images (see plans/STORY_TELLING_PLAN.md) - personal
 # campaign content, not meant to be committed to the shared fork.
 /public/scenes/
+
+# Hosted-deployment planning docs - infra IDs, resource names, and security
+# posture for the actual public/multi-tenant deployment. No real secrets in
+# them, but not meant for the public fork either.
+/plans/private/

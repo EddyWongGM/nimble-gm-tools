@@ -158,8 +158,8 @@ Recommendations below.)
   Client" buttons' safety guard doesn't cover a hosted multi-tenant
   deployment. Both only matter for a hypothetical future hosted service, not
   the current single local DM self-host setup - split out into
-  [HOSTED_DEPLOYMENT.md](HOSTED_DEPLOYMENT.md) rather than covered as a
-  recommendation here.
+  `HOSTED_DEPLOYMENT.md` (private notes, not in this repo) rather than
+  covered as a recommendation here.
 
 ## Recommendations (roughly priority order)
 
@@ -378,7 +378,8 @@ Recommendations below.)
    the existing [Store.test.ts](client/Utility/Store.test.ts) coverage of
    `LegacySynchronousLocalStore`/`Store` is untouched by it.
    **Docs:** n/a - never user-facing or documented.
-8. **Moved to [HOSTED_DEPLOYMENT.md](HOSTED_DEPLOYMENT.md).** Started here
+8. **Moved to `HOSTED_DEPLOYMENT.md` (private notes, not in this repo).**
+   Started here
    as "Mongo needs a backup story too," but grew into deployment/security
    considerations for a hypothetical future hosted, multi-tenant version of
    this app - a different kind of concern than the client-side backup/restore

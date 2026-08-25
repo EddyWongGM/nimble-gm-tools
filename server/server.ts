@@ -5,6 +5,7 @@ import * as http from "http";
 
 import * as cluster from "cluster";
 
+import { configureBasicAuth, configureSocketBasicAuth } from "./basicAuth";
 import * as DB from "./dbconnection";
 import { getDbConnectionString } from "./getDbConnectionString";
 import { GetPlayerViewManager } from "./playerviewmanager";
@@ -16,6 +17,7 @@ import ConfigureSockets from "./sockets";
 async function improvedInitiativeServer() {
   const app = express();
   app.set("trust proxy", true);
+  configureBasicAuth(app);
   const server = new http.Server(app);
 
   const dbConnectionString = await getDbConnectionString();
@@ -41,6 +43,7 @@ async function improvedInitiativeServer() {
   process.on("SIGUSR2", shutdownServer);
 
   const io = new SocketIO.Server(server);
+  configureSocketBasicAuth(io);
   ConfigureSockets(io, session, playerViews);
 
   // @types/node's cluster.d.ts omits `cluster.worker` (only `cluster.workers`
