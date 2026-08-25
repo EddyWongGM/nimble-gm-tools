@@ -24,8 +24,13 @@ function buildMiddleware(): express.RequestHandler | null {
       return next();
     }
 
-    res.set("WWW-Authenticate", 'Basic realm="Restricted"');
-    res.status(401).send("Authentication required.");
+    // Shared with configureSocketBasicAuth below, where `res` is a raw
+    // Node http.ServerResponse (Engine.IO's own middleware pipeline, not
+    // Express) - only setHeader/statusCode/end are guaranteed to exist
+    // there, unlike Express's res.set/res.status/res.send.
+    res.setHeader("WWW-Authenticate", 'Basic realm="Restricted"');
+    res.statusCode = 401;
+    res.end("Authentication required.");
   };
 }
 
