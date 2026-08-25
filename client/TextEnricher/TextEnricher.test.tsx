@@ -1,6 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { Spell } from "../../common/Spell";
+import { StatBlock } from "../../common/StatBlock";
 import { concatenatedStringRegex } from "../../common/Toolbox";
 import { Listing } from "../Library/Listing";
 import { DefaultRules } from "../Rules/Rules";
@@ -74,5 +75,58 @@ describe("TextEnricher", () => {
     });
 
     expect(writeBack).toHaveBeenCalledWith("Gold [200/1000000] gp.");
+  });
+
+  test("LVL tag rolls the Challenge modifier for a whole-number Challenge", async () => {
+    const rollDice = jest.fn();
+    const textEnricher = new TextEnricher(
+      rollDice,
+      () => {},
+      () => {},
+      () => [],
+      () => new RegExp("asdf"),
+      new DefaultRules()
+    );
+
+    const statBlock = { ...StatBlock.Default(), Challenge: "3" };
+    const enrichedText = textEnricher.EnrichText(
+      "Level [LVL]",
+      undefined,
+      statBlock
+    );
+    const tree = render(enrichedText);
+
+    act(() => {
+      tree.getByText("3").click();
+    });
+
+    expect(rollDice).toHaveBeenCalledWith("+3");
+  });
+
+  test("LVL tag falls back to plain text for a fractional Challenge Rating", () => {
+    const rollDice = jest.fn();
+    const textEnricher = new TextEnricher(
+      rollDice,
+      () => {},
+      () => {},
+      () => [],
+      () => new RegExp("asdf"),
+      new DefaultRules()
+    );
+
+    // Legacy imported monsters can have a fractional CR like "1/2" - this
+    // used to silently roll a truncated "+1" (parseInt("1/2") === 1), or a
+    // literal "NaN" for other non-numeric Challenge text.
+    const statBlock = { ...StatBlock.Default(), Challenge: "1/2" };
+    const enrichedText = textEnricher.EnrichText(
+      "Level [LVL]",
+      undefined,
+      statBlock
+    );
+    const tree = render(enrichedText);
+
+    expect(() => tree.getByText("Level [LVL]")).not.toThrow();
+    expect(tree.queryByText("NaN")).toBeNull();
+    expect(rollDice).not.toHaveBeenCalled();
   });
 });

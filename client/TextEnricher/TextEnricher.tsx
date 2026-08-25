@@ -7,6 +7,7 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import * as ReactReplace from "react-string-replace-recursively";
 import remarkBreaks from "remark-breaks";
 
+import { AbilityScores, StatBlock } from "../../common/StatBlock";
 import { Spell } from "../../common/Spell";
 import {
   concatenatedStringRegex,
@@ -20,6 +21,19 @@ import { IRules, DefaultRules } from "../Rules/Rules";
 import { BeanCounter, Counter } from "./Counter";
 
 const conditionsRegex = concatenatedStringRegex(_.keys(Conditions2025));
+
+// "Wil" is Nimble's display name for the Wis field (see
+// StatBlock.AbilityDisplayNames) - accept it as an alias so [WIL] works the
+// same as [WIS] when tagging an ability in Action/Trait text.
+const abilityFieldsByAlias: Record<string, keyof AbilityScores> = {
+  str: "Str",
+  dex: "Dex",
+  con: "Con",
+  int: "Int",
+  wis: "Wis",
+  wil: "Wis",
+  cha: "Cha"
+};
 
 interface ReplaceConfig {
   [name: string]: {
@@ -64,11 +78,45 @@ export class TextEnricher {
     );
   };
 
+  // Shared render for [Str]/[Dex]/etc., [KEY], and [LVL] - a bare,
+  // clickable value followed by a smaller, lighter superscript naming
+  // where it came from.
+  private renderTagWithLabel = (
+    key: string,
+    displayValue: React.ReactNode,
+    rollExpression: string,
+    label: string
+  ): JSX.Element => {
+    return (
+      <span key={key} className="ability-tag">
+        <span className="rollable" onClick={() => this.rollDice(rollExpression)}>
+          {displayValue}
+        </span>
+        <span className="ability-tag__label">({label})</span>
+      </span>
+    );
+  };
+
+  private renderAbilityTag = (
+    key: string,
+    score: number,
+    label: string
+  ): JSX.Element => {
+    const modifier = this.rules.GetModifierFromScore(score);
+    return this.renderTagWithLabel(
+      key,
+      modifier,
+      toModifierString(modifier),
+      label
+    );
+  };
+
   public EnrichText = (
     text: string,
-    updateTextSource?: (newText: string) => void
+    updateTextSource?: (newText: string) => void,
+    statBlock?: StatBlock
   ): JSX.Element => {
-    const replacer = this.buildReactReplacer(text, updateTextSource);
+    const replacer = this.buildReactReplacer(text, updateTextSource, statBlock);
 
     const components: Partial<
       Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents
@@ -97,6 +145,17 @@ export class TextEnricher {
     );
   };
 
+  // For short, single-line strings (e.g. a Power's Name) that shouldn't go
+  // through the full markdown/paragraph pipeline EnrichText uses - applies
+  // the same tag replacements directly to the raw string.
+  public EnrichInlineText = (
+    text: string,
+    statBlock?: StatBlock
+  ): React.ReactNode => {
+    const replacer = this.buildReactReplacer(text, undefined, statBlock);
+    return replacer(text);
+  };
+
   private applyReplacer(
     replacer: any,
     children: React.ReactNode | React.ReactNode[]
@@ -121,7 +180,8 @@ export class TextEnricher {
 
   private buildReactReplacer(
     originalText: string,
-    updateTextSource?: (newText: string) => void
+    updateTextSource?: (newText: string) => void,
+    statBlock?: StatBlock
   ) {
     const replaceConfig: ReplaceConfig = {
       diceExpression: {
@@ -159,6 +219,125 @@ export class TextEnricher {
             {rawText}
           </span>
         )
+      },
+      abilityTag: {
+        pattern: /(\[(?:Str|Dex|Con|Int|Wis|Wil|Cha|LVL|KEY)\])/gi,
+        matcherFn: (rawText, processed, key) => {
+          const typedName = rawText.slice(1, -1);
+          const upperName = typedName.toUpperCase();
+
+          if (upperName === "LVL") {
+            if (!statBlock?.Challenge) {
+              return <React.Fragment key={key}>{rawText}</React.Fragment>;
+            }
+            // Challenge can be a fractional CR string (e.g. "1/2") on
+            // legacy imported monsters, or other non-numeric text - only
+            // treat it as a rollable modifier when it's a clean whole
+            // number. Number() (unlike parseInt) rejects the whole string
+            // rather than silently truncating "1/2" to 1, so this falls
+            // back to plain, non-interactive text instead of rolling a
+            // truncated or NaN modifier.
+            const level = Number(statBlock.Challenge);
+            if (!Number.isInteger(level)) {
+              return <React.Fragment key={key}>{rawText}</React.Fragment>;
+            }
+            return this.renderTagWithLabel(
+              key,
+              statBlock.Challenge,
+              toModifierString(level),
+              "LVL"
+            );
+          }
+
+          if (!statBlock?.Abilities) {
+            return <React.Fragment key={key}>{rawText}</React.Fragment>;
+          }
+
+          if (upperName === "KEY") {
+            const abilities = statBlock.Abilities;
+            const highestField = StatBlock.VisibleAbilityNames.reduce(
+              (best, name) => (abilities[name] > abilities[best] ? name : best)
+            );
+            return this.renderAbilityTag(
+              key,
+              abilities[highestField],
+              highestField.toUpperCase()
+            );
+          }
+
+          const field = abilityFieldsByAlias[typedName.toLowerCase()];
+          if (!field) {
+            return <React.Fragment key={key}>{rawText}</React.Fragment>;
+          }
+          return this.renderAbilityTag(
+            key,
+            statBlock.Abilities[field],
+            upperName
+          );
+        }
+      },
+      icon: {
+        pattern: /(\bfa-[a-z0-9]+(?:-[a-z0-9]+)*\b)/g,
+        matcherFn: (rawText, processed, key) => (
+          <span
+            className={"inline-icon fas " + rawText}
+            key={key}
+            title={rawText}
+          />
+        )
+      },
+      // [d4]/[d6]/[d8]/[d10]/[d12]/[d20] - shorthand for the matching
+      // fa-dice-dN icon, easier to type than the full FontAwesome class name.
+      diceIcon: {
+        pattern: /(\[d(?:4|6|8|10|12|20)\])/gi,
+        matcherFn: (rawText, processed, key) => {
+          const die = rawText.slice(1, -1).toLowerCase();
+          return (
+            <span
+              className={"inline-icon fas fa-dice-" + die}
+              key={key}
+              title={"fa-dice-" + die}
+            />
+          );
+        }
+      },
+      // [A1]/[A2]/... - a circled number for Action cost. [R1]/[R2]/... -
+      // the same circle, filled/inverted, for Mana/Resource cost. No
+      // FontAwesome icon exists for this, so it's a plain CSS badge.
+      costBadge: {
+        pattern: /(\[[AR]\d+\])/gi,
+        matcherFn: (rawText, processed, key) => {
+          const inner = rawText.slice(1, -1);
+          const kind = inner[0].toUpperCase();
+          const value = inner.slice(1);
+          return (
+            <span
+              key={key}
+              className={
+                "cost-badge" + (kind === "R" ? " cost-badge--resource" : "")
+              }
+              title={kind === "R" ? "Resource cost" : "Action cost"}
+            >
+              {value}
+            </span>
+          );
+        }
+      },
+      // [tab]/[dash]/[bullet] - a hanging-indent spacer sized to match a
+      // [A#]/[R#] cost badge's occupied width, so wrapped/continuation
+      // lines can line up under the text that follows a badge on the line
+      // above. [tab] is blank, [dash]/[bullet] show a leading glyph.
+      indentTag: {
+        pattern: /(\[(?:tab|dash|bullet)\])/gi,
+        matcherFn: (rawText, processed, key) => {
+          const kind = rawText.slice(1, -1).toLowerCase();
+          const glyph = kind === "dash" ? "-" : kind === "bullet" ? "•" : "";
+          return (
+            <span key={key} className="indent-tag">
+              {glyph}
+            </span>
+          );
+        }
       },
       counter: {
         pattern: /(.+\[\d+\/\d+\])/g,

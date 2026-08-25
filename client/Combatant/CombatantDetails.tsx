@@ -4,6 +4,7 @@ import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
 import { AbilityScores, StatBlockComponent } from "../Components/StatBlock";
 import { StatBlock } from "../../common/StatBlock";
 import { InventoryItem } from "../../common/CombatantState";
+import { toModifierString } from "../../common/Toolbox";
 import { StatBlockHeader } from "../Components/StatBlockHeader";
 import { TextEnricherContext } from "../TextEnricher/TextEnricher";
 import { Combatant } from "./Combatant";
@@ -42,6 +43,9 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
   const currentWounds = useSubscription(props.combatantViewModel.Wounds);
   const currentWoundsPercentage = useSubscription(
     props.combatantViewModel.WoundsPercentage
+  );
+  const initiativeBonus = useSubscription(
+    props.combatantViewModel.Combatant.InitiativeBonus
   );
   const name = useSubscription(props.combatantViewModel.Name);
   const tags = useSubscription(props.combatantViewModel.Combatant.Tags);
@@ -127,24 +131,28 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         )}
         {StatBlock.ActsInPlayerPhase(statBlock) && challengeOrLevel}
       </div>
-      {(currentResources || currentHitDice || currentWounds) && (
-        <div className="c-combatant-details__resources-wounds">
-          {currentResources && (
-            <>
-              <span className="stat-label Resources">Resources</span>
-              <span>
-                {currentResources}
-                {DisplayHPBar && (
-                  <span className="combatant__hp-bar">
-                    <span
-                      className="combatant__hp-bar--filled"
-                      style={renderHPBarStyle(currentResourcesPercentage)}
-                    />
-                  </span>
-                )}
-              </span>
-            </>
-          )}
+      <div className="c-combatant-details__defense-resources">
+        <span className="stat-label">Defense</span>
+        <span className="stat-value">{statBlock.AC.Value}</span>
+        {currentResources && (
+          <>
+            <span className="stat-label Resources">Resources</span>
+            <span>
+              {currentResources}
+              {DisplayHPBar && (
+                <span className="combatant__hp-bar">
+                  <span
+                    className="combatant__hp-bar--filled"
+                    style={renderHPBarStyle(currentResourcesPercentage)}
+                  />
+                </span>
+              )}
+            </span>
+          </>
+        )}
+      </div>
+      {(currentHitDice || currentWounds) && (
+        <div className="c-combatant-details__hitdice-wounds">
           {currentHitDice && (
             <>
               <span className="stat-label HitDice">Hit Dice</span>
@@ -179,9 +187,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
           )}
         </div>
       )}
-      <div className="HP AC speed Challenge">
-        <span className="stat-label">Defense</span>
-        <span className="stat-value">{statBlock.AC.Value}</span>
+      <div className="c-combatant-details__speed-initiative">
         {statBlock.Speed.length > 0 && (
           <>
             <span className="stat-label Speed">Speed</span>
@@ -197,6 +203,10 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             </span>
           </>
         )}
+        <span className="stat-label Initiative">Initiative</span>
+        <span className="stat-value">
+          {toModifierString(initiativeBonus)}
+        </span>
       </div>
       {tags.length > 0 && (
         <div className="c-combatant-details__tags">
@@ -235,7 +245,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
                 {props.onShowInventoryCard && (
                   <span
                     className="c-combatant-details__items-toggle fas fa-scroll fa-clickable"
-                    title="Show Inventory as a Card"
+                    title="Show Inventory in Player View"
                     onClick={() =>
                       props.onShowInventoryCard(
                         props.combatantViewModel.Combatant

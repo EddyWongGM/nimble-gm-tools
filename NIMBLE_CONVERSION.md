@@ -94,21 +94,24 @@ while the character is in an active encounter).
 - Full contents reach players only on demand, via a DM-triggered popup
   (`InventoryDisplayPopup.tsx`, reusing the same transient-socket-event
   mechanism as the existing "Post-Combat Breakdown" popup), not
-  continuously synced. The DM toggles it via the "Show/Hide Inventory in
-  Player View Popup" command (`CombatantCommander.ToggleInventoryDisplayToPlayers`
-  /`InventoryDisplayedCombatantId`/`DismissInventoryDisplay`) in the
-  combatant command list, or via a one-click shortcut on the "Add Item"
-  prompt itself (`fa-scroll` button in `ItemPrompt.tsx`, which also
-  dismisses that prompt) — clicking the command again dismisses the popup,
-  no separate close button needed on the player side. There is no
-  persistent on-screen indicator in the DM view that a popup is currently
-  showing; re-triggering the same toggle is the only way to dismiss it
-  short of the players closing it themselves.
-- The `fa-scroll` icon in the combatant details pane's Inventory header is
-  a *different*, DM-only action: it opens a dismissible read-only info card
-  (`InventoryCardPrompt.tsx`, queued the same way as spell/condition
-  reference cards) showing that combatant's contents. It does not push
-  anything to players.
+  continuously synced. There's also a separate, hidden-by-default
+  "Show/Hide Inventory in Player View Popup" command
+  (`CombatantCommander.ToggleInventoryDisplayToPlayers`) in the combatant
+  command list that only toggles the Player View popup, with no DM card.
+- The two DM-facing `fa-scroll` triggers - the shortcut on the "Add Item"
+  prompt (`ItemPrompt.tsx`, which also dismisses that prompt) and the icon
+  in the combatant details pane's Inventory header - both call the same
+  combined action, `CombatantCommander.ShowInventoryCard`: it pushes the
+  contents to the Player View popup (`InventoryDisplayedCombatantId`) *and*
+  opens a dismissible DM-only info card (`InventoryCardPrompt.tsx`, queued
+  the same way as spell/condition reference cards) at once. Dismissing that
+  card any way - its checkmark button *or* Escape (`PromptProps.onCancel`,
+  wired through `PendingPrompts`) - dismisses the Player View popup along
+  with it (`CombatantCommander.DismissInventoryDisplay`); re-triggering
+  either `fa-scroll` shortcut or using the separate toggle command above
+  are the only other ways to dismiss it short of the players closing it
+  themselves. There is no persistent on-screen indicator in the DM view
+  that a popup is currently showing.
 - Removing an item goes through a confirm-before-delete prompt
   (`RemoveItemPrompt.tsx`) rather than deleting immediately.
 - Same hide/reveal-from-players toggle as Gold and Hit Dice

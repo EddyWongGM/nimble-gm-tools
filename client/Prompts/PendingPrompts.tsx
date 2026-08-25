@@ -7,6 +7,10 @@ export interface PromptProps<T extends object> {
   autoFocusSelector: string;
   initialValues: T;
   validate?: (values: T) => void | object | Promise<any>;
+  // Called when the prompt is dismissed without submitting (Escape) -
+  // for side effects that should happen on any dismissal, not just a
+  // successful submit.
+  onCancel?: () => void;
 }
 
 class Prompt<T extends object> extends React.Component<
@@ -96,6 +100,7 @@ export class PendingPrompts extends React.Component<PendingPromptsProps> {
                 return shouldResolve;
               }}
               onCancel={() => {
+                prompt.onCancel?.();
                 this.props.removePrompt(promptId);
               }}
             />

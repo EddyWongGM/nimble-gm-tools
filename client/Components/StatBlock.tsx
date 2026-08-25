@@ -212,15 +212,23 @@ function StatBlockComponentNoError(props: StatBlockProps) {
     .filter(powerType => powerType?.data?.length > 0)
     .map(powerType => (
       <div key={powerType.name} className={powerType.name}>
-        <h4 className="stat-label">{powerType.displayName}</h4>
+        {powerType.name !== "Traits" && (
+          <h4 className="stat-label">{powerType.displayName}</h4>
+        )}
         {powerType.data.map((power, j) => (
           <div key={j + power.Name}>
             {power.Name?.length ? (
-              <span className="stat-label">{power.Name}</span>
+              <span className="stat-label">
+                {textEnricher.EnrichInlineText(power.Name, statBlock)}
+              </span>
             ) : null}
             {power.Usage && <span className="stat-label">{power.Usage}</span>}
             <span className="power-content">
-              {textEnricher.EnrichText(power.Content)}
+              {textEnricher.EnrichText(
+                power.Content,
+                undefined,
+                statBlock
+              )}
             </span>
           </div>
         ))}
@@ -230,7 +238,7 @@ function StatBlockComponentNoError(props: StatBlockProps) {
 
   const description = statBlock.Description && (
     <div className="Description">
-      {textEnricher.EnrichText(statBlock.Description)}
+      {textEnricher.EnrichText(statBlock.Description, undefined, statBlock)}
     </div>
   );
 
