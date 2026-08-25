@@ -8,12 +8,14 @@ type FormApi = FormikProps<any>;
 
 type makeSortableComponent = (
   index: number,
-  arrayHelpers: ArrayHelpers
+  arrayHelpers: ArrayHelpers,
+  trailingAddButton?: JSX.Element
 ) => JSX.Element;
 
 export function SortableList(props: {
   api: FormApi;
   listType: string;
+  label?: string;
   makeComponent: makeSortableComponent;
   makeNew: () => any;
 }) {
@@ -30,10 +32,12 @@ function SortableListInner(props: {
   api: FormApi;
   arrayHelpers: ArrayHelpers;
   listType: string;
+  label?: string;
   makeComponent: makeSortableComponent;
   makeNew: () => any;
 }) {
-  const { api, arrayHelpers, listType, makeComponent, makeNew } = props;
+  const { api, arrayHelpers, listType, label, makeComponent, makeNew } = props;
+  const displayLabel = label || listType;
   const addButton = (
     <Button
       fontAwesomeIcon="plus"
@@ -45,14 +49,15 @@ function SortableListInner(props: {
   if (api.values[listType].length == 0) {
     return (
       <span className="c-statblock-editor__label">
-        {listType}
+        {displayLabel}
         {addButton}
       </span>
     );
   } else {
+    const lastIndex = api.values[listType].length - 1;
     return (
       <>
-        <div className="c-statblock-editor__label">{listType}</div>
+        <div className="c-statblock-editor__label">{displayLabel}</div>
         {api.values[listType].map((_, i: number) => (
           <React.Fragment key={i}>
             <DropZone
@@ -60,7 +65,11 @@ function SortableListInner(props: {
               dragDropType={props.listType}
               move={props.arrayHelpers.move}
             />
-            {makeComponent(i, arrayHelpers)}
+            {makeComponent(
+              i,
+              arrayHelpers,
+              i === lastIndex ? addButton : undefined
+            )}
           </React.Fragment>
         ))}
         <DropZone
@@ -68,7 +77,6 @@ function SortableListInner(props: {
           dragDropType={props.listType}
           move={props.arrayHelpers.move}
         />
-        {addButton}
       </>
     );
   }

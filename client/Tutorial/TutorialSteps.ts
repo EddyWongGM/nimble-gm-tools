@@ -34,7 +34,7 @@ export const TutorialSteps: TutorialStep[] = [
   },
   {
     Message:
-      "When you're ready to add some adventurers, select the <strong>Characters</strong> tab at the top of the library.",
+      "When you're ready to add some adventurers, select the <strong>Heroes</strong> tab at the top of the library.",
     RaiseSelector: ".libraries .c-tabs .c-tab",
     AwaitAction: "SelectCharactersTab",
     CalculatePosition: elements => {

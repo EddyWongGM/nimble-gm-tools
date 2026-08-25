@@ -5,13 +5,15 @@ import { SubmitButton } from "../Components/Button";
 import { PromptProps } from "./PendingPrompts";
 
 export function InventoryCardPrompt(
-  combatant: Combatant
+  combatant: Combatant,
+  onDismissFromPlayerView?: () => void
 ): PromptProps<Record<string, never>> {
   const items = combatant.Items();
 
   return {
     autoFocusSelector: "button",
     initialValues: {},
+    onCancel: onDismissFromPlayerView,
     children: (
       <div className="p-inventory-card">
         <h3>{combatant.DisplayName()}&rsquo;s Inventory</h3>
@@ -26,9 +28,12 @@ export function InventoryCardPrompt(
         ) : (
           <p>No items.</p>
         )}
-        <SubmitButton />
+        <SubmitButton tooltip="Hide from Player View" />
       </div>
     ),
-    onSubmit: () => true
+    onSubmit: () => {
+      onDismissFromPlayerView?.();
+      return true;
+    }
   };
 }

@@ -112,9 +112,11 @@
     row-gap: @extra-small-spacer;
 
     .tag {
-      // --dark-red flips from black (light mode) to a light khaki (dark
-      // mode), so the text needs to flip opposite it to stay readable.
-      .colors(var(--text-inverted), var(--dark-red));
+      // Fixed white-on-black regardless of theme, rather than following
+      // --text-inverted/--dark-red - those flip to black text on a pale
+      // khaki background in dark mode, which is hard to read on a screen
+      // meant to be visible to players from a distance (projector/TV).
+      .colors(var(--white), var(--black));
       margin-right: @large-spacer;
       margin-bottom: @extra-small-spacer;
       // Vertical padding kept small so a tagged row's height still matches

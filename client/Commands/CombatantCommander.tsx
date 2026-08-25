@@ -686,8 +686,7 @@ export class CombatantCommander {
     const prompt = ItemPrompt(
       targetCombatants,
       this.tracker.EventLog.AddEvent,
-      singleTargetVM &&
-        (() => this.ShowInventoryCard(singleTargetVM.Combatant))
+      singleTargetVM && (() => this.ShowInventoryCard(singleTargetVM.Combatant))
     );
     this.tracker.PromptQueue.Add(prompt);
     return false;
@@ -706,8 +705,38 @@ export class CombatantCommander {
     this.tracker.PromptQueue.Add(prompt);
   };
 
+  private displayInventoryToPlayers = (combatant: Combatant) => {
+    this.tracker.Encounter.DisplayPlayerViewInventory(
+      combatant.DisplayName(),
+      combatant.Items()
+    );
+    this.InventoryDisplayedCombatantId(combatant.Id);
+    this.InventoryDisplayedCombatantName(combatant.DisplayName());
+    this.tracker.EventLog.AddEvent(
+      `${combatant.DisplayName()}'s inventory shown in Player View.`
+    );
+  };
+
+  // Shows the combatant's inventory to the DM as a dismissible card and
+  // pushes it to the Player View popup at the same time - both the
+  // combatant details pane's scroll icon and the Add Item prompt's scroll
+  // shortcut trigger this same combined action. Dismissing the card any
+  // way - its checkmark button or Escape - dismisses the Player View
+  // popup along with it (see InventoryCardPrompt's onSubmit/onCancel) -
+  // but only if the popup is still showing *this* combatant: if the DM
+  // left this card open and switched the popup to someone else in the
+  // meantime (another ShowInventoryCard/ToggleInventoryDisplayToPlayers
+  // call), dismissing this stale card must not hide their popup.
   public ShowInventoryCard = (combatant: Combatant) => {
-    const prompt = InventoryCardPrompt(combatant);
+    this.displayInventoryToPlayers(combatant);
+
+    const dismissIfStillShowing = () => {
+      if (this.InventoryDisplayedCombatantId() === combatant.Id) {
+        this.DismissInventoryDisplay();
+      }
+    };
+
+    const prompt = InventoryCardPrompt(combatant, dismissIfStillShowing);
     this.tracker.PromptQueue.Add(prompt);
   };
 
@@ -730,24 +759,19 @@ export class CombatantCommander {
     if (this.InventoryDisplayedCombatantId() === combatant.Id) {
       this.DismissInventoryDisplay();
     } else {
-      this.tracker.Encounter.DisplayPlayerViewInventory(
-        combatant.DisplayName(),
-        combatant.Items()
-      );
-      this.InventoryDisplayedCombatantId(combatant.Id);
-      this.InventoryDisplayedCombatantName(combatant.DisplayName());
-      this.tracker.EventLog.AddEvent(
-        `${combatant.DisplayName()}'s inventory shown in Player View.`
-      );
+      this.displayInventoryToPlayers(combatant);
     }
     return false;
   };
 
   public DismissInventoryDisplay = () => {
-    const combatantName = this.InventoryDisplayedCombatantName();
-    if (!combatantName) {
+    // Guard on Id, not the display name - an unnamed combatant's
+    // DisplayName() is legitimately "", which would make a name-based
+    // falsy check bail out and leave the popup stuck open for them.
+    if (!this.InventoryDisplayedCombatantId()) {
       return;
     }
+    const combatantName = this.InventoryDisplayedCombatantName();
     this.tracker.Encounter.HidePlayerViewInventory();
     this.InventoryDisplayedCombatantId(null);
     this.InventoryDisplayedCombatantName(null);

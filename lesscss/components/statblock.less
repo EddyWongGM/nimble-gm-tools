@@ -28,7 +28,9 @@
 }
 
 .c-combatant-details__hp,
-.c-combatant-details__resources-wounds,
+.c-combatant-details__defense-resources,
+.c-combatant-details__hitdice-wounds,
+.c-combatant-details__speed-initiative,
 .c-combatant-details__tags {
   flex-direction: row;
   margin-top: @extra-small-spacer;
@@ -41,9 +43,24 @@
   }
 }
 
-.c-combatant-details__resources-wounds {
+.c-combatant-details__defense-resources {
+  > * + .stat-label.Resources {
+    margin-left: @medium-spacer;
+  }
+}
+
+.c-combatant-details__hitdice-wounds {
   > * + .stat-label.HitDice,
   > * + .stat-label.Wounds {
+    margin-left: @medium-spacer;
+  }
+}
+
+.c-combatant-details__speed-initiative {
+  flex-wrap: wrap;
+
+  > * + .stat-label.Speed,
+  > * + .stat-label.Initiative {
     margin-left: @medium-spacer;
   }
 }
@@ -131,16 +148,6 @@ input[type="number"].c-combatant-details__item-quantity {
   padding-bottom: 0;
   color: var(--wound-red);
   font-size: 0.6rem;
-}
-
-.c-combatant-details > .HP.AC.speed.Challenge {
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: @extra-small-spacer;
-
-  .stat-label.Speed {
-    margin-left: @medium-spacer;
-  }
 }
 
 .combatant-details__header {
@@ -460,4 +467,102 @@ input[type="number"].c-combatant-details__item-quantity {
 .c-statblock__error {
   color: var(--red);
   font-family: "Courier New", Courier, monospace;
+}
+
+// Renders a [Str]/[Dex]/etc. tag typed into Action/Trait/Description text
+// (e.g. "1d4 + [DEX]") as the creature's actual modifier, with the ability
+// name shown as a smaller, lighter superscript annotation - see
+// TextEnricher's "abilityTag" replacer.
+.ability-tag {
+  white-space: nowrap;
+
+  &__label {
+    display: inline-block;
+    margin-left: 0.15em;
+    font-size: 0.75em;
+    color: var(--text-faded);
+    // A native <sup> (vertical-align: super) visibly grows the whole
+    // line's height, even under a fixed ancestor line-height - confirmed
+    // by measuring a line with vs without one (21px vs 19.6px here).
+    // position:relative keeps this out of line-height calculations
+    // entirely - the raise is purely visual, no layout impact.
+    position: relative;
+    top: -0.35em;
+  }
+}
+
+// A [A1]/[A2]/... or [R1]/[R2]/... tag typed into a Power's Name - a
+// circled number for Action cost, or the same circle filled/inverted for
+// Mana/Resource cost. No FontAwesome icon exists for this, so it's built
+// as a plain CSS badge - see TextEnricher's "costBadge" replacer.
+.cost-badge {
+  // inline-flex's vertical-align:baseline uses flex's own baseline
+  // algorithm (the first baseline-eligible flex item, or a fallback that
+  // isn't the box's bottom edge) rather than the plain CSS2 rule of
+  // "bottom margin edge sits on the parent's text baseline" - that plain
+  // rule is exactly what's wanted here, so this uses inline-block with
+  // line-height-based centering instead of flexbox centering.
+  display: inline-block;
+  box-sizing: content-box;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.3em;
+  border: 1.5px solid var(--red);
+  border-radius: 50%;
+  text-align: center;
+  // Courier New's own rendered text height at 0.85em came out taller than
+  // this box's 1em content height (measured ~14px text in an ~11.9px box),
+  // so the digit overflowed the top of the circle even when centered -
+  // sized down so the glyph actually fits inside the box.
+  font-size: 0.7em;
+  // Matches the box's own height, centering the digit vertically within
+  // the circle (classic single-line vertical-centering technique).
+  line-height: 1em;
+  // "1" specifically sits off-center within its own glyph box in the
+  // body font (Jost) - flexbox is centering that box correctly, but the
+  // ink inside it isn't symmetric. Jost doesn't implement tabular-nums to
+  // fix this, so fall back to a monospace stack for just the digit -
+  // monospace fonts guarantee every digit occupies an identical, centered
+  // glyph box.
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  color: var(--red);
+  // Pure baseline alignment is spec-correct (bottom edge on the text
+  // baseline) but a short circle next to much taller text always leaves
+  // visible empty space above it and reads as "sunken" regardless of
+  // context (confirmed next to both a bold Name label and plain Content
+  // text) - nudge up by eye to visually center on the surrounding text's
+  // cap-height/x-height band instead of literally sitting on its baseline.
+  vertical-align: baseline;
+  position: relative;
+  top: -0.2em;
+
+  &--resource {
+    background-color: var(--red);
+    color: var(--text-inverted);
+  }
+}
+
+// [tab]/[dash]/[bullet] typed into Action/Trait text - a hanging-indent
+// spacer that lines up with the text following a .cost-badge on the line
+// above. Mirrors .cost-badge's box model (width/border/margin/position)
+// exactly so the occupied width matches, but with a transparent border
+// since there's no circle to draw - see TextEnricher's "indentTag"
+// replacer.
+.indent-tag {
+  display: inline-block;
+  box-sizing: content-box;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.3em;
+  border: 1.5px solid transparent;
+  text-align: center;
+  font-size: 0.7em;
+  line-height: 1em;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  color: var(--red);
+  vertical-align: baseline;
+  position: relative;
+  top: -0.2em;
 }

@@ -69,8 +69,8 @@ export class StatBlockEditor extends React.Component<
     const header =
       {
         combatant: "Edit Name Statblock",
-        library: "Edit Library Statblock",
-        persistentcharacter: "Edit Character Statblock"
+        library: "Edit Monster Statblock",
+        persistentcharacter: "Edit Hero Statblock"
       }[this.props.editorTarget] || "Edit StatBlock";
 
     const buttons = (
@@ -161,6 +161,42 @@ export class StatBlockEditor extends React.Component<
     );
   }
 
+  // Built as a flat list, then chunked into pairs of 2 for the 2-column
+  // stats layout - so when an optional field (Hit Dice, Wounds) doesn't
+  // apply, later fields (notably Initiative) shift up to fill the gap
+  // instead of leaving an empty cell and an extra near-empty row below.
+  private statFields = (): JSX.Element[][] => {
+    const fields: JSX.Element[] = [
+      <TextField
+        key="level"
+        label={this.props.statBlock.Player == "player" ? "Level" : "Challenge"}
+        fieldName="Challenge"
+      />,
+      <ValueAndNotesField key="defense" label="Defense" fieldName="AC" />,
+      <ValueAndNotesField key="hp" label="Hit Points" fieldName="HP" />,
+      <ValueAndNotesField key="mana" label="Mana" fieldName="Mana" />,
+      <ValueAndNotesField key="resources" label="Resources" fieldName="Resources" />
+    ];
+
+    if (this.props.statBlock.Player == "player") {
+      fields.push(
+        <ValueAndNotesField key="hitdice" label="Hit Dice" fieldName="HitDice" />
+      );
+    }
+    if (StatBlock.ActsInPlayerPhase(this.props.statBlock)) {
+      fields.push(
+        <ValueAndNotesField key="wounds" label="Wounds" fieldName="Wounds" />
+      );
+    }
+    fields.push(<InitiativeField key="initiative" />);
+
+    const rows: JSX.Element[][] = [];
+    for (let i = 0; i < fields.length; i += 2) {
+      rows.push(fields.slice(i, i + 2));
+    }
+    return rows;
+  };
+
   private fieldEditor = (api: FormikProps<any>) => {
     const settings = React.useContext(SettingsContext);
     return (
@@ -193,27 +229,15 @@ export class StatBlockEditor extends React.Component<
             />
           )}
         </div>
-        <div className="c-statblock-editor__stats">
-          <TextField
-            label={
-              this.props.statBlock.Player == "player" ? "Level" : "Challenge"
-            }
-            fieldName="Challenge"
-          />
-          <ValueAndNotesField label="Hit Points" fieldName="HP" />
-          <ValueAndNotesField label="Defense" fieldName="AC" />
-          <ValueAndNotesField label="Mana" fieldName="Mana" />
-          <ValueAndNotesField label="Resources" fieldName="Resources" />
-          {this.props.statBlock.Player == "player" && (
-            <ValueAndNotesField label="Hit Dice" fieldName="HitDice" />
-          )}
-          {StatBlock.ActsInPlayerPhase(this.props.statBlock) && (
-            <ValueAndNotesField label="Wounds" fieldName="Wounds" />
-          )}
-          <InitiativeField />
-        </div>
         <div className="c-statblock-editor__abilityscores">
           {StatBlock.VisibleAbilityNames.map(abilityScoreField)}
+        </div>
+        <div className="c-statblock-editor__stats">
+          {this.statFields().map((pair, i) => (
+            <div className="c-statblock-editor__stats-row" key={i}>
+              {pair}
+            </div>
+          ))}
         </div>
         {settings.StatBlock.CustomFields.length > 0 && (
           <div className="c-statblock-editor__custom-fields">
@@ -235,31 +259,38 @@ export class StatBlockEditor extends React.Component<
         <div className="c-statblock-editor__saves">
           <NameAndModifierFields api={api} modifierType="Saves" />
         </div>
-        {[
-          "Speed",
-          "Senses",
-          "DamageVulnerabilities",
-          "DamageResistances",
-          "DamageImmunities",
-          "ConditionImmunities",
-          "Languages"
-        ].map(keywordType => (
-          <div key={keywordType} className="c-statblock-editor__keywords">
-            <KeywordFields api={api} keywordType={keywordType} />
-          </div>
-        ))}
-        {[
-          "Traits",
-          "Actions",
-          "BonusActions",
-          "Reactions",
-          "LegendaryActions",
-          "MythicActions"
-        ].map(powerType => (
-          <div key={powerType} className="c-statblock-editor__powers">
-            <PowerFields api={api} powerType={powerType} />
-          </div>
-        ))}
+        <div className="c-statblock-editor__keywords">
+          {[
+            { type: "Speed", label: "Speed" },
+            { type: "Senses", label: "Senses" },
+            { type: "DamageVulnerabilities", label: "Damage Vulnerabilities" },
+            { type: "DamageResistances", label: "Damage Resistances" },
+            { type: "DamageImmunities", label: "Damage Immunities" },
+            { type: "ConditionImmunities", label: "Condition Immunities" },
+            { type: "Languages", label: "Languages" }
+          ].map(({ type, label }) => (
+            <div key={type} className="c-statblock-editor__keyword-group">
+              <KeywordFields api={api} keywordType={type} label={label} />
+            </div>
+          ))}
+        </div>
+        <div className="c-statblock-editor__powers">
+          {[
+            { type: "Traits", label: "Traits" },
+            { type: "Actions", label: "Actions" },
+            { type: "BonusActions", label: "Bonus Actions" },
+            { type: "Reactions", label: "Reactions" },
+            { type: "LegendaryActions", label: "Legendary Actions" },
+            // name stays "MythicActions" so the field/className keeps
+            // matching the shared styling and stored data shape - only the
+            // visible label changes, same as the read-only StatBlock view.
+            { type: "MythicActions", label: "Other" }
+          ].map(({ type, label }) => (
+            <div key={type} className="c-statblock-editor__power-group">
+              <PowerFields api={api} powerType={type} label={label} />
+            </div>
+          ))}
+        </div>
         <DescriptionField />
       </>
     );

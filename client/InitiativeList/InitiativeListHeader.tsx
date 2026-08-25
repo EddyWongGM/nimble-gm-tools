@@ -2,7 +2,6 @@ import * as React from "react";
 import { SettingsContext } from "../Settings/SettingsContext";
 
 export function InitiativeListHeader(props: {
-  encounterActive: boolean;
   showManaColumn: boolean;
   showResourcesColumn: boolean;
   showHitDiceColumn: boolean;

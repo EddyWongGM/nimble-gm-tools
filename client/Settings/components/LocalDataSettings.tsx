@@ -27,7 +27,7 @@ export class LocalDataSettings extends React.Component {
         </div>
         <div className="c-button-with-label">
           <span>
-            Import characters, statblocks, encounters and spells from a JSON
+            Import heroes, statblocks, encounters and spells from a JSON
             file
           </span>
           <FileUploadButton
@@ -146,7 +146,7 @@ export class LocalDataSettings extends React.Component {
 
   private confirmClearLocalData = async () => {
     const promptText =
-      "To clear all of your saved player characters, statblocks, encounters, and settings, enter DELETE.";
+      "To clear all of your saved player heroes, statblocks, encounters, and settings, enter DELETE.";
     if (prompt(promptText) == "DELETE") {
       await Store.DeleteAll();
       LegacySynchronousLocalStore.DeleteAll();

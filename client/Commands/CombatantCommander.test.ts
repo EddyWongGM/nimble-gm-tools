@@ -116,6 +116,87 @@ describe("CombatantCommander", () => {
     expect(playerView.Combatants[0].AC).toBe(10);
   });
 
+  test("Add Item prompt's scroll shortcut shows inventory to players and as a DM card", () => {
+    encounter.AddCombatantFromStatBlock(StatBlock.Default());
+    const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
+    combatantViewModel.Combatant.ApplyItemChange("Torch", true, 1, 1);
+
+    combatantCommander.AddItem(combatantViewModel);
+    const [prompt] = trackerViewModel.PromptQueue.GetPrompts()[0];
+
+    prompt.onSubmit({
+      itemName: "",
+      stackable: false,
+      quantity: "1",
+      slotCost: "1",
+      showInventoryCard: true
+    });
+
+    // Broadcast to Player View...
+    expect(combatantCommander.InventoryDisplayedCombatantId()).toBe(
+      combatantViewModel.Combatant.Id
+    );
+    // ...and a DM-facing inventory card queued alongside the original Add
+    // Item prompt (still present here since this test calls onSubmit
+    // directly rather than through the PendingPrompts wrapper that would
+    // normally remove it).
+    expect(trackerViewModel.PromptQueue.GetPrompts()).toHaveLength(2);
+  });
+
+  test("Submitting the inventory card also hides the Player View popup", () => {
+    encounter.AddCombatantFromStatBlock(StatBlock.Default());
+    const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
+
+    combatantCommander.ShowInventoryCard(combatantViewModel.Combatant);
+    expect(combatantCommander.InventoryDisplayedCombatantId()).toBe(
+      combatantViewModel.Combatant.Id
+    );
+
+    const [cardPrompt] = trackerViewModel.PromptQueue.GetPrompts()[0];
+    cardPrompt.onSubmit({});
+
+    expect(combatantCommander.InventoryDisplayedCombatantId()).toBeNull();
+  });
+
+  test("Escaping out of the inventory card also hides the Player View popup", () => {
+    encounter.AddCombatantFromStatBlock(StatBlock.Default());
+    const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
+
+    combatantCommander.ShowInventoryCard(combatantViewModel.Combatant);
+    expect(combatantCommander.InventoryDisplayedCombatantId()).toBe(
+      combatantViewModel.Combatant.Id
+    );
+
+    // PendingPrompts wires the Prompt's Escape key handler to this
+    // onCancel, in addition to removing the prompt from the queue.
+    const [cardPrompt] = trackerViewModel.PromptQueue.GetPrompts()[0];
+    cardPrompt.onCancel();
+
+    expect(combatantCommander.InventoryDisplayedCombatantId()).toBeNull();
+  });
+
+  test("Dismissing a stale inventory card doesn't hide a different combatant's popup", () => {
+    const combatantA = addCombatantFromStatBlock(encounter);
+    const combatantB = addCombatantFromStatBlock(encounter);
+
+    combatantCommander.ShowInventoryCard(combatantA);
+    const [staleCardPrompt] = trackerViewModel.PromptQueue.GetPrompts()[0];
+
+    // The DM leaves A's card open and switches the Player View popup to B
+    // without dismissing it first.
+    combatantCommander.ShowInventoryCard(combatantB);
+    expect(combatantCommander.InventoryDisplayedCombatantId()).toBe(
+      combatantB.Id
+    );
+
+    // Dismissing A's now-stale card must not hide B's still-live popup.
+    staleCardPrompt.onSubmit({});
+
+    expect(combatantCommander.InventoryDisplayedCombatantId()).toBe(
+      combatantB.Id
+    );
+  });
+
   test("Should maintain selection when initiative order changes", () => {
     const combatant1 = addCombatantFromStatBlock(encounter);
     const combatant2 = addCombatantFromStatBlock(encounter);

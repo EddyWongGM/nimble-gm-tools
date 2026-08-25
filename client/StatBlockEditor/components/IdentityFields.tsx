@@ -35,11 +35,23 @@ export class IdentityFields extends React.Component<IdentityFieldsProps> {
       <>
         <div className="c-statblock-editor__path-and-name">
           {this.folderElement()}
-          <div>
+          <div className="c-statblock-editor__name-field">
             <label className="label" htmlFor="name">
               Name
             </label>
             <Field type="text" name="Name" id="name" autoComplete="off" />
+          </div>
+          <div className="c-statblock-editor__mode-toggle">
+            <label>Editor Mode:</label>
+            <Button
+              onClick={() => this.props.setEditorMode("standard")}
+              text="Standard"
+            />
+            <Button
+              additionalClassNames="c-statblock-editor__json-button"
+              onClick={() => this.props.setEditorMode("json")}
+              text="JSON"
+            />
           </div>
         </div>
         {this.props.formApi.errors.NameMissing && (
@@ -63,23 +75,11 @@ export class IdentityFields extends React.Component<IdentityFieldsProps> {
                 fieldName="SaveAsCharacter"
                 disabled={this.props.formApi.values.SaveAs}
               >
-                Save as a <strong>Character</strong>
+                Save as a <strong>Hero</strong>
               </Toggle>
             )}
           </div>
         )}
-        <div className="c-statblock-editor__mode-toggle">
-          <label>Editor Mode:</label>
-          <Button
-            onClick={() => this.props.setEditorMode("standard")}
-            text="Standard"
-          />
-          <Button
-            additionalClassNames="c-statblock-editor__json-button"
-            onClick={() => this.props.setEditorMode("json")}
-            text="JSON"
-          />
-        </div>
       </>
     );
   }

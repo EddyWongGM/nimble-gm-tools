@@ -7,6 +7,7 @@ interface KeywordFieldProps {
   arrayHelpers: ArrayHelpers;
   keywordType: string;
   index: number;
+  trailingAddButton?: JSX.Element;
 }
 
 export function KeywordField(props: KeywordFieldProps) {
@@ -30,6 +31,7 @@ export function KeywordField(props: KeywordFieldProps) {
         className="fa-clickable fa-trash"
         onClick={() => props.arrayHelpers.remove(props.index)}
       />
+      {props.trailingAddButton}
     </div>
   );
 }

@@ -54,7 +54,7 @@ function ItemPromptFields(props: {
           <SubmitButton
             fontAwesomeIcon="scroll"
             submitIntent={["showInventoryCard", true]}
-            tooltip="Show Inventory as a Card"
+            tooltip="Show Inventory in Player View"
           />
         )}
       </div>

@@ -278,7 +278,7 @@ export class EncounterCommander {
     this.tracker.EventLog.AddEvent(
       this.tracker.Encounter.MonstersActFirst()
         ? "Monsters now act first."
-        : "Player characters now act first."
+        : "Player heroes now act first."
     );
     Metrics.TrackEvent(Metrics.Event.PhaseOrderSwapped);
 
@@ -354,7 +354,7 @@ export class EncounterCommander {
       c.IsPlayerCharacter()
     );
     playerCharacters.forEach(pc => pc.CurrentHP(pc.MaxHP()));
-    this.tracker.EventLog.AddEvent("All player character HP was restored.");
+    this.tracker.EventLog.AddEvent("All player hero HP was restored.");
     Metrics.TrackEvent(Metrics.Event.AllPlayerCharacterHpRestored);
   };
 

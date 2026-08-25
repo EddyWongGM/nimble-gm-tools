@@ -2,11 +2,11 @@ import { ArrayHelpers, Field, FormikProps } from "formik";
 import * as React from "react";
 
 import { StatBlock } from "../../../common/StatBlock";
+import { Info } from "../../Components/Info";
 import { KeywordField } from "./KeywordField";
 import { NameAndModifierField } from "./NameAndModifierField";
 import { PowerField } from "./PowerField";
 import { SortableList } from "./SortableList";
-import { Info } from "../../Components/Info";
 
 type FormApi = FormikProps<any>;
 
@@ -35,7 +35,7 @@ export const ValueAndNotesField = (props: {
 export const InitiativeField = () => (
   <div className="c-statblock-editor__text">
     <label className="c-statblock-editor__label" htmlFor="InitiativeModifier">
-      Initiative Modifier
+      Initiative
       <Info>Additional modifier that stacks with Dexterity bonus</Info>
     </label>
     <div className="inline">
@@ -59,7 +59,7 @@ export const InitiativeField = () => (
 
 export const abilityScoreField = (abilityName: string) => (
   <div key={abilityName} className="c-statblock-editor__ability">
-    <label htmlFor={`ability-${abilityName}`}>
+    <label className="c-statblock-editor__label" htmlFor={`ability-${abilityName}`}>
       {StatBlock.AbilityDisplayNames[abilityName] || abilityName}
     </label>
     <Field
@@ -78,12 +78,17 @@ export const NameAndModifierFields = (props: {
     <SortableList
       api={props.api}
       listType={props.modifierType}
-      makeComponent={(index: number, arrayHelpers: ArrayHelpers) => (
+      makeComponent={(
+        index: number,
+        arrayHelpers: ArrayHelpers,
+        trailingAddButton?: JSX.Element
+      ) => (
         <NameAndModifierField
           key={index}
           arrayHelpers={arrayHelpers}
           modifierType={props.modifierType}
           index={index}
+          trailingAddButton={trailingAddButton}
         />
       )}
       makeNew={() => ({ Name: "", Modifier: "" })}
@@ -91,17 +96,27 @@ export const NameAndModifierFields = (props: {
   );
 };
 
-export const KeywordFields = (props: { api: FormApi; keywordType: string }) => {
+export const KeywordFields = (props: {
+  api: FormApi;
+  keywordType: string;
+  label?: string;
+}) => {
   return (
     <SortableList
       api={props.api}
       listType={props.keywordType}
-      makeComponent={(index: number, arrayHelpers: ArrayHelpers) => (
+      label={props.label}
+      makeComponent={(
+        index: number,
+        arrayHelpers: ArrayHelpers,
+        trailingAddButton?: JSX.Element
+      ) => (
         <KeywordField
           key={index}
           arrayHelpers={arrayHelpers}
           keywordType={props.keywordType}
           index={index}
+          trailingAddButton={trailingAddButton}
         />
       )}
       makeNew={() => ""}
@@ -109,18 +124,28 @@ export const KeywordFields = (props: { api: FormApi; keywordType: string }) => {
   );
 };
 
-export function PowerFields(props: { api: FormApi; powerType: string }) {
+export function PowerFields(props: {
+  api: FormApi;
+  powerType: string;
+  label?: string;
+}) {
   return (
     <SortableList
       api={props.api}
       listType={props.powerType}
-      makeComponent={(index: number, arrayHelpers: ArrayHelpers) => (
+      label={props.label}
+      makeComponent={(
+        index: number,
+        arrayHelpers: ArrayHelpers,
+        trailingAddButton?: JSX.Element
+      ) => (
         <PowerField
           key={index}
           remove={arrayHelpers.remove}
           move={arrayHelpers.move}
           powerType={props.powerType}
           index={index}
+          trailingAddButton={trailingAddButton}
         />
       )}
       makeNew={() => ({ Name: "", Content: "", Usage: "" })}

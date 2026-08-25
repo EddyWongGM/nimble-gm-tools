@@ -59,7 +59,6 @@ export function InitiativeList(props: {
       </div>
       <table className="combatants">
         <InitiativeListHeader
-          encounterActive={encounterState.ActiveCombatantId != null}
           showManaColumn={showManaColumn}
           showResourcesColumn={showResourcesColumn}
           showHitDiceColumn={showHitDiceColumn}
