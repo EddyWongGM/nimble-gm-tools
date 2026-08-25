@@ -129,4 +129,29 @@ describe("TextEnricher", () => {
     expect(tree.queryByText("NaN")).toBeNull();
     expect(rollDice).not.toHaveBeenCalled();
   });
+
+  test("KEY tag labels Wisdom as WIL, matching the app's Wis->Wil display name", () => {
+    const textEnricher = new TextEnricher(
+      () => {},
+      () => {},
+      () => {},
+      () => [],
+      () => new RegExp("asdf"),
+      new DefaultRules()
+    );
+
+    const statBlock = {
+      ...StatBlock.Default(),
+      Abilities: { Str: 10, Dex: 10, Con: 10, Int: 10, Wis: 20, Cha: 10 }
+    };
+    const enrichedText = textEnricher.EnrichText(
+      "Save DC [KEY]",
+      undefined,
+      statBlock
+    );
+    const tree = render(enrichedText);
+
+    expect(() => tree.getByText("(WIL)")).not.toThrow();
+    expect(tree.queryByText("(WIS)")).toBeNull();
+  });
 });

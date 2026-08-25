@@ -261,7 +261,7 @@ export class TextEnricher {
             return this.renderAbilityTag(
               key,
               abilities[highestField],
-              highestField.toUpperCase()
+              StatBlock.AbilityDisplayNames[highestField].toUpperCase()
             );
           }
 
