@@ -111,7 +111,7 @@ export class LibrariesCommander {
       name: character.Name
     });
     this.tracker.EventLog.AddEvent(
-      `Character ${character.Name} added to combat.`
+      `Hero ${character.Name} added to combat.`
     );
   };
 
@@ -203,7 +203,7 @@ export class LibrariesCommander {
     const statBlock = StatBlock.Default();
     const newId = probablyUniqueString();
 
-    statBlock.Name = "New Character";
+    statBlock.Name = "New Hero";
     statBlock.Player = "player";
     statBlock.Id = newId;
 

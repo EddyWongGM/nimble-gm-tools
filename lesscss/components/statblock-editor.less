@@ -85,9 +85,28 @@
 
 .c-statblock-editor__path-and-name {
   .inline();
+  flex-wrap: wrap;
 
   .label {
     flex-basis: 20%;
+  }
+}
+
+// The Name input otherwise inherits the general input rule's flex-grow:1
+// and claims all available row width, leaving no room for Editor Mode to
+// sit alongside it on the same row - split the row's remaining space
+// between them instead of letting Name take all of it.
+.c-statblock-editor__name-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 2 1 10rem;
+  min-width: 0;
+
+  input {
+    flex: 1;
+    min-width: 0;
+    width: auto;
   }
 }
 
@@ -96,7 +115,24 @@
   margin-bottom: 0.75rem;
 }
 
+// Same global `div { flex-direction: column }` gotcha as elsewhere in this
+// file - .autohide-field__children has no rule of its own, so its "Folder:"
+// label stacks above the input instead of sitting inline before it.
+.autohide-field__children {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .c-statblock-editor__save-as {
+  // Same global `div { flex-direction: column }` gotcha as elsewhere in
+  // this file - without this, "Save as a copy" and "Save as a Hero" (each
+  // its own .c-button-with-label div) stack instead of sitting side by side.
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: @medium-spacer;
   margin: @medium-spacer 0;
 
   .c-button-with-label {
@@ -107,6 +143,7 @@
 
 .c-statblock-editor__mode-toggle {
   .inline();
+  flex-shrink: 0;
 
   label {
     padding: @small-spacer;
@@ -143,6 +180,26 @@
   }
 }
 
+// SortableList's empty-state label is a <span> with the label text and the
+// add button as inline siblings on one line - without this, the button's
+// height stretches that line box and default baseline alignment pushes the
+// (shorter) text down relative to the non-empty state's plain label <div>,
+// which has no such sibling and so doesn't shift.
+span.c-statblock-editor__label {
+  display: inline-flex;
+  align-items: flex-start;
+
+  // .c-add-button's own top/bottom margin (meant for its usual full-width,
+  // block-level placement below a list of entries) still pushes it down
+  // even with align-items: flex-start above - flex alignment positions the
+  // button's margin box, not its border box, so an 8px top margin reads as
+  // an 8px vertical offset regardless.
+  .c-add-button {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 .c-statblock-editor__description {
   flex-direction: column;
   align-items: flex-start;
@@ -175,7 +232,7 @@
 .c-statblock-editor__stats {
   margin: @medium-spacer;
   padding: 1rem;
-  background-color: var(--text-inverted);
+  background-color: var(--card-background-white);
   border: 1px solid var(--accent-white);
 }
 
@@ -231,6 +288,108 @@
   vertical-align: baseline;
 }
 
+// The 7 keyword types (Speed, Senses, damage types, etc.) used to each get
+// their own full card - most hold just one short field, so that was mostly
+// empty margin/padding/border repeated 7 times. They now share a single
+// card, laid out 2-up since each entry is short.
+.c-statblock-editor__keywords {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: @small-spacer @medium-spacer;
+  align-items: start;
+}
+
+.c-statblock-editor__keyword-group {
+  min-width: 0;
+}
+
+// Same consolidation for the 6 power types (Traits, Actions, etc.), but
+// kept single-column - unlike keywords, these hold paragraph-length text
+// that needs the full row width. A light divider replaces the border each
+// used to have as its own card.
+.c-statblock-editor__power-group {
+  padding-top: @medium-spacer;
+  margin-top: @medium-spacer;
+  border-top: 1px solid var(--accent-white);
+
+  &:first-child {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+  }
+}
+
+.c-statblock-editor__stats {
+  // Every row's label shares one fixed width so all the value/notes inputs
+  // line up in a column, instead of each label pushing its inputs over by
+  // however wide that particular word happens to be.
+  .c-statblock-editor__label,
+  .c-text-field > .label {
+    flex: 0 0 9rem;
+  }
+
+  // TextField (Level/Challenge) otherwise inherits the general 12rem,
+  // flex-grow:1 input rule and stretches to fill the row - match the
+  // numeric spinner width used by every other field in this block instead.
+  .c-text-field input {
+    width: 6rem;
+    flex-basis: auto;
+    flex-grow: 0;
+  }
+
+  // Level/Defense/Mana/etc. are short enough to read centered, like the
+  // ability score inputs already do - unlike Hit Points' notes field
+  // (free text such as "17 + 1d10"), which reads better left-aligned.
+  .c-text-field input,
+  .value {
+    text-align: center;
+  }
+
+  // Free-text notes (e.g. "17 + 1d10") otherwise also inherit flex-grow:1
+  // and stretch to fill all remaining row width regardless of content.
+  .notes {
+    width: 10rem;
+    flex-grow: 0;
+  }
+
+  // Two short rows (Level+Defense, Mana+Resources, Hit Dice+Wounds) sit
+  // side by side instead of each taking a full row - their labels are all
+  // shorter than "Initiative Modifier", so they get a narrower shared
+  // column instead of the 9rem used above for the single-column rows.
+  &-row {
+    // The global `div { flex-direction: column }` rule (layout/base.less)
+    // wins for this property otherwise, since it's the only rule that
+    // declares it - a class selector overriding `display` alone doesn't
+    // implicitly override every other property an element selector set.
+    display: flex;
+    flex-direction: row;
+    gap: @medium-spacer;
+
+    > * {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .c-statblock-editor__label,
+    .c-text-field > .label {
+      flex: 0 0 5.5rem;
+    }
+
+    .notes {
+      width: auto;
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  // The initiative special-roll <select> has no width rule anywhere else,
+  // so it defaults to fitting its longest option ("Roll with Disadvantage"),
+  // which is wide enough to push this row past the panel width and wrap.
+  select {
+    width: 9rem;
+  }
+}
+
 .c-statblock-editor__abilityscores {
   flex-direction: row;
   flex-wrap: wrap;
@@ -242,8 +401,11 @@
 }
 
 .c-statblock-editor__ability {
-  margin: 0 @small-spacer;
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  gap: @small-spacer;
+  margin: @small-spacer;
 }
 
 .c-statblock-editor__textarea {

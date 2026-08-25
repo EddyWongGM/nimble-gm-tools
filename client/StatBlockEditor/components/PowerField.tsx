@@ -10,6 +10,7 @@ interface PowerFieldProps {
   move: (from: number, to: number) => void;
   powerType: string;
   index: number;
+  trailingAddButton?: JSX.Element;
 }
 
 export function PowerField(props: PowerFieldProps) {
@@ -35,6 +36,7 @@ export function PowerField(props: PowerFieldProps) {
           className="fa-clickable fa-trash"
           onClick={() => props.remove(props.index)}
         />
+        {props.trailingAddButton}
       </div>
       <div className="inline">
         <Field

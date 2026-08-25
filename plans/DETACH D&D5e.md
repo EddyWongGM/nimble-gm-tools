@@ -54,8 +54,7 @@ modifier), and `GetCombatantsSorted.tsx`. No server-side ability math exists.
 [`VisibleAbilityNames = ["Str", "Dex", "Int", "Wis"]`](../common/StatBlock.ts#L69-L76)
 (with `Wis` relabeled `"Wil"`) drives both the read-only display
 (`StatBlock.tsx`) and the editor (`StatBlockEditor.tsx`) - it's a plain array
-filter, not CSS. **Con is still functionally live** (feeds
-`ConcentrationBonus`). **Cha is fully dead** - stored, imported, and
+filter, not CSS. **Cha is fully dead** - stored, imported, and
 type-converted, but referenced by zero game logic anywhere. The raw score
 (not the modifier) is what a GM actually types into the editor
 ([`StatBlockEditorFields.tsx:60-71`](../client/StatBlockEditor/components/StatBlockEditorFields.tsx#L60-L71));
@@ -65,17 +64,30 @@ only the *read-only display* shows the computed modifier.
 `Open5eImporter.ts:32-39,200-207`, `StatBlockImporter.ts:51-60` (D&D-app XML
 `str`/`dex`/`con`/`int`/`wis`/`cha` attributes).
 
+**Fixed (2026-08-24): Nimble concentration is STR-based, not Con-based**
+(confirmed by the user, and independently corroborated by the codebase's own
+condition text - `Conditions2025.Concentrating`
+([`client/Rules/Conditions.ts:93-95`](../client/Rules/Conditions.ts#L93-L95))
+already read *"must make a **DC 10 STR save**"*). `Combatant.ConcentrationBonus`
+and `GetConcentrationRoll` were computing from `Abilities.Con`, not
+`Abilities.Str` - a live bug, not just stale-data-model residue: the
+reference text the app itself showed a GM already documented the correct
+Nimble rule, while the actual concentration-check roll silently used the
+wrong ability score. Fixed in
+[`Combatant.ts:283-286`](../client/Combatant/Combatant.ts#L283-L286)
+(`ConcentrationBonus` now reads `Abilities.Str`); `tsc` and the full Jest
+suite (55/55 suites, 420 passing) confirmed clean after the change.
+
+With Con's only live use gone, **`AbilityScores` shrinks cleanly to exactly
+the 4 shown fields** (`Str/Dex/Int/Wis`) - both Con and Cha confirmed safe to
+drop entirely, no open question remaining.
+
 **Recommendation:**
 - Store the modifier directly (drop the score→modifier indirection). This
   matches how a Nimble GM actually thinks about a stat block ("+2 STR"), not
   how a D&D one does ("16 STR").
-- Drop `Cha` entirely - confirmed zero live references, safe removal.
-- **Open question:** does Nimble's concentration mechanic need a Con-based
-  bonus at all, or is that pure D&D residue too? If Nimble drops Con as a
-  concept, `AbilityScores` shrinks to exactly the 4 shown fields
-  (`Str/Dex/Int/Wis`), which is the cleanest outcome. If Con stays relevant,
-  keep it as the 5th stored field but still convert it to a modifier like the
-  other four.
+- Drop `Cha` and `Con` entirely - both confirmed zero *correct* live
+  references (Con's one use was pointed at the wrong ability to begin with).
 - **Migration is required, not optional, once this ships** - see §8.
   Importers (`Open5eImporter.ts`, `StatBlockImporter.ts`) need
   `GetModifierFromScore` moved *into* them (convert-on-import), since their
@@ -244,22 +256,144 @@ already mapped for the unrelated backup-format work, so that investigation's
 "current backup/restore surfaces" section is a useful map of every place this
 migration would need to run too.
 
+## 9. Initiative-related commands
+
+The user flagged 7 commands as D&D-legacy and no longer needed: **Reroll
+Initiative, Start Encounter, End Encounter, Next Turn, Previous Turn, Edit
+Initiative, Link Initiative.** Traced each one fully - the honest finding is
+that only 3 of the 7 are cleanly removable as-is. The other 4 wrap
+mechanisms Nimble still depends on (round counting, tag-duration ticking,
+reaction resets, the "is combat active" gate `Group Monsters` and player-view
+hiding both key off) - those need the D&D-specific *part* stripped out while
+keeping the state machine underneath, not a straight deletion.
+
+**Safe to remove outright (D&D-only, no other consumers):**
+
+- **Reroll Initiative** - [`EncounterCommander.RerollInitiative`](../client/Commands/EncounterCommander.ts#L251-L254)
+  just re-opens the same dice-roll prompt `StartEncounter` uses. Its only
+  other consumer is as an optional callback passed into `NextTurn` for the
+  round-wrap auto-reroll behavior (see below) - removing the standalone
+  command doesn't touch that.
+- **Edit Initiative *(the command)*** - [`CombatantCommander.EditInitiative`](../client/Commands/CombatantCommander.tsx#L759-L762)
+  → [`CombatantViewModel.EditInitiative`](../client/Combatant/CombatantViewModel.ts#L243-L263),
+  a manual numeric-entry dialog. **But** this same method is also
+  auto-invoked, not via any command/toolbar path, whenever a combatant is
+  added while the encounter is active
+  ([`Encounter.ts:205-207`](../client/Encounter/Encounter.ts#L205-L207), wired
+  through `TrackerViewModel.tsx:120-131`) - so deleting the command without
+  also replacing that auto-invoked hook breaks "add a monster mid-fight."
+  Needs a Nimble-appropriate replacement there (e.g. assign the newcomer to
+  a phase/position), not just a deletion.
+- **Link Initiative *(the command)*** - [`CombatantCommander.LinkInitiative`](../client/Commands/CombatantCommander.tsx#L800-L817),
+  the manual "click one combatant, then another, to link them" flow. Its
+  underlying private helper, `linkCombatantInitiatives`
+  (`CombatantCommander.tsx:766-786`), is **shared** with `GroupCombatants` -
+  the implementation behind "Group Monsters," which Nimble keeps. Confirmed
+  `GroupCombatants` calls the shared helper directly, not through the
+  `LinkInitiative` command - so the standalone two-combatant-linking command
+  and its `LinkInitiativePrompt.tsx` UI can be deleted with **zero** effect
+  on Group Monsters.
+
+**Cannot be deleted outright - repurpose, don't remove:**
+
+- **Start Encounter / End Encounter** - these aren't just "roll initiative."
+  [`EncounterFlow.StartEncounter`](../client/Encounter/EncounterFlow.ts#L35-L50)
+  flips `State` to `"active"`, sets `ActiveCombatant`, and starts round/turn
+  timers - `SortByInitiative`/the dice-roll prompt is only *part* of what it
+  does. That `"active"`/`"inactive"` state independently gates: tag-duration
+  creation ([`TagPrompt.tsx:104-111`](../client/Prompts/TagPrompt.tsx#L104-L111),
+  confirmed - "Start Encounter to enable tag durations" is a real, currently
+  load-bearing gate, not just copy), whether adding a combatant mid-fight
+  triggers the initiative-slot prompt (`Encounter.ts:205-207`), and whether
+  Player View hides monsters outside combat
+  (`Settings.PlayerView.HideMonstersOutsideEncounter`). **Recommendation:**
+  keep the state machine and the Start/End Encounter commands (they still
+  make sense as "Start Combat"/"End Combat" without dice) but strip the
+  dice-rolling part specifically - have `StartEncounter` call `SortByPhase`
+  instead of opening `InitiativePrompt`/rolling `Initiative`. This is the
+  one open UX question in this section: does starting combat need any
+  prompt at all (e.g. "who goes first, players or monsters?"), or does it
+  just activate immediately using whatever `MonstersActFirst` is already
+  set to?
+- **Next Turn / Previous Turn** - by far the most load-bearing pair.
+  [`EncounterFlow.NextTurn`](../client/Encounter/EncounterFlow.ts#L65-L109)
+  and [`PreviousTurn`](../client/Encounter/EncounterFlow.ts#L111-L148) don't
+  just move `ActiveCombatantId` - they drive round counting
+  (`CombatTimer.IncrementCombatRounds`/`DecrementCombatRounds`), the
+  `StartOfTurn`/`EndOfTurn` duration-tag increment/decrement engine (Nimble's
+  own `Tag`/`DurationTiming` system, kept per NIMBLE_CONVERSION.md), per-turn
+  timers, and (on `NextTurn` only) resetting `ReactionsSpent(0)` - Nimble's
+  own reaction economy, not a D&D concept. **These must stay** as the "whose
+  phase-turn is active" advancement mechanism - only the round-wrap
+  auto-reroll sub-behavior inside `NextTurn` (gated by the `AutoRerollInitiativeOption`
+  setting) is the actual D&D-only part, and that's a separate, smaller
+  removal (see below). Also confirmed: `CombatantCommander.Remove`
+  ([`CombatantCommander.tsx:151-175`](../client/Commands/CombatantCommander.tsx#L151-L175))
+  calls `EncounterFlow.NextTurn` internally to skip past a deleted active
+  combatant - an internal dependency with nothing to do with the toolbar
+  button, unaffected either way.
+
+**Related, smaller D&D-only pieces worth removing alongside the above (not
+in the user's original list, but the same category):**
+
+- **`AutoRerollInitiativeOption` setting** and its round-wrap behavior inside
+  `NextTurn`/`Remove` (`EncounterFlow.ts:80-86`, `rerollInitiativeWithoutPrompt`
+  at `EncounterFlow.ts:154-158`) - the auto-reroll-on-round-wrap feature is
+  exactly as D&D-only as the manual Reroll Initiative command it's paired
+  with. Same fate, separate call site.
+- **`InitiativeBonus`/`GetInitiativeRoll`/`InitiativeAdvantage`/
+  `InitiativeSpecialRoll`/`InitiativeModifier`** (`Combatant.ts:276-281,
+  323-342`; `StatBlock.ts:44-46`) - the dice-roll-with-advantage machinery
+  behind Reroll/Edit Initiative's prompts. Removable once those prompts are
+  gone, though the plain `Initiative: number` field itself
+  (`CombatantState.ts:39`) should **stay** - it's still Group Monsters' and
+  drag-to-reorder's (`MoveCombatant`, `Encounter.ts:370-396`) internal sort
+  key, just never again presented to a user as a rolled D&D score.
+
+**Bonus dead code found while tracing this (unrelated to the 7 commands, but
+in the same area, confirmed unimported anywhere outside their own files):**
+
+- **`client/Reducers/*`** (`EncounterReducer.tsx`, `GetCombatantsSorted.tsx`,
+  `Actions.ts`, `EncounterActions.tsx`, `CombatantActions.tsx`,
+  `CombatantsReducer.tsx`) - a stale, unwired parallel reimplementation of
+  Start/End/Next/Previous Turn as bare `ActiveCombatantId` pointer moves,
+  with none of the tag/timer/reaction side effects the live `EncounterFlow`
+  has. Not reachable from the running app at all - safe to delete.
+- **`client/GetContextualCommandSuggestion.tsx`** - not imported anywhere,
+  including its own tests.
+- **`TutorialSteps.ts:117-126`** - a commented-out "Next Turn" tutorial step,
+  already inert.
+
 ## Summary / suggested order
 
-1. **§7 Conditions** - trivial, zero-risk, do any time.
-2. **§8 Migration scaffolding** - build the `UpdateStatBlock`-equivalent
+1. ~~§1's `ConcentrationBonus` fix~~ - **done (2026-08-24)**.
+2. **§7 Conditions, and §9's dead-code finds** (`client/Reducers/*`,
+   `GetContextualCommandSuggestion.tsx`) - trivial, zero-risk, do any time.
+3. **§9 Reroll Initiative / Edit Initiative (command) / Link Initiative
+   (command)** - also close to zero-risk once each command's one dependent
+   call site is handled (Edit Initiative's mid-fight-add hook needs a
+   replacement, not just deletion; Reroll and Link Initiative have none).
+4. **§8 Migration scaffolding** - build the `UpdateStatBlock`-equivalent
    first, since §1 (and possibly §4) depend on it existing before they can
    ship safely.
-3. **§1 Ability scores** - the concrete motivating example; blocked only on
-   the Con/concentration open question and §8.
-4. **§2 Skills** - cheap deletion once the "does Nimble want this at all"
+5. **§1 Ability scores (storage-shape change)** - the concrete motivating
+   example; Con/Cha removal is now unblocked (resolved above), so this is
+   gated only on §8 existing first.
+6. **§9 Start/End Encounter's dice-roll removal, and
+   `AutoRerollInitiativeOption`** - blocked on one UX open question (does
+   starting combat need any prompt at all).
+7. **§2 Skills** - cheap deletion once the "does Nimble want this at all"
    question is answered; Saves likely needs no structural change.
-5. **§4 Spells** - the most concretely stale area (School/Components/
+8. **§4 Spells** - the most concretely stale area (School/Components/
    Ritual/Classes are live D&D mechanics with no Nimble equivalent found) -
    needs the same open questions answered before deciding hide-vs-delete.
-6. **§3 misc StatBlock fields** - lowest priority; mostly already freeform
+9. **§3 misc StatBlock fields** - lowest priority; mostly already freeform
    strings, blocked on rules questions (CR vs. flat level, action-economy
    split) rather than code.
+
+**Not going anywhere:** §9's Next Turn / Previous Turn (minus the auto-reroll
+sub-behavior) - they're core Nimble turn/round/tag/reaction infrastructure,
+not D&D residue, despite being on the user's original list.
 
 Every open question above needs a Nimble-rules answer from the user before
 implementation starts - this plan deliberately stops at "here's exactly what

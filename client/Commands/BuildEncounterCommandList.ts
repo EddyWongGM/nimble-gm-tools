@@ -93,7 +93,7 @@ export const BuildEncounterCommandList = (
     }),
     new Command({
       id: "restore-all-player-character-hp",
-      description: "Restore all Player Character HP",
+      description: "Restore all Player Hero HP",
       actionBinding: c.RestoreAllPlayerCharacterHP,
       fontAwesomeIcon: "clinic-medical",
       defaultShowOnActionBar: false

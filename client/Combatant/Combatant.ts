@@ -280,8 +280,10 @@ export class Combatant {
     return dexterityModifier + (this.StatBlock().InitiativeModifier || 0);
   });
 
+  // Nimble's concentration check is a DC 10 STR save, not D&D's Con save -
+  // see Conditions2025.Concentrating in client/Rules/Conditions.ts.
   public ConcentrationBonus = ko.computed(() =>
-    this.Encounter.Rules.GetModifierFromScore(this.StatBlock().Abilities.Con)
+    this.Encounter.Rules.GetModifierFromScore(this.StatBlock().Abilities.Str)
   );
 
   public IsPlayerCharacter = ko.computed(() =>

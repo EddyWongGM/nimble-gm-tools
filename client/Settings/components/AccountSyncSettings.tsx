@@ -56,7 +56,7 @@ export class AccountSyncSettings extends React.Component<
             this.getCounts(this.props.libraries.StatBlocks.GetAllListings())
           )}
           {this.syncCount(
-            "Characters",
+            "Heroes",
             this.getCounts(
               this.props.libraries.PersistentCharacters.GetAllListings()
             )

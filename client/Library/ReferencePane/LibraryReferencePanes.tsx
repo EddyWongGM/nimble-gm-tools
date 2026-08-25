@@ -160,9 +160,9 @@ function LibraryHeader(props: { selectedLibrary: SelectableTab }) {
     StatBlocks:
       "When you add a Creature, a copy of its Stat Block joins the Encounter as a Name.",
     PersistentCharacters:
-      "Each Character can each only be added to an Encounter once, and they will be persistent across different Encounters.",
+      "Each Hero can each only be added to an Encounter once, and they will be persistent across different Encounters.",
     Encounters:
-      "Loading an Encounter adds all of the Names saved in it. Characters who are already present are not duplicated.",
+      "Loading an Encounter adds all of the Names saved in it. Heroes who are already present are not duplicated.",
     Spells: null,
     Scenes:
       "Click a saved scene to set it as the Player View background image."

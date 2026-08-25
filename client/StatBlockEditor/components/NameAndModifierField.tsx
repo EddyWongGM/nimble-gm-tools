@@ -7,6 +7,7 @@ interface NameAndModifierFieldProps {
   arrayHelpers: ArrayHelpers;
   modifierType: string;
   index: number;
+  trailingAddButton?: JSX.Element;
 }
 
 export function NameAndModifierField(props: NameAndModifierFieldProps) {
@@ -35,6 +36,7 @@ export function NameAndModifierField(props: NameAndModifierFieldProps) {
         className="fa-clickable fa-trash"
         onClick={() => props.arrayHelpers.remove(props.index)}
       />
+      {props.trailingAddButton}
     </div>
   );
 }
