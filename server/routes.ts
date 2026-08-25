@@ -30,10 +30,19 @@ const baseUrl = process.env.BASE_URL || "";
 const patreonClientId = process.env.PATREON_CLIENT_ID || "PATREON_CLIENT_ID";
 const defaultAccountLevel = process.env.DEFAULT_ACCOUNT_LEVEL || "none";
 const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID || "";
+// Hard override for a shared hosted instance: forces both action flags off
+// regardless of ALLOW_SERVER_SHUTDOWN/ALLOW_SERVER_REBUILD, so a stray
+// "true" left in a multi-tenant environment's config can't reintroduce
+// these routes. The per-process token guard below was designed for "one DM,
+// other devices on the LAN are players" - it doesn't cover a multi-tenant
+// deployment, where every tenant's own DM-facing page would receive a valid
+// token for the same shared process.
+const isMultiTenant = process.env.MULTI_TENANT_DEPLOYMENT === "true";
 // Opt-in only: this codebase also runs as the public hosted service, so a
 // route that stops the process must never exist unless explicitly enabled
 // for a local, single-user instance.
-const allowServerShutdown = process.env.ALLOW_SERVER_SHUTDOWN === "true";
+const allowServerShutdown =
+  !isMultiTenant && process.env.ALLOW_SERVER_SHUTDOWN === "true";
 // A per-process secret required by /shutdown, generated fresh on each server
 // start. Only the DM-facing tracker page is handed this token (see
 // getClientOptions) - the Player View page, which other devices on the LAN
@@ -43,7 +52,8 @@ const shutdownToken = probablyUniqueString();
 // Same opt-in-only reasoning as allowServerShutdown: this route runs `npm
 // run build` as a child process, which must never be reachable unless
 // explicitly enabled for a local, single-user instance.
-const allowServerRebuild = process.env.ALLOW_SERVER_REBUILD === "true";
+const allowServerRebuild =
+  !isMultiTenant && process.env.ALLOW_SERVER_REBUILD === "true";
 const rebuildToken = probablyUniqueString();
 
 export type Req = Express.Request & express.Request;

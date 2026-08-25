@@ -51,5 +51,10 @@ export default [
     Name: "Nate Whittington",
     Github: "https://github.com/bluecliffadventures",
     PatreonId: "4000000"
-  }
+  },
+  {
+    Name: "Eddy Wong",
+    Github: "",
+    PatreonId: "7741033"
+  }  
 ];

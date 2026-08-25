@@ -113,6 +113,7 @@
     "dev:server": "node node_modules/nodemon/bin/nodemon.js",
     "dev:reload": "browser-sync start --config browser-sync.config.js",
     "build:digitalocean": "npm install --production=false && npm run build && npm ci",
+    "heroku-postbuild": "npm run build",
     "start": "node server/server.js",
     "clean": "git clean -f -x -e node_modules/",
     "test": "jest --projects client/jest.config.js server/jest.config.js --runInBand",

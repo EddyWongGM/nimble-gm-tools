@@ -22,7 +22,12 @@ import { fetchRemoteText } from "./fetchRemoteText";
 type Req = Express.Request & express.Request & { rawBody: string };
 type Res = Express.Response & express.Response;
 
-const tiersWithAccountSyncEntitled = [
+// These default IDs are the original Improved Initiative Patreon campaign's
+// tier rewards. A different Patreon campaign (e.g. a new one for this fork)
+// gets entirely different tier IDs - override via the env vars below rather
+// than editing these defaults, so a hosted deployment can point at its own
+// campaign without a code change.
+const defaultTiersWithAccountSyncEntitled = [
   "1322253", // deprecated: "Improved Initiative"
   "8750629", // "Account Sync"
   "1937132", // deprecated: "Epic Initiative"
@@ -30,9 +35,38 @@ const tiersWithAccountSyncEntitled = [
   "28096851" // "Mythic Tier"
 ];
 
-const tiersWithEpicEntitled = ["1937132", "8749940", "28096851"];
+const defaultTiersWithEpicEntitled = ["1937132", "8749940", "28096851"];
 
-const tiersWithMythicEntitled = ["28096851"];
+const defaultTiersWithMythicEntitled = ["28096851"];
+
+function tierIdsFromEnv(
+  envValue: string | undefined,
+  defaultIds: string[]
+): string[] {
+  if (envValue === undefined) {
+    return defaultIds;
+  }
+
+  return envValue
+    .split(",")
+    .map(id => id.trim())
+    .filter(id => id.length > 0);
+}
+
+const tiersWithAccountSyncEntitled = tierIdsFromEnv(
+  process.env.PATREON_ACCOUNT_SYNC_TIER_IDS,
+  defaultTiersWithAccountSyncEntitled
+);
+
+const tiersWithEpicEntitled = tierIdsFromEnv(
+  process.env.PATREON_EPIC_TIER_IDS,
+  defaultTiersWithEpicEntitled
+);
+
+const tiersWithMythicEntitled = tierIdsFromEnv(
+  process.env.PATREON_MYTHIC_TIER_IDS,
+  defaultTiersWithMythicEntitled
+);
 
 const baseUrl = process.env.BASE_URL;
 const patreonClientId = process.env.PATREON_CLIENT_ID;
