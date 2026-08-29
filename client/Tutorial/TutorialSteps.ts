@@ -23,7 +23,7 @@ function getLocation(element: HTMLElement) {
 export const TutorialSteps: TutorialStep[] = [
   {
     Message:
-      "Let's start by adding a few creatures to the encounter. <strong>Click on any creature</strong> to add one to the encounter pane.",
+      "Let's start by adding a few monsters to the view. <strong>Click on any monster</strong> to add one to the encounter pane.",
     RaiseSelector: ".left-column, .prompt, .combatants",
     CalculatePosition: elements => {
       const location = getLocation(elements.item(0));
@@ -47,7 +47,7 @@ export const TutorialSteps: TutorialStep[] = [
   },
   {
     Message:
-      "It's easy to add your own player characters to Improved Initiative. For now, <strong>add a few sample characters</strong>.",
+      "It's easy to add your own heroes to Nimble RPG App. For now, <strong>add a few sample characters</strong>.",
     RaiseSelector: ".left-column, .combatants",
     CalculatePosition: elements => {
       const location = getLocation(elements[0]);

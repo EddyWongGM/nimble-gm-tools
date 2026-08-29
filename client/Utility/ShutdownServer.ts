@@ -4,7 +4,7 @@ import { env } from "../Environment";
 export async function ConfirmAndShutdownServer(): Promise<void> {
   if (
     confirm(
-      "Shut down the Improved Initiative server running on this machine? This will disconnect any Player Views until it is started again."
+      "Shut down the Nimble RPG App server running on this machine? This will disconnect any Player Views until it is started again."
     )
   ) {
     try {

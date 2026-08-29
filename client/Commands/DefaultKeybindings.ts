@@ -29,7 +29,6 @@ export const DefaultKeybindings: { [commandId: string]: string } = {
   "quick-edit-statblock": "e",
   "edit-statblock": "shift+e",
   "set-initiative": "alt+i",
-  "link-initiative": "alt+l",
   "move-down": "alt+j",
   "move-up": "alt+k",
   "select-next": "j",

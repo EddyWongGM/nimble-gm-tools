@@ -44,14 +44,8 @@ import { ApplyTemporaryManaPrompt } from "../Prompts/ApplyTemporaryManaPrompt";
 import { ApplyTemporaryResourcesPrompt } from "../Prompts/ApplyTemporaryResourcesPrompt";
 import { ApplyTemporaryHitDicePrompt } from "../Prompts/ApplyTemporaryHitDicePrompt";
 import { ApplyTemporaryWoundsPrompt } from "../Prompts/ApplyTemporaryWoundsPrompt";
-import { LinkInitiativePrompt } from "../Prompts/LinkInitiativePrompt";
 import { TextEnricherContext } from "../TextEnricher/TextEnricher";
 import { QuickEditStatBlockPrompt } from "../Prompts/QuickEditStatBlockPrompt";
-
-interface PendingLinkInitiative {
-  combatant: CombatantViewModel;
-  promptId: string;
-}
 
 export class CombatantCommander {
   private selectedCombatantIds = ko.observableArray<string>([]);
@@ -114,12 +108,6 @@ export class CombatantCommander {
     if (!data) {
       return;
     }
-    const pendingLink = this.pendingLinkInitiative();
-    if (pendingLink) {
-      this.linkCombatantInitiatives([data, pendingLink.combatant]);
-      this.tracker.PromptQueue.Remove(pendingLink.promptId);
-    }
-
     const combatantsToRemainSelected = appendSelection
       ? this.selectedCombatantIds()
       : [];
@@ -785,13 +773,10 @@ export class CombatantCommander {
     return false;
   };
 
-  private pendingLinkInitiative = ko.observable<PendingLinkInitiative>(null);
-
   private linkCombatantInitiatives = (
     combatants: CombatantViewModel[],
     resort = true
   ) => {
-    this.pendingLinkInitiative(null);
     const highestInitiative = combatants
       .map(c => c.Combatant.Initiative())
       .sort((a, b) => b - a)[0];
@@ -819,25 +804,6 @@ export class CombatantCommander {
     // order, only clustering them into a contiguous phase block.
     this.linkCombatantInitiatives(combatants, false);
     this.tracker.Encounter.SortByPhase();
-  };
-
-  public LinkInitiative = () => {
-    if (!this.HasSelected()) {
-      return;
-    }
-
-    const selected = this.SelectedCombatants();
-
-    if (selected.length == 1) {
-      const prompt = LinkInitiativePrompt(() =>
-        this.pendingLinkInitiative(null)
-      );
-      const promptId = this.tracker.PromptQueue.Add(prompt);
-      this.pendingLinkInitiative({ combatant: selected[0], promptId });
-      return;
-    }
-
-    this.linkCombatantInitiatives(selected);
   };
 
   public MoveUp = () => {

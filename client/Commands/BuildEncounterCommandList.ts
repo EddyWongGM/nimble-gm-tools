@@ -18,7 +18,8 @@ export const BuildEncounterCommandList = (
       id: "start-encounter",
       description: "Start Encounter",
       actionBinding: c.StartEncounter,
-      fontAwesomeIcon: "play"
+      fontAwesomeIcon: "play",
+      defaultShowOnActionBar: false
     }),
     new Command({
       id: "reroll-initiative",
@@ -31,7 +32,8 @@ export const BuildEncounterCommandList = (
       id: "group-all-monsters",
       description: "Group Monsters",
       actionBinding: c.GroupAllMonsters,
-      fontAwesomeIcon: "object-group"
+      fontAwesomeIcon: "object-group",
+      defaultShowOnActionBar: false
     }),
     new Command({
       id: "swap-phase-order",
@@ -49,7 +51,8 @@ export const BuildEncounterCommandList = (
       id: "end-encounter",
       description: "End Encounter",
       actionBinding: c.EndEncounter,
-      fontAwesomeIcon: "stop"
+      fontAwesomeIcon: "stop",
+      defaultShowOnActionBar: false
     }),
     new Command({
       id: "clear-encounter",
@@ -74,8 +77,7 @@ export const BuildEncounterCommandList = (
       id: "open-library-manager",
       description: "Library Manager",
       actionBinding: c.ToggleLibraryManager,
-      fontAwesomeIcon: "book-open",
-      defaultShowOnActionBar: false
+      fontAwesomeIcon: "book-open"
     }),
     new Command({
       id: "roll-dice",
@@ -116,7 +118,8 @@ export const BuildEncounterCommandList = (
       id: "next-turn",
       description: "Next Turn",
       actionBinding: c.NextTurn,
-      fontAwesomeIcon: "step-forward"
+      fontAwesomeIcon: "step-forward",
+      defaultShowOnActionBar: false
     }),
     new Command({
       id: "previous-turn",

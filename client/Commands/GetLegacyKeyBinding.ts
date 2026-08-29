@@ -23,7 +23,6 @@ const LegacyCommandSettingsKeys = {
   "set-alias": "Rename",
   "edit-statblock": "Edit Statblock",
   "set-initiative": "Edit Initiative",
-  "link-initiative": "Link Initiative",
   "move-down": "Move Down",
   "move-up": "Move Up",
   "select-next": "Select Next",

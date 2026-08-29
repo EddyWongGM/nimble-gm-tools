@@ -171,7 +171,11 @@ export default async function (
         // at all. Force these two to always revalidate instead - still
         // cheap (a 304 with no body) when nothing changed, but picks up a
         // rebuild on a normal refresh rather than requiring a hard refresh.
-        if (filePath.endsWith(".js") || filePath.endsWith(".css")) {
+        if (
+          filePath.endsWith(".js") ||
+          filePath.endsWith(".css") ||
+          filePath.endsWith("sample_players.json")
+        ) {
           res.setHeader("Cache-Control", "no-cache");
         }
       }
@@ -301,7 +305,7 @@ export default async function (
               "Rebuild isn't available in the npm run dev workflow - it " +
               "already rebuilds automatically on file changes. Use a " +
               "production instance (npm start, or the " +
-              "Start-NimbleGMTools scripts) instead."
+              "Start-NimbleRPGApp scripts) instead."
           });
         }
         if (isRebuildInProgress()) {

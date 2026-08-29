@@ -1,11 +1,11 @@
 {
-  "name": "improved-initiative",
-  "version": "3.16.6",
-  "description": "Combat tracker for Dungeons and Dragons (D&D) 5th Edition",
+  "name": "nimblerpg-app",
+  "version": "0.8.0",
+  "description": "GM tool for Nimble TTRPG",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cynicaloptimist/improved-initiative.git"
+    "url": "https://github.com/EddyWongGM/nimble-gm-tools.git"
   },
   "engines": {
     "npm": "^11.3.0",

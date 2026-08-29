@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 import * as React from "react";
 import { Listable } from "../../../common/Listable";
+import { SAMPLE_HEROES_FOLDER_NAME } from "../Libraries";
 import { Listing } from "../Listing";
 import { RenameResult } from "../RenameResult";
 import { Folder } from "./Folder";
@@ -78,7 +79,13 @@ function buildFolderComponents<T extends Listable>(
   parentPath: string
 ) {
   return Object.keys(foldersByKey)
-    .sort()
+    .sort((a, b) => {
+      // Keep the preloaded sample folder below any folders the GM creates,
+      // regardless of what they name them.
+      if (a === SAMPLE_HEROES_FOLDER_NAME) return 1;
+      if (b === SAMPLE_HEROES_FOLDER_NAME) return -1;
+      return a < b ? -1 : a > b ? 1 : 0;
+    })
     .map(key => {
       const folder = foldersByKey[key];
       // Folder labels contain only one segment, while rename commands need the

@@ -235,7 +235,7 @@ export class TrackerViewModel {
     if (!env.IsLoggedIn || !env.HasEpicInitiative) {
       Metrics.TrackPatreonAccessDenied(Metrics.LeadSource.ImporterLoginFail, {
         link_url: env.IsLoggedIn
-          ? "https://www.patreon.com/join/improvedinitiative"
+          ? "https://www.patreon.com/join/NimbleRPGApp"
           : env.PatreonLoginUrl
       });
     }
@@ -275,13 +275,13 @@ export class TrackerViewModel {
           <span className="no-epic-initiative-for-import">
             {"The D&D Beyond Importer is available for "}
             <a
-              href={"https://www.patreon.com/join/improvedinitiative"}
+              href={"https://www.patreon.com/join/NimbleRPGApp"}
               target="_blank"
               onClick={() =>
                 Metrics.TrackPatreonSignupIntent(
                   Metrics.LeadSource.ImporterLoginFail,
                   {
-                    link_url: "https://www.patreon.com/join/improvedinitiative"
+                    link_url: "https://www.patreon.com/join/NimbleRPGApp"
                   }
                 )
               }

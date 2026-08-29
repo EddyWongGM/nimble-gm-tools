@@ -4,8 +4,8 @@ export function LoadingIndicator() {
   return (
     <div className="loading-indicator">
       <img
-        src="../img/boot-white-on-darkred-192.png"
-        alt="Improved Initiative Flying Boot Logo"
+        src="../img/book-white-on-black-192.png"
+        alt="Nimble RPG App Logo"
       />
       <p>Loading...</p>
     </div>

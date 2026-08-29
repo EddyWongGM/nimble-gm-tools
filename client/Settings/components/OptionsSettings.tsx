@@ -105,8 +105,7 @@ export function OptionsSettings(props: {
         </Info>
       </Toggle>
       <Toggle fieldName="TrackerView.DisplayHPBar">
-        Display HP/Mana/Resources/Hit Dice/Wounds Bar of Active or Selected
-        Character
+        Display Indicators of Active or Selected Character
         <Info>
           Show a small HP, Mana, Resources, Hit Dice, and Wounds bar
           indicator for any selected combatant(s), as well as for the

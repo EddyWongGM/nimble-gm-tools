@@ -21,7 +21,7 @@ export function EpicInitiativeSettings() {
     <div className="tab-content epicInitiative">
       <h3>Epic Initiative</h3>
       <p>
-        <strong>Thank you for supporting Improved Initiative!</strong>
+        <strong>Thank you for supporting Nimble RPG App!</strong>
       </p>
       <Button
         text="Get the D&amp;D Beyond StatBlock Importer"

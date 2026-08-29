@@ -79,7 +79,7 @@ export class LocalDataSettings extends React.Component {
   private importDataAndReplace = async (file: File) => {
     if (
       confirm(
-        `Replace your Improved Initiative data with imported ${file.name} and reload?`
+        `Replace your Nimble RPG App data with imported ${file.name} and reload?`
       )
     ) {
       await Store.DeleteAll();

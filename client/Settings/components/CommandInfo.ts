@@ -28,9 +28,5 @@ export const CommandInfoById = {
     "You can view the original name of a renamed combatant by viewing its statblock.",
   "edit-statblock":
     "If you edit a creature's statblock, it will only affect this combatant. " +
-    "If you edit a hero's statblock, it will persist across encounters.",
-  "link-initiative":
-    "Creatures in an initiative group will keep the same initiative count. " +
-    "Group members keep their initiative in sync when you roll or edit " +
-    "initiative, and you can unlink individual members."
+    "If you edit a hero's statblock, it will persist across encounters."
 };

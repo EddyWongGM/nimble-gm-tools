@@ -119,13 +119,8 @@ export function getDefaultSettings(): Settings {
     StatBlock: {
       CustomFields: []
     },
-    PreloadedStatBlockSources: {
-      "wotc-srd": true,
-      "srd-2024": true
-    },
-    PreloadedSpellSources: {
-      "wotc-srd": true
-    },
+    PreloadedStatBlockSources: {},
+    PreloadedSpellSources: {},
     RecentItemIds: [],
     Version: process.env.VERSION || "0.0.0"
   };

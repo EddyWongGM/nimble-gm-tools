@@ -8,6 +8,7 @@ import { StatBlock } from "../../common/StatBlock";
 import { Account } from "../Account/Account";
 import { AccountClient } from "../Account/AccountClient";
 import { Store } from "../Utility/Store";
+import { LegacySynchronousLocalStore } from "../Utility/LegacySynchronousLocalStore";
 import { SavedEncounter } from "../../common/SavedEncounter";
 import { PersistentCharacter } from "../../common/PersistentCharacter";
 import { Library, useLibrary } from "./useLibrary";
@@ -147,13 +148,9 @@ export function useLibraries(
   React.useEffect(() => {
     preloadSpells(Spells, settings);
     preloadStatBlocks(StatBlocks, settings);
+    preloadSamplePlayersForNewcomers(PersistentCharacters);
 
-    getAccountOrSampleCharacters(
-      accountClient,
-      PersistentCharacters,
-      libraries,
-      signalLoadComplete
-    );
+    syncAccountCharacters(accountClient, libraries, signalLoadComplete);
   }, []);
 
   return libraries;
@@ -184,6 +181,47 @@ async function preloadStatBlocks(
   }
 }
 
+export const SAMPLE_HEROES_FOLDER_NAME = "Sample Heroes";
+
+async function preloadSamplePlayersForNewcomers(
+  PersistentCharacters: Library<PersistentCharacter>
+) {
+  // Mirrors the "newcomer" check used to decide whether to show the
+  // tutorial (TrackerViewModel.TutorialVisible): no SkipIntro means this
+  // browser has never been through onboarding. A separate flag tracks
+  // whether we've already seeded sample players, so a page reload during
+  // onboarding (before SkipIntro is set) doesn't seed them twice.
+  const hasSkippedIntro = LegacySynchronousLocalStore.Load(
+    LegacySynchronousLocalStore.User,
+    "SkipIntro"
+  );
+  const hasLoadedSamplePlayers = LegacySynchronousLocalStore.Load(
+    LegacySynchronousLocalStore.User,
+    "SamplePlayersLoaded"
+  );
+  if (hasSkippedIntro || hasLoadedSamplePlayers) {
+    return;
+  }
+
+  LegacySynchronousLocalStore.Save(
+    LegacySynchronousLocalStore.User,
+    "SamplePlayersLoaded",
+    true
+  );
+
+  try {
+    const response = await axios.get("/sample_players.json");
+    const sampleStatBlocks: StatBlock[] = response.data;
+    for (const statBlock of sampleStatBlocks) {
+      await PersistentCharacters.SaveNewListing(
+        PersistentCharacter.Initialize(statBlock)
+      );
+    }
+  } catch (error) {
+    console.warn(`Problem loading sample players: ${error}`);
+  }
+}
+
 async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
   const enabledSources = _.pickBy(
     settings.PreloadedSpellSources,
@@ -204,20 +242,13 @@ async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
   }
 }
 
-function getAccountOrSampleCharacters(
+function syncAccountCharacters(
   accountClient: AccountClient,
-  PersistentCharacters: Library<PersistentCharacter>,
   libraries: Libraries,
   signalLoadComplete: (string: "localAsync" | "account") => void
 ) {
   accountClient.GetAccount(async account => {
     if (!account) {
-      const persistentCharacterCount = await Store.Count(
-        Store.PersistentCharacters
-      );
-      if (persistentCharacterCount == 0) {
-        getAndAddSamplePersistentCharacters(PersistentCharacters);
-      }
       signalLoadComplete("account");
       return;
     }
@@ -229,25 +260,6 @@ function getAccountOrSampleCharacters(
     handleAccountSync(account, accountClient, libraries);
   });
 }
-
-const getAndAddSamplePersistentCharacters = (
-  persistentCharacterLibrary: Library<PersistentCharacter>
-) => {
-  axios.get<StatBlock[]>("/sample_players.json").then(response => {
-    if (!response) {
-      return;
-    }
-    const statblocks = response.data;
-    statblocks.forEach(statBlock => {
-      statBlock.Path = "Sample Player Characters";
-      const persistentCharacter = PersistentCharacter.Initialize({
-        ...StatBlock.Default(),
-        ...statBlock
-      });
-      persistentCharacterLibrary.SaveNewListing(persistentCharacter);
-    });
-  });
-};
 
 const handleAccountSync = (
   account: Account,

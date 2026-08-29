@@ -33,7 +33,7 @@ async function improvedInitiativeServer() {
   const defaultPort = parseInt(process.env.PORT || "80");
 
   await server.listen(defaultPort);
-  console.log("Launched Improved Initiative server.");
+  console.log("Launched Nimble RPG App server.");
 
   process.on("SIGINT", shutdownServer);
   process.on("SIGTERM", shutdownServer);
@@ -51,7 +51,7 @@ async function improvedInitiativeServer() {
   const currentWorker = (cluster as unknown as { worker?: cluster.Worker })
     .worker;
   if (currentWorker) {
-    console.log("Improved Initiative node %s running", currentWorker.id);
+    console.log("Nimble RPG App node %s running", currentWorker.id);
   }
 }
 

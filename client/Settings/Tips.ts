@@ -1,12 +1,12 @@
 export const tips = [
   "You can set keybindings and explore advanced commands on the 'Commands' tab.",
-  "Encounters built in <a href='https://koboldplus.club/' target='_blank'>Kobold Fight Club</a> can be imported into Improved Initiative.",
-  "Improved Initiative is in a beta state. Please periodically export your user data for safe keeping!",
+  // "Encounters built in <a href='https://koboldplus.club/' target='_blank'>Kobold Fight Club</a> can be imported into Nimble RPG App.",
+  "Nimble RPG App is in a beta state. Please periodically export your user data for safe keeping!",
   "You can follow your Encounter on any device with the Player View URL.",
-  `Creatures and Heroes behave differently when added from the library. A Creature's Statblock is copied onto a single Combatant, which exists for the span of the Encounter. On the other hand, a Hero's Statblock is unique and persists its changes across different Encounters.`,
+  `Monsters and Heroes behave differently when added from the library. A Monster's Statblock is copied onto a single Combatant, which exists for the span of the Encounter. On the other hand, a Hero's Statblock is unique and persists its changes across different Encounters.`,
   `The "Edit Unique Statblock" Combatant Command lets you make ad-hoc changes to a single Combatant's statblock without affecting your Creature Library.`,
   "You can restore hit points by applying negative damage to a Combatant.",
-  "Temporary hit points obey the 5th edition rules- applying temporary hitpoints will ignore temporary hit points a Combatant already has.",
+  "Temporary hit points obey the Nimble RPG rules- applying temporary hitpoints will ignore temporary hit points a Combatant already has.",
   "Hidden Combatants can be added to the encounter by holding 'alt' when clicking their library entry.",
   "You can select multiple Combatants by holding a modifier key. You can apply damage or tags to multiple Combatants at the same time this way.",
   "Moving a Combatant in the initiative order will automatically adjust their initiative count.",
@@ -15,8 +15,8 @@ export const tips = [
   "You can create Tags that disappear after a set amount of rounds in order to automatically remove conditions at the end of a Combatant's turn.",
   "You can get automatic Concentration reminders by using the tag 'Concentrating.' You can disable this feature in the settings.",
   "The Library Manager allows you to move, delete, or export multiple items at the same time. You can enable it in the Encounter Commands tab.",
-  "Want to contribute? Improved Initiative is written in TypeScript and runs on node.js. Fork it on <a href='http://github.com/cynicaloptimist/improved-initiative' target='_blank'>GitHub.</a>",
-  "Account Sync will let you access your Characters and Encounters from any device. <a href='https://www.patreon.com/join/improvedinitiative' target='_blank'>Pledge on Patreon</a> to unlock this benefit!",
-  "Epic Initiative lets you enhance your Player View with combatant portraits and custom colors. <a href='https://www.patreon.com/join/improvedinitiative' target='_blank'>Pledge on Patreon</a> to support the app and get Epic Initiative!",
-  "I also made <a href='http://paragondashboard.com' target='_blank'>Paragon Campaign Dashboard</a>, a powerful, customizable virtual GM screen and campaign prep app."
+  // "Want to contribute? Nimble RPG App is written in TypeScript and runs on node.js. Fork it on <a href='https://github.com/EddyWongGM/nimble-gm-tools' target='_blank'>GitHub.</a>",
+  "Account Sync will let you access your Heroes and Encounters from any device. <a href='https://www.patreon.com/NimbleRPGApp' target='_blank'>Pledge on Patreon</a> to unlock this benefit!",
+  "Epic Nimble RPG App lets you enhance your Player View with combatant portraits and custom colors. <a href='https://www.patreon.com/NimbleRPGApp' target='_blank'>Pledge on Patreon</a> to support the app and get Epic Tier!",
+  // "I also made <a href='http://paragondashboard.com' target='_blank'>Paragon Campaign Dashboard</a>, a powerful, customizable virtual GM screen and campaign prep app."
 ];
