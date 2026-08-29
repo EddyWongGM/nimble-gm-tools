@@ -221,41 +221,41 @@ export const BuildCombatantCommandList: (
     fontAwesomeIcon: "magic",
     defaultShowOnActionBar: true
   }),
-  new Command({
-    id: "set-initiative",
-    description: "Edit Initiative",
-    actionBinding: c.EditInitiative,
-    fontAwesomeIcon: "stopwatch",
-    defaultShowOnActionBar: false
-  }),
-  new Command({
-    id: "move-down",
-    description: "Move Down",
-    actionBinding: c.MoveDown,
-    fontAwesomeIcon: "angle-double-down",
-    defaultShowOnActionBar: false
-  }),
-  new Command({
-    id: "move-up",
-    description: "Move Up",
-    actionBinding: c.MoveUp,
-    fontAwesomeIcon: "angle-double-up",
-    defaultShowOnActionBar: false
-  }),
-  new Command({
-    id: "select-next",
-    description: "Select Next",
-    actionBinding: c.SelectNext,
-    fontAwesomeIcon: "arrow-down",
-    defaultShowOnActionBar: false
-  }),
-  new Command({
-    id: "select-previous",
-    description: "Select Previous",
-    actionBinding: c.SelectPrevious,
-    fontAwesomeIcon: "arrow-up",
-    defaultShowOnActionBar: false
-  }),
+  // new Command({
+  //   id: "set-initiative",
+  //   description: "Edit Initiative",
+  //   actionBinding: c.EditInitiative,
+  //   fontAwesomeIcon: "stopwatch",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "move-down",
+  //   description: "Move Down",
+  //   actionBinding: c.MoveDown,
+  //   fontAwesomeIcon: "angle-double-down",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "move-up",
+  //   description: "Move Up",
+  //   actionBinding: c.MoveUp,
+  //   fontAwesomeIcon: "angle-double-up",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "select-next",
+  //   description: "Select Next",
+  //   actionBinding: c.SelectNext,
+  //   fontAwesomeIcon: "arrow-down",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "select-previous",
+  //   description: "Select Previous",
+  //   actionBinding: c.SelectPrevious,
+  //   fontAwesomeIcon: "arrow-up",
+  //   defaultShowOnActionBar: false
+  // }),
   new Command({
     id: "duplicate-combatant",
     description: "Duplicate Combatant",

@@ -15,20 +15,20 @@ export const BuildEncounterCommandList = (
       fontAwesomeIcon: "chevron-right",
       lockOnActionBar: true
     }),
-    new Command({
-      id: "start-encounter",
-      description: "Start Encounter",
-      actionBinding: c.StartEncounter,
-      fontAwesomeIcon: "play",
-      defaultShowOnActionBar: false
-    }),
-    new Command({
-      id: "reroll-initiative",
-      description: "Reroll Initiative",
-      actionBinding: c.RerollInitiative,
-      fontAwesomeIcon: "sync",
-      defaultShowOnActionBar: false
-    }),
+    // new Command({
+    //   id: "start-encounter",
+    //   description: "Start Encounter",
+    //   actionBinding: c.StartEncounter,
+    //   fontAwesomeIcon: "play",
+    //   defaultShowOnActionBar: false
+    // }),
+    // new Command({
+    //   id: "reroll-initiative",
+    //   description: "Reroll Initiative",
+    //   actionBinding: c.RerollInitiative,
+    //   fontAwesomeIcon: "sync",
+    //   defaultShowOnActionBar: false
+    // }),
     new Command({
       id: "group-all-monsters",
       description: "Group Monsters",
@@ -53,22 +53,24 @@ export const BuildEncounterCommandList = (
       description: "Hide Inventory from Players",
       actionBinding: c.ToggleHideInventoryFromPlayers,
       fontAwesomeIcon: "boxes",
-      isActive: () => CurrentSettings().PlayerView.HideInventoryNumbers
+      isActive: () => CurrentSettings().PlayerView.HideInventoryNumbers,
+      defaultShowOnActionBar: false
     }),
     new Command({
       id: "toggle-hide-gold-player-view",
       description: "Hide Gold from Players",
       actionBinding: c.ToggleHideGoldFromPlayers,
       fontAwesomeIcon: "coins",
-      isActive: () => CurrentSettings().PlayerView.HideGoldNumbers
-    }),
-    new Command({
-      id: "end-encounter",
-      description: "End Encounter",
-      actionBinding: c.EndEncounter,
-      fontAwesomeIcon: "stop",
+      isActive: () => CurrentSettings().PlayerView.HideGoldNumbers,
       defaultShowOnActionBar: false
     }),
+    // new Command({
+    //   id: "end-encounter",
+    //   description: "End Encounter",
+    //   actionBinding: c.EndEncounter,
+    //   fontAwesomeIcon: "stop",
+    //   defaultShowOnActionBar: false
+    // }),
     new Command({
       id: "clear-encounter",
       description: "Clear Encounter",
@@ -129,20 +131,20 @@ export const BuildEncounterCommandList = (
         fontAwesomeIcon: "expand",
         defaultShowOnActionBar: false
       }),
-    new Command({
-      id: "next-turn",
-      description: "Next Turn",
-      actionBinding: c.NextTurn,
-      fontAwesomeIcon: "step-forward",
-      defaultShowOnActionBar: false
-    }),
-    new Command({
-      id: "previous-turn",
-      description: "Previous Turn",
-      actionBinding: c.PreviousTurn,
-      fontAwesomeIcon: "step-backward",
-      defaultShowOnActionBar: false
-    }),
+    // new Command({
+    //   id: "next-turn",
+    //   description: "Next Turn",
+    //   actionBinding: c.NextTurn,
+    //   fontAwesomeIcon: "step-forward",
+    //   defaultShowOnActionBar: false
+    // }),
+    // new Command({
+    //   id: "previous-turn",
+    //   description: "Previous Turn",
+    //   actionBinding: c.PreviousTurn,
+    //   fontAwesomeIcon: "step-backward",
+    //   defaultShowOnActionBar: false
+    // }),
     new Command({
       id: "save-encounter",
       description: "Save Encounter",
