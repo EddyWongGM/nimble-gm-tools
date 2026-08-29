@@ -8,7 +8,6 @@ import { StatBlock } from "../../common/StatBlock";
 import { Account } from "../Account/Account";
 import { AccountClient } from "../Account/AccountClient";
 import { Store } from "../Utility/Store";
-import { LegacySynchronousLocalStore } from "../Utility/LegacySynchronousLocalStore";
 import { SavedEncounter } from "../../common/SavedEncounter";
 import { PersistentCharacter } from "../../common/PersistentCharacter";
 import { Library, useLibrary } from "./useLibrary";
@@ -25,8 +24,8 @@ export type UpdatePersistentCharacter = (
 ) => void;
 
 export const LibraryFriendlyNames = {
-  StatBlocks: "Creatures",
   PersistentCharacters: "Heroes",
+  StatBlocks: "Monsters",
   Encounters: "Encounters",
   Spells: "Spells"
 };
@@ -148,7 +147,7 @@ export function useLibraries(
   React.useEffect(() => {
     preloadSpells(Spells, settings);
     preloadStatBlocks(StatBlocks, settings);
-    preloadSamplePlayersForNewcomers(PersistentCharacters);
+    preloadHeroes(PersistentCharacters, settings);
 
     syncAccountCharacters(accountClient, libraries, signalLoadComplete);
   }, []);
@@ -165,12 +164,23 @@ async function preloadStatBlocks(
     isEnabled => isEnabled
   );
   for (const sourceSlug in enabledSources) {
+    if (sourceSlug === "local-basic-rules") {
+      try {
+        const response = await axios.get("/statblocks/");
+        const localListings: ListingMeta[] = response.data;
+        StatBlocks.AddListings(localListings, "server");
+      } catch (error) {
+        console.warn(`Problem loading local Basic Rules StatBlocks: ${error}`);
+      }
+      continue;
+    }
+
     try {
       const response = await axios.get(`/open5e/${sourceSlug}/`);
       const open5eListings: ListingMeta[] = response.data;
       StatBlocks.AddListings(
         open5eListings,
-        ["wotc-srd", "srd-2014", "srd-2024"].includes(sourceSlug)
+        ["srd-2014", "srd-2024"].includes(sourceSlug)
           ? "open5e"
           : "open5e-additional",
         ImportOpen5eV2StatBlock
@@ -181,46 +191,77 @@ async function preloadStatBlocks(
   }
 }
 
-export const SAMPLE_HEROES_FOLDER_NAME = "Sample Heroes";
+async function preloadHeroes(
+  PersistentCharacters: Library<PersistentCharacter>,
+  settings: Settings
+) {
+  const enabledSources = _.pickBy(
+    settings.PreloadedHeroSources,
+    isEnabled => isEnabled
+  );
+  for (const sourceSlug in enabledSources) {
+    if (sourceSlug === "tutorial-heroes") {
+      try {
+        const response = await axios.get("/heroes/");
+        const localListings: ListingMeta[] = response.data;
+        PersistentCharacters.AddListings(
+          localListings,
+          "server",
+          PersistentCharacter.Initialize
+        );
+      } catch (error) {
+        console.warn(`Problem loading Tutorial Heroes: ${error}`);
+      }
+    }
 
-async function preloadSamplePlayersForNewcomers(
+    if (sourceSlug === "local-basic-rules") {
+      try {
+        const response = await axios.get("/basic-rules-heroes/");
+        const localListings: ListingMeta[] = response.data;
+        PersistentCharacters.AddListings(
+          localListings,
+          "server",
+          PersistentCharacter.Initialize
+        );
+      } catch (error) {
+        console.warn(`Problem loading Basic Rules Heroes: ${error}`);
+      }
+    }
+  }
+}
+
+export async function loadTutorialHeroes(
   PersistentCharacters: Library<PersistentCharacter>
 ) {
-  // Mirrors the "newcomer" check used to decide whether to show the
-  // tutorial (TrackerViewModel.TutorialVisible): no SkipIntro means this
-  // browser has never been through onboarding. A separate flag tracks
-  // whether we've already seeded sample players, so a page reload during
-  // onboarding (before SkipIntro is set) doesn't seed them twice.
-  const hasSkippedIntro = LegacySynchronousLocalStore.Load(
-    LegacySynchronousLocalStore.User,
-    "SkipIntro"
+  const alreadyLoaded = PersistentCharacters.GetAllListings().some(
+    l => l.Origin === "server"
   );
-  const hasLoadedSamplePlayers = LegacySynchronousLocalStore.Load(
-    LegacySynchronousLocalStore.User,
-    "SamplePlayersLoaded"
-  );
-  if (hasSkippedIntro || hasLoadedSamplePlayers) {
+  if (alreadyLoaded) {
     return;
   }
 
-  LegacySynchronousLocalStore.Save(
-    LegacySynchronousLocalStore.User,
-    "SamplePlayersLoaded",
-    true
-  );
-
   try {
-    const response = await axios.get("/sample_players.json");
-    const sampleStatBlocks: StatBlock[] = response.data;
-    for (const statBlock of sampleStatBlocks) {
-      await PersistentCharacters.SaveNewListing(
-        PersistentCharacter.Initialize(statBlock)
-      );
-    }
+    const response = await axios.get("/heroes/");
+    const localListings: ListingMeta[] = response.data;
+    PersistentCharacters.AddListings(
+      localListings,
+      "server",
+      PersistentCharacter.Initialize
+    );
   } catch (error) {
-    console.warn(`Problem loading sample players: ${error}`);
+    console.warn(`Problem loading Tutorial Heroes: ${error}`);
   }
 }
+
+export function unloadTutorialHeroes(
+  PersistentCharacters: Library<PersistentCharacter>
+) {
+  PersistentCharacters.GetAllListings()
+    .filter(l => l.Origin === "server")
+    .forEach(l => PersistentCharacters.DeleteListing(l.Meta().Id));
+}
+
+export const SAMPLE_HEROES_FOLDER_NAME = "Sample Heroes";
 
 async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
   const enabledSources = _.pickBy(
@@ -233,7 +274,7 @@ async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
       const open5eListings: ListingMeta[] = response.data;
       Spells.AddListings(
         open5eListings,
-        sourceSlug === "wotc-srd" ? "open5e" : "open5e-additional",
+        "open5e-additional",
         ImportOpen5eSpell
       );
     } catch (error) {

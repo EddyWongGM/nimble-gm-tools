@@ -35,10 +35,18 @@ so it's visually highlighted/spotlighted against the rest of the (dimmed) UI.
   step) sets `SkipIntro = true` ([App.tsx:99-104](../client/App.tsx#L99-L104)),
   so it never auto-shows again for that browser.
 - **Manually replayed**: Settings > About > "Repeat Tutorial" calls
-  `TrackerViewModel.RepeatTutorial` ([TrackerViewModel.tsx:204-209](../client/TrackerViewModel.tsx#L204-L209)),
+  `TrackerViewModel.RepeatTutorial` ([TrackerViewModel.tsx:208-230](../client/TrackerViewModel.tsx#L208-L230)),
   which ends any active encounter, opens the Libraries pane, closes Settings,
   and restarts the tutorial from step 0. It does **not** clear `SkipIntro`, so
   it won't auto-show again next visit just because it was replayed once.
+  The tutorial's sample heroes require `PreloadedHeroSources["tutorial-heroes"]`
+  to be `true`; if the user has turned that source off in Content settings,
+  `RepeatTutorial` instead flips it back on, persists the setting, sets a
+  `PendingRepeatTutorial` flag in local storage, and reloads the page. On the
+  next boot, `TrackerViewModel.SetLibraries` ([TrackerViewModel.tsx:103-134](../client/TrackerViewModel.tsx#L103-L134))
+  sees that flag, clears it, and calls `RepeatTutorial` again automatically
+  once libraries are ready - this time the setting is on, so it proceeds
+  normally.
 - While the tutorial is active, editing a library StatBlock or a Persistent
   Character's stat block is disabled ([LibrariesCommander.ts:168-170,
   219-221](../client/Commands/LibrariesCommander.ts#L168-L170)) - the tutorial

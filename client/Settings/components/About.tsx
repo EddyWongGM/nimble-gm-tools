@@ -51,7 +51,9 @@ export class About extends React.Component<AboutProps, AboutState> {
             <a href="https://github.com/EddyWongGM" target="_blank">
               Eddy Wong
             </a>
-            {". All Nimble content provided under terms of the "}
+            {"."}
+            <br />
+            {"All Nimble content provided under terms of the "}
             <a href="https://nimblerpg.com/pages/creators" target="_blank">
               Nimble 3rd Party Creator License v2.0
             </a>

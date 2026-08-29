@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   output: {
-    filename: "ImprovedInitiative." + appVersion + ".js",
+    filename: "NimbleRPGApp." + appVersion + ".js",
     path: path.resolve(__dirname, "public", "js")
   }
 };

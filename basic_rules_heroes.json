@@ -2,7 +2,7 @@
   {
     "Name": "Berserker",
     "Path": "Sample Heroes/Berserker",
-    "Source": "",
+    "Source": "Basic Rules",
     "Type": "Berserker",
     "HP": {
       "Value": 20,
@@ -40,7 +40,7 @@
         "Content": "Max Fury Dice : 3▲",
         "Usage": ""
       }
-    ],      
+    ],
     "Actions": [
       {
         "Name": "Rage (1/round) ",
@@ -83,7 +83,7 @@
   {
     "Name": "Cheat",
     "Path": "Sample Heroes/Cheat",
-    "Source": "Nimble",
+    "Source": "Basic Rules",
     "Type": "The Cheat",
     "HP": {
       "Value": 10,

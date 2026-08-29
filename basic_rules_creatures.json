@@ -1,0 +1,104 @@
+[
+  {
+    "Name": "LVL 0.5 (CR: 0.25)",
+    "Source": "Basic Rules",
+    "Type": "Damage per round: 6 Sample dice 1d4+3 or 1d6+2",
+    "HP": {
+      "Value": 12,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 10,
+      "Dex": 10,
+      "Con": 10,
+      "Int": 10,
+      "Wis": 10,
+      "Cha": 10
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "0.5 (CR: 0.25) Save DC 11",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "Damage per round: 6\nSample dice 1d4+3 or 1d6+2\nSave DC 11",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258
+  },
+  {
+    "Name": "LVL 01 (CR: 0.5)",
+    "Source": "Basic Rules",
+    "Type": "Damage per round: 11 Sample dice 2d6+4 or 2d10",
+    "HP": {
+      "Value": 25,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 10,
+      "Dex": 10,
+      "Con": 10,
+      "Int": 10,
+      "Wis": 10,
+      "Cha": 10
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1 (CR: 0.5) Save DC 11",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "Damage per round: 11\nSample dice 2d6+4 or 2d10\nSave DC 11",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819244
+  }
+]

@@ -23,7 +23,7 @@ function getLocation(element: HTMLElement) {
 export const TutorialSteps: TutorialStep[] = [
   {
     Message:
-      "Let's start by adding a few monsters to the view. <strong>Click on any monster</strong> to add one to the encounter pane.",
+      "It's easy to add your own heroes to Nimble RPG App. For now, add a few sample <strong>Heroes</strong>. <strong>Click on any hero</strong> to add one to the encounter pane.",
     RaiseSelector: ".left-column, .prompt, .combatants",
     CalculatePosition: elements => {
       const location = getLocation(elements.item(0));
@@ -34,9 +34,9 @@ export const TutorialSteps: TutorialStep[] = [
   },
   {
     Message:
-      "When you're ready to add some adventurers, select the <strong>Heroes</strong> tab at the top of the library.",
-    RaiseSelector: ".libraries .c-tabs .c-tab",
-    AwaitAction: "SelectCharactersTab",
+      "When you're ready to add some monsters,<br />select the <strong>Monsters</strong> tab at the top of the library.",
+    RaiseSelector: '.libraries .c-tabs .c-tab[data-tab-key="StatBlocks"]',
+    AwaitAction: "SelectMonstersTab",
     CalculatePosition: elements => {
       const element = _.last(elements);
       const location = getLocation(element);
@@ -47,7 +47,7 @@ export const TutorialSteps: TutorialStep[] = [
   },
   {
     Message:
-      "It's easy to add your own heroes to Nimble RPG App. For now, <strong>add a few sample characters</strong>.",
+      "Let's add a few monsters to the view.<br /><strong>Click on any monster</strong> to add one to the encounter pane.",
     RaiseSelector: ".left-column, .combatants",
     CalculatePosition: elements => {
       const location = getLocation(elements[0]);
@@ -58,40 +58,7 @@ export const TutorialSteps: TutorialStep[] = [
   },
   {
     Message:
-      "Press 'alt-r' or <strong>click 'Start Encounter'</strong> to roll initiative.",
-    RaiseSelector: ".c-button--start-encounter",
-    AwaitAction: "ShowInitiativeDialog",
-    CalculatePosition: elements => {
-      const element = _.last(elements);
-      const location = getLocation(element);
-      const left = location.left + location.width + 10;
-      const top = location.top + 5;
-      return { left, top };
-    }
-  },
-  {
-    Message:
-      "Enter initiative rolls, or <strong>press enter</strong> to take the pre-rolled results.",
-    RaiseSelector: ".prompt",
-    AwaitAction: "CompleteInitiativeRolls",
-    CalculatePosition: elements => {
-      let element;
-      elements.forEach(e => {
-        if (e.classList.contains("combat-footer")) {
-          element = e;
-        }
-      });
-      const location = getLocation(element);
-      const left = location.left;
-      const top =
-        location.top -
-        (document.getElementsByClassName("tutorial")[0].clientHeight || 0 + 10);
-      return { left, top };
-    }
-  },
-  {
-    Message:
-      "Select a combatant by clicking. You can select multiple combatants by holding the control key.",
+      "Select a combatant by clicking.",
     RaiseSelector: ".combatants, .right-column",
     CalculatePosition: elements => {
       const element = elements[0];
@@ -103,10 +70,13 @@ export const TutorialSteps: TutorialStep[] = [
   },
   {
     Message:
-      "Press 't' or click 'Apply Damage' to apply damage to selected combatants. You can enter a negative number to apply healing.",
-    RaiseSelector: ".combatants, .c-button--apply-damage, .prompts, .prompt",
+      "Press on the health value to apply damage to selected combatants. You can enter a negative number to apply healing.",
+    RaiseSelector: ".combatants, .combatant__hp-outer, .prompts, .prompt",
     AwaitAction: "ApplyDamage",
     CalculatePosition: elements => {
+      // Positioned beside (not below) the combatants table, since the
+      // Apply Damage prompt renders directly below it and a position
+      // below would cover the prompt the user is being asked to use.
       const element = elements[0];
       const location = getLocation(element);
       const left = location.left + location.width + 10;

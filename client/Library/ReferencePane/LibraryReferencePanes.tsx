@@ -41,20 +41,20 @@ export class LibraryReferencePanes extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      selectedLibrary: "StatBlocks"
+      selectedLibrary: "PersistentCharacters"
     };
   }
 
   private hideLibraries = () => this.props.librariesCommander.HideLibraries();
   private selectLibrary = (library: SelectableTab) => {
-    if (library == "PersistentCharacters") {
-      NotifyTutorialOfAction("SelectCharactersTab");
+    if (library == "StatBlocks") {
+      NotifyTutorialOfAction("SelectMonstersTab");
     }
     this.setState({ selectedLibrary: library });
   };
 
   public render() {
-    const hasEpicInitiative = env.HasEpicInitiative;
+    const hasMythic = env.HasMythic;
 
     const libraries: Record<SelectableTab, JSX.Element> = {
       StatBlocks: (
@@ -81,7 +81,7 @@ export class LibraryReferencePanes extends React.Component<
           library={this.props.libraries.Spells}
         />
       ),
-      ...(hasEpicInitiative && {
+      ...(hasMythic && {
         Scenes: (
           <SceneLibraryReferencePane
             applyScene={this.props.applyScene}
@@ -101,13 +101,13 @@ export class LibraryReferencePanes extends React.Component<
     };
 
     const effectiveSelectedLibrary: SelectableTab =
-      this.state.selectedLibrary === "Scenes" && !hasEpicInitiative
+      this.state.selectedLibrary === "Scenes" && !hasMythic
         ? "StatBlocks"
         : this.state.selectedLibrary;
     const selectedLibrary = libraries[effectiveSelectedLibrary];
     const isScenesTab = effectiveSelectedLibrary === "Scenes";
 
-    const tabNamesById: Record<string, string> = hasEpicInitiative
+    const tabNamesById: Record<string, string> = hasMythic
       ? { ...LibraryFriendlyNames, Scenes: "Scenes" }
       : { ...LibraryFriendlyNames };
 
@@ -136,7 +136,7 @@ export class LibraryReferencePanes extends React.Component<
         </div>
         <Tabs
           optionNamesById={tabNamesById}
-          optionIconsById={hasEpicInitiative ? tabIconsById : undefined}
+          optionIconsById={hasMythic ? tabIconsById : undefined}
           onChoose={this.selectLibrary}
           selected={effectiveSelectedLibrary}
         />

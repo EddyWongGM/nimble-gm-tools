@@ -1,0 +1,152 @@
+[
+  {
+    "Name": "Berserker",
+    "Path": "",
+    "Source": "Tutorial",
+    "Type": "Berserker",
+    "HP": {
+      "Value": 20,
+      "Notes": "20 + 0d12"
+    },
+    "AC": {
+      "Value": 1,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 16,
+      "Dex": 12,
+      "Con": 10,
+      "Int": 8,
+      "Wis": 8,
+      "Cha": 10
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "",
+        "Content": "Max Fury Dice : 3▲",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Rage (1/round) ",
+        "Content": "Roll 1d4▲. Rage adds STR based attacks. \n[tab] Fury Dice are Lost when your Rage ends.",
+        "Usage": ""
+      },
+      {
+        "Name": "Weapons",
+        "Content": "[A1] Battleaxe : 1d10 + [STR]\n[A1] Javelin: 1d6 + [STR] Range 8",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "That all you got?! (If attacked)",
+        "Content": "[tab] Spend▲1 Fury Dice to\n[tab] Reduce 4 damage each. ([STR]+[DEX])",
+        "Usage": ""
+      },
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
+        "Usage": ""
+      }
+    ],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Wild One (+1 Naturecraft)",
+        "Content": "[tab] Beasts more friendly. Field Rest: Adv HD in wild.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.6",
+    "ImageURL": "",
+    "CustomFields": []
+  },
+  {
+    "Name": "Cheat",
+    "Path": "",
+    "Source": "Tutorial",
+    "Type": "The Cheat",
+    "HP": {
+      "Value": 10,
+      "Notes": "10+0d6"
+    },
+    "AC": {
+      "Value": 5,
+      "Notes": ""
+    },
+    "InitiativeModifier": 3,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 10,
+      "Dex": 14,
+      "Con": 10,
+      "Int": 14,
+      "Wis": 8,
+      "Cha": 10
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Vicious Opportunist (1/turn) (melee & distracted)",
+        "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
+        "Usage": ""
+      },
+      {
+        "Name": "Sneak Attack (1st Crit hit + 1d6 damage)",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Weapons",
+        "Content": "[A1] Daggers : 1d4 + [DEX] Piercing\n[tab] (Dual wielding: 1/R Advantage)\n[A1] Shortbow : 1d6 + [DEX], Range 12",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Adaptable",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": []
+  }
+]

@@ -19,30 +19,21 @@ export function ContentSettings() {
 
   const statblockSourceKeys = _.orderBy(
     Object.keys(contentSources.data.monsterSources),
-    [
-      k => {
-        if (k === "wotc-srd") {
-          return "0";
-        }
-        return contentSources.data.monsterSources[k];
-      }
-    ]
+    k => contentSources.data.monsterSources[k]
   );
 
   const spellSourceKeys = _.orderBy(
     Object.keys(contentSources.data.spellSources),
-    k => {
-      if (k === "wotc-srd") {
-        return "0";
-      }
-      return contentSources.data.spellSources[k];
-    }
+    k => contentSources.data.spellSources[k]
   );
 
   return (
     <div className="tab-content content">
       <h3>Preloaded Content</h3>
-      <h2>Creature Statblocks</h2>
+      <h2>Monsters</h2>
+      <Toggle fieldName="PreloadedStatBlockSources.local-basic-rules">
+        Basic (Local)
+      </Toggle>
       {statblockSourceKeys.map((sourceName: string) => (
         <Toggle
           key={`toggle-monsters-${sourceName}`}
@@ -50,7 +41,14 @@ export function ContentSettings() {
         >
           {contentSources.data.monsterSources[sourceName]}
         </Toggle>
-      ))}
+      ))}      
+      <h2>Heroes</h2>
+      <Toggle fieldName="PreloadedHeroSources.local-basic-rules">
+        Basic (Local)
+      </Toggle>
+      <Toggle fieldName="PreloadedHeroSources.tutorial-heroes">
+        Tutorial (Local)
+      </Toggle>
       <h2>Spells</h2>
       {spellSourceKeys.map((sourceName: string) => (
         <Toggle
@@ -60,9 +58,6 @@ export function ContentSettings() {
           {contentSources.data.spellSources[sourceName]}
         </Toggle>
       ))}
-      <p style={{ fontWeight: "bold" }}>
-        Reload the app after saving your Preloaded Content changes.
-      </p>
     </div>
   );
 }

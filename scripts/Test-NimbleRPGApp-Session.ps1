@@ -28,6 +28,26 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# When double-clicked (or launched via "Run with PowerShell") from Explorer,
+# this runs in a console host that closes itself the instant the script ends
+# - before there's any chance to read the output. Pause before exiting in
+# that case; leave it alone when run from an already-open terminal, since
+# that window stays open regardless of what this script does.
+$isDirectLaunch = $false
+try {
+    $parentId = (Get-CimInstance Win32_Process -Filter "ProcessId = $PID" -ErrorAction Stop).ParentProcessId
+    $isDirectLaunch = (Get-Process -Id $parentId -ErrorAction Stop).ProcessName -eq "explorer"
+} catch {}
+
+function Exit-Gracefully {
+    param([int]$Code = 0)
+    if ($isDirectLaunch) {
+        Write-Host ""
+        Read-Host "Press Enter to close this window" | Out-Null
+    }
+    exit $Code
+}
+
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
 # Load .env the same way Start-NimbleRPGApp-Console.ps1 does, so the
@@ -92,7 +112,7 @@ foreach ($port in $portsToCheck) {
 
 if (-not $found) {
     Write-Host "No leftover Nimble RPG app session found (checked port(s): $($portsToCheck -join ', '))." -ForegroundColor Green
-    exit 0
+    Exit-Gracefully 0
 }
 
 Write-Host "Found process(es) listening on Nimble RPG app's port(s):" -ForegroundColor Yellow
@@ -108,9 +128,8 @@ foreach ($port in ($found.Port | Select-Object -Unique)) {
     $url = "http://localhost:$port/"
     try {
         $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 3
-        # The served page itself still identifies as "Improved Initiative" (app branding is
-        # unchanged by this rename), so that's what's actually matched here.
-        if ($response.Content -notmatch "Improved Initiative") { continue }
+        # The served page's <title> identifies it as this app.
+        if ($response.Content -notmatch "<title>Nimble RPG App</title>") { continue }
 
         $confirmedUrl = $url
         if ($response.Content -match 'environmentJSON="([^"]*)"') {
@@ -133,14 +152,14 @@ foreach ($port in ($found.Port | Select-Object -Unique)) {
 
 if (-not $confirmedUrl) {
     Write-Host "The process(es) above are using Nimble RPG app's port(s) but didn't answer as the app itself - check manually before assuming it's a leftover session." -ForegroundColor Yellow
-    exit 0
+    Exit-Gracefully 0
 }
 
-Write-Host "Confirmed: Improved Initiative is running at $confirmedUrl" -ForegroundColor Yellow
+Write-Host "Confirmed: Nimble RPG app is running at $confirmedUrl" -ForegroundColor Yellow
 
 if (-not $shutdownToken) {
     Write-Host "This instance has no shutdown capability available (not started with ALLOW_SERVER_SHUTDOWN=true) - can't stop it gracefully from here. Use its Settings menu if it has one open, or Stop-Process -Id <ProcessId> above as a last resort." -ForegroundColor Red
-    exit 1
+    Exit-Gracefully 1
 }
 
 $shouldStop = $Stop
@@ -151,10 +170,11 @@ if (-not $shouldStop) {
 
 if (-not $shouldStop) {
     Write-Host "Left it running." -ForegroundColor Cyan
-    exit 0
+    Exit-Gracefully 0
 }
 
 Write-Host "Shutting down gracefully..." -ForegroundColor Cyan
 $body = @{ token = $shutdownToken } | ConvertTo-Json
 Invoke-WebRequest -Uri "${confirmedUrl}shutdown" -Method Post -Body $body -ContentType "application/json" -UseBasicParsing | Out-Null
 Write-Host "Shutdown request sent." -ForegroundColor Green
+Exit-Gracefully 0

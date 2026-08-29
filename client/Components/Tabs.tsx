@@ -17,6 +17,7 @@ export function Tabs<TKey extends string>(props: {
           type="button"
           key={icon ? undefined : key}
           className={isSelected ? "c-tab s-selected" : "c-tab"}
+          data-tab-key={key}
           onClick={() => props.onChoose(key)}
         >
           {icon ? (

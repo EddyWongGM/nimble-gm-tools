@@ -15,6 +15,16 @@ export type ListingOrigin =
   | "localAsync"
   | "localStorage";
 
+/** Bundled reference content the user didn't create - read-only in place. */
+const PreloadedOrigins: ListingOrigin[] = [
+  "server",
+  "open5e",
+  "open5e-additional"
+];
+
+export const IsPreloadedOrigin = (origin: ListingOrigin): boolean =>
+  PreloadedOrigins.includes(origin);
+
 export class Listing<T extends Listable> {
   constructor(
     private listingMeta: ListingMeta,

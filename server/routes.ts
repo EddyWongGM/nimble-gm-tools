@@ -171,11 +171,7 @@ export default async function (
         // at all. Force these two to always revalidate instead - still
         // cheap (a 304 with no body) when nothing changed, but picks up a
         // rebuild on a normal refresh rather than requiring a hard refresh.
-        if (
-          filePath.endsWith(".js") ||
-          filePath.endsWith(".css") ||
-          filePath.endsWith("sample_players.json")
-        ) {
+        if (filePath.endsWith(".js") || filePath.endsWith(".css")) {
           res.setHeader("Cache-Control", "no-cache");
         }
       }

@@ -22,7 +22,11 @@ import { SubmitButton } from "./Components/Button";
 import { Encounter } from "./Encounter/Encounter";
 import { UpdateLegacyEncounterState } from "./Encounter/UpdateLegacySavedEncounter";
 import { env } from "./Environment";
-import { Libraries, LibraryType } from "./Library/Libraries";
+import {
+  Libraries,
+  LibraryType,
+  loadTutorialHeroes
+} from "./Library/Libraries";
 import { PlayerViewClient } from "./PlayerView/PlayerViewClient";
 import { DefaultRules } from "./Rules/Rules";
 import {
@@ -113,6 +117,19 @@ export class TrackerViewModel {
     );
 
     this.LibrariesCommander.SetLibraries(libraries);
+
+    if (
+      LegacySynchronousLocalStore.Load(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial"
+      )
+    ) {
+      LegacySynchronousLocalStore.Delete(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial"
+      );
+      this.RepeatTutorial();
+    }
   };
 
   public StatBlockTextEnricher: TextEnricher;
@@ -202,10 +219,29 @@ export class TrackerViewModel {
   }
 
   public RepeatTutorial = (): void => {
+    const settings = CurrentSettings();
+    if (!settings.PreloadedHeroSources["tutorial-heroes"]) {
+      this.SaveUpdatedSettings({
+        ...settings,
+        PreloadedHeroSources: {
+          ...settings.PreloadedHeroSources,
+          "tutorial-heroes": true
+        }
+      });
+      LegacySynchronousLocalStore.Save(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial",
+        true
+      );
+      window.location.reload();
+      return;
+    }
+
     this.Encounter.EncounterFlow.EndEncounter();
     this.EncounterCommander.ShowLibraries();
     this.SettingsVisible(false);
     this.TutorialVisible(true);
+    loadTutorialHeroes(this.Libraries.PersistentCharacters);
   };
 
   public ImportEncounterIfAvailable = (): void => {

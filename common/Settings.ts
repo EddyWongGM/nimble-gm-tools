@@ -59,6 +59,7 @@ export interface Settings {
   };
   PreloadedStatBlockSources: Record<string, boolean | undefined>;
   PreloadedSpellSources: Record<string, boolean | undefined>;
+  PreloadedHeroSources: Record<string, boolean | undefined>;
   RecentItemIds: string[];
   Version: string;
 }
@@ -119,8 +120,9 @@ export function getDefaultSettings(): Settings {
     StatBlock: {
       CustomFields: []
     },
-    PreloadedStatBlockSources: {},
+    PreloadedStatBlockSources: { "local-basic-rules": true },
     PreloadedSpellSources: {},
+    PreloadedHeroSources: { "local-basic-rules": false, "tutorial-heroes": true },
     RecentItemIds: [],
     Version: process.env.VERSION || "0.0.0"
   };
