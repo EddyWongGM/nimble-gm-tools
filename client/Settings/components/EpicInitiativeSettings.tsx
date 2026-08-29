@@ -23,13 +23,6 @@ export function EpicInitiativeSettings() {
       <p>
         <strong>Thank you for supporting Nimble RPG App!</strong>
       </p>
-      <Button
-        text="Get the D&amp;D Beyond StatBlock Importer"
-        additionalClassNames="get-importer-extension"
-        onClick={() =>
-          window.open("https://www.patreon.com/posts/31705918", "_blank)")
-        }
-      />
       <h4>Additional Player View Settings</h4>
       <Toggle fieldName="PlayerView.DisplayPortraits">
         Show combatant portraits
