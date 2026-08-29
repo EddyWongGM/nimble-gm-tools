@@ -5,6 +5,9 @@ import { SpecialComponents } from "react-markdown/lib/ast-to-react";
 import { NormalComponents } from "react-markdown/lib/complex-types";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import * as ReactReplace from "react-string-replace-recursively";
+import type { Schema } from "hast-util-sanitize";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 import remarkBreaks from "remark-breaks";
 
 import { AbilityScores, StatBlock } from "../../common/StatBlock";
@@ -20,7 +23,39 @@ import { Dice } from "../Rules/Dice";
 import { IRules, DefaultRules } from "../Rules/Rules";
 import { BeanCounter, Counter } from "./Counter";
 
-const conditionsRegex = concatenatedStringRegex(_.keys(Conditions2025));
+const conditionsRegex = concatenatedStringRegex(_.keys(Conditions2025), {
+  allowEscape: true
+});
+
+// Allows raw <b>/<i>/<u> (and their standard markdown-producible
+// equivalents) in description text, on top of react-markdown's normal
+// CommonMark output - everything else raw HTML is stripped so authors
+// can't smuggle in scripts, event handlers, or arbitrary links/images via
+// hand-typed tags.
+const descriptionSanitizeSchema: Schema = {
+  tagNames: [
+    "p",
+    "br",
+    "strong",
+    "b",
+    "em",
+    "i",
+    "u",
+    "blockquote",
+    "code",
+    "pre",
+    "ul",
+    "ol",
+    "li",
+    "hr",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6"
+  ]
+};
 
 // "Wil" is Nimble's display name for the Wis field (see
 // StatBlock.AbilityDisplayNames) - accept it as an alias so [WIL] works the
@@ -28,11 +63,9 @@ const conditionsRegex = concatenatedStringRegex(_.keys(Conditions2025));
 const abilityFieldsByAlias: Record<string, keyof AbilityScores> = {
   str: "Str",
   dex: "Dex",
-  con: "Con",
   int: "Int",
   wis: "Wis",
-  wil: "Wis",
-  cha: "Cha"
+  wil: "Wis"
 };
 
 interface ReplaceConfig {
@@ -62,11 +95,6 @@ export class TextEnricher {
     if (listing) {
       this.referenceSpellListing(listing);
     }
-  };
-
-  public GetEnrichedModifierFromAbilityScore = (score: number): JSX.Element => {
-    const modifier = this.rules.GetModifierFromScore(score);
-    return this.EnrichModifier(modifier);
   };
 
   public EnrichModifier = (modifier: number): JSX.Element => {
@@ -99,10 +127,9 @@ export class TextEnricher {
 
   private renderAbilityTag = (
     key: string,
-    score: number,
+    modifier: number,
     label: string
   ): JSX.Element => {
-    const modifier = this.rules.GetModifierFromScore(score);
     return this.renderTagWithLabel(
       key,
       modifier,
@@ -130,8 +157,17 @@ export class TextEnricher {
       strong: ({ children }) => {
         return <strong>{this.applyReplacer(replacer, children)}</strong>;
       },
+      b: ({ children }) => {
+        return <b>{this.applyReplacer(replacer, children)}</b>;
+      },
       em: ({ children }) => {
         return <em>{this.applyReplacer(replacer, children)}</em>;
+      },
+      i: ({ children }) => {
+        return <i>{this.applyReplacer(replacer, children)}</i>;
+      },
+      u: ({ children }) => {
+        return <u>{this.applyReplacer(replacer, children)}</u>;
       }
     };
 
@@ -140,6 +176,7 @@ export class TextEnricher {
         children={preserveBlankLines(text)}
         components={components}
         remarkPlugins={[remarkBreaks]}
+        rehypePlugins={[rehypeRaw, [rehypeSanitize, descriptionSanitizeSchema]]}
         rawSourcePos
       />
     );
@@ -155,6 +192,21 @@ export class TextEnricher {
     const replacer = this.buildReactReplacer(text, undefined, statBlock);
     return replacer(text);
   };
+
+  // A leading backslash (from an allowEscape-built pattern, see
+  // concatenatedStringRegex) lets an author write "\Bleeding" to keep a
+  // word from becoming a clickable reference. Returns the plain,
+  // backslash-stripped text when escaped, or null when rawText should be
+  // rendered as a normal reference.
+  private renderEscapedReference(
+    rawText: string,
+    key: string
+  ): JSX.Element | null {
+    if (!rawText.startsWith("\\")) {
+      return null;
+    }
+    return <React.Fragment key={key}>{rawText.slice(1)}</React.Fragment>;
+  }
 
   private applyReplacer(
     replacer: any,
@@ -198,30 +250,32 @@ export class TextEnricher {
       },
       spells: {
         pattern: this.getSpellsByNameRegex(),
-        matcherFn: (rawText, processed, key) => (
-          <span
-            className="spell-reference"
-            key={key}
-            onClick={() => this.referenceSpell(rawText)}
-          >
-            {rawText}
-          </span>
-        )
+        matcherFn: (rawText, processed, key) =>
+          this.renderEscapedReference(rawText, key) || (
+            <span
+              className="spell-reference"
+              key={key}
+              onClick={() => this.referenceSpell(rawText)}
+            >
+              {rawText}
+            </span>
+          )
       },
       conditions: {
         pattern: conditionsRegex,
-        matcherFn: (rawText, processed, key) => (
-          <span
-            className="condition-reference"
-            key={key}
-            onClick={() => this.referenceCondition(rawText)}
-          >
-            {rawText}
-          </span>
-        )
+        matcherFn: (rawText, processed, key) =>
+          this.renderEscapedReference(rawText, key) || (
+            <span
+              className="condition-reference"
+              key={key}
+              onClick={() => this.referenceCondition(rawText)}
+            >
+              {rawText}
+            </span>
+          )
       },
       abilityTag: {
-        pattern: /(\[(?:Str|Dex|Con|Int|Wis|Wil|Cha|LVL|KEY)\])/gi,
+        pattern: /(\[(?:Str|Dex|Int|Wis|Wil|LVL|KEY)\])/gi,
         matcherFn: (rawText, processed, key) => {
           const typedName = rawText.slice(1, -1);
           const upperName = typedName.toUpperCase();

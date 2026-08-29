@@ -80,8 +80,8 @@ Persistent characters can carry items, tracked the same dual-storage way as
 gold (`CombatantState.Items` + `PersistentCharacter.Items`, editable only
 while the character is in an active encounter).
 
-- **Slot-based capacity**, derived from Strength: `10 +
-  GetModifierFromScore(Str)`. Not a stored field — always recomputed so it
+- **Slot-based capacity**, derived from Strength: `10 + Str` (`Abilities.Str`
+  stores the modifier directly). Not a stored field — always recomputed so it
   can't drift if Strength changes.
 - **Stackable items** (e.g. torches) are one row with a `Quantity`, costing a
   flat 1 slot regardless of quantity. **Non-stackable items** are one row

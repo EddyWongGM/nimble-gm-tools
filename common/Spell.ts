@@ -2,6 +2,8 @@ import { Listable, FilterDimensions } from "./Listable";
 import { probablyUniqueString } from "./Toolbox";
 
 export interface Spell extends Listable {
+  // Missing/undefined on data saved before EntryType existed - treat as "spell".
+  EntryType?: "spell" | "rule";
   Source: string;
   Level: number;
   School: string;
@@ -20,7 +22,8 @@ export namespace Spell {
 
   export const GetFilterDimensions = (spell: Spell): FilterDimensions => ({
     Level: spell.Level.toString(),
-    Type: spell.School
+    Type: spell.School,
+    Category: spell.EntryType === "rule" ? "Rule" : "Spell"
   });
 
   export const Default: () => Spell = () => {
@@ -29,6 +32,7 @@ export namespace Spell {
       Version: process.env.VERSION || "0.0.0",
       Name: "",
       Path: "",
+      EntryType: "spell",
       Source: "",
       CastingTime: "",
       Classes: [],

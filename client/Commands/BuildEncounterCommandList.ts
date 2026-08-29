@@ -1,4 +1,5 @@
 import { env } from "../Environment";
+import { CurrentSettings } from "../Settings/Settings";
 import { Command } from "./Command";
 import { EncounterCommander } from "./EncounterCommander";
 
@@ -46,6 +47,20 @@ export const BuildEncounterCommandList = (
       description: "Hide/Reveal All Monsters",
       actionBinding: c.ToggleAllMonstersHidden,
       fontAwesomeIcon: "eye-slash"
+    }),
+    new Command({
+      id: "toggle-hide-inventory-player-view",
+      description: "Hide Inventory from Players",
+      actionBinding: c.ToggleHideInventoryFromPlayers,
+      fontAwesomeIcon: "boxes",
+      isActive: () => CurrentSettings().PlayerView.HideInventoryNumbers
+    }),
+    new Command({
+      id: "toggle-hide-gold-player-view",
+      description: "Hide Gold from Players",
+      actionBinding: c.ToggleHideGoldFromPlayers,
+      fontAwesomeIcon: "coins",
+      isActive: () => CurrentSettings().PlayerView.HideGoldNumbers
     }),
     new Command({
       id: "end-encounter",

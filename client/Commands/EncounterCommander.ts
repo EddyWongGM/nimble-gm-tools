@@ -122,6 +122,19 @@ export class EncounterCommander {
     Metrics.TrackEvent(Metrics.Event.CombatantsHiddenInPlayerViewToggled);
   };
 
+  public ToggleHideInventoryFromPlayers = (): void => {
+    const settings = CurrentSettings();
+    settings.PlayerView.HideInventoryNumbers =
+      !settings.PlayerView.HideInventoryNumbers;
+    this.tracker.SaveUpdatedSettings(settings);
+  };
+
+  public ToggleHideGoldFromPlayers = (): void => {
+    const settings = CurrentSettings();
+    settings.PlayerView.HideGoldNumbers = !settings.PlayerView.HideGoldNumbers;
+    this.tracker.SaveUpdatedSettings(settings);
+  };
+
   private requestCustomEncounterIdAndUpdateEncounter = async (
     requestedId: string
   ) => {

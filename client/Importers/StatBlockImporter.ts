@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import { StatBlock } from "../../common/StatBlock";
+import { GetModifierFromScore } from "../../common/Toolbox";
 import { AccountClient } from "../Account/AccountClient";
 import { Importer } from "./Importer";
 
@@ -50,12 +51,10 @@ export class StatBlockImporter extends Importer {
 
   public getAbilities() {
     return {
-      Str: this.getInt("str"),
-      Dex: this.getInt("dex"),
-      Con: this.getInt("con"),
-      Int: this.getInt("int"),
-      Wis: this.getInt("wis"),
-      Cha: this.getInt("cha")
+      Str: GetModifierFromScore(this.getInt("str")),
+      Dex: GetModifierFromScore(this.getInt("dex")),
+      Int: GetModifierFromScore(this.getInt("int")),
+      Wis: GetModifierFromScore(this.getInt("wis"))
     };
   }
 

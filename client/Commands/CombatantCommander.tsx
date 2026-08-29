@@ -716,6 +716,10 @@ export class CombatantCommander {
   // meantime (another ShowInventoryCard/ToggleInventoryDisplayToPlayers
   // call), dismissing this stale card must not hide their popup.
   public ShowInventoryCard = (combatant: Combatant) => {
+    if (!CurrentSettings().Rules.EnableInventory) {
+      return;
+    }
+
     this.displayInventoryToPlayers(combatant);
 
     const dismissIfStillShowing = () => {

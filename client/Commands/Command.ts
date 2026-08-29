@@ -17,6 +17,7 @@ export class Command {
   public ActionBinding: () => any;
   public FontAwesomeIcon: ko.Computed<string>;
   public LockOnActionBar?: boolean;
+  public Active: ko.PureComputed<boolean>;
 
   constructor(props: {
     id: string;
@@ -26,6 +27,7 @@ export class Command {
     defaultShowOnActionBar?: boolean;
     defaultShowInCombatantRow?: boolean;
     lockOnActionBar?: boolean;
+    isActive?: () => boolean;
   }) {
     this.Id = props.id;
     this.Description = props.description;
@@ -36,6 +38,8 @@ export class Command {
     } else {
       this.FontAwesomeIcon = ko.computed(props.fontAwesomeIcon);
     }
+
+    this.Active = ko.pureComputed(props.isActive ?? (() => false));
 
     this.LockOnActionBar = props.lockOnActionBar || false;
 

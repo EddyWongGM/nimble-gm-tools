@@ -313,7 +313,12 @@ function GetWoundsColor(combatant: Combatant): string | undefined {
 }
 
 function GetGoldDisplay(combatant: Combatant): string | undefined {
-  if (!combatant.IsPlayerCharacter() || !combatant.RevealedGold()) {
+  if (
+    !CurrentSettings().Rules.EnableGold ||
+    !combatant.IsPlayerCharacter() ||
+    !combatant.RevealedGold() ||
+    CurrentSettings().PlayerView.HideGoldNumbers
+  ) {
     return undefined;
   }
 
@@ -321,7 +326,12 @@ function GetGoldDisplay(combatant: Combatant): string | undefined {
 }
 
 function GetGoldColor(combatant: Combatant): string | undefined {
-  if (!combatant.IsPlayerCharacter() || !combatant.RevealedGold()) {
+  if (
+    !CurrentSettings().Rules.EnableGold ||
+    !combatant.IsPlayerCharacter() ||
+    !combatant.RevealedGold() ||
+    CurrentSettings().PlayerView.HideGoldNumbers
+  ) {
     return undefined;
   }
 
@@ -329,7 +339,12 @@ function GetGoldColor(combatant: Combatant): string | undefined {
 }
 
 function GetInventoryDisplay(combatant: Combatant): string | undefined {
-  if (!combatant.IsPlayerCharacter() || !combatant.RevealedItems()) {
+  if (
+    !CurrentSettings().Rules.EnableInventory ||
+    !combatant.IsPlayerCharacter() ||
+    !combatant.RevealedItems() ||
+    CurrentSettings().PlayerView.HideInventoryNumbers
+  ) {
     return undefined;
   }
 
@@ -337,7 +352,12 @@ function GetInventoryDisplay(combatant: Combatant): string | undefined {
 }
 
 function GetInventoryColor(combatant: Combatant): string | undefined {
-  if (!combatant.IsPlayerCharacter() || !combatant.RevealedItems()) {
+  if (
+    !CurrentSettings().Rules.EnableInventory ||
+    !combatant.IsPlayerCharacter() ||
+    !combatant.RevealedItems() ||
+    CurrentSettings().PlayerView.HideInventoryNumbers
+  ) {
     return undefined;
   }
 

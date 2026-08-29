@@ -18,12 +18,10 @@
       "6"
     ],
     "Abilities": {
-      "Str": 16,
-      "Dex": 12,
-      "Con": 10,
-      "Int": 8,
-      "Wis": 8,
-      "Cha": 10
+      "Str": 3,
+      "Dex": 1,
+      "Int": -1,
+      "Wis": -1
     },
     "DamageVulnerabilities": [],
     "DamageResistances": [],
@@ -99,12 +97,10 @@
       "6"
     ],
     "Abilities": {
-      "Str": 10,
-      "Dex": 14,
-      "Con": 10,
-      "Int": 14,
-      "Wis": 8,
-      "Cha": 10
+      "Str": 0,
+      "Dex": 2,
+      "Int": 2,
+      "Wis": -1
     },
     "DamageVulnerabilities": [],
     "DamageResistances": [],

@@ -27,7 +27,7 @@ export const LibraryFriendlyNames = {
   PersistentCharacters: "Heroes",
   StatBlocks: "Monsters",
   Encounters: "Encounters",
-  Spells: "Spells"
+  Spells: "Compendium"
 };
 
 export const LibraryStoreNames: Record<LibraryType, string> = {
@@ -111,7 +111,8 @@ export function useLibraries(
       accountDelete: accountClient.DeletePersistentCharacter,
       getFilterDimensions: PersistentCharacter.GetFilterDimensions,
       getSearchHint: PersistentCharacter.GetSearchHint,
-      signalLoadComplete
+      signalLoadComplete,
+      migrate: PersistentCharacter.Update
     }
   );
   const StatBlocks = useLibrary(Store.StatBlocks, "statblocks", {
@@ -119,7 +120,8 @@ export function useLibraries(
     accountSave: accountClient.SaveStatBlock,
     accountDelete: accountClient.DeleteStatBlock,
     getFilterDimensions: StatBlock.FilterDimensions,
-    getSearchHint: StatBlock.GetSearchHint
+    getSearchHint: StatBlock.GetSearchHint,
+    migrate: StatBlock.Update
   });
   const Encounters = useLibrary(Store.SavedEncounters, "encounters", {
     createEmptyListing: SavedEncounter.Default,

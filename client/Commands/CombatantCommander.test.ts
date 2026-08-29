@@ -117,6 +117,7 @@ describe("CombatantCommander", () => {
   });
 
   test("Add Item prompt's scroll shortcut shows inventory to players and as a DM card", () => {
+    InitializeTestSettings({ Rules: { EnableInventory: true } });
     encounter.AddCombatantFromStatBlock(StatBlock.Default());
     const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
     combatantViewModel.Combatant.ApplyItemChange("Torch", true, 1, 1);
@@ -144,6 +145,7 @@ describe("CombatantCommander", () => {
   });
 
   test("Submitting the inventory card also hides the Player View popup", () => {
+    InitializeTestSettings({ Rules: { EnableInventory: true } });
     encounter.AddCombatantFromStatBlock(StatBlock.Default());
     const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
 
@@ -159,6 +161,7 @@ describe("CombatantCommander", () => {
   });
 
   test("Escaping out of the inventory card also hides the Player View popup", () => {
+    InitializeTestSettings({ Rules: { EnableInventory: true } });
     encounter.AddCombatantFromStatBlock(StatBlock.Default());
     const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
 
@@ -176,6 +179,7 @@ describe("CombatantCommander", () => {
   });
 
   test("Dismissing a stale inventory card doesn't hide a different combatant's popup", () => {
+    InitializeTestSettings({ Rules: { EnableInventory: true } });
     const combatantA = addCombatantFromStatBlock(encounter);
     const combatantB = addCombatantFromStatBlock(encounter);
 

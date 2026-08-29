@@ -39,6 +39,8 @@ export interface Settings {
     AutoGroupInitiative: AutoGroupInitiativeOption;
     AutoRerollInitiative: AutoRerollInitiativeOption;
     AlwaysNumberMonsters: boolean;
+    EnableInventory: boolean;
+    EnableGold: boolean;
   };
   TrackerView: {
     DarkMode: boolean;
@@ -74,7 +76,9 @@ export function getDefaultSettings(): Settings {
       AutoCheckConcentration: true,
       AutoGroupInitiative: AutoGroupInitiativeOption.None,
       AutoRerollInitiative: AutoRerollInitiativeOption.No,
-      AlwaysNumberMonsters: false
+      AlwaysNumberMonsters: false,
+      EnableInventory: false,
+      EnableGold: false
     },
     TrackerView: {
       DarkMode: false,
@@ -96,6 +100,8 @@ export function getDefaultSettings(): Settings {
       MonsterHPVerbosity: HpVerbosityOption.ColoredLabel,
       PlayerHPVerbosity: HpVerbosityOption.ActualHP,
       HideMonstersOutsideEncounter: false,
+      HideInventoryNumbers: false,
+      HideGoldNumbers: false,
       DarkMode: false,
       DisplayRoundCounter: false,
       DisplayTurnTimer: false,

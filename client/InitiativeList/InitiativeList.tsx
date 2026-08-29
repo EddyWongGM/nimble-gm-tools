@@ -31,12 +31,12 @@ export function InitiativeList(props: {
   const showWoundsColumn = encounterState.Combatants.some(
     c => c.StatBlock.Wounds && StatBlock.ActsInPlayerPhase(c.StatBlock)
   );
-  const showItemsColumn = encounterState.Combatants.some(c =>
-    StatBlock.IsPlayerCharacter(c.StatBlock)
-  );
-  const showGoldColumn = encounterState.Combatants.some(c =>
-    StatBlock.IsPlayerCharacter(c.StatBlock)
-  );
+  const showItemsColumn =
+    settings.Rules.EnableInventory &&
+    encounterState.Combatants.some(c => StatBlock.IsPlayerCharacter(c.StatBlock));
+  const showGoldColumn =
+    settings.Rules.EnableGold &&
+    encounterState.Combatants.some(c => StatBlock.IsPlayerCharacter(c.StatBlock));
   const anyHasTakenTurn = encounterState.Combatants.some(c => c.HasTakenTurn);
 
   return (

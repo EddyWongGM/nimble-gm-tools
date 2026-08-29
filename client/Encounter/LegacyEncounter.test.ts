@@ -10,7 +10,7 @@ function makev0_1StatBlock() {
     HP: { Value: 1 },
     AC: { Value: 10 },
     Speed: ["Walk 30"],
-    Abilities: { Str: 10, Dex: 10, Con: 10, Cha: 10, Int: 10, Wis: 10 },
+    Abilities: { Str: 16, Dex: 10, Con: 10, Cha: 10, Int: 10, Wis: 10 },
     DamageVulnerabilities: [],
     DamageResistances: [],
     DamageImmunities: [],
@@ -55,6 +55,15 @@ describe("UpdateLegacySavedEncounter", () => {
     expect(updatedCombatant.Id).toHaveLength(8);
     expect(updatedCombatant.CurrentHP).toBe(1);
     expect(updatedCombatant.RevealedAC).toBe(false);
+    // Legacy saved data stored a raw D&D score with Con/Cha - loading it
+    // should convert to the modifier-only shape, not carry the raw score
+    // (16) forward as if it were already a modifier.
+    expect(updatedCombatant.StatBlock.Abilities).toEqual({
+      Str: 3,
+      Dex: 0,
+      Int: 0,
+      Wis: 0
+    });
     expect(updatedCombatant.Tags).toEqual([
       {
         Text: "string tag",
@@ -94,5 +103,11 @@ describe("UpdateLegacyEncounterState", () => {
     expect(updatedEncounter.ActiveCombatantId).toEqual(updatedCombatant.Id);
     expect(updatedCombatant.CurrentHP).toBe(1);
     expect(updatedCombatant.RevealedAC).toBe(false);
+    expect(updatedCombatant.StatBlock.Abilities).toEqual({
+      Str: 3,
+      Dex: 0,
+      Int: 0,
+      Wis: 0
+    });
   });
 });

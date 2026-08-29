@@ -15,12 +15,10 @@
     "InitiativeAdvantage": false,
     "Speed": [],
     "Abilities": {
-      "Str": 10,
-      "Dex": 10,
-      "Con": 10,
-      "Int": 10,
-      "Wis": 10,
-      "Cha": 10
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
     },
     "DamageVulnerabilities": [],
     "DamageResistances": [],
@@ -66,12 +64,10 @@
     "InitiativeAdvantage": false,
     "Speed": [],
     "Abilities": {
-      "Str": 10,
-      "Dex": 10,
-      "Con": 10,
-      "Int": 10,
-      "Wis": 10,
-      "Cha": 10
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
     },
     "DamageVulnerabilities": [],
     "DamageResistances": [],

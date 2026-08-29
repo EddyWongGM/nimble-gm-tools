@@ -3,71 +3,21 @@ import { Spell } from "../../../common/Spell";
 import { TextEnricherContext } from "../../TextEnricher/TextEnricher";
 import { LoadingIndicator } from "../../Components/LoadingIndicator";
 
-const numberSuffixes = [
-  "0th",
-  "1st",
-  "2nd",
-  "3rd",
-  "4th",
-  "5th",
-  "6th",
-  "7th",
-  "8th",
-  "9th"
-];
-
 export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
   const textEnricher = React.useContext(TextEnricherContext);
+  const isRule = props.Spell.EntryType === "rule";
   if (props.isLoading) {
     <div className="spell">
       <h3>{props.Spell.Name}</h3>
-      <div className="spell-type">{getSpellType(props.Spell)}</div>
+      {!isRule && <div className="spell-type">{getSpellType(props.Spell)}</div>}
       <LoadingIndicator />
     </div>;
   }
-  
+
   return (
     <div className="spell">
       <h3>{props.Spell.Name}</h3>
-      <div className="spell-type">{getSpellType(props.Spell)}</div>
-      <div className="spell-details">
-        <div>
-          <label className="spell-label">Casting Time:</label>
-          <span className="spell-value">{props.Spell.CastingTime}</span>
-        </div>
-        <div>
-          <label className="spell-label">Range:</label>
-          <span className="spell-value">{props.Spell.Range}</span>
-        </div>
-        <div>
-          <label className="spell-label">Components:</label>
-          <span className="spell-value">
-            {props.Spell.Components.split(/\s*,\s*/).map((component, index) => {
-              return (
-                <span key={index} className="spell-value__item">
-                  {component}
-                </span>
-              );
-            })}
-          </span>
-        </div>
-        <div>
-          <label className="spell-label">Duration:</label>
-          <span className="spell-value">{props.Spell.Duration}</span>
-        </div>
-        <div>
-          <label className="spell-label">Classes:</label>
-          <span className="spell-value">
-            {props.Spell.Classes.map((spellClass, index) => {
-              return (
-                <span key={index} className="spell-value__item">
-                  {spellClass}
-                </span>
-              );
-            })}
-          </span>
-        </div>
-      </div>
+      {!isRule && <div className="spell-type">{getSpellType(props.Spell)}</div>}
       <div className="spell-description">
         {textEnricher.EnrichText(props.Spell.Description)}
       </div>
@@ -77,14 +27,9 @@ export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
 }
 
 function getSpellType(spell: Spell) {
-  const ritual = spell.Ritual ? " (ritual)" : "";
   if (spell.Level === 0) {
-    return `${spell.School} cantrip${ritual}`;
-  }
-  const numberSuffix = numberSuffixes[spell.School];
-  if (numberSuffix) {
-    return `${numberSuffix}-tier ${spell.School}${ritual}`;
+    return "Cantrip";
   }
 
-  return `Tier ${spell.Level} ${spell.School}${ritual}`;
+  return `Tier ${spell.Level}`;
 }

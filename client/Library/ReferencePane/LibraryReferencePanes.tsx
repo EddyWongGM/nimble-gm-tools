@@ -150,7 +150,7 @@ const tabIconsById: Record<SelectableTab, string> = {
   StatBlocks: "dragon",
   PersistentCharacters: "user",
   Encounters: "skull-crossbones",
-  Spells: "hat-wizard",
+  Spells: "book",
   Scenes: "image"
 };
 
@@ -159,7 +159,7 @@ function LibraryHeader(props: { selectedLibrary: SelectableTab }) {
     StatBlocks: "Add Names",
     PersistentCharacters: "Add Names",
     Encounters: "Load Encounters",
-    Spells: "Reference Spells",
+    Spells: "Browse Compendium",
     Scenes: "Manage Scenes"
   };
 

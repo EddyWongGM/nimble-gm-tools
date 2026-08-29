@@ -1,7 +1,7 @@
 import { StatBlock } from "../../common/StatBlock";
 
 export const ConvertStringsToNumbersWhereNeeded = (statBlock: StatBlock) => {
-  StatBlock.AbilityNames.forEach(
+  StatBlock.VisibleAbilityNames.forEach(
     a => (statBlock.Abilities[a] = castToNumberOrZero(statBlock.Abilities[a]))
   );
   statBlock.HP.Value = castToNumberOrZero(statBlock.HP.Value);

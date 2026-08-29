@@ -21,6 +21,8 @@ module.exports = {
     "^react-dnd-test-backend$": "react-dnd-test-backend/dist/cjs",
     "^react-dnd-test-utils$": "react-dnd-test-utils/dist/cjs",
     "^react-markdown/lib/react-markdown$": "<rootDir>/test/reactMarkdownMock.tsx",
-    "^remark-breaks$": "<rootDir>/test/remarkBreaksMock.ts"
+    "^remark-breaks$": "<rootDir>/test/remarkBreaksMock.ts",
+    "^rehype-raw$": "<rootDir>/test/rehypeRawMock.ts",
+    "^rehype-sanitize$": "<rootDir>/test/rehypeSanitizeMock.ts"
   }
 };

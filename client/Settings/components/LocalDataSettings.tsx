@@ -37,14 +37,6 @@ export class LocalDataSettings extends React.Component {
           />
         </div>
         <div className="c-button-with-label">
-          <span>Import statblocks and spells from DnDAppFile</span>
-          <FileUploadButton
-            acceptFileType=".xml"
-            fontAwesomeIcon="code"
-            handleFile={this.importDndAppFile}
-          />
-        </div>
-        <div className="c-button-with-label">
           <span>
             Export Settings (rules toggles, keybindings, styles, scene
             library) as JSON file
@@ -97,10 +89,6 @@ export class LocalDataSettings extends React.Component {
       LegacySynchronousLocalStore.ImportAll(file);
       location.reload();
     }
-  };
-
-  private importDndAppFile = (file: File) => {
-    Store.ImportFromDnDAppFile(file);
   };
 
   private exportSettings = () => {

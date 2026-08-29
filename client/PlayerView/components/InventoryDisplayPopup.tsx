@@ -14,7 +14,7 @@ export class InventoryDisplayPopup extends React.Component<InventoryDisplayProps
             <ul className="inventory-display__items">
               {items.map((item, index) => (
                 <li key={index}>
-                  {item.Stackable
+                  {item.Stackable && !this.props.hideNumbers
                     ? `${item.Name} ×${item.Quantity}`
                     : item.Name}
                 </li>
@@ -31,4 +31,5 @@ export class InventoryDisplayPopup extends React.Component<InventoryDisplayProps
 
 interface InventoryDisplayProps {
   inventory: InventoryDisplayPayload;
+  hideNumbers?: boolean;
 }

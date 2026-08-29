@@ -1,13 +1,15 @@
 import * as _ from "lodash";
 
 import { Listable, FilterDimensions } from "./Listable";
-import { probablyUniqueString } from "./Toolbox";
+import { GetModifierFromScore, probablyUniqueString } from "./Toolbox";
 
+// Str/Dex/Int/Wis store the modifier directly (e.g. +2), not a raw D&D
+// score - that's how a Nimble GM actually thinks about a stat block. Con
+// and Cha were dropped: neither has a live Nimble use (concentration is
+// Str-based, not Con-based).
 export interface AbilityScores {
   Str: number;
   Dex: number;
-  Con: number;
-  Cha: number;
   Int: number;
   Wis: number;
 }
@@ -66,7 +68,6 @@ export interface StatBlock extends Listable {
 }
 
 export namespace StatBlock {
-  export const AbilityNames = ["Str", "Dex", "Con", "Int", "Wis", "Cha"];
   export const VisibleAbilityNames = ["Str", "Dex", "Int", "Wis"];
   export const AbilityDisplayNames: Record<string, string> = {
     Str: "Str",
@@ -104,6 +105,28 @@ export namespace StatBlock {
     };
   };
 
+  // Older saved data (and anything imported from a D&D-format source) still
+  // has raw D&D ability scores (3-20) and a Con/Cha pair. Con/Cha's presence
+  // is the shape marker - the new shape simply never has those keys - so
+  // detecting it doesn't depend on guessing a numeric range. Idempotent and
+  // safe to call on already-migrated data.
+  export const Update = (statBlock: any): StatBlock => {
+    const abilities = statBlock?.Abilities;
+    if (!abilities || !("Con" in abilities || "Cha" in abilities)) {
+      return statBlock;
+    }
+
+    return {
+      ...statBlock,
+      Abilities: {
+        Str: GetModifierFromScore(abilities.Str),
+        Dex: GetModifierFromScore(abilities.Dex),
+        Int: GetModifierFromScore(abilities.Int),
+        Wis: GetModifierFromScore(abilities.Wis)
+      }
+    };
+  };
+
   export const IsPlayerCharacter = (statBlock: StatBlock): boolean =>
     statBlock.Player == "player";
 
@@ -127,7 +150,7 @@ export namespace StatBlock {
     InitiativeModifier: 0,
     InitiativeAdvantage: false,
     Speed: [],
-    Abilities: { Str: 10, Dex: 10, Con: 10, Int: 10, Wis: 10, Cha: 10 },
+    Abilities: { Str: 0, Dex: 0, Int: 0, Wis: 0 },
     DamageVulnerabilities: [],
     DamageResistances: [],
     DamageImmunities: [],

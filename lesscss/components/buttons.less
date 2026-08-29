@@ -133,6 +133,14 @@ button.button {
   cursor: unset;
 }
 
+.c-button--active {
+  .colors(var(--text-inverted), var(--blue), var(--blue));
+
+  &:hover {
+    .colors(var(--text-inverted), var(--blue), var(--blue));
+  }
+}
+
 // A small "+" badge in the corner of the base stat icon, so each
 // "apply temporary X" button reads as "add to <stat>" rather than every
 // stat sharing the same generic medkit glyph, distinguished only by color.

@@ -37,6 +37,12 @@ export function GetAppleBackspaceAlias(keyBinding: string): string | null {
   return alias === keyBinding ? null : alias;
 }
 
+const FORCE_HIDDEN_INLINE_COMMANDS = new Set([
+  "toggle-reveal-gold",
+  "toggle-reveal-items",
+  "toggle-keep-hidden"
+]);
+
 function applyNewCommandSettings(newSettings: Settings, commands: Command[]) {
   Mousetrap.reset();
 
@@ -58,6 +64,10 @@ function applyNewCommandSettings(newSettings: Settings, commands: Command[]) {
       command.KeyBinding = commandSetting.KeyBinding;
       command.ShowOnActionBar(commandSetting.ShowOnActionBar);
       command.ShowInCombatantRow(commandSetting.ShowInCombatantRow);
+    }
+
+    if (FORCE_HIDDEN_INLINE_COMMANDS.has(command.Id)) {
+      command.ShowInCombatantRow(false);
     }
 
     const keys = [command.KeyBinding];

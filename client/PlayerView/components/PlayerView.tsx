@@ -141,7 +141,10 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
           <CombatStatsPopup stats={this.props.combatStats} />
         )}
         {this.state.showInventoryDisplay && this.props.inventoryDisplay && (
-          <InventoryDisplayPopup inventory={this.props.inventoryDisplay} />
+          <InventoryDisplayPopup
+            inventory={this.props.inventoryDisplay}
+            hideNumbers={this.props.settings.HideInventoryNumbers}
+          />
         )}
         {!this.props.encounterState.CombatantsHidden && (
           <>

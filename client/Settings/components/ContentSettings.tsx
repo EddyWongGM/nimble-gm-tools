@@ -49,7 +49,7 @@ export function ContentSettings() {
       <Toggle fieldName="PreloadedHeroSources.tutorial-heroes">
         Tutorial (Local)
       </Toggle>
-      <h2>Spells</h2>
+      <h2>Compendium</h2>
       {spellSourceKeys.map((sourceName: string) => (
         <Toggle
           key={`toggle-spells-${sourceName}`}

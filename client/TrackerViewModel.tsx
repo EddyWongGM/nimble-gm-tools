@@ -213,6 +213,10 @@ export class TrackerViewModel {
         this.Libraries.PersistentCharacters.DeleteListing(
           persistentCharacterId
         ),
+      onSaveAsCopy: (statBlock: StatBlock) =>
+        this.Libraries.PersistentCharacters.SaveNewListing(
+          PersistentCharacter.Initialize(statBlock)
+        ),
       onClose: () => this.StatBlockEditorProps(null),
       currentListings: this.Libraries.PersistentCharacters.GetAllListings()
     });

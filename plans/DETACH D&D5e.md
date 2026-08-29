@@ -94,6 +94,19 @@ drop entirely, no open question remaining.
   source formats (Open5e API, D&D-app XML) will keep giving raw scores
   regardless of what this app stores internally.
 
+**Done (2026-08-29):** `AbilityScores` now only has `Str/Dex/Int/Wis`,
+storing the modifier directly; `Con`/`Cha` dropped. Both importers convert
+raw scores at import time via `GetModifierFromScore` (moved to
+`common/Toolbox.ts` so the migration below can share it). `StatBlock.Update`
+(`common/StatBlock.ts`) migrates old-shape data on load - detected by the
+presence of `Con`/`Cha` keys, not a numeric-range guess - and is wired into
+the `StatBlocks`/`PersistentCharacters` library loaders
+(`useLibrary`/`Listing`'s new `migrate` callback) and into
+`UpdateLegacySavedEncounter`/`UpdateLegacyEncounterState` for saved/autosaved
+encounters. The three preloaded content files (`basic_rules_creatures.json`,
+`tutorial_heroes.json`, `basic_rules_heroes.json`) were hand-converted to the
+new shape.
+
 ## 2. Skills and Saves
 
 **Current state**

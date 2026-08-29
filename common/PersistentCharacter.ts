@@ -44,6 +44,13 @@ export namespace PersistentCharacter {
 
   export const Default = () => Initialize(StatBlock.Default());
 
+  export const Update = (character: any): PersistentCharacter => {
+    if (!character?.StatBlock) {
+      return character;
+    }
+    return { ...character, StatBlock: StatBlock.Update(character.StatBlock) };
+  };
+
   export const GetSearchHint = (character: PersistentCharacter) =>
     character.StatBlock.Type;
 

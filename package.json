@@ -98,6 +98,8 @@
     "react-markdown": "^8.0.7",
     "react-string-replace-recursively": "^0.2.0",
     "redis": "^4.6.8",
+    "rehype-raw": "^6.1.1",
+    "rehype-sanitize": "^5.0.1",
     "remark-breaks": "^4.0.0",
     "request-filtering-agent": "^3.2.1",
     "retry": "^0.13.1",
