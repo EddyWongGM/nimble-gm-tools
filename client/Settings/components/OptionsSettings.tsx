@@ -76,7 +76,7 @@ export function OptionsSettings(props: {
 
       <h3>Encounter View</h3>
       <Toggle fieldName="TrackerView.DarkMode">Dark Mode</Toggle>
-      <Toggle fieldName="TrackerView.DisplayDifficulty">
+      {/* <Toggle fieldName="TrackerView.DisplayDifficulty">
         Display Encounter Difficulty
         <Info>
           Encounter Difficulty is calculated based on the guidelines in the
@@ -84,15 +84,15 @@ export function OptionsSettings(props: {
           in the combat, or assumes 4 characters if none are present. All
           Creatures and Non Player Characters are counted as enemies.
         </Info>
-      </Toggle>
-      <Toggle fieldName="TrackerView.DisplayHPBar">
+      </Toggle> */}
+      {/* <Toggle fieldName="TrackerView.DisplayHPBar">
         Display Indicators of Active or Selected Character
         <Info>
           Show a small HP, Mana, Resources, Hit Dice, and Wounds bar
           indicator for any selected combatant(s), as well as for the
           currently-active combatant.
         </Info>
-      </Toggle>
+      </Toggle> */}
       <Toggle fieldName="TrackerView.DisplayRestoreCombatants">
         Display Restore Names prompt
         <Info>
@@ -149,12 +149,12 @@ export function OptionsSettings(props: {
           View. You can accept the full or half amount of damage.
         </Info>
       </Toggle>
-      <p>
+      {/* <p>
         {"Additional Player View customization options available with "}
         <a href="#" onClick={props.goToEpicInitiativeSettings}>
-          Epic Initiative
+          Epic Tier
         </a>
-      </p>
+      </p> */}
     </div>
   );
 }

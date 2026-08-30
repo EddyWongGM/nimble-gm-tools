@@ -60,7 +60,9 @@ export function configureSocketBasicAuth(io: SocketIO.Server): void {
 // how many characters of the guess were correct via response timing -
 // crypto.timingSafeEqual avoids that, but only accepts equal-length buffers,
 // so a length mismatch has to be handled (and rejected) before calling it.
-function safeEqual(a: string, b: string): boolean {
+// Exported since patreon.ts's webhook signature check needs the same
+// constant-time comparison.
+export function safeEqual(a: string, b: string): boolean {
   const bufferA = Buffer.from(a);
   const bufferB = Buffer.from(b);
 

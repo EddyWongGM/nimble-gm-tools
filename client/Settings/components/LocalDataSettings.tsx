@@ -14,11 +14,11 @@ export class LocalDataSettings extends React.Component {
       <>
         <h3>Local Data</h3>
         <div className="c-button-with-label">
-          <span>Export your user data as JSON file</span>
+          <span>Export all your data as JSON file</span>
           <Button fontAwesomeIcon="file-archive" onClick={this.exportData} />
         </div>
         <div className="c-button-with-label">
-          <span>Replace your user data by uploading a JSON file</span>
+          <span>Replace all your data by uploading a JSON file</span>
           <FileUploadButton
             acceptFileType=".json"
             fontAwesomeIcon="recycle"
@@ -26,10 +26,7 @@ export class LocalDataSettings extends React.Component {
           />
         </div>
         <div className="c-button-with-label">
-          <span>
-            Import heroes, statblocks, encounters and spells from a JSON
-            file
-          </span>
+          <span>Add Library content from a JSON file</span>
           <FileUploadButton
             acceptFileType=".json"
             fontAwesomeIcon="upload"
@@ -38,8 +35,7 @@ export class LocalDataSettings extends React.Component {
         </div>
         <div className="c-button-with-label">
           <span>
-            Export Settings (rules toggles, keybindings, styles, scene
-            library) as JSON file
+            Export your Settings as JSON file
           </span>
           <Button fontAwesomeIcon="sliders-h" onClick={this.exportSettings} />
         </div>
@@ -52,7 +48,7 @@ export class LocalDataSettings extends React.Component {
           />
         </div>
         <div className="c-button-with-label">
-          <span>Clear all local data</span>
+          <span>Clear all your Local data</span>
           <Button
             fontAwesomeIcon="trash"
             onClick={this.confirmClearLocalData}

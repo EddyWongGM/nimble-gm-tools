@@ -1,3 +1,4 @@
+# CI build + test, gates Heroku's auto-deploy to nimble-gm-tools-dev.
 name: Node.js CI
 
 on:
