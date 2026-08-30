@@ -1,9 +1,9 @@
 [
   {
-    "Name": "Berserker",
+    "Name": "Berserker LVL 1",
     "Path": "Sample Heroes/Berserker",
-    "Source": "Basic Rules",
-    "Type": "Berserker LVL 1",
+    "Source": "Sample Heroes",
+    "Type": "Berserker",
     "HP": {
       "Value": 20,
       "Notes": "20 + 0d12"
@@ -79,10 +79,10 @@
     "CustomFields": []
   },
   {
-    "Name": "Cheat",
+    "Name": "Cheat LVL 1",
     "Path": "Sample Heroes/Cheat",
-    "Source": "Basic Rules",
-    "Type": "The Cheat LVL 1",
+    "Source": "Sample Heroes",
+    "Type": "The Cheat",
     "HP": {
       "Value": 10,
       "Notes": "10+0d6"

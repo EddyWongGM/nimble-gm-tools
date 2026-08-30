@@ -77,7 +77,7 @@ export function getDefaultSettings(): Settings {
       AutoCheckConcentration: true,
       AutoGroupInitiative: AutoGroupInitiativeOption.None,
       AutoRerollInitiative: AutoRerollInitiativeOption.No,
-      AlwaysNumberMonsters: false,
+      AlwaysNumberMonsters: true,
       EnableInventory: false,
       EnableGold: false
     },
@@ -92,7 +92,7 @@ export function getDefaultSettings(): Settings {
       DisplayReactionTracker: false,
       PostCombatStats: PostCombatStatsOption.None,
       DisplayRestoreCombatants: true,
-      HideRollableUnderline: false
+      HideRollableUnderline: true
     },
     PlayerView: {
       ActiveCombatantOnTop: false,

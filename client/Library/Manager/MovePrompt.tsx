@@ -4,12 +4,14 @@ import { Button } from "../../Components/Button";
 import { Info } from "../../Components/Info";
 import { Listing } from "../Listing";
 import { Library } from "../useLibrary";
+import { ListingSelectionContext } from "./ListingSelectionContext";
 
 export function MovePrompt(props: {
   targets: Listing<Listable>[];
   library: Library<Listable>;
   done: () => void;
 }) {
+  const selection = React.useContext(ListingSelectionContext);
   const inputRef = React.useRef<HTMLInputElement>();
   const submit = async () => {
     if (!inputRef.current) {
@@ -27,6 +29,7 @@ export function MovePrompt(props: {
         return await props.library.SaveEditedListing(targetListing, item);
       })
     );
+    selection.clearSelected();
     props.done();
   };
 
