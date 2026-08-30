@@ -36,6 +36,9 @@ function CombatantStateWithName(name: string): CombatantState {
 describe("Autosaved Encounters", () => {
   it("loads simple combatants", async () => {
     InitializeTestSettings({
+      Rules: {
+        AlwaysNumberMonsters: false
+      },
       PreloadedContent: {
         BasicRules: false,
         Open5eContent: false
@@ -77,6 +80,9 @@ describe("Autosaved Encounters", () => {
 
   it("autosaves save defaults", () => {
     InitializeTestSettings({
+      Rules: {
+        AlwaysNumberMonsters: false
+      },
       PreloadedContent: {
         BasicRules: false,
         Open5eContent: false

@@ -7,7 +7,7 @@ import { buildEncounter } from "../test/buildEncounter";
 describe("Index labeling", () => {
   let encounter: Encounter;
   beforeEach(() => {
-    InitializeTestSettings();
+    InitializeTestSettings({ Rules: { AlwaysNumberMonsters: false } });
     encounter = buildEncounter();
   });
 

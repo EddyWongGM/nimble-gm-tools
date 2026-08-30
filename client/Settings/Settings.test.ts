@@ -137,7 +137,13 @@ describe("Settings", () => {
     });
 
     test("toggles the body class when the setting changes", () => {
-      CurrentSettings(getDefaultSettings());
+      CurrentSettings({
+        ...getDefaultSettings(),
+        TrackerView: {
+          ...getDefaultSettings().TrackerView,
+          HideRollableUnderline: false
+        }
+      });
       SubscribeToRollableUnderlineChanges();
       expect(
         document.body.classList.contains("hide-rollable-underline")
