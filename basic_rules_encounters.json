@@ -1,0 +1,408 @@
+[
+  {
+    "Name": "1 Gob Min x2 (1/H)",
+    "Path": "Intro Nimble GM/LV01 Intro - Tiny Rescue",
+    "Source": "GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Goblin Minion",
+          "Source": "GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 1,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": ["6"],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/4",
+          "Traits": [
+            {
+              "Name": "Small",
+              "Content": "",
+              "Usage": ""
+            },
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Stab",
+              "Content": "1d6 (cannot crit, follow minion rules)",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      },
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Goblin Minion",
+          "Source": "GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 1,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": ["6"],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/4",
+          "Traits": [
+            {
+              "Name": "Small",
+              "Content": "",
+              "Usage": ""
+            },
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Stab",
+              "Content": "1d6 (cannot crit, follow minion rules)",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }
+    ]
+  },
+  {
+    "Name": "2 Goblin F (1/H)",
+    "Path": "Intro Nimble GM/LV01 Intro - Tiny Rescue",
+    "Source": "GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Goblin Flunkie",
+          "Source": "GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 12,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": ["6"],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/4",
+          "Traits": [
+            {
+              "Name": "Small",
+              "Content": "",
+              "Usage": ""
+            },            
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "",
+              "Content": "Choose one: \n<b>Stab</b> 1d6+2. \nOR\n<b>Shoot</b> 1d6+2 (Range 8)",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "Flunkies can't crit.\n\nGoblin Loot\nLive mouse (a snack for later), moldy bread, smooth stones, sharp sticks, teeth (forcibly removed), arrows (surprisingly well-made), lots of blades (jagged, but effective), dead captive (forgot to feed him).",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }      
+    ]
+  },
+  {
+    "Name": "2 Ratrider",
+    "Path": "Intro Nimble GM/LV01 Intro - Tiny Rescue",
+    "Source": "GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Goblin Ratrider",
+          "Source": "GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 30,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": ["10"],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/4",
+          "Traits": [
+            {
+              "Name": "CHAAARGE!",
+              "Content": "If you move at least <b>4</b> spaces, attack with advantage once.",
+              "Usage": ""
+            },
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Bite & Stab (x2)",
+              "Content": "1d6+2. On crit: <b>Prone</b>",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "Goblin Loot\nLive mouse (a snack for later), moldy bread, smooth stones, sharp sticks, teeth (forcibly removed), arrows (surprisingly well-made), lots of blades (jagged, but effective), dead captive (forgot to feed him).",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }      
+    ]
+  },
+  {
+    "Name": "1 Atrium (1/H)",
+    "Path": "Intro Nimble GM/LV02 Intro - Crystal Crag",
+    "Source": "GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Goblin",
+          "Source": "GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 15,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "0.5 (CR: 0.25) Save DC 11",
+          "Traits": [
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Stab or Shoot",
+              "Content": "Stab 1d6+2 (or Shoot, Range 8).",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }      
+    ]
+  },
+  {
+    "Name": "2 Spider (1/H)",
+    "Path": "Intro Nimble GM/LV02 Intro - Crystal Crag",
+    "Source": "GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Giant Spider",
+          "Source": "GMG",
+          "Type": "",
+          "HP": {
+            "Value": 18,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "0.5 (CR: 0.25) Save DC 11",
+          "Traits": [],
+          "Actions": [
+            {
+              "Name": "",
+              "Content": "Choose one",
+              "Usage": ""
+            },
+            {
+              "Name": "Shoot Web",
+              "Content": "(Range 6) 1d8+2. On hit: Restrained (escape DC 12, or any slashing/fire damage).",
+              "Usage": ""
+            },
+            {
+              "Name": "",
+              "Content": "OR:",
+              "Usage": ""
+            },
+            {
+              "Name": "Bite",
+              "Content": "(Hampered targets) 2d8+4, Poisoned (magical healing ends).",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }      
+    ]
+  }
+]

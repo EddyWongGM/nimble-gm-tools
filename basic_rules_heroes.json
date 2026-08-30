@@ -3,7 +3,7 @@
     "Name": "Berserker",
     "Path": "Sample Heroes/Berserker",
     "Source": "Basic Rules",
-    "Type": "Berserker",
+    "Type": "Berserker LVL 1",
     "HP": {
       "Value": 20,
       "Notes": "20 + 0d12"
@@ -82,7 +82,7 @@
     "Name": "Cheat",
     "Path": "Sample Heroes/Cheat",
     "Source": "Basic Rules",
-    "Type": "The Cheat",
+    "Type": "The Cheat LVL 1",
     "HP": {
       "Value": 10,
       "Notes": "10+0d6"

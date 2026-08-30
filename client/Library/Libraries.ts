@@ -9,6 +9,7 @@ import { Account } from "../Account/Account";
 import { AccountClient } from "../Account/AccountClient";
 import { Store } from "../Utility/Store";
 import { SavedEncounter } from "../../common/SavedEncounter";
+import { UpdateLegacySavedEncounter } from "../Encounter/UpdateLegacySavedEncounter";
 import { PersistentCharacter } from "../../common/PersistentCharacter";
 import { Library, useLibrary } from "./useLibrary";
 import { Listable, ListingMeta } from "../../common/Listable";
@@ -150,6 +151,7 @@ export function useLibraries(
     preloadSpells(Spells, settings);
     preloadStatBlocks(StatBlocks, settings);
     preloadHeroes(PersistentCharacters, settings);
+    preloadEncounters(Encounters, settings);
 
     syncAccountCharacters(accountClient, libraries, signalLoadComplete);
   }, []);
@@ -173,6 +175,17 @@ async function preloadStatBlocks(
         StatBlocks.AddListings(localListings, "server");
       } catch (error) {
         console.warn(`Problem loading local Basic Rules StatBlocks: ${error}`);
+      }
+      continue;
+    }
+
+    if (sourceSlug === "tutorial-monsters") {
+      try {
+        const response = await axios.get("/tutorial-monsters/");
+        const localListings: ListingMeta[] = response.data;
+        StatBlocks.AddListings(localListings, "server");
+      } catch (error) {
+        console.warn(`Problem loading Tutorial Monsters: ${error}`);
       }
       continue;
     }
@@ -263,6 +276,31 @@ export function unloadTutorialHeroes(
     .forEach(l => PersistentCharacters.DeleteListing(l.Meta().Id));
 }
 
+async function preloadEncounters(
+  Encounters: Library<SavedEncounter>,
+  settings: Settings
+) {
+  const enabledSources = _.pickBy(
+    settings.PreloadedEncounterSources,
+    isEnabled => isEnabled
+  );
+  for (const sourceSlug in enabledSources) {
+    if (sourceSlug === "local-basic-rules") {
+      try {
+        const response = await axios.get("/basic-rules-encounters/");
+        const localListings: ListingMeta[] = response.data;
+        Encounters.AddListings(
+          localListings,
+          "server",
+          UpdateLegacySavedEncounter
+        );
+      } catch (error) {
+        console.warn(`Problem loading Basic Rules Encounters: ${error}`);
+      }
+    }
+  }
+}
+
 export const SAMPLE_HEROES_FOLDER_NAME = "Sample Heroes";
 
 async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
@@ -271,6 +309,17 @@ async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
     isEnabled => isEnabled
   );
   for (const sourceSlug in enabledSources) {
+    if (sourceSlug === "local-basic-rules") {
+      try {
+        const response = await axios.get("/spells/");
+        const localListings: ListingMeta[] = response.data;
+        Spells.AddListings(localListings, "server");
+      } catch (error) {
+        console.warn(`Problem loading local Basic Rules Compendium: ${error}`);
+      }
+      continue;
+    }
+
     try {
       const response = await axios.get(`/open5e-spells/${sourceSlug}/`);
       const open5eListings: ListingMeta[] = response.data;
