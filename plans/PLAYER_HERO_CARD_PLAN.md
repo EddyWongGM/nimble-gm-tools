@@ -108,6 +108,20 @@ players from a distance (projector/TV)". A dedicated card avoids any risk
 of regressing that shared layout and can be phone-first from the start:
 single column, large type, generous tap targets.
 
+Target widths: phone portrait as the primary case (single column, per
+above), plus a wide breakpoint for tablet landscape that lets the card go
+two-column (portrait + name/tags on one side, resource rows on the other)
+instead of stretching single-column content across the full width. Reuse
+the existing `@medium: 1000px` variable
+(`lesscss/nimble-rpg-app.less:32`) as that breakpoint rather than inventing
+a new value — most tablets in landscape (iPad: 1024px, iPad mini: 1024px,
+iPad Pro 11": 1194px) land above it, and it's already established as the
+project's one-column/two-column cutoff (see `@media (max-width: @small)`
+vs. the wider rules in `lesscss/base/responsive.less`). Phone landscape and
+tablet portrait (both well under 1000px in their narrow dimension) fall
+back to the single-column layout — a three-tier layout isn't worth the
+complexity for phase 1.
+
 `lesscss/base/responsive.less` is not touched by this plan — a responsive
 pass on the *existing* full-party list (Option 1 in the research doc) is a
 separate, independent piece of work, not a prerequisite for this one.
@@ -142,12 +156,16 @@ client-side rendering change layered on data already flowing today.
      crashing.
    - (If `IsPlayerCharacter`-gating is implemented) a monster row has no
      focus affordance.
-6. Manual verification: `npm run dev`, open `/p/:id` in a phone-width
-   viewport (devtools device emulation, or an actual phone on the same
-   network) alongside the GM tracker; add a couple of PCs and a monster to
-   an encounter; confirm tap-to-focus, back navigation, and legibility at
-   phone width; confirm HP/Mana/etc. changes pushed from the GM tracker
-   still update the focused card live.
+6. Manual verification: `npm run dev`, open `/p/:id` alongside the GM
+   tracker; add a couple of PCs and a monster to an encounter; confirm
+   tap-to-focus, back navigation, and legibility at:
+   - phone portrait (devtools device emulation, or an actual phone on the
+     same network) — primary target
+   - tablet landscape, i.e. >= 1000px wide (devtools emulation at an iPad
+     landscape size, or an actual tablet) — confirm the two-column layout
+     kicks in and doesn't leave awkward empty space or cramped columns
+   Confirm HP/Mana/etc. changes pushed from the GM tracker still update the
+   focused card live in both cases.
 
 ## Open implementation questions
 
