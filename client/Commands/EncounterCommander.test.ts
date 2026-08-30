@@ -20,6 +20,9 @@ describe("EncounterCommander", () => {
   beforeEach(() => {
     window.confirm = () => true;
     InitializeTestSettings({
+      Rules: {
+        AlwaysNumberMonsters: false
+      },
       PreloadedContent: {
         BasicRules: false,
         Open5eContent: false
