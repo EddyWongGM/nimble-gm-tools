@@ -37,8 +37,35 @@ export function SpellEditor(props: SpellEditorProps) {
     SaveAs: false
   };
 
+  const validate = (values: typeof formValues) => {
+    const errors: { PathAndName?: string } = {};
+
+    if (!values.SaveAs) {
+      return errors;
+    }
+
+    const path = values.Path || "";
+    const name = values.Name || "";
+    const originalPath = props.spell.Path || "";
+    const originalName = props.spell.Name || "";
+
+    if (path === originalPath && name === originalName) {
+      errors.PathAndName = "Error: Save as a copy requires a different name.";
+    } else if (
+      props.currentListings?.some(
+        l => l.Meta().Path === path && l.Meta().Name === name
+      )
+    ) {
+      errors.PathAndName =
+        "Error: This copy will overwrite an existing entry. Please change the name or folder.";
+    }
+
+    return errors;
+  };
+
   return (
     <Formik
+      validate={validate}
       onSubmit={submittedValues => {
         let spell: Spell;
         if (editorMode === "standard") {

@@ -291,12 +291,14 @@ function syncAccountCharacters(
   signalLoadComplete: (string: "localAsync" | "account") => void
 ) {
   accountClient.GetAccount(async account => {
+    console.log("[TutorialDebug] GetAccount resolved, account =", account);
     if (!account) {
       signalLoadComplete("account");
       return;
     }
     if (account.persistentcharacters.length == 0) {
       // Normally useLibrary will only call signalLoadComplete if at least one loaded listing is from the account
+      console.log("[TutorialDebug] GetAccount: 0 persistentcharacters, signalLoadComplete(account) explicitly");
       signalLoadComplete("account");
     }
 

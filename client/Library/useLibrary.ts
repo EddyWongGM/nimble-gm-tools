@@ -242,9 +242,11 @@ export function useLibrary<T extends Listable>(
   if (callbacks.signalLoadComplete) {
     React.useEffect(() => {
       if (hasAttemptedLocalLoad) {
+        console.log("[TutorialDebug] useLibrary(" + storeName + ") signalLoadComplete(localAsync)");
         callbacks.signalLoadComplete("localAsync");
       }
       if (listings.some(l => l.Origin === "account")) {
+        console.log("[TutorialDebug] useLibrary(" + storeName + ") signalLoadComplete(account) via listings");
         callbacks.signalLoadComplete("account");
       }
     }, [callbacks.signalLoadComplete, listings, hasAttemptedLocalLoad]);

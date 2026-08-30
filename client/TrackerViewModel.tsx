@@ -117,13 +117,40 @@ export class TrackerViewModel {
     );
 
     this.LibrariesCommander.SetLibraries(libraries);
+  };
 
-    if (
-      LegacySynchronousLocalStore.Load(
-        LegacySynchronousLocalStore.User,
-        "PendingRepeatTutorial"
-      )
-    ) {
+  // Set synchronously by RepeatTutorial, right before it writes the
+  // PendingRepeatTutorial flag and calls location.reload(). The reload
+  // doesn't stop this page's JS immediately - it keeps running (and
+  // re-rendering, since RepeatTutorial's own SaveUpdatedSettings just
+  // changed CurrentSettings) until the browser actually navigates away.
+  // useLibraries' allPersistentCharactersLoaded callback fires repeatedly
+  // (once per relevant library/state change, not once per page), so without
+  // this guard one of those extra firings on this same doomed page finds the
+  // flag it just wrote, consumes it, and runs RepeatTutorial a second time
+  // here - which briefly opens the tutorial on a page that's about to be
+  // thrown away, and leaves no flag for the real post-reload page to find.
+  private didTriggerRepeatTutorialReload = false;
+
+  // Called once account sync and local persistent-character loading have
+  // both finished (see useLibraries' allPersistentCharactersLoaded callback
+  // in App.tsx). Calling RepeatTutorial any earlier races two things that
+  // can silently undo it: SetLibraries runs synchronously in App's render
+  // body, so setting TutorialVisible there happens before App's own
+  // useSubscription has read the new value; and for a logged-in account,
+  // LoadAutoSavedEncounterIfAvailable (gated on this same signal) can
+  // restore a previous encounter after RepeatTutorial's EndEncounter call,
+  // undoing the fresh start. Running after both are settled avoids both.
+  public ContinuePendingRepeatTutorialIfNeeded = (): void => {
+    if (this.didTriggerRepeatTutorialReload) {
+      return;
+    }
+    const pending = LegacySynchronousLocalStore.Load(
+      LegacySynchronousLocalStore.User,
+      "PendingRepeatTutorial"
+    );
+    console.log("[TutorialDebug] ContinuePendingRepeatTutorialIfNeeded, pending =", pending);
+    if (pending) {
       LegacySynchronousLocalStore.Delete(
         LegacySynchronousLocalStore.User,
         "PendingRepeatTutorial"
@@ -224,7 +251,12 @@ export class TrackerViewModel {
 
   public RepeatTutorial = (): void => {
     const settings = CurrentSettings();
+    console.log(
+      "[TutorialDebug] RepeatTutorial called, tutorial-heroes =",
+      settings.PreloadedHeroSources["tutorial-heroes"]
+    );
     if (!settings.PreloadedHeroSources["tutorial-heroes"]) {
+      this.didTriggerRepeatTutorialReload = true;
       this.SaveUpdatedSettings({
         ...settings,
         PreloadedHeroSources: {
@@ -237,6 +269,7 @@ export class TrackerViewModel {
         "PendingRepeatTutorial",
         true
       );
+      console.log("[TutorialDebug] RepeatTutorial reloading page");
       window.location.reload();
       return;
     }
@@ -245,6 +278,10 @@ export class TrackerViewModel {
     this.EncounterCommander.ShowLibraries();
     this.SettingsVisible(false);
     this.TutorialVisible(true);
+    console.log(
+      "[TutorialDebug] RepeatTutorial set TutorialVisible(true), current value =",
+      this.TutorialVisible()
+    );
     loadTutorialHeroes(this.Libraries.PersistentCharacters);
   };
 

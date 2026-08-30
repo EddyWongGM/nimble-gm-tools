@@ -237,11 +237,15 @@
     .support {
     }
     .patreon-button {
-      .colors(var(--text-inverted), var(--red), var(--red));
+      // The Patreon logo image has white text/icons baked in, so this
+      // button is always a dark background regardless of site theme -
+      // otherwise dark mode's light --red flips it to unreadable white
+      // text on a light background.
+      .colors(var(--white), var(--black), var(--black));
       padding: @large-spacer;
 
       &:hover {
-        background-color: var(--dark-red);
+        background-color: var(--grey);
       }
     }
   }

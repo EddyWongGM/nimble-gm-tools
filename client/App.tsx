@@ -51,10 +51,14 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   );
 
   const libraries = useLibraries(settings, new AccountClient(), () => {
+    console.log("[TutorialDebug] allPersistentCharactersLoaded fired");
     tracker.LoadAutoSavedEncounterIfAvailable();
+    tracker.ContinuePendingRepeatTutorialIfNeeded();
   });
 
   tracker.SetLibraries(libraries);
+
+  console.log("[TutorialDebug] App render, tutorialVisible =", tutorialVisible);
 
   const centerColumn = centerColumnView(statblockEditorProps, spellEditorProps);
   const interfacePriority = interfacePriorityClass(
