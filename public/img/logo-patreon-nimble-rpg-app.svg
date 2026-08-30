@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="258"
+   height="32"
+   viewBox="0 0 258 32"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="logo-patreon-nimble-rpg-app.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="5.4689922"
+     inkscape:cx="260.92558"
+     inkscape:cy="15.999291"
+     inkscape:window-width="1920"
+     inkscape:window-height="1129"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g3" />
+  <defs
+     id="defs1">
+    <polygon
+       id="logo-patreon-improved-initiative-a"
+       points=".016 .013 2.163 .013 2.163 31.712 .016 31.712" />
+  </defs>
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g3"
+     style="display:inline;mix-blend-mode:normal">
+    <text
+       fill="#ffffff"
+       font-family="SpectralSC-Bold, 'Spectral SC'"
+       font-size="14.5px"
+       font-weight="bold"
+       id="text1"><tspan
+         x="99"
+         y="20"
+         id="tspan1">Nimble RPG App</tspan></text>
+    <g
+       transform="translate(86.77)"
+       id="g1">
+      <mask
+         id="logo-patreon-improved-initiative-b"
+         fill="#ffffff">
+        <use
+           xlink:href="#logo-patreon-improved-initiative-a"
+           id="use1" />
+      </mask>
+      <polygon
+         fill="#fffffe"
+         points="0.016,31.712 2.163,31.712 2.163,0.013 0.016,0.013 "
+         mask="url(#logo-patreon-improved-initiative-b)"
+         id="polygon1" />
+    </g>
+    <path
+       fill="#fffffe"
+       d="m 5.6204069,14.020352 c 0,-0.914402 -0.6424917,-1.702136 -1.6351427,-1.702136 H 2.3648725 v 3.403807 h 1.6203917 c 0.992651,0 1.6351427,-0.78727 1.6351427,-1.701671 z M 0,10.461539 H 4.2770838 C 6.5399672,10.461539 8,12.107462 8,14.020352 8,15.933242 6.5399672,17.578671 4.2770838,17.578671 H 2.3648725 v 2.729021 H 0 Z m 14.447277,2.813136 -1.217572,4.051213 h 2.406592 z m 2.137896,7.033017 -0.381879,-1.195552 h -3.525286 l -0.382405,1.195552 H 9.8461539 l 3.5395621,-9.846153 h 2.109344 l 3.581863,9.846153 z"
+       id="path1" />
+    <polyline
+       fill="#fffffe"
+       points="23.156 12.431 20.923 12.431 20.923 10.462 27.692 10.462 27.692 12.431 25.445 12.431 25.445 20.308 23.156 20.308 23.156 12.431"
+       id="polyline1" />
+    <path
+       fill="#fffffe"
+       d="m 36.984435,14.020352 c 0,-0.914402 -0.640168,-1.702136 -1.629273,-1.702136 h -1.614547 v 3.403807 h 1.614547 c 0.989105,0 1.629273,-0.78727 1.629273,-1.701671 z m -5.59982,-3.558813 h 4.276505 c 2.254114,0 3.708769,1.645923 3.708769,3.558813 0,1.378462 -0.756481,2.601888 -2.022091,3.178897 l 2.036817,3.108443 h -2.73439 l -1.804193,-2.729021 h -1.105417 v 2.729021 h -2.356 z"
+       id="path2" />
+    <polyline
+       fill="#fffffe"
+       points="45.412 12.29 45.412 14.526 49.231 14.526 49.231 16.313 45.412 16.313 45.412 18.479 49.231 18.479 49.231 20.308 43.077 20.308 43.077 10.462 49.231 10.462 49.231 12.29 45.412 12.29"
+       id="polyline2" />
+    <path
+       fill="#fffffe"
+       d="m 61.055486,15.692308 c 0,-1.634555 -1.101553,-3.155474 -2.894201,-3.155474 -1.807234,0 -2.8942,1.520919 -2.8942,3.155474 0,1.634554 1.086966,3.155443 2.8942,3.155443 1.792648,0 2.894201,-1.520889 2.894201,-3.155443 z m -8.132409,0 c 0,-2.729036 1.948429,-5.230769 5.238208,-5.230769 3.274901,0 5.22333,2.501733 5.22333,5.230769 0,2.729006 -1.948429,5.230769 -5.22333,5.230769 -3.289779,0 -5.238208,-2.501763 -5.238208,-5.230769 z"
+       id="path3" />
+    <polyline
+       fill="#fffffe"
+       points="73.929 16.876 73.929 10.462 76.308 10.462 76.308 20.308 73.811 20.308 70.086 13.978 70.086 20.308 67.692 20.308 67.692 10.462 70.189 10.462 73.929 16.876"
+       id="polyline3" />
+  </g>
+</svg>

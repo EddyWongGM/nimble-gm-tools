@@ -12,7 +12,7 @@ const promptClassName = "p-privacy-policy";
 function PrivacyPolicyComponent() {
   const [displayFullText, setDisplayFullText] = React.useState(false);
   const privacyBrief =
-    "Improved Initiative has a privacy policy. Your data is never sold to third parties. You can help improve the app by sharing your usage data.";
+    "Nimble RPG App has a privacy policy. Your data is never sold to third parties. You can help improve the app by sharing your usage data.";
   const moreInfoButton = (
     <a href="#" onClick={e => setDisplayFullText(true)}>
       More Info.

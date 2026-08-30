@@ -1,16 +1,25 @@
 import * as React from "react";
 
-import { Formik, Field, Form } from "formik";
+import { Formik, Form, useFormikContext } from "formik";
+import { Listable } from "../../common/Listable";
 import { Spell } from "../../common/Spell";
+import { probablyUniqueString } from "../../common/Toolbox";
 import { useState, useRef } from "react";
-import { Button } from "../Components/Button";
-import { ToggleButton } from "../Settings/components/Toggle";
+import { Button, SubmitButton } from "../Components/Button";
+import { Listing } from "../Library/Listing";
+import { Toggle } from "../Settings/components/Toggle";
+import { EnumToggle } from "./EnumToggle";
+import { DescriptionField } from "./components/StatBlockEditorFields";
+import { TextField } from "./components/TextField";
+import { IdentityFields } from "./components/IdentityFields";
 
 export type SpellEditorProps = {
   spell: Spell;
   onSave: (newSpell: Spell) => void;
   onDelete: (id: string) => void;
+  onSaveAsCopy?: (newSpell: Spell) => void;
   onClose: () => void;
+  currentListings?: Listing<Listable>[];
 };
 
 export function SpellEditor(props: SpellEditorProps) {
@@ -23,40 +32,55 @@ export function SpellEditor(props: SpellEditorProps) {
 
   const formValues = {
     ...props.spell,
-    AllClasses: props.spell.Classes.join(", ")
+    EntryType: props.spell.EntryType || "spell",
+    AllClasses: props.spell.Classes.join(", "),
+    SaveAs: false
   };
 
   return (
     <Formik
       onSubmit={submittedValues => {
+        let spell: Spell;
         if (editorMode === "standard") {
-          const { AllClasses, ...spell } = submittedValues;
+          const { AllClasses, SaveAs, ...standardSpell } = submittedValues;
 
-          spell.Classes = AllClasses.split(",").map(c => c.trim());
+          standardSpell.Classes = AllClasses.split(",").map(c => c.trim());
 
-          props.onSave(spell);
-        }
-
-        if (editorMode === "json") {
+          spell = standardSpell;
+        } else {
           const parsedSpellFromJSON = JSON.parse(jsonEditor.current?.value);
-          const updatedSpell = {
+          spell = {
             ...Spell.Default(),
             ...parsedSpellFromJSON
           };
-          props.onSave(updatedSpell);
+        }
+
+        if (submittedValues.SaveAs && props.onSaveAsCopy) {
+          spell.Id = probablyUniqueString();
+          props.onSaveAsCopy(spell);
+        } else {
+          props.onSave(spell);
         }
 
         props.onClose();
       }}
       initialValues={formValues}
     >
-      {() => (
+      {api => (
         <Form autoComplete="false" className="spell-editor" translate="no">
-          <h2>Edit Spell</h2>
-          <div className="editor-type">
-            <label>Editor Mode: </label>
-            <Button onClick={() => setEditorMode("standard")} text="Standard" />
-            <Button onClick={() => setEditorMode("json")} text="JSON" />
+          <div className="c-statblock-editor__title-row">
+            <h2 className="c-statblock-editor__title">Edit Entry</h2>
+            {buttons(props)}
+          </div>
+          <div className="c-statblock-editor__identity">
+            <IdentityFields
+              formApi={api}
+              allowFolder
+              allowSaveAsCopy={props.onSaveAsCopy !== undefined}
+              allowSaveAsCharacter={false}
+              currentListings={props.currentListings}
+              setEditorMode={setEditorMode}
+            />
           </div>
           {editorMode === "standard" && <StandardEditor />}
           {editorMode === "json" && (
@@ -67,68 +91,68 @@ export function SpellEditor(props: SpellEditorProps) {
               defaultValue={JSON.stringify(props.spell, null, 2)}
             />
           )}
-          <div className="buttons">
-            <Button
-              tooltip="Cancel and revert spell"
-              fontAwesomeIcon="times"
-              onClick={props.onClose}
-            />
-            <Button
-              tooltip="Delete spell"
-              fontAwesomeIcon="trash"
-              onClick={() => {
-                if (confirm("Delete Spell?")) {
-                  props.onDelete(props.spell.Id);
-                  props.onClose();
-                }
-              }}
-            />
-            <Button
-              type="submit"
-              tooltip="Save changes to spell"
-              fontAwesomeIcon="save"
-            />
-          </div>
+          <div className="buttons">{buttons(props)}</div>
         </Form>
       )}
     </Formik>
   );
 }
 
-function StandardEditor() {
+function buttons(props: SpellEditorProps) {
   return (
-    <div className="c-spell-editor-fields">
-      <FieldRow label="Name" name="Name" />
-      <FieldRow label="Source" name="Source" />
-      <FieldRow label="Tier" name="Level" />
-      <FieldRow label="School" name="School" />
-      <FieldRow label="Casting Time" name="CastingTime" />
-      <label className="inline">
-        <span className="c-spell-editor__label">Ritual</span>
-        <ToggleButton fieldName="Ritual" />
-      </label>
-      <FieldRow label="Range" name="Range" />
-      <FieldRow label="Components" name="Components" />
-      <FieldRow label="Duration" name="Duration" />
-      <FieldRow label="Classes" name="AllClasses" />
-      <label className="c-spell-editor__label">Description</label>
-      <Field component="textarea" name="Description" />
-    </div>
+    <>
+      <Button
+        tooltip="Cancel and revert entry"
+        fontAwesomeIcon="times"
+        onClick={props.onClose}
+      />
+      <Button
+        tooltip="Delete entry"
+        fontAwesomeIcon="trash"
+        onClick={() => {
+          if (confirm("Delete Entry?")) {
+            props.onDelete(props.spell.Id);
+            props.onClose();
+          }
+        }}
+      />
+      <SubmitButton tooltip="Save changes to entry" fontAwesomeIcon="save" />
+    </>
   );
 }
 
-function FieldRow(props: { label: string; name: string }) {
+function StandardEditor() {
+  const { values } = useFormikContext<{ EntryType: "spell" | "rule" }>();
+  const isRule = values.EntryType === "rule";
+
   return (
-    <label className="c-spell-editor__field">
-      <span className="c-spell-editor__label">{props.label}</span>
-      <div className="c-spell-editor__input">
-        <Field
-          type="text"
-          className="notes"
-          name={`${props.name}`}
-          autoComplete="off"
+    <>
+      <div className="c-statblock-editor__headers">
+        <EnumToggle
+          labelsByOption={{ spell: "Spell", rule: "Rule" }}
+          fieldName="EntryType"
         />
+        <TextField label="Source" fieldName="Source" />
+        {!isRule && (
+          <>
+            <TextField label="School" fieldName="School" />
+            <TextField label="Tier" fieldName="Level" />
+            <TextField label="Classes" fieldName="AllClasses" />
+            <div className="c-spell-editor__ritual">
+              <Toggle fieldName="Ritual">Ritual</Toggle>
+            </div>
+          </>
+        )}
       </div>
-    </label>
+      {!isRule && (
+        <div className="c-statblock-editor__headers">
+          <TextField label="Casting Time" fieldName="CastingTime" />
+          <TextField label="Range" fieldName="Range" />
+          <TextField label="Duration" fieldName="Duration" />
+          <TextField label="Components" fieldName="Components" />
+        </div>
+      )}
+      <DescriptionField />
+    </>
   );
 }

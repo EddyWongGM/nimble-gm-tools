@@ -72,4 +72,31 @@ describe("StatBlock", () => {
       ).toBe(false);
     });
   });
+
+  describe("Update", () => {
+    test("converts old-shape raw D&D scores (with Con/Cha) to modifiers", () => {
+      const legacyStatBlock = {
+        ...StatBlock.Default(),
+        Abilities: { Str: 16, Dex: 8, Con: 10, Cha: 10, Int: 14, Wis: 12 }
+      };
+
+      expect(StatBlock.Update(legacyStatBlock).Abilities).toEqual({
+        Str: 3,
+        Dex: -1,
+        Int: 2,
+        Wis: 1
+      });
+    });
+
+    test("leaves already-current-shape data untouched", () => {
+      const statBlock = {
+        ...StatBlock.Default(),
+        Abilities: { Str: 3, Dex: -1, Int: 2, Wis: 1 }
+      };
+
+      expect(StatBlock.Update(statBlock).Abilities).toEqual(
+        statBlock.Abilities
+      );
+    });
+  });
 });

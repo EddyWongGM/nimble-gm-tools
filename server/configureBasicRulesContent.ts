@@ -7,7 +7,7 @@ import { Req, Res } from "./routes";
 
 export function configureBasicRulesContent(app: express.Application) {
   const statBlockLibrary = Library.FromFile<StatBlock>(
-    "ogl_creatures.json",
+    "basic_rules_creatures.json",
     "/statblocks/",
     StatBlock.GetSearchHint,
     StatBlock.FilterDimensions
@@ -22,7 +22,7 @@ export function configureBasicRulesContent(app: express.Application) {
   });
 
   const spellLibrary = Library.FromFile<Spell>(
-    "ogl_spells.json",
+    "basic_rules_spells.json",
     "/spells/",
     Spell.GetSearchHint,
     Spell.GetFilterDimensions
@@ -34,5 +34,35 @@ export function configureBasicRulesContent(app: express.Application) {
 
   app.get(spellLibrary.Route() + ":id", (req: Req, res: Res) => {
     res.json(spellLibrary.GetById(req.params.id));
+  });
+
+  const heroLibrary = Library.FromFile<StatBlock>(
+    "tutorial_heroes.json",
+    "/heroes/",
+    StatBlock.GetSearchHint,
+    StatBlock.FilterDimensions
+  );
+
+  app.get(heroLibrary.Route(), (req: Req, res: Res) => {
+    res.json(heroLibrary.GetListings());
+  });
+
+  app.get(heroLibrary.Route() + ":id", (req: Req, res: Res) => {
+    res.json(heroLibrary.GetById(req.params.id));
+  });
+
+  const basicRulesHeroLibrary = Library.FromFile<StatBlock>(
+    "basic_rules_heroes.json",
+    "/basic-rules-heroes/",
+    StatBlock.GetSearchHint,
+    StatBlock.FilterDimensions
+  );
+
+  app.get(basicRulesHeroLibrary.Route(), (req: Req, res: Res) => {
+    res.json(basicRulesHeroLibrary.GetListings());
+  });
+
+  app.get(basicRulesHeroLibrary.Route() + ":id", (req: Req, res: Res) => {
+    res.json(basicRulesHeroLibrary.GetById(req.params.id));
   });
 }

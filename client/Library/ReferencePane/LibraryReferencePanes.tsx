@@ -41,19 +41,21 @@ export class LibraryReferencePanes extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      selectedLibrary: "StatBlocks"
+      selectedLibrary: "PersistentCharacters"
     };
   }
 
   private hideLibraries = () => this.props.librariesCommander.HideLibraries();
   private selectLibrary = (library: SelectableTab) => {
-    if (library == "PersistentCharacters") {
-      NotifyTutorialOfAction("SelectCharactersTab");
+    if (library == "StatBlocks") {
+      NotifyTutorialOfAction("SelectMonstersTab");
     }
     this.setState({ selectedLibrary: library });
   };
 
   public render() {
+    const hasMythic = env.HasMythic;
+
     const libraries: Record<SelectableTab, JSX.Element> = {
       StatBlocks: (
         <StatBlockLibraryReferencePane
@@ -79,37 +81,47 @@ export class LibraryReferencePanes extends React.Component<
           library={this.props.libraries.Spells}
         />
       ),
-      Scenes: (
-        <SceneLibraryReferencePane
-          applyScene={this.props.applyScene}
-          showScene={this.props.showScene}
-          dismissScene={this.props.dismissScene}
-          activeSceneId={this.props.activeSceneId}
-          addScene={this.props.librariesCommander.AddScene}
-          editScene={this.props.librariesCommander.EditScene}
-          deleteScene={this.props.librariesCommander.DeleteScene}
-          exportScenes={this.props.librariesCommander.ExportScenes}
-          importScenes={this.props.librariesCommander.ImportScenes}
-          combatantsHidden={this.props.combatantsHidden}
-          onToggleCombatantsHidden={this.props.onToggleCombatantsHidden}
-        />
-      )
+      ...(hasMythic && {
+        Scenes: (
+          <SceneLibraryReferencePane
+            applyScene={this.props.applyScene}
+            showScene={this.props.showScene}
+            dismissScene={this.props.dismissScene}
+            activeSceneId={this.props.activeSceneId}
+            addScene={this.props.librariesCommander.AddScene}
+            editScene={this.props.librariesCommander.EditScene}
+            deleteScene={this.props.librariesCommander.DeleteScene}
+            exportScenes={this.props.librariesCommander.ExportScenes}
+            importScenes={this.props.librariesCommander.ImportScenes}
+            combatantsHidden={this.props.combatantsHidden}
+            onToggleCombatantsHidden={this.props.onToggleCombatantsHidden}
+          />
+        )
+      })
     };
 
-    const selectedLibrary = libraries[this.state.selectedLibrary];
-    const isScenesTab = this.state.selectedLibrary === "Scenes";
+    const effectiveSelectedLibrary: SelectableTab =
+      this.state.selectedLibrary === "Scenes" && !hasMythic
+        ? "StatBlocks"
+        : this.state.selectedLibrary;
+    const selectedLibrary = libraries[effectiveSelectedLibrary];
+    const isScenesTab = effectiveSelectedLibrary === "Scenes";
+
+    const tabNamesById: Record<string, string> = hasMythic
+      ? { ...LibraryFriendlyNames, Scenes: "Scenes" }
+      : { ...LibraryFriendlyNames };
 
     return (
       <div className="libraries">
         <div className="libraries__header">
-          <LibraryHeader selectedLibrary={this.state.selectedLibrary} />
+          <LibraryHeader selectedLibrary={effectiveSelectedLibrary} />
           {!isScenesTab && (
             <Button
               additionalClassNames="button--library-manager"
               fontAwesomeIcon="book-open"
               onClick={() =>
                 this.props.librariesCommander.OpenLibraryManagerPane(
-                  this.state.selectedLibrary as LibraryType
+                  effectiveSelectedLibrary as LibraryType
                 )
               }
               tooltip="Open Library Manager"
@@ -124,9 +136,9 @@ export class LibraryReferencePanes extends React.Component<
         </div>
         <Tabs
           optionNamesById={tabNamesById}
-          optionIconsById={tabIconsById}
+          optionIconsById={hasMythic ? tabIconsById : undefined}
           onChoose={this.selectLibrary}
-          selected={this.state.selectedLibrary}
+          selected={effectiveSelectedLibrary}
         />
         {selectedLibrary}
       </div>
@@ -134,16 +146,11 @@ export class LibraryReferencePanes extends React.Component<
   }
 }
 
-const tabNamesById: Record<SelectableTab, string> = {
-  ...LibraryFriendlyNames,
-  Scenes: "Scenes"
-};
-
 const tabIconsById: Record<SelectableTab, string> = {
   StatBlocks: "dragon",
   PersistentCharacters: "user",
   Encounters: "skull-crossbones",
-  Spells: "hat-wizard",
+  Spells: "book",
   Scenes: "image"
 };
 
@@ -152,15 +159,15 @@ function LibraryHeader(props: { selectedLibrary: SelectableTab }) {
     StatBlocks: "Add Names",
     PersistentCharacters: "Add Names",
     Encounters: "Load Encounters",
-    Spells: "Reference Spells",
+    Spells: "Browse Compendium",
     Scenes: "Manage Scenes"
   };
 
   const libraryInfos: Record<SelectableTab, string | null> = {
     StatBlocks:
-      "When you add a Creature, a copy of its Stat Block joins the Encounter as a Name.",
+      "When you add a Monster, a copy of its Stat Block joins the Encounter as a Name.",
     PersistentCharacters:
-      "Each Hero can each only be added to an Encounter once, and they will be persistent across different Encounters.",
+      "Each Hero can each only be added to the View once, and they will be persistent across different Encounters.",
     Encounters:
       "Loading an Encounter adds all of the Names saved in it. Heroes who are already present are not duplicated.",
     Spells: null,

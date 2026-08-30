@@ -2,7 +2,7 @@
 
 ## Project Context
 
-Improved Initiative is an open-source, freemium combat tracker for D&D 5th
+Nimble RPG App is an open-source, freemium combat tracker for D&D 5th
 Edition. It helps dungeon masters run combat by tracking initiative order,
 combatant statblocks, HP, tags/conditions, player view state, encounters, and
 related combat workflow.
@@ -12,9 +12,10 @@ complement a real tabletop battlemap, especially for in-person play. Optimize
 for busy DMs operating mid-session: fast actions, low friction, readable combat
 state, and minimal surprises matter more than broad platform scope.
 
-The production app is https://www.improvedinitiative.app/. The project is
-sustained by Patreon-backed premium features, so changes should respect the
-free core experience while preserving paid-account behavior.
+The production app runs on Heroku (see `plans/private/DEPLOYMENT_FLOW.md` for
+deploy details) - no custom domain is set up yet. The project is sustained by
+Patreon-backed premium features, so changes should respect the free core
+experience while preserving paid-account behavior.
 
 This fork adapts the app for the Nimble RPG system rather than D&D 5E. See
 [NIMBLE_CONVERSION.md](NIMBLE_CONVERSION.md) for what changed and why before

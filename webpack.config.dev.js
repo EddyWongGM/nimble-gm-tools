@@ -20,7 +20,7 @@ module.exports = merge(baseConfig, {
     }),
     new WebpackBuildNotifierPlugin({
       title: "Client",
-      successIcon: path.resolve("./public/img/boot-transparent-white.png"),
+      successIcon: path.resolve("./public/img/book-transparent-white.png"),
       showDuration: true,
       suppressSuccess: true,
       notifierOptions: {

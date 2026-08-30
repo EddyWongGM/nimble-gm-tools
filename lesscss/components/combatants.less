@@ -1,7 +1,10 @@
 .initiative-list {
   flex-shrink: 1;
   overflow: hidden auto;
-  min-height: 6rem;
+  // Must comfortably fit the title + column-header row with zero combatants,
+  // or that minimum forces a spurious scrollbar (overflow-y: auto engages
+  // even though there's nothing to scroll to).
+  min-height: 6.5rem;
 }
 
 .initiative-list__header {

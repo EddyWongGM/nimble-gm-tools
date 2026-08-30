@@ -39,6 +39,8 @@ export interface Settings {
     AutoGroupInitiative: AutoGroupInitiativeOption;
     AutoRerollInitiative: AutoRerollInitiativeOption;
     AlwaysNumberMonsters: boolean;
+    EnableInventory: boolean;
+    EnableGold: boolean;
   };
   TrackerView: {
     DarkMode: boolean;
@@ -59,6 +61,7 @@ export interface Settings {
   };
   PreloadedStatBlockSources: Record<string, boolean | undefined>;
   PreloadedSpellSources: Record<string, boolean | undefined>;
+  PreloadedHeroSources: Record<string, boolean | undefined>;
   RecentItemIds: string[];
   Version: string;
 }
@@ -73,7 +76,9 @@ export function getDefaultSettings(): Settings {
       AutoCheckConcentration: true,
       AutoGroupInitiative: AutoGroupInitiativeOption.None,
       AutoRerollInitiative: AutoRerollInitiativeOption.No,
-      AlwaysNumberMonsters: false
+      AlwaysNumberMonsters: false,
+      EnableInventory: false,
+      EnableGold: false
     },
     TrackerView: {
       DarkMode: false,
@@ -95,6 +100,8 @@ export function getDefaultSettings(): Settings {
       MonsterHPVerbosity: HpVerbosityOption.ColoredLabel,
       PlayerHPVerbosity: HpVerbosityOption.ActualHP,
       HideMonstersOutsideEncounter: false,
+      HideInventoryNumbers: false,
+      HideGoldNumbers: false,
       DarkMode: false,
       DisplayRoundCounter: false,
       DisplayTurnTimer: false,
@@ -119,13 +126,9 @@ export function getDefaultSettings(): Settings {
     StatBlock: {
       CustomFields: []
     },
-    PreloadedStatBlockSources: {
-      "wotc-srd": true,
-      "srd-2024": true
-    },
-    PreloadedSpellSources: {
-      "wotc-srd": true
-    },
+    PreloadedStatBlockSources: { "local-basic-rules": true },
+    PreloadedSpellSources: {},
+    PreloadedHeroSources: { "local-basic-rules": false, "tutorial-heroes": true },
     RecentItemIds: [],
     Version: process.env.VERSION || "0.0.0"
   };

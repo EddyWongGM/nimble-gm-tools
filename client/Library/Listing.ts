@@ -15,15 +15,26 @@ export type ListingOrigin =
   | "localAsync"
   | "localStorage";
 
+/** Bundled reference content the user didn't create - read-only in place. */
+const PreloadedOrigins: ListingOrigin[] = [
+  "server",
+  "open5e",
+  "open5e-additional"
+];
+
+export const IsPreloadedOrigin = (origin: ListingOrigin): boolean =>
+  PreloadedOrigins.includes(origin);
+
 export class Listing<T extends Listable> {
   constructor(
     private listingMeta: ListingMeta,
     public Origin: ListingOrigin,
     value?: T,
-    private mapLinkResponse?: (statBlockData: any) => T
+    private mapLinkResponse?: (statBlockData: any) => T,
+    private migrate?: (item: any) => T
   ) {
     if (value) {
-      this.value(value);
+      this.value(this.migrate ? this.migrate(value) : value);
     }
   }
 
@@ -46,6 +57,7 @@ export class Listing<T extends Listable> {
 
     if (this.Origin === "localAsync") {
       return Store.Load(this.listingMeta.Link, this.listingMeta.Id)
+        .then(item => (this.migrate ? this.migrate(item) : item))
         .then(callback)
         .catch(err =>
           console.error(
@@ -55,13 +67,16 @@ export class Listing<T extends Listable> {
     }
 
     if (this.Origin === "localStorage") {
-      const item = LegacySynchronousLocalStore.Load<T>(
+      let item: any = LegacySynchronousLocalStore.Load<T>(
         this.listingMeta.Link,
         this.listingMeta.Id
       );
 
       if (item !== null) {
         item.Id = this.listingMeta.Id;
+        if (this.migrate) {
+          item = this.migrate(item);
+        }
         this.value(item);
         return callback(item);
       } else {
@@ -81,6 +96,9 @@ export class Listing<T extends Listable> {
         }
 
         item.Id = this.listingMeta.Id;
+        if (this.migrate) {
+          item = this.migrate(item);
+        }
         this.value(item);
         return callback(item);
       })

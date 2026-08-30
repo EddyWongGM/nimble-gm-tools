@@ -111,6 +111,15 @@ function RenderPersistentCharacterEditor(
         );
         props.closeEditor();
       }}
+      onSaveAsCopy={statBlock => {
+        const newPersistentCharacter = PersistentCharacter.Initialize(
+          statBlock
+        );
+        props.libraries.PersistentCharacters.SaveNewListing(
+          newPersistentCharacter
+        );
+        props.closeEditor();
+      }}
       currentListings={props.libraries.PersistentCharacters.GetAllListings()}
       onClose={props.closeEditor}
     />
@@ -136,6 +145,11 @@ function RenderSpellEditor(
         props.libraries.Spells.DeleteListing(spellId);
         props.closeEditor();
       }}
+      onSaveAsCopy={spell => {
+        props.libraries.Spells.SaveNewListing(spell);
+        props.closeEditor();
+      }}
+      currentListings={props.libraries.Spells.GetAllListings()}
       onClose={props.closeEditor}
     />
   );

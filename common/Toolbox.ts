@@ -1,9 +1,15 @@
 import { escapeRegExp } from "lodash";
 export function toModifierString(number: number): string {
-  if (number >= 0) {
+  if (number > 0) {
     return `+${number}`;
   }
   return number.toString();
+}
+
+// Converts a raw D&D-style ability score (3-20) to its modifier, for
+// content still arriving in that shape (importers, legacy saved data).
+export function GetModifierFromScore(abilityScore: number): number {
+  return Math.floor((abilityScore - 10) / 2);
 }
 
 export function probablyUniqueString(): string {
@@ -21,7 +27,7 @@ export function probablyUniqueString(): string {
 
 export function concatenatedStringRegex(
   strings: string[],
-  options: { caseSensitive?: boolean } = {}
+  options: { caseSensitive?: boolean; allowEscape?: boolean } = {}
 ): RegExp {
   const allStrings = strings
     .map(s => escapeRegExp(s))
@@ -30,7 +36,16 @@ export function concatenatedStringRegex(
     return new RegExp("a^");
   }
   const flags = options.caseSensitive ? "gm" : "gim";
-  return new RegExp(`\\b(${allStrings.join("|")})\\b`, flags);
+  const alternation = allStrings.join("|");
+  // allowEscape pulls a leading backslash into the same capture group as
+  // the match, so callers that want a "\Name" escape hatch (e.g. to keep
+  // a word from becoming a clickable reference) can detect and strip it -
+  // a backslash outside the capture group would just be silently dropped
+  // by react-string-replace-recursively's regex-based text.split().
+  const pattern = options.allowEscape
+    ? `(\\\\?\\b(?:${alternation})\\b)`
+    : `\\b(${alternation})\\b`;
+  return new RegExp(pattern, flags);
 }
 
 export function ParseJSONOrDefault<T>(json: string, defaultValue: T): T {

@@ -22,7 +22,11 @@ import { SubmitButton } from "./Components/Button";
 import { Encounter } from "./Encounter/Encounter";
 import { UpdateLegacyEncounterState } from "./Encounter/UpdateLegacySavedEncounter";
 import { env } from "./Environment";
-import { Libraries, LibraryType } from "./Library/Libraries";
+import {
+  Libraries,
+  LibraryType,
+  loadTutorialHeroes
+} from "./Library/Libraries";
 import { PlayerViewClient } from "./PlayerView/PlayerViewClient";
 import { DefaultRules } from "./Rules/Rules";
 import {
@@ -113,6 +117,19 @@ export class TrackerViewModel {
     );
 
     this.LibrariesCommander.SetLibraries(libraries);
+
+    if (
+      LegacySynchronousLocalStore.Load(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial"
+      )
+    ) {
+      LegacySynchronousLocalStore.Delete(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial"
+      );
+      this.RepeatTutorial();
+    }
   };
 
   public StatBlockTextEnricher: TextEnricher;
@@ -196,16 +213,39 @@ export class TrackerViewModel {
         this.Libraries.PersistentCharacters.DeleteListing(
           persistentCharacterId
         ),
+      onSaveAsCopy: (statBlock: StatBlock) =>
+        this.Libraries.PersistentCharacters.SaveNewListing(
+          PersistentCharacter.Initialize(statBlock)
+        ),
       onClose: () => this.StatBlockEditorProps(null),
       currentListings: this.Libraries.PersistentCharacters.GetAllListings()
     });
   }
 
   public RepeatTutorial = (): void => {
+    const settings = CurrentSettings();
+    if (!settings.PreloadedHeroSources["tutorial-heroes"]) {
+      this.SaveUpdatedSettings({
+        ...settings,
+        PreloadedHeroSources: {
+          ...settings.PreloadedHeroSources,
+          "tutorial-heroes": true
+        }
+      });
+      LegacySynchronousLocalStore.Save(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial",
+        true
+      );
+      window.location.reload();
+      return;
+    }
+
     this.Encounter.EncounterFlow.EndEncounter();
     this.EncounterCommander.ShowLibraries();
     this.SettingsVisible(false);
     this.TutorialVisible(true);
+    loadTutorialHeroes(this.Libraries.PersistentCharacters);
   };
 
   public ImportEncounterIfAvailable = (): void => {
@@ -235,7 +275,7 @@ export class TrackerViewModel {
     if (!env.IsLoggedIn || !env.HasEpicInitiative) {
       Metrics.TrackPatreonAccessDenied(Metrics.LeadSource.ImporterLoginFail, {
         link_url: env.IsLoggedIn
-          ? "https://www.patreon.com/join/improvedinitiative"
+          ? "https://www.patreon.com/join/NimbleRPGApp"
           : env.PatreonLoginUrl
       });
     }
@@ -275,13 +315,13 @@ export class TrackerViewModel {
           <span className="no-epic-initiative-for-import">
             {"The D&D Beyond Importer is available for "}
             <a
-              href={"https://www.patreon.com/join/improvedinitiative"}
+              href={"https://www.patreon.com/join/NimbleRPGApp"}
               target="_blank"
               onClick={() =>
                 Metrics.TrackPatreonSignupIntent(
                   Metrics.LeadSource.ImporterLoginFail,
                   {
-                    link_url: "https://www.patreon.com/join/improvedinitiative"
+                    link_url: "https://www.patreon.com/join/NimbleRPGApp"
                   }
                 )
               }

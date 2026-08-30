@@ -37,6 +37,12 @@ export function GetAppleBackspaceAlias(keyBinding: string): string | null {
   return alias === keyBinding ? null : alias;
 }
 
+const FORCE_HIDDEN_INLINE_COMMANDS = new Set([
+  "toggle-reveal-gold",
+  "toggle-reveal-items",
+  "toggle-keep-hidden"
+]);
+
 function applyNewCommandSettings(newSettings: Settings, commands: Command[]) {
   Mousetrap.reset();
 
@@ -60,6 +66,10 @@ function applyNewCommandSettings(newSettings: Settings, commands: Command[]) {
       command.ShowInCombatantRow(commandSetting.ShowInCombatantRow);
     }
 
+    if (FORCE_HIDDEN_INLINE_COMMANDS.has(command.Id)) {
+      command.ShowInCombatantRow(false);
+    }
+
     const keys = [command.KeyBinding];
     const appleAlias = getAppleAlias(command.KeyBinding);
     if (appleAlias) {
@@ -80,11 +90,6 @@ export function UpdateSettings(oldSettings: any): Settings {
     updatedSettings.PreloadedStatBlockSources["tob2"] = true;
     updatedSettings.PreloadedStatBlockSources["tob3"] = true;
     delete updatedSettings.PreloadedContent.Open5eContent;
-  }
-
-  if (_.get(oldSettings, "PreloadedStatBlockSources.wotc-srd")) {
-    updatedSettings.PreloadedStatBlockSources["srd-2024"] = true;
-    updatedSettings.PreloadedStatBlockSources["wotc-srd"] = false;
   }
 
   return updatedSettings;

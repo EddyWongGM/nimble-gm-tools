@@ -302,7 +302,7 @@ export function startNewsUpdates(app: express.Application): void {
         title: process.env.FALLBACK_POST_TITLE || "Pledge on Patreon",
         url:
           process.env.FALLBACK_POST_URL ||
-          "https://www.patreon.com/improvedinitiative",
+          "https://www.patreon.com/NimbleRPGApp",
         was_posted_by_campaign_owner: true
       }
     };

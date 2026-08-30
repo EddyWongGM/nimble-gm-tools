@@ -1,6 +1,7 @@
 import { CombatantState, TagState } from "../../common/CombatantState";
 import { EncounterState } from "../../common/EncounterState";
 import { SavedEncounter } from "../../common/SavedEncounter";
+import { StatBlock } from "../../common/StatBlock";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { AccountClient } from "../Account/AccountClient";
 
@@ -8,6 +9,7 @@ function updateLegacySavedCombatant(savedCombatant: any) {
   if (!savedCombatant.StatBlock) {
     savedCombatant.StatBlock = savedCombatant["Statblock"];
   }
+  savedCombatant.StatBlock = StatBlock.Update(savedCombatant.StatBlock);
   if (!savedCombatant.Id) {
     savedCombatant.Id = probablyUniqueString();
   }

@@ -64,6 +64,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
   );
 
   const { DisplayHPBar } = useContext(SettingsContext).TrackerView;
+  const { EnableInventory } = useContext(SettingsContext).Rules;
   if (!props.combatantViewModel) {
     return null;
   }
@@ -100,7 +101,6 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         </>
       )}
       <div className="c-combatant-details__hp">
-        {!StatBlock.ActsInPlayerPhase(statBlock) && challengeOrLevel}
         <span className="stat-label CurrentHP">HP</span>
         <span>
           {currentHp}
@@ -129,28 +129,34 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             </span>
           </>
         )}
-        {StatBlock.ActsInPlayerPhase(statBlock) && challengeOrLevel}
+        {challengeOrLevel}
       </div>
-      <div className="c-combatant-details__defense-resources">
-        <span className="stat-label">Defense</span>
-        <span className="stat-value">{statBlock.AC.Value}</span>
-        {currentResources && (
-          <>
-            <span className="stat-label Resources">Resources</span>
-            <span>
-              {currentResources}
-              {DisplayHPBar && (
-                <span className="combatant__hp-bar">
-                  <span
-                    className="combatant__hp-bar--filled"
-                    style={renderHPBarStyle(currentResourcesPercentage)}
-                  />
-                </span>
-              )}
-            </span>
-          </>
-        )}
-      </div>
+      {(StatBlock.ActsInPlayerPhase(statBlock) || currentResources) && (
+        <div className="c-combatant-details__defense-resources">
+          {StatBlock.ActsInPlayerPhase(statBlock) && (
+            <>
+              <span className="stat-label">Defense</span>
+              <span className="stat-value">{statBlock.AC.Value}</span>
+            </>
+          )}
+          {currentResources && (
+            <>
+              <span className="stat-label Resources">Resources</span>
+              <span>
+                {currentResources}
+                {DisplayHPBar && (
+                  <span className="combatant__hp-bar">
+                    <span
+                      className="combatant__hp-bar--filled"
+                      style={renderHPBarStyle(currentResourcesPercentage)}
+                    />
+                  </span>
+                )}
+              </span>
+            </>
+          )}
+        </div>
+      )}
       {(currentHitDice || currentWounds) && (
         <div className="c-combatant-details__hitdice-wounds">
           {currentHitDice && (
@@ -187,27 +193,33 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
           )}
         </div>
       )}
-      <div className="c-combatant-details__speed-initiative">
-        {statBlock.Speed.length > 0 && (
-          <>
-            <span className="stat-label Speed">Speed</span>
-            <span className="stat-value">
-              {statBlock.Speed.map((speed, i) => (
-                <span
-                  className="stat-value__item"
-                  key={"stat-value__speed-" + i}
-                >
-                  {speed}
-                </span>
-              ))}
-            </span>
-          </>
-        )}
-        <span className="stat-label Initiative">Initiative</span>
-        <span className="stat-value">
-          {toModifierString(initiativeBonus)}
-        </span>
-      </div>
+      {(statBlock.Speed.length > 0 || StatBlock.ActsInPlayerPhase(statBlock)) && (
+        <div className="c-combatant-details__speed-initiative">
+          {statBlock.Speed.length > 0 && (
+            <>
+              <span className="stat-label Speed">Speed</span>
+              <span className="stat-value">
+                {statBlock.Speed.map((speed, i) => (
+                  <span
+                    className="stat-value__item"
+                    key={"stat-value__speed-" + i}
+                  >
+                    {speed}
+                  </span>
+                ))}
+              </span>
+            </>
+          )}
+          {StatBlock.ActsInPlayerPhase(statBlock) && (
+            <>
+              <span className="stat-label Initiative">Initiative</span>
+              <span className="stat-value">
+                {toModifierString(initiativeBonus)}
+              </span>
+            </>
+          )}
+        </div>
+      )}
       {tags.length > 0 && (
         <div className="c-combatant-details__tags">
           <span className="stat-label">Tags</span>{" "}
@@ -233,7 +245,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         {renderedNotes && (
           <div className="c-combatant-details__notes">{renderedNotes}</div>
         )}
-        {items.length > 0 && (
+        {EnableInventory && items.length > 0 && (
           <>
             {props.displayMode === "status-only" && <hr />}
             <div className="c-combatant-details__items">

@@ -1,15 +1,15 @@
 {
-  "short_name": "Initiative",
-  "name": "Improved Initiative",
+  "short_name": "Nimble",
+  "name": "Nimble RPG App",
   "icons": [
     {
-      "src": "/img/boot-white-on-darkred-192.png",
+      "src": "/img/book-white-on-black-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
     },
     {
-      "src": "/img/boot-white-on-darkred-512.png",
+      "src": "/img/book-white-on-black-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"

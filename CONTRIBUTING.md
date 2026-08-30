@@ -1,12 +1,12 @@
-# Contributing to Improved Initiative
+# Contributing to Nimble RPG App
 
-Thanks for your interest in contributing to Improved Initiative! It means a lot to me that you'd like to spend your time to help me build this project, and I'd be happy to review any issues or pull requests you'd like to submit.
+Thanks for your interest in contributing to Nimble RPG App! It means a lot to me that you'd like to spend your time to help me build this project, and I'd be happy to review any issues or pull requests you'd like to submit.
 
 If this is your first time contributing to an open source project, don't sweat it. It's my first time maintaining an open source project. We'll learn together- look over [this article](https://opensource.guide/how-to-contribute/) for some general advice.
 
 ## Getting Started
 
-Evan uses and recommends [Visual Studio Code](https://code.visualstudio.com/) when developing Improved Initiative. You can hit F5 and accept the default Node.js environment to get the server running. You can set environment variables as described in the README in this default launch.json.
+Evan uses and recommends [Visual Studio Code](https://code.visualstudio.com/) when developing Nimble RPG App. You can hit F5 and accept the default Node.js environment to get the server running. You can set environment variables as described in the README in this default launch.json.
 
 Most of the Typescript code for the frontend lives in `/client/`. Everything is in the process of gradually being migrated to React, so use React components in .tsx files when possible.
 
@@ -23,7 +23,7 @@ Here is a short list of coding guidelines (adapted from [TypeScript Coding Guide
 ### General
 
 - Open pull requests against the `development` branch.
-- Link your pull request to an open [issue](https://github.com/cynicaloptimist/improved-initiative/labels/help%20wanted) with the `help wanted` tag.
+- Link your pull request to an open [issue](https://github.com/EddyWongGM/nimble-gm-tools/labels/help%20wanted) with the `help wanted` tag.
 - Include at least one test for your code.
 - Don't add any game content that isn't covered by the [Open-Gaming License](http://dnd.wizards.com/articles/features/systems-reference-document-srd).
 
@@ -37,7 +37,7 @@ Here is a short list of coding guidelines (adapted from [TypeScript Coding Guide
 
 ## Epic Initiative
 
-While Improved Initiative is open source, the MIT license allows anyone to use this code to make a profit. I've chosen to make a subset of the app's features available as rewards to [Patreon](https://www.patreon.com/improvedinitiative) subscribers as "Epic Initiative". At the time of this writing, this mainly covers cosmetic benefits associated with the Player View such as custom CSS. As the license indicates, you are always free to run your own instance of Improved Initiative and modify this functionality to meet your needs.
+While Nimble RPG App is open source, the MIT license allows anyone to use this code to make a profit. I've chosen to make a subset of the app's features available as rewards to [Patreon](https://www.patreon.com/NimbleRPGApp) subscribers as "Epic Initiative". At the time of this writing, this mainly covers cosmetic benefits associated with the Player View such as custom CSS. As the license indicates, you are always free to run your own instance of Nimble RPG App and modify this functionality to meet your needs.
 
 ### thanks.ts
 

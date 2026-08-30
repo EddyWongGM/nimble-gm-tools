@@ -1,11 +1,10 @@
-# improved-initiative
+# Nimble RPG App
 
-_Combat tracker for Dungeons and Dragons (D&amp;D) 5th Edition_
+_Combat tracker for the [Nimble](https://nimblerpg.com/) tabletop RPG_
 
-The official Improved Initiative app lives at https://improvedinitiative.app/
-
-This fork adapts the app for the [Nimble](https://nimblerpg.com/) RPG system.
-See [NIMBLE_CONVERSION.md](NIMBLE_CONVERSION.md) for what changed and why.
+This is a fork of [Improved Initiative](https://improvedinitiative.app/),
+adapted from Dungeons & Dragons 5th Edition to the Nimble RPG system. See
+[NIMBLE_CONVERSION.md](NIMBLE_CONVERSION.md) for what changed and why.
 
 ## Local Development
 
@@ -37,19 +36,19 @@ npm run dev
   in the shell take precedence over `.env`, which takes precedence over the
   development defaults.
 
-Development of Improved Initiative is supported through [Patreon](https://www.patreon.com/improvedinitiative).
+Development of Nimble RPG App is supported through [Patreon](https://www.patreon.com/NimbleRPGApp).
 
-To learn more about how to contribute code to Improved Initiative, refer to [CONTRIBUTING.md](./CONTRIBUTING.md).
+To learn more about how to contribute code to Nimble RPG App, refer to [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ### Linting
 
-Improved Initiative uses Eslint with prettier to lint the code files.
+Nimble RPG App uses Eslint with prettier to lint the code files.
 
 Linting happens automatically on commit, but you can also run it manually via: `npm run lint`.
 
 ### App Settings
 
-You can configure your instance of Improved Initiative with these settings. All are optional, basic functionality should work if you don't specify any.
+You can configure your instance of Nimble RPG App with these settings. All are optional, basic functionality should work if you don't specify any.
 
 - `PORT` - Defaults to 80
 - `NODE_ENV` - Set to "production" to satisfy react, set to "development" to disable html view caching.
@@ -65,7 +64,7 @@ You can configure your instance of Improved Initiative with these settings. All 
 - `BASIC_AUTH_USERNAME`, `BASIC_AUTH_PASSWORD` - If both are set, gates the entire app (pages, API routes, and the Socket.IO live-sync connection) behind a single shared HTTP Basic Auth login. Inactive unless both are set. Intended for a dev/staging deployment that would otherwise sit open at its default URL - not needed for the production instance real visitors use.
 - `METRICS_DB_CONNECTION_STRING` - Provide a DB connection string to write metrics to.
 - `PATREON_URL`, `PATREON_CLIENT_ID`, `PATREON_CLIENT_SECRET` - Configuration for Patreon integration
-- `PATREON_ACCOUNT_SYNC_TIER_IDS`, `PATREON_EPIC_TIER_IDS`, `PATREON_MYTHIC_TIER_IDS` - Comma-separated Patreon tier reward IDs that grant Account Sync/Epic/Mythic features after login. Default to the original Improved Initiative campaign's tier IDs - set these if running your own Patreon campaign, since a different campaign's tiers get different IDs.
+- `PATREON_ACCOUNT_SYNC_TIER_IDS`, `PATREON_EPIC_TIER_IDS`, `PATREON_MYTHIC_TIER_IDS` - Comma-separated Patreon tier reward IDs that grant Account Sync/Epic/Mythic features after login. Default to the original Nimble RPG App campaign's tier IDs - set these if running your own Patreon campaign, since a different campaign's tiers get different IDs.
 - `GOOGLE_ANALYTICS_ID` - GA4 measurement ID used by the browser tag and Measurement Protocol events.
 - `GOOGLE_ANALYTICS_API_SECRET` - GA4 Measurement Protocol API secret used for server-side Patreon subscription events.
 
@@ -74,11 +73,11 @@ You can configure your instance of Improved Initiative with these settings. All 
 To self-host this app for your own table (rather than developing on it), use
 the launcher scripts in `scripts/`:
 
-- `Start-NimbleGMTools-Console.ps1` - Right-click and "Run with
+- `Start-NimbleRPGApp-Console.ps1` - Right-click and "Run with
   PowerShell". Builds and starts a production instance in a visible window,
   and opens it in your browser once it's up. Stop it with Ctrl+C in that
   window, which shuts down cleanly and flushes the local database.
-- `Start-NimbleGMTools-Hidden.ps1` - Same, but with no visible console
+- `Start-NimbleRPGApp-Hidden.ps1` - Same, but with no visible console
   window (output is logged to `data\start.log`). Since there's no window for
   Ctrl+C, stop it from the app's Settings > About tab instead ("Shut Down
   Server" - requires `ALLOW_SERVER_SHUTDOWN=true`, which both scripts set by
@@ -96,4 +95,4 @@ force-closing the process.
 
 ## License
 
-The Improved Initiative app is made available under the [MIT](license) license.
+The Nimble RPG App app is made available under the [MIT](license) license.

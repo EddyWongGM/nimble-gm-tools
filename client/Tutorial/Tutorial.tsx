@@ -61,7 +61,7 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
 
   return (
     <div className="tutorial">
-      {stepIndex === 0 && <h3>Welcome to Improved Initiative!</h3>}
+      {stepIndex === 0 && <h3>Welcome to Nimble RPG App!</h3>}
       <p dangerouslySetInnerHTML={{ __html: step.Message }} />
       <Button
         onClick={advance}

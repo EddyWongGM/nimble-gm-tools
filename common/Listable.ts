@@ -11,6 +11,7 @@ export interface FilterDimensions {
   Level?: string;
   Source?: string;
   Type?: string;
+  Category?: string;
 }
 
 export interface ListingMeta {

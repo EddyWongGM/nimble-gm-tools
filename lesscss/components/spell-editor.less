@@ -1,12 +1,8 @@
 .spell-editor {
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
-
-  .c-spell-editor-fields {
-    overflow-y: auto;
-    flex-shrink: 1;
-  }
+  flex: 1;
+  overflow-y: scroll;
 
   textarea[name="Description"] {
     height: 200px;
@@ -19,25 +15,22 @@
     line-height: 1.4em;
   }
 
-  .editor-type,
-  .edit-mode {
-    display: block;
-  }
-
   .fa-clickable {
     margin-left: @medium-spacer;
   }
 
-  .c-spell-editor__label {
-    padding: @extra-small-spacer @small-spacer;
-    font-size: @font-size-h4;
-    font-family: @font-family-headers;
-    color: var(--red);
-  }
+  // Same global `div { flex-direction: column }` gotcha as statblock-editor.less
+  // - without this, the Ritual toggle's label and button stack instead of
+  // sitting side by side.
+  .c-spell-editor__ritual {
+    display: flex;
+    align-items: center;
+    margin: @medium-spacer 0;
 
-  .c-spell-editor__input {
-    width: 100%;
-    height: 3rem;
+    .c-button-with-label {
+      display: flex;
+      flex-flow: row;
+    }
   }
 
   .json-editor {

@@ -5,7 +5,10 @@ import {
   NameAndModifier,
   StatBlock
 } from "../../common/StatBlock";
-import { normalizeChallengeRating } from "../../common/Toolbox";
+import {
+  GetModifierFromScore,
+  normalizeChallengeRating
+} from "../../common/Toolbox";
 import { Spell } from "../../common/Spell";
 
 export function ImportOpen5eStatBlock(
@@ -30,12 +33,10 @@ export function ImportOpen5eStatBlock(
       return `${speedType} ${sb.speed[speedType]} ft.`;
     }),
     Abilities: {
-      Str: sb.strength,
-      Dex: sb.dexterity,
-      Con: sb.constitution,
-      Int: sb.intelligence,
-      Wis: sb.wisdom,
-      Cha: sb.charisma
+      Str: GetModifierFromScore(sb.strength),
+      Dex: GetModifierFromScore(sb.dexterity),
+      Int: GetModifierFromScore(sb.intelligence),
+      Wis: GetModifierFromScore(sb.wisdom)
     },
     DamageVulnerabilities: commaSeparatedStrings(sb.damage_vulnerabilities),
     DamageResistances: commaSeparatedStrings(sb.damage_resistances),
@@ -198,12 +199,10 @@ export function ImportOpen5eV2StatBlock(
       (sb.initiative_bonus ?? 0) - (sb.modifiers?.dexterity ?? 0),
     Speed: getSpeedV2(sb),
     Abilities: {
-      Str: sb.ability_scores.strength,
-      Dex: sb.ability_scores.dexterity,
-      Con: sb.ability_scores.constitution,
-      Int: sb.ability_scores.intelligence,
-      Wis: sb.ability_scores.wisdom,
-      Cha: sb.ability_scores.charisma
+      Str: GetModifierFromScore(sb.ability_scores.strength),
+      Dex: GetModifierFromScore(sb.ability_scores.dexterity),
+      Int: GetModifierFromScore(sb.ability_scores.intelligence),
+      Wis: GetModifierFromScore(sb.ability_scores.wisdom)
     },
     DamageVulnerabilities:
       sb.resistances_and_immunities.damage_vulnerabilities.map(v => v.name),

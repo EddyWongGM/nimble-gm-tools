@@ -49,7 +49,27 @@ type CommandsSettingsProps = {
   combatantCommands: Command[];
 };
 
+const HIDDEN_FROM_COMMAND_SETTINGS = new Set([
+  "start-encounter",
+  "reroll-initiative",
+  "end-encounter",
+  "next-turn",
+  "previous-turn",
+  "set-initiative",
+  "shutdown-server",
+  "toggle-reveal-gold",
+  "toggle-reveal-items",
+  "toggle-keep-hidden"
+]);
+
 export function CommandsSettings(props: CommandsSettingsProps) {
+  const encounterCommands = props.encounterCommands.filter(
+    c => !HIDDEN_FROM_COMMAND_SETTINGS.has(c.Id)
+  );
+  const combatantCommands = props.combatantCommands.filter(
+    c => !HIDDEN_FROM_COMMAND_SETTINGS.has(c.Id)
+  );
+
   return (
     <div className="tab-content keybindings">
       <h2>Encounter Commands</h2>
@@ -57,14 +77,14 @@ export function CommandsSettings(props: CommandsSettingsProps) {
         <span className="hotkey-label">Hotkey</span>
         <span className="toolbar-label">Toolbar</span>
       </div>
-      {props.encounterCommands.map(buildCommandSettingRow(props, false))}
+      {encounterCommands.map(buildCommandSettingRow(props, false))}
       <h2>Name Commands</h2>
       <div className="command-options-labels">
         <span className="hotkey-label">Hotkey</span>
         <span className="toolbar-label">Toolbar</span>
         <span className="combatant-label">Inline</span>
       </div>
-      {props.combatantCommands.map(buildCommandSettingRow(props, true))}
+      {combatantCommands.map(buildCommandSettingRow(props, true))}
     </div>
   );
 }
