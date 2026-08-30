@@ -24,9 +24,9 @@ export function AbilityScores(props: { statBlock: StatBlock }) {
   return (
     <div className="Abilities">
       {StatBlock.VisibleAbilityNames.map(abilityName => {
-        const abilityScore = props.statBlock.Abilities[abilityName];
-        const abilityModifier =
-          textEnricher.GetEnrichedModifierFromAbilityScore(abilityScore);
+        const abilityModifier = textEnricher.EnrichModifier(
+          props.statBlock.Abilities[abilityName]
+        );
         return (
           <div className="Ability" key={abilityName}>
             <div className="stat-label">

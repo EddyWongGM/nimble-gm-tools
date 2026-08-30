@@ -16,7 +16,11 @@ import { interfacePriorityClass } from "./Layout/interfacePriorityClass";
 import { centerColumnView } from "./Layout/centerColumnView";
 import { ThreeColumnLayout } from "./Layout/ThreeColumnLayout";
 import { LibraryManager } from "./Library/Manager/LibraryManager";
-import { LibrariesContext, useLibraries } from "./Library/Libraries";
+import {
+  LibrariesContext,
+  unloadTutorialHeroes,
+  useLibraries
+} from "./Library/Libraries";
 import { Store } from "./Utility/Store";
 import { Settings } from "../common/Settings";
 import { Metrics } from "./Utility/Metrics";
@@ -47,10 +51,14 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   );
 
   const libraries = useLibraries(settings, new AccountClient(), () => {
+    console.log("[TutorialDebug] allPersistentCharactersLoaded fired");
     tracker.LoadAutoSavedEncounterIfAvailable();
+    tracker.ContinuePendingRepeatTutorialIfNeeded();
   });
 
   tracker.SetLibraries(libraries);
+
+  console.log("[TutorialDebug] App render, tutorialVisible =", tutorialVisible);
 
   const centerColumn = centerColumnView(statblockEditorProps, spellEditorProps);
   const interfacePriority = interfacePriorityClass(
@@ -97,6 +105,14 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
                 <Tutorial
                   onClose={() => {
                     tracker.TutorialVisible(false);
+                    unloadTutorialHeroes(libraries.PersistentCharacters);
+                    tracker.SaveUpdatedSettings({
+                      ...settings,
+                      PreloadedHeroSources: {
+                        ...settings.PreloadedHeroSources,
+                        "tutorial-heroes": false
+                      }
+                    });
                     LegacySynchronousLocalStore.Save(
                       LegacySynchronousLocalStore.User,
                       "SkipIntro",

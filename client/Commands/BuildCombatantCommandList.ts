@@ -14,7 +14,8 @@ export const BuildCombatantCommandList: (
     id: "apply-damage",
     description: "Apply Damage",
     actionBinding: c.ApplyDamage,
-    fontAwesomeIcon: "fist-raised"
+    fontAwesomeIcon: "fist-raised",
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "apply-healing",
@@ -27,8 +28,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-hp",
     description: "Apply Temporary HP",
     actionBinding: c.AddTemporaryHP,
-    fontAwesomeIcon: "heart",
-    defaultShowOnActionBar: false
+    fontAwesomeIcon: "heart"
   }),
   new Command({
     id: "spend-mana",
@@ -48,8 +48,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-mana",
     description: "Apply Temporary Mana",
     actionBinding: c.AddTemporaryMana,
-    fontAwesomeIcon: "tint",
-    defaultShowOnActionBar: false
+    fontAwesomeIcon: "tint"
   }),
   new Command({
     id: "spend-resources",
@@ -69,8 +68,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-resources",
     description: "Apply Temporary Resources",
     actionBinding: c.AddTemporaryResources,
-    fontAwesomeIcon: "bolt",
-    defaultShowOnActionBar: false
+    fontAwesomeIcon: "bolt"
   }),
   new Command({
     id: "spend-hit-dice",
@@ -90,8 +88,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-hit-dice",
     description: "Apply Temporary Hit Dice",
     actionBinding: c.AddTemporaryHitDice,
-    fontAwesomeIcon: "dice-d6",
-    defaultShowOnActionBar: false
+    fontAwesomeIcon: "dice-d6"
   }),
   new Command({
     id: "spend-wounds",
@@ -111,8 +108,7 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-wounds",
     description: "Apply Wound Protection",
     actionBinding: c.AddTemporaryWounds,
-    fontAwesomeIcon: "skull",
-    defaultShowOnActionBar: false
+    fontAwesomeIcon: "skull"
   }),
   new Command({
     id: "add-gold",
@@ -169,8 +165,7 @@ export const BuildCombatantCommandList: (
     description: "Lock Hidden (ignore Reveal All Monsters)",
     actionBinding: c.ToggleKeepHidden,
     fontAwesomeIcon: "lock",
-    defaultShowOnActionBar: false,
-    defaultShowInCombatantRow: true
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "toggle-reveal-ac",
@@ -190,15 +185,13 @@ export const BuildCombatantCommandList: (
     id: "toggle-reveal-items",
     description: "Hide/Reveal Inventory in Player View",
     actionBinding: c.ToggleRevealedItems,
-    fontAwesomeIcon: "scroll",
-    defaultShowOnActionBar: false
+    fontAwesomeIcon: "scroll"
   }),
   new Command({
     id: "toggle-reveal-gold",
     description: "Hide/Reveal Gold in Player View",
     actionBinding: c.ToggleRevealedGold,
-    fontAwesomeIcon: "coins",
-    defaultShowOnActionBar: false
+    fontAwesomeIcon: "coins"
   }),
   new Command({
     id: "show-inventory",
@@ -212,15 +205,14 @@ export const BuildCombatantCommandList: (
     description: "Add Item",
     actionBinding: c.AddItem,
     fontAwesomeIcon: "box-open",
-    defaultShowOnActionBar: false,
-    defaultShowInCombatantRow: true
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "edit-statblock",
     description: "Edit Unique Statblock",
     actionBinding: c.EditOwnStatBlock,
     fontAwesomeIcon: "edit",
-    defaultShowOnActionBar: false
+    defaultShowOnActionBar: true
   }),
   new Command({
     id: "quick-edit-statblock",
@@ -229,46 +221,41 @@ export const BuildCombatantCommandList: (
     fontAwesomeIcon: "magic",
     defaultShowOnActionBar: true
   }),
-  new Command({
-    id: "set-initiative",
-    description: "Edit Initiative",
-    actionBinding: c.EditInitiative,
-    fontAwesomeIcon: "stopwatch",
-    defaultShowOnActionBar: false
-  }),
-  new Command({
-    id: "link-initiative",
-    description: "Link Initiative",
-    actionBinding: c.LinkInitiative,
-    fontAwesomeIcon: "link",
-    defaultShowOnActionBar: false
-  }),
-  new Command({
-    id: "move-down",
-    description: "Move Down",
-    actionBinding: c.MoveDown,
-    fontAwesomeIcon: "angle-double-down"
-  }),
-  new Command({
-    id: "move-up",
-    description: "Move Up",
-    actionBinding: c.MoveUp,
-    fontAwesomeIcon: "angle-double-up"
-  }),
-  new Command({
-    id: "select-next",
-    description: "Select Next",
-    actionBinding: c.SelectNext,
-    fontAwesomeIcon: "arrow-down",
-    defaultShowOnActionBar: false
-  }),
-  new Command({
-    id: "select-previous",
-    description: "Select Previous",
-    actionBinding: c.SelectPrevious,
-    fontAwesomeIcon: "arrow-up",
-    defaultShowOnActionBar: false
-  }),
+  // new Command({
+  //   id: "set-initiative",
+  //   description: "Edit Initiative",
+  //   actionBinding: c.EditInitiative,
+  //   fontAwesomeIcon: "stopwatch",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "move-down",
+  //   description: "Move Down",
+  //   actionBinding: c.MoveDown,
+  //   fontAwesomeIcon: "angle-double-down",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "move-up",
+  //   description: "Move Up",
+  //   actionBinding: c.MoveUp,
+  //   fontAwesomeIcon: "angle-double-up",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "select-next",
+  //   description: "Select Next",
+  //   actionBinding: c.SelectNext,
+  //   fontAwesomeIcon: "arrow-down",
+  //   defaultShowOnActionBar: false
+  // }),
+  // new Command({
+  //   id: "select-previous",
+  //   description: "Select Previous",
+  //   actionBinding: c.SelectPrevious,
+  //   fontAwesomeIcon: "arrow-up",
+  //   defaultShowOnActionBar: false
+  // }),
   new Command({
     id: "duplicate-combatant",
     description: "Duplicate Combatant",

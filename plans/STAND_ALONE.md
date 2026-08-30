@@ -15,7 +15,7 @@ Self-hosting for a *technically comfortable* second user is already mostly
 solved:
 
 - Clone the repo, `npm install`, then run
-  [scripts/Start-NimbleGMTools-Console.ps1](scripts/Start-NimbleGMTools-Console.ps1)
+  [scripts/Start-NimbleRPGApp-Console.ps1](scripts/Start-NimbleRPGApp-Console.ps1)
   (or the `-Hidden` variant) to build and run a production instance.
 - Data is isolated per install: local MongoDB persists under `data\db`
   ([README.md](README.md#local-hosting)).

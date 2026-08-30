@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import { InitiativeSpecialRoll } from "../../common/StatBlock";
+import { GetModifierFromScore } from "../../common/Toolbox";
 
 export type AbilityCheckResult = {
   rolls: number[];
@@ -17,9 +18,7 @@ export interface IRules {
 }
 
 export class DefaultRules implements IRules {
-  public GetModifierFromScore = (abilityScore: number) => {
-    return Math.floor((abilityScore - 10) / 2);
-  };
+  public GetModifierFromScore = GetModifierFromScore;
 
   public GetProficiencyBonus = (challengeString: string) => {
     const challenge = parseFloat(challengeString);

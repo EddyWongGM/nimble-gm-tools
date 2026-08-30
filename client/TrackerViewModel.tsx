@@ -22,7 +22,11 @@ import { SubmitButton } from "./Components/Button";
 import { Encounter } from "./Encounter/Encounter";
 import { UpdateLegacyEncounterState } from "./Encounter/UpdateLegacySavedEncounter";
 import { env } from "./Environment";
-import { Libraries, LibraryType } from "./Library/Libraries";
+import {
+  Libraries,
+  LibraryType,
+  loadTutorialHeroes
+} from "./Library/Libraries";
 import { PlayerViewClient } from "./PlayerView/PlayerViewClient";
 import { DefaultRules } from "./Rules/Rules";
 import {
@@ -115,6 +119,46 @@ export class TrackerViewModel {
     this.LibrariesCommander.SetLibraries(libraries);
   };
 
+  // Set synchronously by RepeatTutorial, right before it writes the
+  // PendingRepeatTutorial flag and calls location.reload(). The reload
+  // doesn't stop this page's JS immediately - it keeps running (and
+  // re-rendering, since RepeatTutorial's own SaveUpdatedSettings just
+  // changed CurrentSettings) until the browser actually navigates away.
+  // useLibraries' allPersistentCharactersLoaded callback fires repeatedly
+  // (once per relevant library/state change, not once per page), so without
+  // this guard one of those extra firings on this same doomed page finds the
+  // flag it just wrote, consumes it, and runs RepeatTutorial a second time
+  // here - which briefly opens the tutorial on a page that's about to be
+  // thrown away, and leaves no flag for the real post-reload page to find.
+  private didTriggerRepeatTutorialReload = false;
+
+  // Called once account sync and local persistent-character loading have
+  // both finished (see useLibraries' allPersistentCharactersLoaded callback
+  // in App.tsx). Calling RepeatTutorial any earlier races two things that
+  // can silently undo it: SetLibraries runs synchronously in App's render
+  // body, so setting TutorialVisible there happens before App's own
+  // useSubscription has read the new value; and for a logged-in account,
+  // LoadAutoSavedEncounterIfAvailable (gated on this same signal) can
+  // restore a previous encounter after RepeatTutorial's EndEncounter call,
+  // undoing the fresh start. Running after both are settled avoids both.
+  public ContinuePendingRepeatTutorialIfNeeded = (): void => {
+    if (this.didTriggerRepeatTutorialReload) {
+      return;
+    }
+    const pending = LegacySynchronousLocalStore.Load(
+      LegacySynchronousLocalStore.User,
+      "PendingRepeatTutorial"
+    );
+    console.log("[TutorialDebug] ContinuePendingRepeatTutorialIfNeeded, pending =", pending);
+    if (pending) {
+      LegacySynchronousLocalStore.Delete(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial"
+      );
+      this.RepeatTutorial();
+    }
+  };
+
   public StatBlockTextEnricher: TextEnricher;
 
   public Encounter = new Encounter(
@@ -196,16 +240,49 @@ export class TrackerViewModel {
         this.Libraries.PersistentCharacters.DeleteListing(
           persistentCharacterId
         ),
+      onSaveAsCopy: (statBlock: StatBlock) =>
+        this.Libraries.PersistentCharacters.SaveNewListing(
+          PersistentCharacter.Initialize(statBlock)
+        ),
       onClose: () => this.StatBlockEditorProps(null),
       currentListings: this.Libraries.PersistentCharacters.GetAllListings()
     });
   }
 
   public RepeatTutorial = (): void => {
+    const settings = CurrentSettings();
+    console.log(
+      "[TutorialDebug] RepeatTutorial called, tutorial-heroes =",
+      settings.PreloadedHeroSources["tutorial-heroes"]
+    );
+    if (!settings.PreloadedHeroSources["tutorial-heroes"]) {
+      this.didTriggerRepeatTutorialReload = true;
+      this.SaveUpdatedSettings({
+        ...settings,
+        PreloadedHeroSources: {
+          ...settings.PreloadedHeroSources,
+          "tutorial-heroes": true
+        }
+      });
+      LegacySynchronousLocalStore.Save(
+        LegacySynchronousLocalStore.User,
+        "PendingRepeatTutorial",
+        true
+      );
+      console.log("[TutorialDebug] RepeatTutorial reloading page");
+      window.location.reload();
+      return;
+    }
+
     this.Encounter.EncounterFlow.EndEncounter();
     this.EncounterCommander.ShowLibraries();
     this.SettingsVisible(false);
     this.TutorialVisible(true);
+    console.log(
+      "[TutorialDebug] RepeatTutorial set TutorialVisible(true), current value =",
+      this.TutorialVisible()
+    );
+    loadTutorialHeroes(this.Libraries.PersistentCharacters);
   };
 
   public ImportEncounterIfAvailable = (): void => {
@@ -235,7 +312,7 @@ export class TrackerViewModel {
     if (!env.IsLoggedIn || !env.HasEpicInitiative) {
       Metrics.TrackPatreonAccessDenied(Metrics.LeadSource.ImporterLoginFail, {
         link_url: env.IsLoggedIn
-          ? "https://www.patreon.com/join/improvedinitiative"
+          ? "https://www.patreon.com/join/NimbleRPGApp"
           : env.PatreonLoginUrl
       });
     }
@@ -275,13 +352,13 @@ export class TrackerViewModel {
           <span className="no-epic-initiative-for-import">
             {"The D&D Beyond Importer is available for "}
             <a
-              href={"https://www.patreon.com/join/improvedinitiative"}
+              href={"https://www.patreon.com/join/NimbleRPGApp"}
               target="_blank"
               onClick={() =>
                 Metrics.TrackPatreonSignupIntent(
                   Metrics.LeadSource.ImporterLoginFail,
                   {
-                    link_url: "https://www.patreon.com/join/improvedinitiative"
+                    link_url: "https://www.patreon.com/join/NimbleRPGApp"
                   }
                 )
               }

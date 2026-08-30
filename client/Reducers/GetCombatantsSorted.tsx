@@ -2,7 +2,6 @@ import { EncounterState } from "../../common/EncounterState";
 import { CombatantState } from "../../common/CombatantState";
 import { max, sortBy } from "lodash";
 import { StatBlock } from "../../common/StatBlock";
-import { DefaultRules } from "../Rules/Rules";
 
 export function GetCombatantsSorted(
   encounterState: EncounterState<CombatantState>,
@@ -50,8 +49,5 @@ function getGroupBonusForCombatant(
 }
 
 function computeInitiativeBonus(statBlock: StatBlock) {
-  const dexterityModifier = new DefaultRules().GetModifierFromScore(
-    statBlock.Abilities.Dex
-  );
-  return dexterityModifier + (statBlock.InitiativeModifier || 0);
+  return statBlock.Abilities.Dex + (statBlock.InitiativeModifier || 0);
 }

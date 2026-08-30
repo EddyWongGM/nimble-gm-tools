@@ -274,16 +274,14 @@ export class Combatant {
   }
 
   public InitiativeBonus = ko.computed(() => {
-    const dexterityModifier = this.Encounter.Rules.GetModifierFromScore(
-      this.StatBlock().Abilities.Dex
-    );
+    const dexterityModifier = this.StatBlock().Abilities.Dex;
     return dexterityModifier + (this.StatBlock().InitiativeModifier || 0);
   });
 
   // Nimble's concentration check is a DC 10 STR save, not D&D's Con save -
   // see Conditions2025.Concentrating in client/Rules/Conditions.ts.
-  public ConcentrationBonus = ko.computed(() =>
-    this.Encounter.Rules.GetModifierFromScore(this.StatBlock().Abilities.Str)
+  public ConcentrationBonus = ko.computed(
+    () => this.StatBlock().Abilities.Str
   );
 
   public IsPlayerCharacter = ko.computed(() =>
@@ -313,9 +311,7 @@ export class Combatant {
   );
 
   public MaxInventorySlots = ko.computed(
-    () =>
-      10 +
-      this.Encounter.Rules.GetModifierFromScore(this.StatBlock().Abilities.Str)
+    () => 10 + this.StatBlock().Abilities.Str
   );
 
   public InventorySlotsUsed = ko.computed(() =>

@@ -150,7 +150,7 @@ export class LibrariesCommander {
     const statBlock = StatBlock.Default();
     const newId = probablyUniqueString();
 
-    statBlock.Name = "New Creature";
+    statBlock.Name = "New Monster";
     statBlock.Id = newId;
 
     this.tracker.EditStatBlock({
@@ -240,8 +240,9 @@ export class LibrariesCommander {
   public CreateAndEditSpell = (): void => {
     const newSpell = {
       ...Spell.Default(),
-      Name: "New Spell",
+      Name: "New Entry",
       Source: "Custom",
+      EntryType: "rule" as const,
       Id: probablyUniqueString()
     };
     this.tracker.EditSpell({
@@ -257,7 +258,8 @@ export class LibrariesCommander {
         spell: { ...Spell.Default(), ...spell },
         onSave: spell =>
           this.libraries.Spells.SaveEditedListing(listing, spell),
-        onDelete: this.libraries.Spells.DeleteListing
+        onDelete: this.libraries.Spells.DeleteListing,
+        onSaveAsCopy: this.libraries.Spells.SaveNewListing
       });
     });
   };
@@ -278,7 +280,7 @@ export class LibrariesCommander {
       this.libraries.Spells.GetAllListings()
         .map(s => s.Meta().Name)
         .filter(n => n.length > 2),
-      { caseSensitive: true }
+      { caseSensitive: true, allowEscape: true }
     );
 
   public LoadEncounter = (

@@ -22,9 +22,14 @@ export function CenterColumn(props: {
   return (
     <div className="center-column" ref={useVerticalResizerDrop()}>
       {centerColumn === "statblockeditor" && (
-        <StatBlockEditor {...statblockEditorProps} />
+        <StatBlockEditor
+          key={statblockEditorProps.statBlock.Id}
+          {...statblockEditorProps}
+        />
       )}
-      {centerColumn === "spelleditor" && <SpellEditor {...spellEditorProps} />}
+      {centerColumn === "spelleditor" && (
+        <SpellEditor key={spellEditorProps.spell.Id} {...spellEditorProps} />
+      )}
       {centerColumn === "combat" && (
         <>
           <InitiativeListHost tracker={props.tracker} />

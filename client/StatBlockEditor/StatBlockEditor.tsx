@@ -165,30 +165,37 @@ export class StatBlockEditor extends React.Component<
   // stats layout - so when an optional field (Hit Dice, Wounds) doesn't
   // apply, later fields (notably Initiative) shift up to fill the gap
   // instead of leaving an empty cell and an extra near-empty row below.
-  private statFields = (): JSX.Element[][] => {
+  private statFields = (player: string): JSX.Element[][] => {
+    const actsInPlayerPhase = player == "player" || player == "companion";
+
     const fields: JSX.Element[] = [
       <TextField
         key="level"
-        label={this.props.statBlock.Player == "player" ? "Level" : "Challenge"}
+        label={player == "player" ? "Level" : "Challenge"}
         fieldName="Challenge"
       />,
       <ValueAndNotesField key="defense" label="Defense" fieldName="AC" />,
-      <ValueAndNotesField key="hp" label="Hit Points" fieldName="HP" />,
-      <ValueAndNotesField key="mana" label="Mana" fieldName="Mana" />,
-      <ValueAndNotesField key="resources" label="Resources" fieldName="Resources" />
+      <ValueAndNotesField key="hp" label="Hit Points" fieldName="HP" />
     ];
 
-    if (this.props.statBlock.Player == "player") {
+    if (actsInPlayerPhase) {
+      fields.push(
+        <ValueAndNotesField key="mana" label="Mana" fieldName="Mana" />,
+        <ValueAndNotesField key="resources" label="Resources" fieldName="Resources" />
+      );
+    }
+
+    if (player == "player") {
       fields.push(
         <ValueAndNotesField key="hitdice" label="Hit Dice" fieldName="HitDice" />
       );
     }
-    if (StatBlock.ActsInPlayerPhase(this.props.statBlock)) {
+    if (actsInPlayerPhase) {
       fields.push(
-        <ValueAndNotesField key="wounds" label="Wounds" fieldName="Wounds" />
+        <ValueAndNotesField key="wounds" label="Wounds" fieldName="Wounds" />,
+        <InitiativeField key="initiative" />
       );
     }
-    fields.push(<InitiativeField key="initiative" />);
 
     const rows: JSX.Element[][] = [];
     for (let i = 0; i < fields.length; i += 2) {
@@ -222,18 +229,21 @@ export class StatBlockEditor extends React.Component<
             this.props.editorTarget == "combatant") && (
             <EnumToggle
               labelsByOption={{
-                "": "Monster/NPC",
-                companion: "Companion"
+                "": "Normal",
+                legendary: "Legendary",
+                titan: "Titan"
               }}
               fieldName="Player"
             />
           )}
         </div>
-        <div className="c-statblock-editor__abilityscores">
-          {StatBlock.VisibleAbilityNames.map(abilityScoreField)}
-        </div>
+        {api.values.Player === "player" && (
+          <div className="c-statblock-editor__abilityscores">
+            {StatBlock.VisibleAbilityNames.map(abilityScoreField)}
+          </div>
+        )}
         <div className="c-statblock-editor__stats">
-          {this.statFields().map((pair, i) => (
+          {this.statFields(api.values.Player).map((pair, i) => (
             <div className="c-statblock-editor__stats-row" key={i}>
               {pair}
             </div>
@@ -278,9 +288,14 @@ export class StatBlockEditor extends React.Component<
           {[
             { type: "Traits", label: "Traits" },
             { type: "Actions", label: "Actions" },
-            { type: "BonusActions", label: "Bonus Actions" },
-            { type: "Reactions", label: "Reactions" },
-            { type: "LegendaryActions", label: "Legendary Actions" },
+            // Only clutter the form with Legendary Actions once the
+            // statblock is marked Legendary or Titan, or already has some
+            // (e.g. imported from a source that doesn't use this toggle).
+            ...(api.values.Player === "legendary" ||
+            api.values.Player === "titan" ||
+            api.values.LegendaryActions?.length > 0
+              ? [{ type: "LegendaryActions", label: "Legendary Actions" }]
+              : []),
             // name stays "MythicActions" so the field/className keeps
             // matching the shared styling and stored data shape - only the
             // visible label changes, same as the read-only StatBlock view.
@@ -412,7 +427,12 @@ export class StatBlockEditor extends React.Component<
     const path = values.Path || "";
     const name = values.Name || "";
 
-    if (this.willOverwriteStatBlock(path, name)) {
+    const originalPath = this.props.statBlock.Path || "";
+    const originalName = this.props.statBlock.Name || "";
+
+    if (path === originalPath && name === originalName) {
+      errors.PathAndName = "Error: Save as a copy requires a different name.";
+    } else if (this.willOverwriteStatBlock(path, name)) {
       errors.PathAndName =
         "Error: This copy will overwrite an existing statblock. Please change the name or folder.";
     }

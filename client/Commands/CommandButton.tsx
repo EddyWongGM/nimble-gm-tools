@@ -8,6 +8,7 @@ export function CommandButton(props: { command: Command; showLabel: boolean }) {
   const c = props.command;
   const buttonIsOnActionBar = useSubscription(c.ShowOnActionBar);
   const fontAwesomeIcon = useSubscription(c.FontAwesomeIcon);
+  const isActive = useSubscription(c.Active);
 
   if (!buttonIsOnActionBar) {
     return null;
@@ -16,7 +17,9 @@ export function CommandButton(props: { command: Command; showLabel: boolean }) {
   const buttonText = props.showLabel && c.Description;
   return (
     <Button
-      additionalClassNames={"c-button--" + c.Id}
+      additionalClassNames={
+        "c-button--" + c.Id + (isActive ? " c-button--active" : "")
+      }
       key={c.Description}
       tooltip={commandButtonTooltip(c)}
       tooltipProps={{

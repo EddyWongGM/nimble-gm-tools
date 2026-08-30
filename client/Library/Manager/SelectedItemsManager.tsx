@@ -12,7 +12,7 @@ import {
   Libraries,
   LibraryStoreNames
 } from "../Libraries";
-import { Listing } from "../Listing";
+import { IsPreloadedOrigin, Listing } from "../Listing";
 import { ActiveLibrary } from "./ActiveLibrary";
 import { DeletePrompt } from "./DeletePrompt";
 import { MovePrompt } from "./MovePrompt";
@@ -34,8 +34,8 @@ export function SelectedItemsManager(props: {
 
   const selection = React.useContext(ListingSelectionContext);
 
-  const preloadedContentSelected = selection.selected.some(
-    l => l.Origin === "open5e" || l.Origin === "open5e-additional"
+  const preloadedContentSelected = selection.selected.some(l =>
+    IsPreloadedOrigin(l.Origin)
   );
 
   return (

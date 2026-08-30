@@ -25,7 +25,6 @@ type ApplyDamage = {
     ApplyHealing
     ApplyTemporaryHP
     SetInitiative
-    LinkInitiative
     AddTag
     RemoveTag
     UpdateNotes

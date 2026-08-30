@@ -24,10 +24,10 @@ export type UpdatePersistentCharacter = (
 ) => void;
 
 export const LibraryFriendlyNames = {
-  StatBlocks: "Creatures",
   PersistentCharacters: "Heroes",
+  StatBlocks: "Monsters",
   Encounters: "Encounters",
-  Spells: "Spells"
+  Spells: "Compendium"
 };
 
 export const LibraryStoreNames: Record<LibraryType, string> = {
@@ -111,7 +111,8 @@ export function useLibraries(
       accountDelete: accountClient.DeletePersistentCharacter,
       getFilterDimensions: PersistentCharacter.GetFilterDimensions,
       getSearchHint: PersistentCharacter.GetSearchHint,
-      signalLoadComplete
+      signalLoadComplete,
+      migrate: PersistentCharacter.Update
     }
   );
   const StatBlocks = useLibrary(Store.StatBlocks, "statblocks", {
@@ -119,7 +120,8 @@ export function useLibraries(
     accountSave: accountClient.SaveStatBlock,
     accountDelete: accountClient.DeleteStatBlock,
     getFilterDimensions: StatBlock.FilterDimensions,
-    getSearchHint: StatBlock.GetSearchHint
+    getSearchHint: StatBlock.GetSearchHint,
+    migrate: StatBlock.Update
   });
   const Encounters = useLibrary(Store.SavedEncounters, "encounters", {
     createEmptyListing: SavedEncounter.Default,
@@ -147,13 +149,9 @@ export function useLibraries(
   React.useEffect(() => {
     preloadSpells(Spells, settings);
     preloadStatBlocks(StatBlocks, settings);
+    preloadHeroes(PersistentCharacters, settings);
 
-    getAccountOrSampleCharacters(
-      accountClient,
-      PersistentCharacters,
-      libraries,
-      signalLoadComplete
-    );
+    syncAccountCharacters(accountClient, libraries, signalLoadComplete);
   }, []);
 
   return libraries;
@@ -168,12 +166,23 @@ async function preloadStatBlocks(
     isEnabled => isEnabled
   );
   for (const sourceSlug in enabledSources) {
+    if (sourceSlug === "local-basic-rules") {
+      try {
+        const response = await axios.get("/statblocks/");
+        const localListings: ListingMeta[] = response.data;
+        StatBlocks.AddListings(localListings, "server");
+      } catch (error) {
+        console.warn(`Problem loading local Basic Rules StatBlocks: ${error}`);
+      }
+      continue;
+    }
+
     try {
       const response = await axios.get(`/open5e/${sourceSlug}/`);
       const open5eListings: ListingMeta[] = response.data;
       StatBlocks.AddListings(
         open5eListings,
-        ["wotc-srd", "srd-2014", "srd-2024"].includes(sourceSlug)
+        ["srd-2014", "srd-2024"].includes(sourceSlug)
           ? "open5e"
           : "open5e-additional",
         ImportOpen5eV2StatBlock
@@ -183,6 +192,78 @@ async function preloadStatBlocks(
     }
   }
 }
+
+async function preloadHeroes(
+  PersistentCharacters: Library<PersistentCharacter>,
+  settings: Settings
+) {
+  const enabledSources = _.pickBy(
+    settings.PreloadedHeroSources,
+    isEnabled => isEnabled
+  );
+  for (const sourceSlug in enabledSources) {
+    if (sourceSlug === "tutorial-heroes") {
+      try {
+        const response = await axios.get("/heroes/");
+        const localListings: ListingMeta[] = response.data;
+        PersistentCharacters.AddListings(
+          localListings,
+          "server",
+          PersistentCharacter.Initialize
+        );
+      } catch (error) {
+        console.warn(`Problem loading Tutorial Heroes: ${error}`);
+      }
+    }
+
+    if (sourceSlug === "local-basic-rules") {
+      try {
+        const response = await axios.get("/basic-rules-heroes/");
+        const localListings: ListingMeta[] = response.data;
+        PersistentCharacters.AddListings(
+          localListings,
+          "server",
+          PersistentCharacter.Initialize
+        );
+      } catch (error) {
+        console.warn(`Problem loading Basic Rules Heroes: ${error}`);
+      }
+    }
+  }
+}
+
+export async function loadTutorialHeroes(
+  PersistentCharacters: Library<PersistentCharacter>
+) {
+  const alreadyLoaded = PersistentCharacters.GetAllListings().some(
+    l => l.Origin === "server"
+  );
+  if (alreadyLoaded) {
+    return;
+  }
+
+  try {
+    const response = await axios.get("/heroes/");
+    const localListings: ListingMeta[] = response.data;
+    PersistentCharacters.AddListings(
+      localListings,
+      "server",
+      PersistentCharacter.Initialize
+    );
+  } catch (error) {
+    console.warn(`Problem loading Tutorial Heroes: ${error}`);
+  }
+}
+
+export function unloadTutorialHeroes(
+  PersistentCharacters: Library<PersistentCharacter>
+) {
+  PersistentCharacters.GetAllListings()
+    .filter(l => l.Origin === "server")
+    .forEach(l => PersistentCharacters.DeleteListing(l.Meta().Id));
+}
+
+export const SAMPLE_HEROES_FOLDER_NAME = "Sample Heroes";
 
 async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
   const enabledSources = _.pickBy(
@@ -195,7 +276,7 @@ async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
       const open5eListings: ListingMeta[] = response.data;
       Spells.AddListings(
         open5eListings,
-        sourceSlug === "wotc-srd" ? "open5e" : "open5e-additional",
+        "open5e-additional",
         ImportOpen5eSpell
       );
     } catch (error) {
@@ -204,50 +285,26 @@ async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
   }
 }
 
-function getAccountOrSampleCharacters(
+function syncAccountCharacters(
   accountClient: AccountClient,
-  PersistentCharacters: Library<PersistentCharacter>,
   libraries: Libraries,
   signalLoadComplete: (string: "localAsync" | "account") => void
 ) {
   accountClient.GetAccount(async account => {
+    console.log("[TutorialDebug] GetAccount resolved, account =", account);
     if (!account) {
-      const persistentCharacterCount = await Store.Count(
-        Store.PersistentCharacters
-      );
-      if (persistentCharacterCount == 0) {
-        getAndAddSamplePersistentCharacters(PersistentCharacters);
-      }
       signalLoadComplete("account");
       return;
     }
     if (account.persistentcharacters.length == 0) {
       // Normally useLibrary will only call signalLoadComplete if at least one loaded listing is from the account
+      console.log("[TutorialDebug] GetAccount: 0 persistentcharacters, signalLoadComplete(account) explicitly");
       signalLoadComplete("account");
     }
 
     handleAccountSync(account, accountClient, libraries);
   });
 }
-
-const getAndAddSamplePersistentCharacters = (
-  persistentCharacterLibrary: Library<PersistentCharacter>
-) => {
-  axios.get<StatBlock[]>("/sample_players.json").then(response => {
-    if (!response) {
-      return;
-    }
-    const statblocks = response.data;
-    statblocks.forEach(statBlock => {
-      statBlock.Path = "Sample Player Characters";
-      const persistentCharacter = PersistentCharacter.Initialize({
-        ...StatBlock.Default(),
-        ...statBlock
-      });
-      persistentCharacterLibrary.SaveNewListing(persistentCharacter);
-    });
-  });
-};
 
 const handleAccountSync = (
   account: Account,

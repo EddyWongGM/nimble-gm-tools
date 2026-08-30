@@ -1,4 +1,5 @@
 import { env } from "../Environment";
+import { CurrentSettings } from "../Settings/Settings";
 import { Command } from "./Command";
 import { EncounterCommander } from "./EncounterCommander";
 
@@ -14,24 +15,26 @@ export const BuildEncounterCommandList = (
       fontAwesomeIcon: "chevron-right",
       lockOnActionBar: true
     }),
-    new Command({
-      id: "start-encounter",
-      description: "Start Encounter",
-      actionBinding: c.StartEncounter,
-      fontAwesomeIcon: "play"
-    }),
-    new Command({
-      id: "reroll-initiative",
-      description: "Reroll Initiative",
-      actionBinding: c.RerollInitiative,
-      fontAwesomeIcon: "sync",
-      defaultShowOnActionBar: false
-    }),
+    // new Command({
+    //   id: "start-encounter",
+    //   description: "Start Encounter",
+    //   actionBinding: c.StartEncounter,
+    //   fontAwesomeIcon: "play",
+    //   defaultShowOnActionBar: false
+    // }),
+    // new Command({
+    //   id: "reroll-initiative",
+    //   description: "Reroll Initiative",
+    //   actionBinding: c.RerollInitiative,
+    //   fontAwesomeIcon: "sync",
+    //   defaultShowOnActionBar: false
+    // }),
     new Command({
       id: "group-all-monsters",
       description: "Group Monsters",
       actionBinding: c.GroupAllMonsters,
-      fontAwesomeIcon: "object-group"
+      fontAwesomeIcon: "object-group",
+      defaultShowOnActionBar: false
     }),
     new Command({
       id: "swap-phase-order",
@@ -46,11 +49,28 @@ export const BuildEncounterCommandList = (
       fontAwesomeIcon: "eye-slash"
     }),
     new Command({
-      id: "end-encounter",
-      description: "End Encounter",
-      actionBinding: c.EndEncounter,
-      fontAwesomeIcon: "stop"
+      id: "toggle-hide-inventory-player-view",
+      description: "Hide Inventory from Players",
+      actionBinding: c.ToggleHideInventoryFromPlayers,
+      fontAwesomeIcon: "boxes",
+      isActive: () => CurrentSettings().PlayerView.HideInventoryNumbers,
+      defaultShowOnActionBar: false
     }),
+    new Command({
+      id: "toggle-hide-gold-player-view",
+      description: "Hide Gold from Players",
+      actionBinding: c.ToggleHideGoldFromPlayers,
+      fontAwesomeIcon: "coins",
+      isActive: () => CurrentSettings().PlayerView.HideGoldNumbers,
+      defaultShowOnActionBar: false
+    }),
+    // new Command({
+    //   id: "end-encounter",
+    //   description: "End Encounter",
+    //   actionBinding: c.EndEncounter,
+    //   fontAwesomeIcon: "stop",
+    //   defaultShowOnActionBar: false
+    // }),
     new Command({
       id: "clear-encounter",
       description: "Clear Encounter",
@@ -74,8 +94,7 @@ export const BuildEncounterCommandList = (
       id: "open-library-manager",
       description: "Library Manager",
       actionBinding: c.ToggleLibraryManager,
-      fontAwesomeIcon: "book-open",
-      defaultShowOnActionBar: false
+      fontAwesomeIcon: "book-open"
     }),
     new Command({
       id: "roll-dice",
@@ -112,19 +131,20 @@ export const BuildEncounterCommandList = (
         fontAwesomeIcon: "expand",
         defaultShowOnActionBar: false
       }),
-    new Command({
-      id: "next-turn",
-      description: "Next Turn",
-      actionBinding: c.NextTurn,
-      fontAwesomeIcon: "step-forward"
-    }),
-    new Command({
-      id: "previous-turn",
-      description: "Previous Turn",
-      actionBinding: c.PreviousTurn,
-      fontAwesomeIcon: "step-backward",
-      defaultShowOnActionBar: false
-    }),
+    // new Command({
+    //   id: "next-turn",
+    //   description: "Next Turn",
+    //   actionBinding: c.NextTurn,
+    //   fontAwesomeIcon: "step-forward",
+    //   defaultShowOnActionBar: false
+    // }),
+    // new Command({
+    //   id: "previous-turn",
+    //   description: "Previous Turn",
+    //   actionBinding: c.PreviousTurn,
+    //   fontAwesomeIcon: "step-backward",
+    //   defaultShowOnActionBar: false
+    // }),
     new Command({
       id: "save-encounter",
       description: "Save Encounter",

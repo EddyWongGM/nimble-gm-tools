@@ -35,7 +35,7 @@ export const ValueAndNotesField = (props: {
 export const InitiativeField = () => (
   <div className="c-statblock-editor__text">
     <label className="c-statblock-editor__label" htmlFor="InitiativeModifier">
-      Initiative
+      Initiative Modifier
       <Info>Additional modifier that stacks with Dexterity bonus</Info>
     </label>
     <div className="inline">

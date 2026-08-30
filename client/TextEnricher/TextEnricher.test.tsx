@@ -54,6 +54,31 @@ describe("TextEnricher", () => {
     expect.assertions(1);
   });
 
+  test("Escaped Spell Reference renders as plain, non-clickable text", async () => {
+    const referenceSpellListing = jest.fn();
+    const textEnricher = new TextEnricher(
+      () => {},
+      referenceSpellListing,
+      () => {},
+      () => [getTestSpell()],
+      () =>
+        concatenatedStringRegex([getTestSpell().Meta().Name], {
+          allowEscape: true
+        }),
+      new DefaultRules()
+    );
+
+    const inputText =
+      "The creature can cast \\Test Spell at will as a bonus action.";
+
+    const enrichedText = textEnricher.EnrichText(inputText);
+
+    const tree = render(enrichedText);
+    expect(tree.container.textContent).toContain("Test Spell");
+    expect(tree.container.querySelector(".spell-reference")).toBeNull();
+    expect(referenceSpellListing).not.toHaveBeenCalled();
+  });
+
   test("Counter", async () => {
     const textEnricher = new TextEnricher(
       () => {},
@@ -142,7 +167,7 @@ describe("TextEnricher", () => {
 
     const statBlock = {
       ...StatBlock.Default(),
-      Abilities: { Str: 10, Dex: 10, Con: 10, Int: 10, Wis: 20, Cha: 10 }
+      Abilities: { Str: 0, Dex: 0, Int: 0, Wis: 5 }
     };
     const enrichedText = textEnricher.EnrichText(
       "Save DC [KEY]",

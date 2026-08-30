@@ -24,8 +24,8 @@ module.exports = function (grunt) {
     less: {
       default: {
         files: {
-          ["public/css/improved-initiative." + appVersion + ".css"]: [
-            "lesscss/improved-initiative.less"
+          ["public/css/nimble-rpg-app." + appVersion + ".css"]: [
+            "lesscss/nimble-rpg-app.less"
           ]
         }
       }

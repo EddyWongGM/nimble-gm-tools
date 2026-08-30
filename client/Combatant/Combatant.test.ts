@@ -224,19 +224,19 @@ describe("Combatant", () => {
     test("MaxInventorySlots is 10 plus the Strength modifier", () => {
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
-        Abilities: { ...StatBlock.Default().Abilities, Str: 10 }
+        Abilities: { ...StatBlock.Default().Abilities, Str: 0 }
       });
       expect(combatant.MaxInventorySlots()).toBe(10);
 
       combatant.StatBlock({
         ...StatBlock.Default(),
-        Abilities: { ...StatBlock.Default().Abilities, Str: 14 }
+        Abilities: { ...StatBlock.Default().Abilities, Str: 2 }
       });
       expect(combatant.MaxInventorySlots()).toBe(12);
 
       combatant.StatBlock({
         ...StatBlock.Default(),
-        Abilities: { ...StatBlock.Default().Abilities, Str: 6 }
+        Abilities: { ...StatBlock.Default().Abilities, Str: -2 }
       });
       expect(combatant.MaxInventorySlots()).toBe(8);
     });
@@ -524,6 +524,7 @@ describe("Combatant", () => {
     });
 
     test("GoldDisplay shows once a player character's gold is revealed", () => {
+      InitializeTestSettings({ Rules: { EnableGold: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player"
@@ -556,6 +557,7 @@ describe("Combatant", () => {
     });
 
     test("InventoryDisplay shows slots used over max once a player character's inventory is revealed", () => {
+      InitializeTestSettings({ Rules: { EnableInventory: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player"
@@ -573,6 +575,7 @@ describe("Combatant", () => {
     });
 
     test("InventoryColor turns warning-red once slots used exceeds MaxInventorySlots", () => {
+      InitializeTestSettings({ Rules: { EnableInventory: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player"

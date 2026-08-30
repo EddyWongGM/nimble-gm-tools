@@ -14,11 +14,13 @@ import { EpicInitiativeSettings } from "./EpicInitiativeSettings";
 import { OptionsSettings } from "./OptionsSettings";
 import { useContext, useState, useCallback } from "react";
 import { SettingsContext } from "../SettingsContext";
+import { ContentSettings } from "./ContentSettings";
 
 const SettingsTab = {
   About: "About",
   Commands: "Commands",
   Options: "Options",
+  Content: "Content",
   Account: "Account",
   EpicTier: "Epic Tier"
 };
@@ -40,8 +42,26 @@ export function SettingsPane(props: SettingsPaneProps) {
     (newSettings: Settings) => {
       props.handleNewSettings(newSettings);
       props.closeSettings();
+
+      const preloadedContentChanged =
+        !_.isEqual(
+          settings.PreloadedStatBlockSources,
+          newSettings.PreloadedStatBlockSources
+        ) ||
+        !_.isEqual(
+          settings.PreloadedSpellSources,
+          newSettings.PreloadedSpellSources
+        ) ||
+        !_.isEqual(
+          settings.PreloadedHeroSources,
+          newSettings.PreloadedHeroSources
+        );
+
+      if (preloadedContentChanged) {
+        window.location.reload();
+      }
     },
-    [props.handleNewSettings, props.closeSettings]
+    [settings, props.handleNewSettings, props.closeSettings]
   );
 
   const [currentTab, setCurrentTab] = useState(SettingsTab.About);
@@ -71,6 +91,9 @@ export function SettingsPane(props: SettingsPaneProps) {
           }
         />
       );
+    }
+    if (currentTab == SettingsTab.Content) {
+      return <ContentSettings />;
     }
     if (currentTab == SettingsTab.Account) {
       return (

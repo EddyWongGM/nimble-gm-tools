@@ -52,6 +52,10 @@ export class SpellLibraryReferencePane extends React.Component<SpellLibraryRefer
     {
       label: "Type",
       groupFn: l => ({ key: l.Meta().FilterDimensions.Type })
+    },
+    {
+      label: "Category",
+      groupFn: l => ({ key: l.Meta().FilterDimensions.Category })
     }
   ];
 

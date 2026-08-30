@@ -43,6 +43,11 @@ export function useLibrary<T extends Listable>(
     getSearchHint: (listable: T) => string;
     getFilterDimensions: (listable: T) => FilterDimensions;
     signalLoadComplete?: (string: "account" | "localAsync") => void;
+    // Runs whenever a listable is deserialized from IndexedDB, legacy
+    // localStorage, or a server/account route - the single choke point for
+    // bringing older-shape saved data up to the current data model.
+    // Idempotent: safe to run on already-current-shape data.
+    migrate?: (item: any) => T;
   }
 ): Library<T> {
   // locals
@@ -91,11 +96,12 @@ export function useLibrary<T extends Listable>(
       setListings(currentListings => [
         ...currentListings,
         ...newListingMetas.map(
-          m => new Listing<T>(m, source, undefined, mapLinkResponse)
+          m =>
+            new Listing<T>(m, source, undefined, mapLinkResponse, callbacks.migrate)
         )
       ]);
     },
-    [setListings]
+    [setListings, callbacks.migrate]
   );
 
   const DeleteListing = React.useCallback(
@@ -236,9 +242,11 @@ export function useLibrary<T extends Listable>(
   if (callbacks.signalLoadComplete) {
     React.useEffect(() => {
       if (hasAttemptedLocalLoad) {
+        console.log("[TutorialDebug] useLibrary(" + storeName + ") signalLoadComplete(localAsync)");
         callbacks.signalLoadComplete("localAsync");
       }
       if (listings.some(l => l.Origin === "account")) {
+        console.log("[TutorialDebug] useLibrary(" + storeName + ") signalLoadComplete(account) via listings");
         callbacks.signalLoadComplete("account");
       }
     }, [callbacks.signalLoadComplete, listings, hasAttemptedLocalLoad]);

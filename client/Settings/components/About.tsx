@@ -42,22 +42,36 @@ export class About extends React.Component<AboutProps, AboutState> {
       <div className="tab-content about">
         <div>
           <p>
-            <strong>Improved Initiative</strong>
+            Nimble RPG App is an independent product published under the Nimble
+            3rd Party Creator License. Nimble © Nimble Co.
+          </p>
+          <p>
+            <strong>Nimble RPG App</strong>
             {" was created by "}
-            <a href="mailto:improvedinitiativedev@gmail.com">Evan Bailey</a>
-            {". All Wizards of the Coast content provided under terms of the "}
-            <a href={env.BaseUrl + "/SRD-OGL_V1.1.pdf"} target="_blank">
-              Open Gaming License Version 1.0a
+            <a href="https://github.com/EddyWongGM" target="_blank">
+              Eddy Wong
             </a>
-            {". Additional content provided by "}
-            <a href="https://open5e.com/" target="_blank">
-              Open5e
+            {"."}
+            <br />
+            {"All Nimble content provided under terms of the "}
+            <a href="https://nimblerpg.com/pages/creators" target="_blank">
+              Nimble 3rd Party Creator License v2.0
             </a>
             {"."}
           </p>
+          <p>
+            This app is free to use for anyone who already owns the content, is
+            trying the system out, or cannot afford to buy it right now. If you
+            enjoy Nimble and are able, please support the game by purchasing the
+            official content at{" "}
+            <a href="https://nimblerpg.com/" target="_blank">
+              nimbleRPG.com
+            </a>
+            .
+          </p>
         </div>
         <div className="support">
-          Love Improved Initiative?
+          Love Nimble RPG App?
           <div
             className="fb-like"
             data-href="https://www.facebook.com/improvedinitiativeapp/"
@@ -69,13 +83,13 @@ export class About extends React.Component<AboutProps, AboutState> {
           />
           <a
             className="pledge"
-            href="https://www.patreon.com/join/improvedinitiative"
+            href="https://www.patreon.com/join/NimbleRPGApp"
             target="_blank"
             onClick={() =>
               Metrics.TrackPatreonSignupIntent(
                 Metrics.LeadSource.AboutTabSupporterBenefits,
                 {
-                  link_url: "https://www.patreon.com/join/improvedinitiative"
+                  link_url: "https://www.patreon.com/join/NimbleRPGApp"
                 }
               )
             }

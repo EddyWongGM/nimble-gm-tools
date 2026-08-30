@@ -24,7 +24,8 @@ module.exports = {
   ghostMode: false,
   files: [
     "public/css/*.css",
-    "public/js/ImprovedInitiative.*.js",
+    "public/js/NimbleRPGApp.*.js",
+    "public/img/**/*",
     "html/**/*.html"
   ],
   reloadDebounce: 300

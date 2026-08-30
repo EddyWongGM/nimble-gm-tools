@@ -1,7 +1,10 @@
 .initiative-list {
   flex-shrink: 1;
   overflow: hidden auto;
-  min-height: 6rem;
+  // Must comfortably fit the title + column-header row with zero combatants,
+  // or that minimum forces a spurious scrollbar (overflow-y: auto engages
+  // even though there's nothing to scroll to).
+  min-height: 6.5rem;
 }
 
 .initiative-list__header {
@@ -186,12 +189,16 @@
     border: 0;
     padding: @small-spacer;
     display: grid;
+    // Name gets its own full-width row above the stats (rather than sharing
+    // a row with them) so it isn't squeezed by the stats' fixed widths, and
+    // the stats row below matches the desktop table's column order.
     /* prettier-ignore */
     grid-template:
-      "leftgutter image name           mana         resources hitdice  wounds   hp       ac       itemsslots gold"
-      "leftgutter image divider        divider      divider   divider  divider  divider  divider  divider    divider"
-      "leftgutter image tagsCommands   tagsCommands tagsCommands tagsCommands tagsCommands tagsCommands tagsCommands tagsCommands tagsCommands" /
-       auto auto  minmax(0, 1fr) auto     auto      auto     auto     auto     auto     auto       auto;
+      "leftgutter image name  name  name       name  name     name    name       name"
+      "leftgutter image hp    ac    mana       resources hitdice wounds itemsslots gold"
+      "leftgutter image divider   divider   divider    divider   divider divider divider    divider"
+      "leftgutter image tagsCommands   tagsCommands tagsCommands tagsCommands tagsCommands tagsCommands tagsCommands tagsCommands" /
+       auto auto  auto  auto  auto       auto  auto     auto    auto       auto;
 
     &::before {
       content: "";

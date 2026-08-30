@@ -82,18 +82,18 @@ const Banners: { href: string; src: string; altText: string }[] = [
     altText: "Eberron Adventures at DMsGuild.com"
   },
   {
-    href: "https://www.patreon.com/join/improvedinitiative",
+    href: "https://www.patreon.com/join/NimbleRPGApp",
     src: "../img/banner-annual.png",
-    altText: "Improved Initiative Epic Tier Annual Subscriptions"
+    altText: "Nimble RPG App Epic Tier Annual Subscriptions"
   },
   {
-    href: "https://www.patreon.com/join/improvedinitiative",
+    href: "https://www.patreon.com/join/NimbleRPGApp",
     src: "../img/banner-features.png",
-    altText: "Improved Initiative Epic Tier Features"
+    altText: "Nimble RPG App Epic Tier Features"
   },
   {
-    href: "https://www.patreon.com/join/improvedinitiative",
+    href: "https://www.patreon.com/join/NimbleRPGApp",
     src: "../img/banner-trial.png",
-    altText: "Improved Initiative Epic Tier Free Trial"
+    altText: "Nimble RPG App Epic Tier Free Trial"
   }
 ];

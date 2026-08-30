@@ -301,7 +301,7 @@ export default async function (
               "Rebuild isn't available in the npm run dev workflow - it " +
               "already rebuilds automatically on file changes. Use a " +
               "production instance (npm start, or the " +
-              "Start-NimbleGMTools scripts) instead."
+              "Start-NimbleRPGApp scripts) instead."
           });
         }
         if (isRebuildInProgress()) {
