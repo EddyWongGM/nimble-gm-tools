@@ -43,10 +43,18 @@ so it's visually highlighted/spotlighted against the rest of the (dimmed) UI.
   to be `true`; if the user has turned that source off in Content settings,
   `RepeatTutorial` instead flips it back on, persists the setting, sets a
   `PendingRepeatTutorial` flag in local storage, and reloads the page. On the
-  next boot, `TrackerViewModel.SetLibraries` ([TrackerViewModel.tsx:103-134](../client/TrackerViewModel.tsx#L103-L134))
-  sees that flag, clears it, and calls `RepeatTutorial` again automatically
-  once libraries are ready - this time the setting is on, so it proceeds
-  normally.
+  next boot, `TrackerViewModel.ContinuePendingRepeatTutorialIfNeeded`
+  ([TrackerViewModel.tsx:131-144](../client/TrackerViewModel.tsx#L131-L144))
+  sees that flag, clears it, and calls `RepeatTutorial` again automatically -
+  this time the setting is on, so it proceeds normally. This is deliberately
+  wired into `useLibraries`' `allPersistentCharactersLoaded` callback in
+  [App.tsx](../client/App.tsx#L53-L56), right after
+  `LoadAutoSavedEncounterIfAvailable`, rather than fired as soon as libraries
+  exist: both persistent-character loading (local + account sync) need to
+  have actually finished, or `RepeatTutorial`'s `TutorialVisible(true)` can
+  get raced by React not having subscribed to the observable yet, or by the
+  autosave restore running afterward and reintroducing the encounter
+  `RepeatTutorial` just ended.
 - While the tutorial is active, editing a library StatBlock or a Persistent
   Character's stat block is disabled ([LibrariesCommander.ts:168-170,
   219-221](../client/Commands/LibrariesCommander.ts#L168-L170)) - the tutorial

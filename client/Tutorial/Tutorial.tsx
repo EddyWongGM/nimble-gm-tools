@@ -41,6 +41,7 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
   }, [stepIndex]);
 
   useLayoutEffect(() => {
+    console.log("[TutorialDebug] Tutorial useLayoutEffect, stepIndex =", stepIndex);
     document
       .querySelectorAll(".tutorial-focus")
       .forEach(e => e.classList.remove("tutorial-focus"));
@@ -61,7 +62,21 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
 
   return (
     <div className="tutorial">
-      {stepIndex === 0 && <h3>Welcome to Nimble RPG App!</h3>}
+      {stepIndex === 0 && (
+        <>
+          <h3>Welcome to Nimble RPG App!</h3>
+          <p className="tutorial__free-notice">
+            This app is free to use for anyone who already owns the content,
+            is trying the system out, or cannot afford to buy it right now.
+            If you enjoy Nimble and are able, please support the game by
+            purchasing the official content at{" "}
+            <a href="https://nimblerpg.com/" target="_blank">
+              nimbleRPG.com
+            </a>
+            .
+          </p>
+        </>
+      )}
       <p dangerouslySetInnerHTML={{ __html: step.Message }} />
       <Button
         onClick={advance}

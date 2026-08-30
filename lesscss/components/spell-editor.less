@@ -15,8 +15,21 @@
     line-height: 1.4em;
   }
 
+  // c-statblock-editor gives its inputs this same height/margin - the
+  // .autohide-field__open-button margin-bottom hack below is calibrated
+  // against that box height to vertically center the folder icon next to
+  // "Name". Without it here too, the icon and label sit at different
+  // heights.
+  input {
+    height: 3rem;
+    margin: @small-spacer 0;
+  }
+
+  // Match the hero/statblock editor's folder-icon spacing (c-statblock-editor
+  // .fa-clickable) so the identity row's folder icon lines up with "Name"
+  // the same way in both editors.
   .fa-clickable {
-    margin-left: @medium-spacer;
+    padding: @medium-spacer;
   }
 
   // Same global `div { flex-direction: column }` gotcha as statblock-editor.less

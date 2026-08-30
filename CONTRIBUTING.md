@@ -25,7 +25,8 @@ Here is a short list of coding guidelines (adapted from [TypeScript Coding Guide
 - Open pull requests against the `development` branch.
 - Link your pull request to an open [issue](https://github.com/EddyWongGM/nimble-gm-tools/labels/help%20wanted) with the `help wanted` tag.
 - Include at least one test for your code.
-- Don't add any game content that isn't covered by the [Open-Gaming License](http://dnd.wizards.com/articles/features/systems-reference-document-srd).
+- Don't add any game content that isn't covered by the [Open-Gaming License](http://dnd.wizards.com/articles/features/systems-reference-document-srd) or the [Nimble 3rd Party Creator License](https://nimblerpg.com/pages/creators).
+- Nimble content (rules text, stat blocks, spells, bestiary entries) must never be gated behind a paid tier (Epic Initiative or otherwise) — per the Nimble 3rd Party Creator License, the app must remain completely free to use for anything covered by Nimble's published content. Paid-tier features must stay limited to cosmetic/account conveniences (e.g. Player View styling, account sync) that don't touch Nimble rules text itself.
 
 ### Names
 

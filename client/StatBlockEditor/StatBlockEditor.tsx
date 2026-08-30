@@ -427,7 +427,12 @@ export class StatBlockEditor extends React.Component<
     const path = values.Path || "";
     const name = values.Name || "";
 
-    if (this.willOverwriteStatBlock(path, name)) {
+    const originalPath = this.props.statBlock.Path || "";
+    const originalName = this.props.statBlock.Name || "";
+
+    if (path === originalPath && name === originalName) {
+      errors.PathAndName = "Error: Save as a copy requires a different name.";
+    } else if (this.willOverwriteStatBlock(path, name)) {
       errors.PathAndName =
         "Error: This copy will overwrite an existing statblock. Please change the name or folder.";
     }

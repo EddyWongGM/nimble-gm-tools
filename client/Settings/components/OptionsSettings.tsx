@@ -13,14 +13,14 @@ export function OptionsSettings(props: {
   return (
     <div className="tab-content options">
       <h3>Rules</h3>
-      <Toggle fieldName="Rules.EnableBossAndMinionHP">
+      {/* <Toggle fieldName="Rules.EnableBossAndMinionHP">
         Show Boss and Minion buttons
         <Info>
           Hover or preview a Creature in the Library Pane to reveal these
           buttons. The pawn icon will add a creature as a 1HP "minion" and the
           king icon will add it with the maximum possible HP roll.
         </Info>
-      </Toggle>
+      </Toggle> */}
       <Toggle fieldName="Rules.AllowNegativeHP">
         Allow negative hit points
       </Toggle>

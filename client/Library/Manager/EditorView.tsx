@@ -81,6 +81,7 @@ function RenderStatBlockEditor(
         props.libraries.StatBlocks.SaveNewListing(statBlock);
         props.closeEditor();
       }}
+      currentListings={props.libraries.StatBlocks.GetAllListings()}
       onClose={props.closeEditor}
     />
   );
