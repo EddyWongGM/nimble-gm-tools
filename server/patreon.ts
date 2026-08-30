@@ -6,6 +6,7 @@ import * as _ from "lodash";
 import axios from "axios";
 import * as querystring from "querystring";
 
+import { safeEqual } from "./basicAuth";
 import * as DB from "./dbconnection";
 import {
   recordServerEvent,
@@ -555,5 +556,5 @@ function verifySignature(
 
   const crypted = hmac.digest("hex");
 
-  return crypted === signature;
+  return safeEqual(crypted, signature);
 }
