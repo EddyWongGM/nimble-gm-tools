@@ -1,10 +1,72 @@
 [
   {
-    "Name": "LVL 0.5 (CR: 0.25)",
-    "Source": "Basic Rules",
-    "Type": "Damage per round: 6 Sample dice 1d4+3 or 1d6+2",
+    "Name": "Goblin Minion",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Goblin",
     "HP": {
-      "Value": 12,
+      "Value": 15,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "Minion",
+    "Traits": [
+      {
+        "Name": "Small",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Haha, missed me!",
+        "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Stab or Shoot",
+        "Content": "1d6 (follows minion rules).",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],      
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258
+  },
+   {
+    "Name": "Goblin",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Goblin",
+    "HP": {
+      "Value": 15,
       "Notes": ""
     },
     "AC": {
@@ -29,31 +91,54 @@
     "Senses": [],
     "Languages": [],
     "Challenge": "0.5 (CR: 0.25) Save DC 11",
-    "Traits": [],
+    "Traits": [
+      {
+        "Name": "Small",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Haha, missed me!",
+        "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return.",
+        "Usage": ""
+      }
+    ],
     "Actions": [
       {
-        "Name": "",
-        "Content": "Damage per round: 6\nSample dice 1d4+3 or 1d6+2\nSave DC 11",
+        "Name": "Stab or Shoot",
+        "Content": "Stab 1d6+2 (or Shoot, Range 8).",
         "Usage": ""
       }
     ],
     "BonusActions": [],
     "Reactions": [],
     "LegendaryActions": [],
-    "MythicActions": [],
-    "Description": "",
+    "MythicActions": [
+      {
+        "Name": "Dove",
+        "Content": "Very injured Goblins can run past multiple heroes, and less injured Goblins can remain adjacent to melee heroes rather than running away to same them an action moving.",
+        "Usage": ""
+      },
+      {
+        "Name": "Doom",
+        "Content": "If a hero is within Reach 6, run up to them, stab, then run away in hopes of triggering an Opportunity Attack. Goad heroes into it with verbal taunts: \"You can't catch me!\" feigning fear (especially if you miss, or seeing them survive your best stab) \"Ahh! Run awaayy!\"",
+        "Usage": ""
+      }
+    ],
+    "Description": "The backbone of any raiding party, especially when it comes to setting up makeshift traps, stealing food, and heckling  anything with a pulse.",
     "Player": "",
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
     "LastUpdateMs": 1787998819258
   },
-  {
-    "Name": "LVL 01 (CR: 0.5)",
-    "Source": "Basic Rules",
-    "Type": "Damage per round: 11 Sample dice 2d6+4 or 2d10",
+   {
+    "Name": "Goblin Ratrider",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Goblin",
     "HP": {
-      "Value": 25,
+      "Value": 30,
       "Notes": ""
     },
     "AC": {
@@ -62,7 +147,7 @@
     },
     "InitiativeModifier": -99,
     "InitiativeAdvantage": false,
-    "Speed": [],
+    "Speed": ["10"],
     "Abilities": {
       "Str": 0,
       "Dex": 0,
@@ -77,12 +162,23 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "1 (CR: 0.5) Save DC 11",
-    "Traits": [],
+    "Challenge": "2 (CR: 1) Save DC 11",
+    "Traits": [
+      {
+        "Name": "CHAAARGE!",
+        "Content": "If you move at least <b>4</b> spaces, attack with advantage once.",
+        "Usage": ""
+      },
+      {
+        "Name": "Haha, Missed Me!",
+        "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+        "Usage": ""
+      }
+    ],
     "Actions": [
       {
-        "Name": "",
-        "Content": "Damage per round: 11\nSample dice 2d6+4 or 2d10\nSave DC 11",
+        "Name": "Bite & Stab (x2)",
+        "Content": "1d6+2. On crit: <b>Prone</b>",
         "Usage": ""
       }
     ],
@@ -95,6 +191,6 @@
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
-    "LastUpdateMs": 1787998819244
+    "LastUpdateMs": 1787998819258
   }
 ]

@@ -38,6 +38,20 @@ function updateLegacySavedCombatant(savedCombatant: any) {
       }
       return tag;
     });
+  } else {
+    savedCombatant.Tags = [];
+  }
+  if (savedCombatant.CurrentHP === undefined) {
+    savedCombatant.CurrentHP = savedCombatant.StatBlock.HP.Value;
+  }
+  if (savedCombatant.TemporaryHP === undefined) {
+    savedCombatant.TemporaryHP = 0;
+  }
+  if (savedCombatant.Initiative === undefined) {
+    savedCombatant.Initiative = 0;
+  }
+  if (savedCombatant.Hidden === undefined) {
+    savedCombatant.Hidden = false;
   }
 }
 

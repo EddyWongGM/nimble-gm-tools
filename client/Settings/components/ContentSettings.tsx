@@ -30,9 +30,19 @@ export function ContentSettings() {
   return (
     <div className="tab-content content">
       <h3>Preloaded Content</h3>
+      <h2>Heroes</h2>
+      <Toggle fieldName="PreloadedHeroSources.local-basic-rules">
+        (WIP) Heroes Starter Set
+      </Toggle>
+      <Toggle fieldName="PreloadedHeroSources.tutorial-heroes">
+        (WIP) Heroes Tutorial Set
+      </Toggle>      
       <h2>Monsters</h2>
+      <Toggle fieldName="PreloadedStatBlockSources.tutorial-monsters">
+        (WIP) Monster Builder Set
+      </Toggle>
       <Toggle fieldName="PreloadedStatBlockSources.local-basic-rules">
-        (WIP) Tutorial Set
+        (WIP) Monsters Starter Set
       </Toggle>
       {statblockSourceKeys.map((sourceName: string) => (
         <Toggle
@@ -42,14 +52,14 @@ export function ContentSettings() {
           {contentSources.data.monsterSources[sourceName]}
         </Toggle>
       ))}      
-      <h2>Heroes</h2>
-      <Toggle fieldName="PreloadedHeroSources.local-basic-rules">
-        (WIP) Starter Set
-      </Toggle>
-      <Toggle fieldName="PreloadedHeroSources.tutorial-heroes">
-        (WIP) Tutorial Set
+      <h2>Encounters</h2>
+      <Toggle fieldName="PreloadedEncounterSources.local-basic-rules">
+        (WIP) Encounters Starter Set
       </Toggle>
       <h2>Compendium</h2>
+      <Toggle fieldName="PreloadedSpellSources.local-basic-rules">
+        (WIP) Compendium Starter Set
+      </Toggle>
       {spellSourceKeys.map((sourceName: string) => (
         <Toggle
           key={`toggle-spells-${sourceName}`}

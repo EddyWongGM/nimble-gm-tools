@@ -1,5 +1,6 @@
 import * as express from "express";
 
+import { SavedEncounter } from "../common/SavedEncounter";
 import { Spell } from "../common/Spell";
 import { StatBlock } from "../common/StatBlock";
 import { Library } from "./library";
@@ -19,6 +20,21 @@ export function configureBasicRulesContent(app: express.Application) {
 
   app.get(statBlockLibrary.Route() + ":id", (req: Req, res: Res) => {
     res.json(statBlockLibrary.GetById(req.params.id));
+  });
+
+  const tutorialMonsterLibrary = Library.FromFile<StatBlock>(
+    "tutorial_monsters.json",
+    "/tutorial-monsters/",
+    StatBlock.GetSearchHint,
+    StatBlock.FilterDimensions
+  );
+
+  app.get(tutorialMonsterLibrary.Route(), (req: Req, res: Res) => {
+    res.json(tutorialMonsterLibrary.GetListings());
+  });
+
+  app.get(tutorialMonsterLibrary.Route() + ":id", (req: Req, res: Res) => {
+    res.json(tutorialMonsterLibrary.GetById(req.params.id));
   });
 
   const spellLibrary = Library.FromFile<Spell>(
@@ -64,5 +80,20 @@ export function configureBasicRulesContent(app: express.Application) {
 
   app.get(basicRulesHeroLibrary.Route() + ":id", (req: Req, res: Res) => {
     res.json(basicRulesHeroLibrary.GetById(req.params.id));
+  });
+
+  const basicRulesEncounterLibrary = Library.FromFile<SavedEncounter>(
+    "basic_rules_encounters.json",
+    "/basic-rules-encounters/",
+    SavedEncounter.GetSearchHint,
+    () => ({})
+  );
+
+  app.get(basicRulesEncounterLibrary.Route(), (req: Req, res: Res) => {
+    res.json(basicRulesEncounterLibrary.GetListings());
+  });
+
+  app.get(basicRulesEncounterLibrary.Route() + ":id", (req: Req, res: Res) => {
+    res.json(basicRulesEncounterLibrary.GetById(req.params.id));
   });
 }
