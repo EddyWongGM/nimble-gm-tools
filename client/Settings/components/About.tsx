@@ -108,7 +108,7 @@ export class About extends React.Component<AboutProps, AboutState> {
           </span>
           <Button
             additionalClassNames="repeat-tutorial"
-            fontAwesomeIcon="hat-wizard"
+            fontAwesomeIcon="lightbulb"
             text="Repeat Tutorial"
             onClick={this.props.repeatTutorial}
           />

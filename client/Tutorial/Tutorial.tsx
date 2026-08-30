@@ -56,6 +56,9 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
     focusedElements.forEach(e => e.classList.add("tutorial-focus"));
     const position = step.CalculatePosition(focusedElements);
     const tutorialWidget = document.querySelector<HTMLElement>(".tutorial");
+    if (!tutorialWidget) {
+      return;
+    }
     tutorialWidget.style.setProperty("left", position.left + "px");
     tutorialWidget.style.setProperty("top", position.top + "px");
   }, [stepIndex]);

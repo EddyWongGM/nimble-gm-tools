@@ -52,23 +52,23 @@ export class AccountSyncSettings extends React.Component<
         <p>Account Sync is enabled.</p>
         <div className="sync-counts">
           {this.syncCount(
-            "Statblocks",
-            this.getCounts(this.props.libraries.StatBlocks.GetAllListings())
-          )}
-          {this.syncCount(
             "Heroes",
             this.getCounts(
               this.props.libraries.PersistentCharacters.GetAllListings()
             )
           )}
           {this.syncCount(
-            "Spells",
-            this.getCounts(this.props.libraries.Spells.GetAllListings())
-          )}
+            "Monsters",
+            this.getCounts(this.props.libraries.StatBlocks.GetAllListings())
+          )}          
           {this.syncCount(
             "Encounters",
             this.getCounts(this.props.libraries.Encounters.GetAllListings())
           )}
+          {this.syncCount(
+            "Compendium",
+            this.getCounts(this.props.libraries.Spells.GetAllListings())
+          )}          
         </div>
         <div className="c-button-with-label">
           <span>Backup and sync local data</span>

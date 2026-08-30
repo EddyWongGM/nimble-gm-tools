@@ -32,7 +32,7 @@ export function ContentSettings() {
       <h3>Preloaded Content</h3>
       <h2>Monsters</h2>
       <Toggle fieldName="PreloadedStatBlockSources.local-basic-rules">
-        Basic (Local)
+        Tutorial Set
       </Toggle>
       {statblockSourceKeys.map((sourceName: string) => (
         <Toggle
@@ -44,10 +44,10 @@ export function ContentSettings() {
       ))}      
       <h2>Heroes</h2>
       <Toggle fieldName="PreloadedHeroSources.local-basic-rules">
-        Basic (Local)
+        Starter Set
       </Toggle>
       <Toggle fieldName="PreloadedHeroSources.tutorial-heroes">
-        Tutorial (Local)
+        Tutorial Set
       </Toggle>
       <h2>Compendium</h2>
       {spellSourceKeys.map((sourceName: string) => (

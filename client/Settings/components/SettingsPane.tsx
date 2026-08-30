@@ -25,6 +25,9 @@ const SettingsTab = {
   EpicTier: "Epic Tier"
 };
 
+// TODO: temporarily hidden - remove to re-enable the Epic Tier tab
+const { EpicTier: _EpicTier, ...visibleSettingsTabs } = SettingsTab;
+
 interface SettingsPaneProps {
   repeatTutorial: () => void;
   reviewPrivacyPolicy: () => void;
@@ -114,7 +117,7 @@ export function SettingsPane(props: SettingsPaneProps) {
         <form className="settings" onSubmit={props.handleSubmit}>
           <Tabs
             selected={currentTab}
-            optionNamesById={SettingsTab}
+            optionNamesById={visibleSettingsTabs}
             onChoose={tab => setCurrentTab(SettingsTab[tab])}
           />
           {getTabContent()}

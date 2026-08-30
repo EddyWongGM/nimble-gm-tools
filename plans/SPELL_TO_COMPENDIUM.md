@@ -204,16 +204,24 @@ unification as a separate, later decision — only worth it if a fifth content
 type or heavy per-type duplication in the shell body makes the case
 concretely, and only with explicit confirmation first.
 
-## Open questions
+## Resolved questions
 
-- Does "CompendiumEditor" mean *all four* library types, or specifically
-  broadening what "Compendium" (today: Spells only) can hold — e.g. adding
-  items/feats as new entries in the Spells library? `LIBRARY_TABS_PLAN.md`
-  §2 flags that as a materially different, larger effort (new `Listable`
-  type or tagged union, new `Store` key, new list/filter/import UI) and
-  explicitly recommends not renaming/expanding the Spells library until that
-  scope is real. Worth resolving before scoping implementation work, since
-  it changes which of the two questions above is actually in play.
-- Is unifying the two editor-hosting mechanisms (Knockout center column vs
-  React `EditorView`) in scope, or should `CompendiumEditor` be built to
-  slot into both as they exist today?
+- **Scope of "CompendiumEditor":** Interpretation A. `CompendiumEditor` is
+  the editor for all four existing library types (`Spell`, `StatBlock`,
+  `SavedEncounter`, `PersistentCharacter`), dispatched per `LibraryType`.
+  No new `Listable` type/tagged union, no new `Store` key, no change to what
+  each store holds — Spells stays spell-shaped, Monsters stays
+  statblock-shaped, etc. Broadening the Spells/Compendium tab itself to hold
+  items/feats (`LIBRARY_TABS_PLAN.md` §2) is out of scope here and remains a
+  separate, later effort.
+- **Dispatch unification:** Narrower option. Both hosting mechanisms stay as
+  they are — the React switch in
+  [EditorView.tsx:130-157](client/Library/Manager/EditorView.tsx#L130-L157)
+  and the Knockout-observable watching in
+  [CenterColumn.tsx](client/Layout/CenterColumn.tsx) — each still picking
+  which editor to show for its own path. What changes is *what* they render:
+  the four separate editor components collapse into one `CompendiumEditor`
+  with a per-type body (per Question B / table-driven dispatch above), fed
+  into both existing dispatch points unchanged. Unifying the Knockout/React
+  hosting mechanisms themselves stays a separate, larger effort per
+  `AGENTS.md`'s Knockout-removal guidance, not bundled into this change.
