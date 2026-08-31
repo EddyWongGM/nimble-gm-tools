@@ -129,7 +129,7 @@ export function getDefaultSettings(): Settings {
     },
     PreloadedStatBlockSources: {
       "local-basic-rules": true,
-      "tutorial-monsters": false
+      "tutorial-monsters": true
     },
     PreloadedSpellSources: { "local-basic-rules": true },
     PreloadedHeroSources: { "local-basic-rules": false, "tutorial-heroes": true },

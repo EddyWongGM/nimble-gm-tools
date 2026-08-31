@@ -1,6 +1,6 @@
 [
   {
-    "Name": "Berserker LVL 1",
+    "Name": "Berserker LV1",
     "Path": "Sample Heroes/Berserker",
     "Source": "Sample Heroes",
     "Type": "Berserker",
@@ -85,7 +85,7 @@
     }
   },
   {
-    "Name": "Cheat LVL 1",
+    "Name": "Cheat LV1",
     "Path": "Sample Heroes/Cheat",
     "Source": "Sample Heroes",
     "Type": "The Cheat",
@@ -142,6 +142,164 @@
       {
         "Name": "Adaptable",
         "Content": "[tab] (+1 to all skills. +1 to Initiative)",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1
+    }
+  },
+  {
+    "Name": "Commander LV1",
+    "Path": "Sample Heroes/Commander",
+    "Source": "Sample Heroes",
+    "Type": "Commander",
+    "HP": {
+      "Value": 17,
+      "Notes": "17 + 0d10"
+    },
+    "AC": {
+      "Value": 8,
+      "Notes": "Rusty Mail"
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": 2,
+      "Wis": -1
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Coordinated Strike! (1/encounter)",
+        "Content": "Free: You & Ally in 6 spaces free attack.\nFor Ally it's not Rushed, because it is not their turn.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+    {
+      "Name": "Weapons",
+      "Content": "[A1] Short Sword : 1d6 + [STR]\n[A1] Javelin : 1d6 + [STR] Range <b>8</b>",
+      "Usage": ""
+    }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "Strength of Stone (1/encounter)",
+        "Content": "If you get a Crit: force a reroll. (+2 Might)",
+        "Usage": ""
+      }
+    ],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Home at Sea",
+        "Content": "Recover 2x Wounds & HP if on a ship / near water. You can act as captain. Adv. water related checks.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1
+    }
+  },
+  {
+    "Name": "Hunter LV1",
+    "Path": "Sample Heroes/Hunter",
+    "Source": "Sample Heroes",
+    "Type": "Hunter",
+    "HP": {
+      "Value": 13,
+      "Notes": "13 + 0d8"
+    },
+    "AC": {
+      "Value": 5,
+      "Notes": "Cheap Hides"
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 1,
+      "Dex": 2,
+      "Int": 0,
+      "Wis": 1
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Hunter’s Mark",
+        "Content": "[A1] Mark Quarry for 1 day (til you mark other).\n[dash] Quarry can’t hide from you.\n[dash] Before atk: Advantage OR +1 (LVL) damage",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Short Bow 1d6 + 2 , Range 12\n[dash] If adjacent, ranged attacks: Disadvantage.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Hand axe : 1d6 + 1, Thrown 4",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Taste for the finer things (Adv. Influence vs Noble)",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Forager (Advantage finding food/water in wild)",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe (Advantage on Initiative, +1 speed)",
+        "Content": "",
         "Usage": ""
       }
     ],

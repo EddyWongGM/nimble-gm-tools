@@ -57,13 +57,14 @@
 
     // TITLE STYLES
     .title {
-      flex-direction: row;
+      flex-direction: column;
       justify-content: flex-start;
       align-items: center;
 
       .logo {
         flex-shrink: 1;
-        margin-right: @larger-spacer;
+        margin-right: 0;
+        margin-bottom: @medium-spacer;
 
         img {
           width: 56px;
@@ -75,6 +76,7 @@
       .headline {
         flex: 1;
         flex-direction: column;
+        text-align: center;
 
         h1 {
           line-height: 1;
@@ -99,6 +101,7 @@
         font-size: @font-size-body;
         line-height: 1.4;
         text-align: center;
+        text-wrap: balance;
       }
 
       .features {

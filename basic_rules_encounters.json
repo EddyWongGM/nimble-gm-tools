@@ -1,6 +1,6 @@
 [
   {
-    "Name": "1 Gob Min x2 (1/H)",
+    "Name": "A Goblin Minions x 2",
     "Path": "Intro Nimble GM/LV01 Intro - Tiny Rescue",
     "Source": "GMG",
     "Combatants": [
@@ -131,7 +131,7 @@
     ]
   },
   {
-    "Name": "2 Goblin F (1/H)",
+    "Name": "B Goblin Flunkie",
     "Path": "Intro Nimble GM/LV01 Intro - Tiny Rescue",
     "Source": "GMG",
     "Combatants": [
@@ -200,7 +200,7 @@
     ]
   },
   {
-    "Name": "2 Ratrider",
+    "Name": "C Goblin Ratrider",
     "Path": "Intro Nimble GM/LV01 Intro - Tiny Rescue",
     "Source": "GMG",
     "Combatants": [
@@ -269,7 +269,7 @@
     ]
   },
   {
-    "Name": "1 Atrium (1/H)",
+    "Name": "1 Atrium (1/Hero)",
     "Path": "Intro Nimble GM/LV02 Intro - Crystal Crag",
     "Source": "GMG",
     "Combatants": [
@@ -333,7 +333,7 @@
     ]
   },
   {
-    "Name": "2 Spider (1/H)",
+    "Name": "2 Spider (1/Hero)",
     "Path": "Intro Nimble GM/LV02 Intro - Crystal Crag",
     "Source": "GMG",
     "Combatants": [
@@ -389,6 +389,134 @@
             {
               "Name": "Bite",
               "Content": "(Hampered targets) 2d8+4, Poisoned (magical healing ends).",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }      
+    ]
+  },
+  {
+    "Name": "3 Goblin (1/Hero)",
+    "Path": "Intro Nimble GM/LV02 Intro - Crystal Crag",
+    "Source": "GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Goblin",
+          "Source": "GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 15,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "0.5 (CR: 0.25) Save DC 11",
+          "Traits": [
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Stab or Shoot",
+              "Content": "Stab 1d6+2 (or Shoot, Range 8).",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }      
+    ]
+  },
+  {
+    "Name": "4 Kitchen Sprig",
+    "Path": "Intro Nimble GM/LV02 Intro - Crystal Crag",
+    "Source": "GMG",
+    "Combatants": [
+      {
+        "Alias": "Sprig",
+        "StatBlock": {
+          "Name": "Goblin",
+          "Source": "GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 15,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "0.5 (CR: 0.25) Save DC 11",
+          "Traits": [
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Stab or Shoot",
+              "Content": "Stab 1d6+2 (or Shoot, Range 8).",
               "Usage": ""
             }
           ],
