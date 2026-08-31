@@ -41,11 +41,11 @@ export class SpellImporter extends Importer {
     const spell = Spell.Default();
     spell.Name = this.getString("name");
     spell.Id = AccountClient.MakeId(spell.Name);
-    spell.Level = this.getInt("level");
+    spell.Tier = this.getInt("level");
     const initial = this.getString("school");
     spell.School = SpellImporter.schoolsByInitials[initial];
     spell.CastingTime = this.getString("time");
-    spell.Range = this.getString("range");
+    spell.Distance = this.getString("range");
     spell.Components = this.getString("components");
     spell.Duration = this.getString("duration");
     spell.Classes = this.getCommaSeparatedStrings("classes");

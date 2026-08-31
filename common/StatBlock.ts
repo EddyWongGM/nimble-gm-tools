@@ -1,5 +1,3 @@
-import * as _ from "lodash";
-
 import { Listable, FilterDimensions } from "./Listable";
 import { GetModifierFromScore, probablyUniqueString } from "./Toolbox";
 
@@ -14,9 +12,20 @@ export interface AbilityScores {
   Wis: number;
 }
 
-export interface NameAndModifier {
+export type AdvantageLevel =
+  | "----"
+  | "---"
+  | "--"
+  | "-"
+  | ""
+  | "+"
+  | "++"
+  | "+++"
+  | "++++";
+
+export interface NameAndAdvantage {
   Name: string;
-  Modifier: number;
+  Advantage: AdvantageLevel;
 }
 
 export interface ValueAndNotes {
@@ -32,10 +41,16 @@ export interface NameAndContent {
 
 export type InitiativeSpecialRoll = "advantage" | "disadvantage" | "take-ten";
 
+export type ArmorTier = "" | "medium" | "heavy";
+
 export interface StatBlock extends Listable {
   Source: string;
   Type: string;
+  Armor?: ArmorTier;
   HP: ValueAndNotes;
+  HPMediumArmor?: ValueAndNotes;
+  HPHeavyArmor?: ValueAndNotes;
+  LastStageHP?: ValueAndNotes;
   AC: ValueAndNotes;
   Mana?: ValueAndNotes;
   Resources?: ValueAndNotes;
@@ -50,11 +65,13 @@ export interface StatBlock extends Listable {
   DamageResistances: string[];
   DamageImmunities: string[];
   ConditionImmunities: string[];
-  Saves: NameAndModifier[];
-  Skills: NameAndModifier[];
+  Saves: NameAndAdvantage[];
+  Skills: NameAndAdvantage[];
   Senses: string[];
   Languages: string[];
   Challenge: string;
+  CRRating?: string;
+  SaveDC?: number;
   Traits: NameAndContent[];
   Actions: NameAndContent[];
   Reactions: NameAndContent[];
@@ -76,32 +93,24 @@ export namespace StatBlock {
     Wis: "Wil"
   };
 
-  const BaseTypes = [
-    "aberration",
-    "beast",
-    "celestial",
-    "construct",
-    "dragon",
-    "elemental",
-    "fey",
-    "fiend",
-    "giant",
-    "humanoid",
-    "monstrosity",
-    "ooze",
-    "plant",
-    "undead"
-  ];
+  export const ArmorDisplayNames: Record<ArmorTier, string> = {
+    "": "Unarmored",
+    medium: "Medium Armor",
+    heavy: "Heavy Armor"
+  };
 
   export const GetSearchHint = (statBlock: StatBlock): string =>
     statBlock.Type.toLocaleLowerCase().replace(/[^\w\s]/g, "");
 
   export const FilterDimensions = (statBlock: StatBlock): FilterDimensions => {
-    const baseType = _.find(BaseTypes, t => statBlock.Type.search(t) != -1);
     return {
       Level: statBlock.Challenge,
       Source: statBlock.Source,
-      Type: _.startCase(baseType)
+      // Nimble stat blocks put free text here (e.g. "Goblin", "Boss"),
+      // not a D&D creature-type category, so group by the raw value
+      // rather than matching against a fixed taxonomy that no longer
+      // applies.
+      Type: statBlock.Type.trim()
     };
   };
 
@@ -111,20 +120,39 @@ export namespace StatBlock {
   // detecting it doesn't depend on guessing a numeric range. Idempotent and
   // safe to call on already-migrated data.
   export const Update = (statBlock: any): StatBlock => {
+    let updated = statBlock;
+
     const abilities = statBlock?.Abilities;
-    if (!abilities || !("Con" in abilities || "Cha" in abilities)) {
-      return statBlock;
+    if (abilities && ("Con" in abilities || "Cha" in abilities)) {
+      updated = {
+        ...updated,
+        Abilities: {
+          Str: GetModifierFromScore(abilities.Str),
+          Dex: GetModifierFromScore(abilities.Dex),
+          Int: GetModifierFromScore(abilities.Int),
+          Wis: GetModifierFromScore(abilities.Wis)
+        }
+      };
     }
 
     return {
-      ...statBlock,
-      Abilities: {
-        Str: GetModifierFromScore(abilities.Str),
-        Dex: GetModifierFromScore(abilities.Dex),
-        Int: GetModifierFromScore(abilities.Int),
-        Wis: GetModifierFromScore(abilities.Wis)
-      }
+      ...updated,
+      Saves: dropLegacyModifierEntries(updated?.Saves),
+      Skills: dropLegacyModifierEntries(updated?.Skills)
     };
+  };
+
+  // Older saved data (and anything imported from a D&D-format source) has
+  // Saves/Skills entries shaped { Name, Modifier: number }; the current
+  // shape is { Name, Advantage: string }. There's no sound numeric-to-
+  // advantage mapping (a "+5" bonus isn't equivalent to "advantage"), so
+  // legacy entries are dropped rather than converted. Idempotent - entries
+  // that already have Advantage pass through untouched.
+  const dropLegacyModifierEntries = (entries: any): NameAndAdvantage[] => {
+    if (!Array.isArray(entries)) {
+      return [];
+    }
+    return entries.filter(entry => !("Modifier" in entry) || "Advantage" in entry);
   };
 
   export const IsPlayerCharacter = (statBlock: StatBlock): boolean =>
@@ -139,12 +167,16 @@ export namespace StatBlock {
   export const ActsInPlayerPhase = (statBlock: StatBlock): boolean =>
     IsPlayerCharacter(statBlock) || IsCompanion(statBlock);
 
+  export const IsLegendary = (statBlock: StatBlock): boolean =>
+    statBlock.Player == "legendary";
+
   export const Default = (): StatBlock => ({
     Id: probablyUniqueString(),
     Name: "",
     Path: "",
     Source: "",
     Type: "",
+    Armor: "",
     HP: { Value: 1, Notes: "(1d1+0)" },
     AC: { Value: 0, Notes: "" },
     InitiativeModifier: 0,

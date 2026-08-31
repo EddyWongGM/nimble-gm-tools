@@ -18,6 +18,7 @@ export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
     <div className="spell">
       <h3>{props.Spell.Name}</h3>
       {!isRule && <div className="spell-type">{getSpellType(props.Spell)}</div>}
+      {!isRule && <div className="spell-type">{getSpellCost(props.Spell)}</div>}
       <div className="spell-description">
         {textEnricher.EnrichText(props.Spell.Description)}
       </div>
@@ -27,9 +28,20 @@ export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
 }
 
 function getSpellType(spell: Spell) {
-  if (spell.Level === 0) {
+  if (spell.Tier === 0) {
     return "Cantrip";
   }
 
-  return `Tier ${spell.Level}`;
+  return `Tier ${spell.Tier}`;
+}
+
+function getSpellCost(spell: Spell) {
+  const parts: string[] = [];
+  if (spell.Mana) {
+    parts.push(`Mana ${spell.Mana}`);
+  }
+  if (spell.Distance) {
+    parts.push(`${spell.DistanceType} ${spell.Distance}`);
+  }
+  return parts.join(" · ");
 }

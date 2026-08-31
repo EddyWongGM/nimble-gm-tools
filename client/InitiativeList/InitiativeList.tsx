@@ -73,6 +73,7 @@ export function InitiativeList(props: {
             const isMonster = !StatBlock.ActsInPlayerPhase(
               combatantState.StatBlock
             );
+            const isLegendary = StatBlock.IsLegendary(combatantState.StatBlock);
 
             return (
               <CombatantRow
@@ -84,9 +85,12 @@ export function InitiativeList(props: {
                 )}
                 // Show index labels if the encounter has ever had more than one
                 // creature with this name, or if Creatures and NPCs are always
-                // numbered per settings.
+                // numbered per settings. Legendary monsters are exempt from the
+                // settings-driven numbering - they're solo/unique by design -
+                // but still get numbered if a GM genuinely duplicates one.
                 showIndexLabel={
-                  siblingCount > 1 || (alwaysNumberMonsters && isMonster)
+                  siblingCount > 1 ||
+                  (alwaysNumberMonsters && isMonster && !isLegendary)
                 }
                 initiativeIndex={index}
                 showManaColumn={showManaColumn}

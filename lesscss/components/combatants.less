@@ -434,6 +434,13 @@
   }
 }
 
+// GM-only indicator that a Legendary monster has entered its last stage.
+.combatant__hp-bar--last-stage {
+  .combatant__hp-bar--filled {
+    background: var(--gold);
+  }
+}
+
 .combatant__wounds {
   width: 4rem;
   justify-content: center;
@@ -479,6 +486,15 @@
   @media (max-width: @medium) {
     top: -4px;
   }
+}
+
+// GM-only monster armor tier indicator ("M"/"H") shown in place of the AC
+// column, which is dropped entirely for monsters.
+.combatant__armor-badge {
+  display: inline-block;
+  width: 1.5em;
+  text-align: center;
+  color: var(--text-faded);
 }
 
 .combatant__hitdice--hidden-badge {

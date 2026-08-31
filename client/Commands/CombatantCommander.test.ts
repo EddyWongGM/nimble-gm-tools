@@ -86,7 +86,10 @@ describe("CombatantCommander", () => {
   });
 
   test("Toggle Reveal AC", () => {
-    encounter.AddCombatantFromStatBlock(StatBlock.Default());
+    encounter.AddCombatantFromStatBlock({
+      ...StatBlock.Default(),
+      Player: "player"
+    });
     const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
 
     const playerViewBeforeToggle = encounter.GetPlayerView();
@@ -97,6 +100,17 @@ describe("CombatantCommander", () => {
     const playerView = encounter.GetPlayerView();
 
     expect(playerView.Combatants[0].AC).toBe(0);
+  });
+
+  test("Toggle Reveal AC does nothing for a monster - Armor tier is never revealed to players", () => {
+    encounter.AddCombatantFromStatBlock(StatBlock.Default());
+    const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
+
+    combatantCommander.Select(combatantViewModel);
+    combatantCommander.ToggleRevealedAC();
+    const playerView = encounter.GetPlayerView();
+
+    expect(playerView.Combatants[0].AC).toBeUndefined();
   });
 
   test("Add Item prompt's scroll shortcut shows inventory to players and as a DM card", () => {

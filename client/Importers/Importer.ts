@@ -35,21 +35,6 @@ export class Importer {
     return [];
   }
 
-  public getCommaSeparatedModifiers(selector: string) {
-    const entries = this.getCommaSeparatedStrings(selector);
-    return entries.map(e => {
-      // Extract the last piece of the name/modifier, and parse an int from only that, ensuring the name can contain any manner of spacing.
-      const nameAndModifier = e.split(" ");
-      const modifierValue = parseInt(nameAndModifier.pop());
-
-      // Join the remaining string name, and trim outside spacing just in case.
-      return {
-        Name: nameAndModifier.join(" ").trim(),
-        Modifier: modifierValue
-      };
-    });
-  }
-
   public getPowers(selector: string) {
     return _.map(this.domElement.querySelectorAll(selector), p => ({
       Name: p.querySelector<Element>("name")?.innerHTML,

@@ -4,7 +4,7 @@ import * as React from "react";
 import { StatBlock } from "../../../common/StatBlock";
 import { Info } from "../../Components/Info";
 import { KeywordField } from "./KeywordField";
-import { NameAndModifierField } from "./NameAndModifierField";
+import { NameAndAdvantageField } from "./NameAndAdvantageField";
 import { PowerField } from "./PowerField";
 import { SortableList } from "./SortableList";
 
@@ -29,6 +29,13 @@ export const ValueAndNotesField = (props: {
         autoComplete="off"
       />
     </div>
+  </label>
+);
+
+export const NumberField = (props: { label: string; fieldName: string }) => (
+  <label className="c-text-field inline">
+    <div className="label">{props.label}</div>
+    <Field type="number" name={props.fieldName} autoComplete="off" />
   </label>
 );
 
@@ -70,7 +77,7 @@ export const abilityScoreField = (abilityName: string) => (
   </div>
 );
 
-export const NameAndModifierFields = (props: {
+export const NameAndAdvantageFields = (props: {
   api: FormApi;
   modifierType: string;
 }) => {
@@ -83,7 +90,7 @@ export const NameAndModifierFields = (props: {
         arrayHelpers: ArrayHelpers,
         trailingAddButton?: JSX.Element
       ) => (
-        <NameAndModifierField
+        <NameAndAdvantageField
           key={index}
           arrayHelpers={arrayHelpers}
           modifierType={props.modifierType}
@@ -91,7 +98,7 @@ export const NameAndModifierFields = (props: {
           trailingAddButton={trailingAddButton}
         />
       )}
-      makeNew={() => ({ Name: "", Modifier: "" })}
+      makeNew={() => ({ Name: "", Advantage: "" })}
     />
   );
 };

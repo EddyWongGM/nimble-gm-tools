@@ -30,10 +30,6 @@ export function AutoPopulatedNotes(statBlock: StatBlock): string {
     }
   }
 
-  if (statBlock.LegendaryActions.length > 0) {
-    notes.push("Legendary Actions [3/3]");
-  }
-
   notes.push(...GetDailyCounters(statBlock.Traits));
   notes.push(...GetRechargeCounters(statBlock.Traits));
 

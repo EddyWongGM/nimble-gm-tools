@@ -8,7 +8,10 @@ export interface Listable {
 
 // Listings can be grouped or filtered by their FilterDimensions.
 export interface FilterDimensions {
+  // StatBlocks: Challenge Rating.
   Level?: string;
+  // Spells: spell Tier (cantrips are Tier 0).
+  Tier?: string;
   Source?: string;
   Type?: string;
   Category?: string;

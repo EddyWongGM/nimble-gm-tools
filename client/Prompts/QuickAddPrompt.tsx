@@ -8,7 +8,7 @@ import { StandardPromptLayout } from "./StandardPromptLayout";
 type QuickAddModel = {
   Name: string;
   MaxHP: number;
-  AC: number;
+  SaveDC: number;
   Initiative: number;
 };
 
@@ -21,14 +21,14 @@ export function QuickAddPrompt(
       <StandardPromptLayout className="p-quick-add" label="Quick Add Name">
         <Field name="Name" type="text" placeholder="Name" autoComplete="off" />
         <Field name="MaxHP" type="number" placeholder="HP" />
-        <Field name="AC" type="number" placeholder="AC" />
+        <Field name="SaveDC" type="number" placeholder="Save DC" />
         <Field name="Initiative" type="number" placeholder="Init" />
       </StandardPromptLayout>
     ),
     initialValues: {
       Name: "",
       MaxHP: null,
-      AC: null,
+      SaveDC: null,
       Initiative: null
     },
     onSubmit: model => {
@@ -40,7 +40,7 @@ export function QuickAddPrompt(
         ...StatBlock.Default(),
         Name: model.Name || "New Name",
         HP: { Value: model.MaxHP, Notes: "" },
-        AC: { Value: model.AC ?? 10, Notes: "" },
+        SaveDC: model.SaveDC ?? undefined,
         InitiativeModifier: model.Initiative ?? 0
       };
 

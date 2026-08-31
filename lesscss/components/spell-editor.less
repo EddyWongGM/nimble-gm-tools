@@ -46,6 +46,52 @@
     }
   }
 
+  // Tier/Mana/Requires/Duration only ever hold a short value - lay them out
+  // 2 by 2 instead of each claiming a full-width row like Source/School.
+  .c-spell-editor__small-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 @medium-spacer;
+
+    // .c-text-field's label/input split (20%/80%) assumes a full-width row.
+    // Halved into a grid column, "Requires"/"Duration" no longer fit 20% and
+    // wrap onto their own line - give every label here the same fixed width
+    // (sized for the longest label, "Requires"/"Duration") instead, so the
+    // inputs line up in a column regardless of each row's label length.
+    .c-text-field {
+      flex-wrap: nowrap;
+
+      .label {
+        flex: 0 0 5.5rem;
+      }
+
+      input {
+        flex: 1;
+      }
+    }
+  }
+
+  // Same flex-direction gotcha as .c-spell-editor__ritual above - without
+  // this the Range/Reach toggle and its value field stack instead of sitting
+  // side by side.
+  .c-spell-editor__distance {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    .c-button {
+      margin: @small-spacer @small-spacer @small-spacer 0;
+    }
+
+    // .c-text-field sizes its label/input via percentage flex-basis, which
+    // only resolves against a definite width. Left to shrink-to-fit next to
+    // the Range/Reach button, that percentage math breaks and the "Value"
+    // label wraps onto its own line - grow the field to fill the row instead.
+    .c-text-field {
+      flex: 1;
+    }
+  }
+
   .json-editor {
     font-family: "Courier New", Courier, monospace;
     height: 500px;

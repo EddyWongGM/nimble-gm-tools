@@ -158,5 +158,27 @@ describe("Index labeling", () => {
       const combatant = addCombatantFromStatBlock(encounter, statBlock);
       expect(combatant.DisplayName()).toEqual("Wolf");
     });
+
+    test("A lone Legendary monster is not numbered - it's solo/unique by design", () => {
+      const statBlock = {
+        ...StatBlock.Default(),
+        Name: "Ancient Dragon",
+        Player: "legendary"
+      };
+      const combatant = addCombatantFromStatBlock(encounter, statBlock);
+      expect(combatant.DisplayName()).toEqual("Ancient Dragon");
+    });
+  });
+
+  test("Two Legendary monsters sharing a name are still numbered, for disambiguation (AlwaysNumberMonsters off)", () => {
+    const statBlock = {
+      ...StatBlock.Default(),
+      Name: "Ancient Dragon",
+      Player: "legendary"
+    };
+    const first = addCombatantFromStatBlock(encounter, statBlock);
+    const second = addCombatantFromStatBlock(encounter, statBlock);
+    expect(first.DisplayName()).toEqual("Ancient Dragon 1");
+    expect(second.DisplayName()).toEqual("Ancient Dragon 2");
   });
 });

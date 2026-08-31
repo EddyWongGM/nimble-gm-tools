@@ -17,6 +17,7 @@ export function QuickEditStatBlockPrompt(
   updateStatBlock: (updatedStatBlock: StatBlock) => void
 ): PromptProps<QuickAddModel> {
   const statBlock = combatant.StatBlock();
+  const showAC = combatant.ActsInPlayerPhase();
 
   return {
     autoFocusSelector: "input[name='Name']",
@@ -27,7 +28,11 @@ export function QuickEditStatBlockPrompt(
       >
         Name <Field name="Name" type="text" autoComplete="off" />
         Max HP <Field name="MaxHP" type="number" />
-        AC <Field name="AC" type="number" />
+        {showAC && (
+          <>
+            AC <Field name="AC" type="number" />
+          </>
+        )}
       </StandardPromptLayout>
     ),
     initialValues: {

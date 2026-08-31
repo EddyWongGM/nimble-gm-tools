@@ -58,7 +58,9 @@
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
-    "LastUpdateMs": 1787998819258
+    "LastUpdateMs": 1787998819258,
+	"SaveDC": 10,
+	"CRRating": "0.25"
   },
    {
     "Name": "Goblin",
@@ -90,7 +92,7 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "0.5 (CR: 0.25) Save DC 11",
+    "Challenge": "0.5",
     "Traits": [
       {
         "Name": "Small",
@@ -130,7 +132,9 @@
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
-    "LastUpdateMs": 1787998819258
+    "LastUpdateMs": 1787998819258,
+	"SaveDC": 11,
+	"CRRating": "0.25"
   },
    {
     "Name": "Goblin Ratrider",
@@ -162,7 +166,7 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "2 (CR: 1) Save DC 11",
+    "Challenge": "2",
     "Traits": [
       {
         "Name": "CHAAARGE!",
@@ -191,6 +195,96 @@
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
-    "LastUpdateMs": 1787998819258
+    "LastUpdateMs": 1787998819258,
+	"SaveDC": 11,
+	"CRRating": "1"
+  },
+   {
+    "Name": "Krogg, Goblin King",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Goblin",
+	"Armor": "medium",
+    "HP": {
+      "Value": 30,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": ["10"],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+	"Skills": [
+	{
+	  "Name": "STR",
+	  "Advantage": "+"
+	},
+	{
+	  "Name": "DEX",
+	  "Advantage": "+"
+	}
+	],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+	"Actions": [
+	{
+	  "Name": "",
+	  "Content": "After each hero’s turn, choose one:",
+	  "Usage": ""
+	},
+	{
+	  "Name": "Manglemaul",
+	  "Content": "Move 6. 2d6, Grappled (escape DC 10).",
+	  "Usage": ""
+	},
+	{
+	  "Name": "",
+	  "Content": "OR:",
+	  "Usage": ""
+	},
+	{
+	  "Name": "Crack Skulls",
+	  "Content": "Move <b>6</b>. Swing a Grappled creature at another creature. \nBoth take 2d6, ending the Grapple.",
+	  "Usage": ""
+	}
+	],
+    "BonusActions": [],
+    "Reactions": [],
+	"LegendaryActions": [
+	{
+	  "Name": "BLOODIED: ",
+	  "Content": "\n<b>Enraged</b>.\nKrogg loses Medium Armor but his damage increases to 2d8.",
+	  "Usage": ""
+	}
+	],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+	"SaveDC": 10,
+	"HPMediumArmor": {
+	"Value": 20
+	},	
+    "LastUpdateMs": 1787998819258,
+	"LastStageHP": {
+	"Value": 20
+	}
   }
 ]

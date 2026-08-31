@@ -1,10 +1,4 @@
-import * as _ from "lodash";
-
-import {
-  NameAndContent,
-  NameAndModifier,
-  StatBlock
-} from "../../common/StatBlock";
+import { NameAndContent, StatBlock } from "../../common/StatBlock";
 import {
   GetModifierFromScore,
   normalizeChallengeRating
@@ -42,13 +36,9 @@ export function ImportOpen5eStatBlock(
     DamageResistances: commaSeparatedStrings(sb.damage_resistances),
     DamageImmunities: commaSeparatedStrings(sb.damage_immunities),
     ConditionImmunities: commaSeparatedStrings(sb.condition_immunities),
-    Saves: getSaves(sb),
-    Skills: Object.keys(sb.skills ?? {}).map(skillName => {
-      return {
-        Name: _.startCase(skillName),
-        Modifier: sb.skills[skillName]
-      };
-    }),
+    // D&D's numeric save/skill bonuses have no sound mapping to the app's
+    // advantage-tag shape (a "+5" bonus isn't equivalent to "advantage"),
+    // so they're left for the GM to author rather than converted.
     Senses: commaSeparatedStrings(sb.senses),
     Languages: commaSeparatedStrings(sb.languages),
     Challenge: normalizeChallengeRating(sb.challenge_rating),
@@ -66,10 +56,11 @@ export function ImportOpen5eSpell(open5eSpell: Record<string, any>): Spell {
     ...Spell.Default(),
     Name: open5eSpell.name,
     Source: open5eSpell.document__title,
-    Level: open5eSpell.level_int,
+    Tier: open5eSpell.level_int,
     School: open5eSpell.school,
     CastingTime: open5eSpell.casting_time,
-    Range: open5eSpell.range,
+    DistanceType: "Range" as const,
+    Distance: open5eSpell.range,
     Components: open5eSpell.components,
     Duration: open5eSpell.duration,
     Classes: open5eSpell.dnd_class.split(", "),
@@ -92,53 +83,6 @@ function commaSeparatedStrings(input: string | undefined) {
     return [];
   }
   return input.split(", ");
-}
-
-function getSaves(sb: any): NameAndModifier[] {
-  const saves: NameAndModifier[] = [];
-  if (sb.strength_save !== null) {
-    saves.push({
-      Name: "Str",
-      Modifier: sb.strength_save
-    });
-  }
-
-  if (sb.dexterity_save !== null) {
-    saves.push({
-      Name: "Dex",
-      Modifier: sb.dexterity_save
-    });
-  }
-
-  if (sb.constitution_save !== null) {
-    saves.push({
-      Name: "Con",
-      Modifier: sb.constitution_save
-    });
-  }
-
-  if (sb.intelligence_save !== null) {
-    saves.push({
-      Name: "Int",
-      Modifier: sb.intelligence_save
-    });
-  }
-
-  if (sb.wisdom_save !== null) {
-    saves.push({
-      Name: "Wis",
-      Modifier: sb.wisdom_save
-    });
-  }
-
-  if (sb.charisma_save !== null) {
-    saves.push({
-      Name: "Cha",
-      Modifier: sb.charisma_save
-    });
-  }
-
-  return saves;
 }
 
 function nameAndDescArrays(entries: any): NameAndContent[] {
@@ -215,18 +159,6 @@ export function ImportOpen5eV2StatBlock(
     ConditionImmunities: sb.resistances_and_immunities.condition_immunities.map(
       v => v.name
     ),
-    Saves: Object.keys(sb.saving_throws ?? {}).map(saveName => {
-      return {
-        Name: _.startCase(saveName),
-        Modifier: sb.saving_throws[saveName]
-      };
-    }),
-    Skills: Object.keys(sb.skill_bonuses ?? {}).map(skillName => {
-      return {
-        Name: _.startCase(skillName),
-        Modifier: sb.skill_bonuses[skillName]
-      };
-    }),
     Senses: getSensesV2(sb),
     Languages: commaSeparatedStrings(sb.languages.as_string),
     Challenge: normalizeChallengeRating(sb.challenge_rating),

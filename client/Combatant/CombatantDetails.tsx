@@ -131,32 +131,37 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         )}
         {challengeOrLevel}
       </div>
-      {(StatBlock.ActsInPlayerPhase(statBlock) || currentResources) && (
-        <div className="c-combatant-details__defense-resources">
-          {StatBlock.ActsInPlayerPhase(statBlock) && (
-            <>
-              <span className="stat-label">Defense</span>
-              <span className="stat-value">{statBlock.AC.Value}</span>
-            </>
-          )}
-          {currentResources && (
-            <>
-              <span className="stat-label Resources">Resources</span>
-              <span>
-                {currentResources}
-                {DisplayHPBar && (
-                  <span className="combatant__hp-bar">
-                    <span
-                      className="combatant__hp-bar--filled"
-                      style={renderHPBarStyle(currentResourcesPercentage)}
-                    />
-                  </span>
-                )}
-              </span>
-            </>
-          )}
-        </div>
-      )}
+      <div className="c-combatant-details__defense-resources">
+        {StatBlock.ActsInPlayerPhase(statBlock) ? (
+          <>
+            <span className="stat-label">Defense</span>
+            <span className="stat-value">{statBlock.AC.Value}</span>
+          </>
+        ) : (
+          <>
+            <span className="stat-label">Armor</span>
+            <span className="stat-value">
+              {StatBlock.ArmorDisplayNames[statBlock.Armor || ""]}
+            </span>
+          </>
+        )}
+        {currentResources && (
+          <>
+            <span className="stat-label Resources">Resources</span>
+            <span>
+              {currentResources}
+              {DisplayHPBar && (
+                <span className="combatant__hp-bar">
+                  <span
+                    className="combatant__hp-bar--filled"
+                    style={renderHPBarStyle(currentResourcesPercentage)}
+                  />
+                </span>
+              )}
+            </span>
+          </>
+        )}
+      </div>
       {(currentHitDice || currentWounds) && (
         <div className="c-combatant-details__hitdice-wounds">
           {currentHitDice && (
