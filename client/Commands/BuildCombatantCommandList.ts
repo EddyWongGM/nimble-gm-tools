@@ -182,18 +182,6 @@ export const BuildCombatantCommandList: (
     defaultShowOnActionBar: false
   }),
   new Command({
-    id: "toggle-reveal-items",
-    description: "Hide/Reveal Inventory in Player View",
-    actionBinding: c.ToggleRevealedItems,
-    fontAwesomeIcon: "scroll"
-  }),
-  new Command({
-    id: "toggle-reveal-gold",
-    description: "Hide/Reveal Gold in Player View",
-    actionBinding: c.ToggleRevealedGold,
-    fontAwesomeIcon: "coins"
-  }),
-  new Command({
     id: "show-inventory",
     description: "Show/Hide Inventory in Player View Popup",
     actionBinding: () => c.ToggleInventoryDisplayToPlayers(),

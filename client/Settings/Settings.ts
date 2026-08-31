@@ -37,11 +37,7 @@ export function GetAppleBackspaceAlias(keyBinding: string): string | null {
   return alias === keyBinding ? null : alias;
 }
 
-const FORCE_HIDDEN_INLINE_COMMANDS = new Set([
-  "toggle-reveal-gold",
-  "toggle-reveal-items",
-  "toggle-keep-hidden"
-]);
+const FORCE_HIDDEN_INLINE_COMMANDS = new Set(["toggle-keep-hidden"]);
 
 function applyNewCommandSettings(newSettings: Settings, commands: Command[]) {
   Mousetrap.reset();

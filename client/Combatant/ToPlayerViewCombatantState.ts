@@ -316,7 +316,6 @@ function GetGoldDisplay(combatant: Combatant): string | undefined {
   if (
     !CurrentSettings().Rules.EnableGold ||
     !combatant.IsPlayerCharacter() ||
-    !combatant.RevealedGold() ||
     CurrentSettings().PlayerView.HideGoldNumbers
   ) {
     return undefined;
@@ -329,7 +328,6 @@ function GetGoldColor(combatant: Combatant): string | undefined {
   if (
     !CurrentSettings().Rules.EnableGold ||
     !combatant.IsPlayerCharacter() ||
-    !combatant.RevealedGold() ||
     CurrentSettings().PlayerView.HideGoldNumbers
   ) {
     return undefined;
@@ -342,7 +340,6 @@ function GetInventoryDisplay(combatant: Combatant): string | undefined {
   if (
     !CurrentSettings().Rules.EnableInventory ||
     !combatant.IsPlayerCharacter() ||
-    !combatant.RevealedItems() ||
     CurrentSettings().PlayerView.HideInventoryNumbers
   ) {
     return undefined;
@@ -355,7 +352,6 @@ function GetInventoryColor(combatant: Combatant): string | undefined {
   if (
     !CurrentSettings().Rules.EnableInventory ||
     !combatant.IsPlayerCharacter() ||
-    !combatant.RevealedItems() ||
     CurrentSettings().PlayerView.HideInventoryNumbers
   ) {
     return undefined;
@@ -365,7 +361,7 @@ function GetInventoryColor(combatant: Combatant): string | undefined {
     return "rgb(200,30,30)";
   }
 
-  return "var(--text-face)";
+  return "var(--parchment)";
 }
 
 function GetHPColor(combatant: Combatant) {

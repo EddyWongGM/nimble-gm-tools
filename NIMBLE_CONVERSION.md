@@ -29,7 +29,7 @@ require it.
 | **Resources** | Any stat block with `StatBlock.Resources` set | Full | spend decreases | shown when set, current only |
 | **Hit Dice** | Player characters only | Full | spend decreases | shown when set, current only, hide/reveal toggle |
 | **Wounds** | Player characters (and companions — see below) only | 0 (empty) | add increases (`current + amount`) | hidden until first wound taken; DM always sees `0/max` |
-| **Gold** | Player characters only | 0 | add increases | hide/reveal toggle, defaults hidden for new PCs |
+| **Gold** | Player characters only | 0 | add increases | shown unless hidden globally via "Hide Gold from Players" |
 
 Notable deviations from the obvious pattern:
 
@@ -37,11 +37,16 @@ Notable deviations from the obvious pattern:
   is defeated, so its color gradient and "Add"/"Heal" verbs run the opposite
   direction from HP/Mana's "Spend"/"Restore". A fresh PC starts at `0/5`
   wounds (5 is the Nimble default max), not full.
-- **Gold and Hit Dice default to hidden** for newly-created player
-  characters — the DM reveals them per-combatant via a "Hide/Reveal in
-  Player View" toggle (mirroring the existing AC-reveal mechanic), rather
-  than a global settings checkbox. Older saved encounters keep showing
-  them as before (legacy data defaults to visible).
+- **Hit Dice defaults to hidden** for newly-created player characters — the
+  DM reveals it per-combatant via a "Hide/Reveal in Player View" toggle
+  (mirroring the existing AC-reveal mechanic). Older saved encounters keep
+  showing it as before (legacy data defaults to visible).
+- **Gold and Inventory have no per-combatant reveal toggle.** They're
+  gated only by the global "Hide Gold from Players" / "Hide Inventory from
+  Players" Encounter Commands (`PlayerView.HideGoldNumbers` /
+  `HideInventoryNumbers`), which default to visible. An earlier revision
+  had a per-combatant `RevealedGold`/`RevealedItems` toggle mirroring Hit
+  Dice/AC; it was removed as redundant with the global switch.
 - Column order everywhere the resources appear together: **HP, Mana,
   Resources, Hit Dice, Wounds, AC, Gold**.
 - **Mana, Resources, Hit Dice, and Wounds each got a `TemporaryX` pool**
@@ -114,11 +119,10 @@ while the character is in an active encounter).
   that a popup is currently showing.
 - Removing an item goes through a confirm-before-delete prompt
   (`RemoveItemPrompt.tsx`) rather than deleting immediately.
-- Same hide/reveal-from-players toggle as Gold and Hit Dice
-  (`RevealedItems`), defaulting hidden for new PCs. This is a distinct
-  control from the popup toggle above: `RevealedItems` governs the passive
-  slot-count indicator, the popup toggle governs the on-demand
-  full-contents popup.
+- The passive slot-count indicator is gated only by the global "Hide
+  Inventory from Players" Encounter Command (`PlayerView.HideInventoryNumbers`),
+  a distinct control from the popup toggle above, which governs the
+  on-demand full-contents popup.
 - Add/remove UI in the combatant details pane (`CombatantDetails.tsx`),
   modeled on `Tags`' inline-list-with-remove-button pattern plus a
   Gold-style signed-quantity prompt (`ItemPrompt.tsx`).

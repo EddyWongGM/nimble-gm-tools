@@ -12,7 +12,7 @@
       "Value": 1,
       "Notes": ""
     },
-    "InitiativeModifier": 1,
+    "InitiativeModifier": 0,
     "InitiativeAdvantage": false,
     "Speed": [
       "6"
@@ -76,7 +76,13 @@
     "Player": "player",
     "Version": "3.16.6",
     "ImageURL": "",
-    "CustomFields": []
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1
+    }
   },
   {
     "Name": "Cheat LVL 1",
@@ -91,7 +97,7 @@
       "Value": 5,
       "Notes": ""
     },
-    "InitiativeModifier": 3,
+    "InitiativeModifier": 1,
     "InitiativeAdvantage": false,
     "Speed": [
       "6"
@@ -143,6 +149,12 @@
     "Player": "player",
     "Version": "3.16.5",
     "ImageURL": "",
-    "CustomFields": []
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1
+    }
   }
 ]

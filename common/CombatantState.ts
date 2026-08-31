@@ -31,7 +31,6 @@ export interface CombatantState {
   CurrentWounds?: number;
   TemporaryWounds?: number;
   CurrentGold?: number;
-  RevealedGold?: boolean;
   CurrentNotes?: string;
   Color?: string;
   ReactionsSpent?: number;
@@ -42,7 +41,6 @@ export interface CombatantState {
   IndexLabel: number | null;
   Tags: TagState[];
   Items?: InventoryItem[];
-  RevealedItems?: boolean;
   Hidden: boolean;
   KeepHidden?: boolean;
   RevealedAC: boolean;

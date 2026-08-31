@@ -48,9 +48,7 @@ export class About extends React.Component<AboutProps, AboutState> {
           <p>
             <strong>Nimble RPG App</strong>
             {" was created by "}
-            <a href="https://github.com/EddyWongGM" target="_blank">
-              Eddy Wong
-            </a>
+            <a href="mailto:nimblerpg.app@gmail.com">Eddy Wong</a>
             {"."}
             <br />
             {"All Nimble content provided under terms of the "}
@@ -74,7 +72,7 @@ export class About extends React.Component<AboutProps, AboutState> {
           Love Nimble RPG App?
           <div
             className="fb-like"
-            data-href="https://www.facebook.com/improvedinitiativeapp/"
+            data-href="https://www.facebook.com/groups/nimblerpgapp/"
             data-layout="button"
             data-action="recommend"
             data-size="large"

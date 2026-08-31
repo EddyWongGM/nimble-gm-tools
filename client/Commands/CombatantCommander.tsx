@@ -887,22 +887,6 @@ export class CombatantCommander {
     this.SelectedCombatants().forEach(c => c.ToggleRevealedAC());
   };
 
-  public ToggleRevealedGold = () => {
-    if (!this.HasSelected()) {
-      return;
-    }
-
-    this.SelectedCombatants().forEach(c => c.ToggleRevealedGold());
-  };
-
-  public ToggleRevealedItems = () => {
-    if (!this.HasSelected()) {
-      return;
-    }
-
-    this.SelectedCombatants().forEach(c => c.ToggleRevealedItems());
-  };
-
   public ToggleRevealedHitDice = () => {
     if (!this.HasSelected()) {
       return;

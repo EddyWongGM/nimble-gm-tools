@@ -96,7 +96,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-scroll"
               title="Inventory"
               aria-hidden="true"
-              style={{ color: "var(--white)" }}
+              style={{ color: "var(--parchment)" }}
             ></span>
           </th>
         )}

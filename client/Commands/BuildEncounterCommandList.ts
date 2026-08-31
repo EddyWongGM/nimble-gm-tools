@@ -50,15 +50,15 @@ export const BuildEncounterCommandList = (
     }),
     new Command({
       id: "toggle-hide-inventory-player-view",
-      description: "Hide Inventory from Players",
+      description: "Hide/Reveal Inventory from Players",
       actionBinding: c.ToggleHideInventoryFromPlayers,
-      fontAwesomeIcon: "boxes",
+      fontAwesomeIcon: "scroll",
       isActive: () => CurrentSettings().PlayerView.HideInventoryNumbers,
       defaultShowOnActionBar: false
     }),
     new Command({
       id: "toggle-hide-gold-player-view",
-      description: "Hide Gold from Players",
+      description: "Hide/Reveal Gold from Players",
       actionBinding: c.ToggleHideGoldFromPlayers,
       fontAwesomeIcon: "coins",
       isActive: () => CurrentSettings().PlayerView.HideGoldNumbers,

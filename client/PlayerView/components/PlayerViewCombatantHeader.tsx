@@ -45,7 +45,7 @@ export const PlayerViewCombatantHeader = (props: {
     )}
     {props.inventoryColumnVisible && (
       <div className="combatant__inventory">
-        <span className="fas fa-scroll" style={{ color: "var(--white)" }} />
+        <span className="fas fa-scroll" style={{ color: "var(--parchment)" }} />
       </div>
     )}
     {props.acColumnVisible && (
