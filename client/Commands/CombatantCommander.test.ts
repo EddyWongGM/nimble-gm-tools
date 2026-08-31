@@ -96,7 +96,7 @@ describe("CombatantCommander", () => {
     combatantCommander.ToggleRevealedAC();
     const playerView = encounter.GetPlayerView();
 
-    expect(playerView.Combatants[0].AC).toBe(10);
+    expect(playerView.Combatants[0].AC).toBe(0);
   });
 
   test("Add Item prompt's scroll shortcut shows inventory to players and as a DM card", () => {

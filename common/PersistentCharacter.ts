@@ -42,7 +42,12 @@ export namespace PersistentCharacter {
     };
   }
 
-  export const Default = () => Initialize(StatBlock.Default());
+  export const Default = () =>
+    Initialize({
+      ...StatBlock.Default(),
+      HitDice: { Value: 1, Notes: "" },
+      Wounds: { Value: 5, Notes: "" }
+    });
 
   export const Update = (character: any): PersistentCharacter => {
     if (!character?.StatBlock) {
