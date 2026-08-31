@@ -7,6 +7,7 @@ import { Listable } from "../../common/Listable";
 import { StatBlock } from "../../common/StatBlock";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { Button, SubmitButton } from "../Components/Button";
+import { Info } from "../Components/Info";
 import { Listing } from "../Library/Listing";
 import { ConvertStringsToNumbersWhereNeeded } from "./ConvertStringsToNumbersWhereNeeded";
 import { EnumToggle } from "./EnumToggle";
@@ -17,7 +18,8 @@ import {
   DescriptionField,
   InitiativeField,
   KeywordFields,
-  NameAndModifierFields,
+  NameAndAdvantageFields,
+  NumberField,
   PowerFields,
   ValueAndNotesField
 } from "./components/StatBlockEditorFields";
@@ -173,10 +175,43 @@ export class StatBlockEditor extends React.Component<
         key="level"
         label={player == "player" ? "Level" : "Challenge"}
         fieldName="Challenge"
-      />,
-      <ValueAndNotesField key="defense" label="Defense" fieldName="AC" />,
-      <ValueAndNotesField key="hp" label="Hit Points" fieldName="HP" />
+      />
     ];
+
+    if (!actsInPlayerPhase) {
+      fields.push(<NumberField key="savedc" label="Save DC" fieldName="SaveDC" />);
+    }
+
+    if (actsInPlayerPhase) {
+      fields.push(
+        <ValueAndNotesField key="defense" label="Defense" fieldName="AC" />,
+        <ValueAndNotesField key="hp" label="Hit Points" fieldName="HP" />
+      );
+    } else {
+      fields.push(
+        <ValueAndNotesField key="hp" label="HP (No Armor)" fieldName="HP" />,
+        <ValueAndNotesField
+          key="hpmediumarmor"
+          label="HP (M Armor)"
+          fieldName="HPMediumArmor"
+        />,
+        <ValueAndNotesField
+          key="hpheavyarmor"
+          label="HP (H Armor)"
+          fieldName="HPHeavyArmor"
+        />
+      );
+    }
+
+    if (player === "legendary") {
+      fields.push(
+        <ValueAndNotesField
+          key="laststagehp"
+          label="Last Stage HP"
+          fieldName="LastStageHP"
+        />
+      );
+    }
 
     if (actsInPlayerPhase) {
       fields.push(
@@ -236,6 +271,28 @@ export class StatBlockEditor extends React.Component<
               fieldName="Player"
             />
           )}
+          {api.values.Player === "legendary" && (
+            <Info>
+              A Legendary monster's max HP is multiplied by the number of
+              heroes already in the encounter, calculated once when it's
+              added to the tracker. Add heroes to the encounter first, or
+              the multiplier will under-count.
+            </Info>
+          )}
+          {(this.props.editorTarget == "library" ||
+            this.props.editorTarget == "combatant") &&
+            api.values.Player !== "player" &&
+            api.values.Player !== "companion" && (
+              <EnumToggle
+                labelsByOption={StatBlock.ArmorDisplayNames}
+                fieldName="Armor"
+              />
+            )}
+          {(this.props.editorTarget == "library" ||
+            this.props.editorTarget == "combatant") &&
+            api.values.Player === "" && (
+              <TextField label="CR Rating" fieldName="CRRating" />
+            )}
         </div>
         {api.values.Player === "player" && (
           <div className="c-statblock-editor__abilityscores">
@@ -266,9 +323,16 @@ export class StatBlockEditor extends React.Component<
             })}
           </div>
         )}
-        <div className="c-statblock-editor__saves">
-          <NameAndModifierFields api={api} modifierType="Saves" />
-        </div>
+        {api.values.Player !== "player" && api.values.Player !== "companion" && (
+          <>
+            <div className="c-statblock-editor__saves">
+              <NameAndAdvantageFields api={api} modifierType="Saves" />
+            </div>
+            <div className="c-statblock-editor__skills">
+              <NameAndAdvantageFields api={api} modifierType="Skills" />
+            </div>
+          </>
+        )}
         <div className="c-statblock-editor__keywords">
           {[
             { type: "Speed", label: "Speed" },
@@ -288,13 +352,16 @@ export class StatBlockEditor extends React.Component<
           {[
             { type: "Traits", label: "Traits" },
             { type: "Actions", label: "Actions" },
-            // Only clutter the form with Legendary Actions once the
-            // statblock is marked Legendary or Titan, or already has some
-            // (e.g. imported from a source that doesn't use this toggle).
+            // Only clutter the form with Special once the statblock is
+            // marked Legendary or Titan, or already has some (e.g. imported
+            // from a source that doesn't use this toggle). Field name stays
+            // "LegendaryActions" so it keeps matching the stored data shape
+            // and shared styling - only the visible label changes, same as
+            // Other/MythicActions below.
             ...(api.values.Player === "legendary" ||
             api.values.Player === "titan" ||
             api.values.LegendaryActions?.length > 0
-              ? [{ type: "LegendaryActions", label: "Legendary Actions" }]
+              ? [{ type: "LegendaryActions", label: "Special" }]
               : []),
             // name stays "MythicActions" so the field/className keeps
             // matching the shared styling and stored data shape - only the
@@ -344,14 +411,14 @@ export class StatBlockEditor extends React.Component<
       statBlockFromActiveEditor = JSON.parse(StatBlockJSON);
     }
 
-    const editedStatBlock: StatBlock = {
+    const editedStatBlock: StatBlock = StatBlock.Update({
       ...StatBlock.Default(),
       ...statBlockFromActiveEditor,
       Id: submittedStatBlock.Id,
       Name: submittedStatBlock.Name,
       Path: submittedStatBlock.Path,
       Version: process.env.VERSION || "unknown"
-    };
+    });
 
     ConvertStringsToNumbersWhereNeeded(editedStatBlock);
 

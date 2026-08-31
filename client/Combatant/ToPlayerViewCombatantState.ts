@@ -1,4 +1,5 @@
 import { PlayerViewCombatantState } from "../../common/PlayerViewCombatantState";
+import { StatBlock } from "../../common/StatBlock";
 import { env } from "../Environment";
 import { CurrentSettings } from "../Settings/Settings";
 import { Combatant } from "./Combatant";
@@ -39,7 +40,10 @@ export function ToPlayerViewCombatantState(
         };
       }),
     ImageURL: sendImage ? combatant.StatBlock().ImageURL : "",
-    AC: combatant.RevealedAC() ? combatant.StatBlock().AC.Value : undefined,
+    AC:
+      combatant.RevealedAC() && combatant.ActsInPlayerPhase()
+        ? combatant.StatBlock().AC.Value
+        : undefined,
     Color: combatant.Color(),
     ReactionsSpent: combatant.ReactionsSpent(),
     HasTakenTurn: combatant.HasTakenTurn()
@@ -52,7 +56,8 @@ function GetIndexLabel(combatant: Combatant): number | undefined {
   }
   if (
     CurrentSettings().Rules.AlwaysNumberMonsters &&
-    !combatant.ActsInPlayerPhase()
+    !combatant.ActsInPlayerPhase() &&
+    !StatBlock.IsLegendary(combatant.StatBlock())
   ) {
     return combatant.IndexLabel();
   }

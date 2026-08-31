@@ -98,5 +98,40 @@ describe("StatBlock", () => {
         statBlock.Abilities
       );
     });
+
+    test("drops legacy Modifier-shaped Saves and Skills entries", () => {
+      const legacyStatBlock = {
+        ...StatBlock.Default(),
+        Saves: [{ Name: "Con", Modifier: 3 }],
+        Skills: [{ Name: "Perception", Modifier: 4 }]
+      };
+
+      const updated = StatBlock.Update(legacyStatBlock);
+      expect(updated.Saves).toEqual([]);
+      expect(updated.Skills).toEqual([]);
+    });
+
+    test("leaves current-shape Saves and Skills entries untouched", () => {
+      const statBlock = {
+        ...StatBlock.Default(),
+        Saves: [{ Name: "Int", Advantage: "+" }],
+        Skills: [{ Name: "Perception", Advantage: "++" }]
+      };
+
+      const updated = StatBlock.Update(statBlock);
+      expect(updated.Saves).toEqual([{ Name: "Int", Advantage: "+" }]);
+      expect(updated.Skills).toEqual([{ Name: "Perception", Advantage: "++" }]);
+    });
+
+    test("Update is idempotent for legacy Saves/Skills - safe to run twice", () => {
+      const legacyStatBlock = {
+        ...StatBlock.Default(),
+        Saves: [{ Name: "Con", Modifier: 3 }]
+      };
+
+      const updatedOnce = StatBlock.Update(legacyStatBlock);
+      const updatedTwice = StatBlock.Update(updatedOnce);
+      expect(updatedTwice.Saves).toEqual([]);
+    });
   });
 });

@@ -85,6 +85,7 @@ export class Combatant {
   public Color = ko.observable("");
   public ReactionsSpent = ko.observable(0);
   public IsPendingRemoval = ko.observable(false);
+  public HasEnteredLastStage = ko.observable(false);
 
   public CombatTimer = new CombatTimer();
 
@@ -141,6 +142,7 @@ export class Combatant {
     this.HasTakenTurn(savedCombatant.HasTakenTurn || false);
     this.Color(savedCombatant.Color || "");
     this.ReactionsSpent(savedCombatant.ReactionsSpent || 0);
+    this.HasEnteredLastStage(savedCombatant.HasEnteredLastStage || false);
     this.CombatTimer.SetElapsedRounds(savedCombatant.RoundCounter || 0);
     this.CombatTimer.SetElapsedSeconds(savedCombatant.ElapsedSeconds || 0);
   }
@@ -349,7 +351,20 @@ export class Combatant {
       tempHP = 0;
     }
 
-    if (currHP <= 0 && !allowNegativeHP) {
+    const lastStageHP = this.StatBlock().LastStageHP?.Value ?? 0;
+    if (
+      currHP <= 0 &&
+      this.StatBlock().Player === "legendary" &&
+      !this.HasEnteredLastStage() &&
+      lastStageHP > 0
+    ) {
+      currHP = lastStageHP;
+      this.HasEnteredLastStage(true);
+      this.Tags.push(new Tag("Last Stage", this, false));
+      Metrics.TrackEvent(Metrics.Event.CombatantEnteredLastStage, {
+        name: this.DisplayName()
+      });
+    } else if (currHP <= 0 && !allowNegativeHP) {
       Metrics.TrackEvent(Metrics.Event.CombatantDefeated, {
         name: this.DisplayName()
       });
@@ -543,7 +558,8 @@ export class Combatant {
     }
     const alwaysNumberMonsters =
       CurrentSettings().Rules.AlwaysNumberMonsters &&
-      !this.ActsInPlayerPhase();
+      !this.ActsInPlayerPhase() &&
+      !StatBlock.IsLegendary(ko.unwrap(this.StatBlock));
     if (combatantCount > 1 || alwaysNumberMonsters) {
       return name + " " + index;
     }
@@ -583,6 +599,7 @@ export class Combatant {
       HasTakenTurn: this.HasTakenTurn(),
       Color: this.Color(),
       ReactionsSpent: this.ReactionsSpent(),
+      HasEnteredLastStage: this.HasEnteredLastStage(),
       RoundCounter: this.CombatTimer.ElapsedRounds(),
       InterfaceVersion: process.env.VERSION || "unknown"
     };

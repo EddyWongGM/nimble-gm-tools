@@ -33,6 +33,7 @@ export class SpellLibraryReferencePane extends React.Component<SpellLibraryRefer
         addNewItem={this.props.librariesCommander.CreateAndEditSpell}
         renderPreview={this.renderPreview}
         listingGroups={this.listingGroups}
+        sortComparator={CompareByTierThenName}
       />
     );
   }
@@ -45,8 +46,8 @@ export class SpellLibraryReferencePane extends React.Component<SpellLibraryRefer
     {
       label: "Tier",
       groupFn: l => ({
-        label: TierOrCantrip(l.Meta().FilterDimensions.Level),
-        key: GetAlphaSortableLevelString(l.Meta().FilterDimensions.Level)
+        label: TierOrCantrip(l.Meta().FilterDimensions.Tier),
+        key: GetAlphaSortableLevelString(l.Meta().FilterDimensions.Tier)
       })
     },
     {
@@ -95,4 +96,13 @@ function TierOrCantrip(levelString: string) {
     return "Cantrip";
   }
   return "Tier " + levelString;
+}
+
+function CompareByTierThenName(a: Listing<Spell>, b: Listing<Spell>) {
+  const tierA = Number(a.Meta().FilterDimensions.Tier) || 0;
+  const tierB = Number(b.Meta().FilterDimensions.Tier) || 0;
+  if (tierA !== tierB) {
+    return tierA - tierB;
+  }
+  return a.Meta().Name.localeCompare(b.Meta().Name);
 }

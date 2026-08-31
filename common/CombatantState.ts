@@ -45,6 +45,7 @@ export interface CombatantState {
   KeepHidden?: boolean;
   RevealedAC: boolean;
   HasTakenTurn?: boolean;
+  HasEnteredLastStage?: boolean;
   RoundCounter?: number;
   ElapsedSeconds?: number;
   InterfaceVersion: string;

@@ -26,6 +26,140 @@ describe("Encounter", () => {
     expect(encounter.Combatants()[0].StatBlock()).toEqual(statBlock);
   });
 
+  test("A Legendary monster's HP is multiplied by the number of heroes already in the encounter", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const legendaryMonster = {
+      ...StatBlock.Default(),
+      Player: "legendary",
+      HP: { Value: 20, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(legendaryMonster);
+
+    const monsterCombatant = encounter.Combatants()[3];
+    expect(monsterCombatant.StatBlock().HP.Value).toBe(60);
+    expect(monsterCombatant.MaxHP()).toBe(60);
+  });
+
+  test("A Legendary monster added to a hero-less encounter is not zeroed out", () => {
+    const legendaryMonster = {
+      ...StatBlock.Default(),
+      Player: "legendary",
+      HP: { Value: 20, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(legendaryMonster);
+
+    expect(encounter.Combatants()[0].StatBlock().HP.Value).toBe(20);
+  });
+
+  test("A Legendary monster is tagged with the hero-count multiplier that was applied", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const legendaryMonster = {
+      ...StatBlock.Default(),
+      Player: "legendary",
+      HP: { Value: 20, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(legendaryMonster);
+
+    const monsterCombatant = encounter.Combatants()[3];
+    expect(monsterCombatant.Tags().map(t => t.Text)).toContain(
+      "HP ×3 (heroes)"
+    );
+  });
+
+  test("A Legendary monster added to a hero-less encounter is tagged with an x1 multiplier", () => {
+    const legendaryMonster = {
+      ...StatBlock.Default(),
+      Player: "legendary",
+      HP: { Value: 20, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(legendaryMonster);
+
+    expect(encounter.Combatants()[0].Tags().map(t => t.Text)).toContain(
+      "HP ×1 (heroes)"
+    );
+  });
+
+  test("A Normal monster is not tagged with a hero-count multiplier", () => {
+    encounter.AddCombatantFromStatBlock(StatBlock.Default());
+
+    expect(encounter.Combatants()[0].Tags()).toHaveLength(0);
+  });
+
+  test("A monster with Medium Armor enters combat with its Medium Armor HP pool", () => {
+    const monster = {
+      ...StatBlock.Default(),
+      Armor: "medium" as const,
+      HP: { Value: 30, Notes: "" },
+      HPMediumArmor: { Value: 20, Notes: "" },
+      HPHeavyArmor: { Value: 10, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(monster);
+
+    expect(encounter.Combatants()[0].StatBlock().HP.Value).toBe(20);
+  });
+
+  test("A monster with Heavy Armor enters combat with its Heavy Armor HP pool", () => {
+    const monster = {
+      ...StatBlock.Default(),
+      Armor: "heavy" as const,
+      HP: { Value: 30, Notes: "" },
+      HPMediumArmor: { Value: 20, Notes: "" },
+      HPHeavyArmor: { Value: 10, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(monster);
+
+    expect(encounter.Combatants()[0].StatBlock().HP.Value).toBe(10);
+  });
+
+  test("A monster with an Armor tier but no authored HP for that tier falls back to the Unarmored pool", () => {
+    const monster = {
+      ...StatBlock.Default(),
+      Armor: "heavy" as const,
+      HP: { Value: 30, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(monster);
+
+    expect(encounter.Combatants()[0].StatBlock().HP.Value).toBe(30);
+  });
+
+  test("Armor tier and the Legendary hero-count multiplier compose", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const legendaryMonster = {
+      ...StatBlock.Default(),
+      Player: "legendary",
+      Armor: "heavy" as const,
+      HP: { Value: 30, Notes: "" },
+      HPHeavyArmor: { Value: 10, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(legendaryMonster);
+
+    expect(encounter.Combatants()[2].StatBlock().HP.Value).toBe(20);
+  });
+
+  test("Armor tier selection does not apply to player characters", () => {
+    const hero = {
+      ...StatBlock.Default(),
+      Player: "player",
+      Armor: "heavy" as const,
+      HP: { Value: 30, Notes: "" },
+      HPHeavyArmor: { Value: 10, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(hero);
+
+    expect(encounter.Combatants()[0].StatBlock().HP.Value).toBe(30);
+  });
+
   test("CombatantsHidden defaults to false and toggles via ToggleCombatantsHidden", () => {
     expect(encounter.CombatantsHidden()).toBe(false);
     expect(encounter.GetPlayerView().CombatantsHidden).toBe(false);
@@ -146,7 +280,6 @@ describe("Encounter", () => {
     expect(combatant.CurrentNotes()).toBe(
       "Spellcasting Slots\n\n1st Level [4/4]\n\n2nd Level [3/3]\n\n" +
         "Innate Spellcasting Slots\n\n[3/3]\n\n[1/1]\n\n" +
-        "Legendary Actions [3/3]\n\n" +
         "Thrice Daily Action [3/3]\n\n" +
         "Recharge Action [1/1]"
     );

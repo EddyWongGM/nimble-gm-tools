@@ -137,7 +137,8 @@ export function useLibraries(
     accountSave: accountClient.SaveSpell,
     accountDelete: accountClient.DeleteSpell,
     getFilterDimensions: Spell.GetFilterDimensions,
-    getSearchHint: Spell.GetSearchHint
+    getSearchHint: Spell.GetSearchHint,
+    migrate: Spell.Update
   });
 
   const libraries: Libraries = {

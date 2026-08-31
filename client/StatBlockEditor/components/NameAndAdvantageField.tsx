@@ -3,14 +3,14 @@ import * as React from "react";
 import { useDrag } from "react-dnd";
 import { useFocusIfEmpty } from "./useFocus";
 
-interface NameAndModifierFieldProps {
+interface NameAndAdvantageFieldProps {
   arrayHelpers: ArrayHelpers;
   modifierType: string;
   index: number;
   trailingAddButton?: JSX.Element;
 }
 
-export function NameAndModifierField(props: NameAndModifierFieldProps) {
+export function NameAndAdvantageField(props: NameAndAdvantageFieldProps) {
   const nameInput = useFocusIfEmpty();
 
   const [, drag, preview] = useDrag({
@@ -28,10 +28,20 @@ export function NameAndModifierField(props: NameAndModifierFieldProps) {
         autoComplete="off"
       />
       <Field
-        type="number"
-        className="modifier"
-        name={`${props.modifierType}[${props.index}].Modifier`}
-      />
+        component="select"
+        className="advantage"
+        name={`${props.modifierType}[${props.index}].Advantage`}
+      >
+        <option value="----">---- Disadvantage x4</option>
+        <option value="---">--- Disadvantage x3</option>
+        <option value="--">-- Disadvantage x2</option>
+        <option value="-">- Disadvantage</option>
+        <option value="">Normal</option>
+        <option value="+">+ Advantage</option>
+        <option value="++">++ Advantage x2</option>
+        <option value="+++">+++ Advantage x3</option>
+        <option value="++++">++++ Advantage x4</option>
+      </Field>
       <span
         className="fa-clickable fa-trash"
         onClick={() => props.arrayHelpers.remove(props.index)}

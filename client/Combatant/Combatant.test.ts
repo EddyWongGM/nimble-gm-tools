@@ -382,6 +382,25 @@ describe("Combatant", () => {
       );
     });
 
+    test("AC is revealed for a player character once RevealedAC is set", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "player",
+        AC: { Value: 15, Notes: "" }
+      });
+      combatant.RevealedAC(true);
+      expect(ToPlayerViewCombatantState(combatant).AC).toBe(15);
+    });
+
+    test("AC is never revealed for a monster, even if RevealedAC is set", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        AC: { Value: 15, Notes: "" }
+      });
+      combatant.RevealedAC(true);
+      expect(ToPlayerViewCombatantState(combatant).AC).toBeUndefined();
+    });
+
     test("ManaDisplay is undefined when the statblock has no Mana", () => {
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
@@ -600,6 +619,64 @@ describe("Combatant", () => {
         Player: "companion"
       });
       expect(ToPlayerViewCombatantState(combatant).IndexLabel).toBeUndefined();
+    });
+  });
+
+  describe("Legendary last stage", () => {
+    test("ApplyDamage drops a Legendary monster to its Last Stage HP instead of defeating it, the first time it hits 0", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "legendary",
+        HP: { Value: 10, Notes: "" },
+        LastStageHP: { Value: 4, Notes: "" }
+      });
+
+      combatant.ApplyDamage(10);
+
+      expect(combatant.CurrentHP()).toBe(4);
+      expect(combatant.HasEnteredLastStage()).toBe(true);
+      expect(combatant.Tags().map(t => t.Text)).toContain("Last Stage");
+    });
+
+    test("ApplyDamage defeats a Legendary monster normally the second time it hits 0", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "legendary",
+        HP: { Value: 10, Notes: "" },
+        LastStageHP: { Value: 4, Notes: "" }
+      });
+
+      combatant.ApplyDamage(10);
+      combatant.ApplyDamage(4);
+
+      expect(combatant.CurrentHP()).toBe(0);
+      expect(combatant.HasEnteredLastStage()).toBe(true);
+    });
+
+    test("ApplyDamage does not trigger a last stage without an authored Last Stage HP", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "legendary",
+        HP: { Value: 10, Notes: "" }
+      });
+
+      combatant.ApplyDamage(10);
+
+      expect(combatant.CurrentHP()).toBe(0);
+      expect(combatant.HasEnteredLastStage()).toBe(false);
+    });
+
+    test("ApplyDamage does not trigger a last stage for a non-Legendary monster", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        HP: { Value: 10, Notes: "" },
+        LastStageHP: { Value: 4, Notes: "" }
+      });
+
+      combatant.ApplyDamage(10);
+
+      expect(combatant.CurrentHP()).toBe(0);
+      expect(combatant.HasEnteredLastStage()).toBe(false);
     });
   });
 });

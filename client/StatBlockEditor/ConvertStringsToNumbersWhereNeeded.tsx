@@ -6,6 +6,21 @@ export const ConvertStringsToNumbersWhereNeeded = (statBlock: StatBlock) => {
   );
   statBlock.HP.Value = castToNumberOrZero(statBlock.HP.Value);
   statBlock.AC.Value = castToNumberOrZero(statBlock.AC.Value);
+  if (statBlock.HPMediumArmor) {
+    statBlock.HPMediumArmor.Value = castToNumberOrZero(
+      statBlock.HPMediumArmor.Value
+    );
+  }
+  if (statBlock.HPHeavyArmor) {
+    statBlock.HPHeavyArmor.Value = castToNumberOrZero(
+      statBlock.HPHeavyArmor.Value
+    );
+  }
+  if (statBlock.LastStageHP) {
+    statBlock.LastStageHP.Value = castToNumberOrZero(
+      statBlock.LastStageHP.Value
+    );
+  }
   if (statBlock.Mana) {
     statBlock.Mana.Value = castToNumberOrZero(statBlock.Mana.Value);
   }
@@ -21,8 +36,12 @@ export const ConvertStringsToNumbersWhereNeeded = (statBlock: StatBlock) => {
   statBlock.InitiativeModifier = castToNumberOrZero(
     statBlock.InitiativeModifier
   );
-  statBlock.Skills.forEach(s => (s.Modifier = castToNumberOrZero(s.Modifier)));
-  statBlock.Saves.forEach(s => (s.Modifier = castToNumberOrZero(s.Modifier)));
+  if (statBlock.SaveDC !== undefined) {
+    statBlock.SaveDC =
+      (statBlock.SaveDC as unknown) === ""
+        ? undefined
+        : castToNumberOrZero(statBlock.SaveDC);
+  }
 };
 
 function castToNumberOrZero(value?: any) {

@@ -66,7 +66,10 @@ function StatBlockComponentNoError(props: StatBlockProps) {
 
   const statBlock = props.statBlock;
 
-  const modifierTypes = [{ name: "Saves", data: statBlock.Saves }];
+  const modifierTypes = [
+    { name: "Saves", data: statBlock.Saves.filter(s => s.Advantage !== "") },
+    { name: "Skills", data: statBlock.Skills.filter(s => s.Advantage !== "") }
+  ];
 
   const keywordSetTypes = [
     { name: "Senses", data: statBlock.Senses },
@@ -87,8 +90,11 @@ function StatBlockComponentNoError(props: StatBlockProps) {
     },
     { name: "Reactions", displayName: "Reactions", data: statBlock.Reactions },
     {
+      // name stays "Legendary Actions" so the className keeps matching the
+      // shared .Actions styling in statblock.less - only the visible label
+      // changes, same as Mythic Actions below.
       name: "Legendary Actions",
-      displayName: "Legendary Actions",
+      displayName: "Special",
       data: statBlock.LegendaryActions
     },
     {
@@ -122,8 +128,19 @@ function StatBlockComponentNoError(props: StatBlockProps) {
     <>
       {!props.hideTopRow && (
         <div className="HP AC speed Challenge">
-          <span className="stat-label">Defense</span>
-          <span className="stat-value">{statBlock.AC.Value}</span>
+          {StatBlock.ActsInPlayerPhase(statBlock) ? (
+            <>
+              <span className="stat-label">Defense</span>
+              <span className="stat-value">{statBlock.AC.Value}</span>
+            </>
+          ) : (
+            statBlock.SaveDC !== undefined && (
+              <>
+                <span className="stat-label">Save DC</span>
+                <span className="stat-value">{statBlock.SaveDC}</span>
+              </>
+            )
+          )}
           {statBlock.Speed.length > 0 && (
             <>
               <span className="stat-label Speed">Speed</span>
@@ -173,7 +190,7 @@ function StatBlockComponentNoError(props: StatBlockProps) {
               {modifierType.data.map((modifier, i) => (
                 <span className="stat-value" key={i + modifier.Name}>
                   {modifier.Name}
-                  {textEnricher.EnrichModifier(modifier.Modifier)}{" "}
+                  {modifier.Advantage}{" "}
                 </span>
               ))}
             </div>

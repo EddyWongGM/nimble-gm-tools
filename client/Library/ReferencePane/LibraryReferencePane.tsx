@@ -32,6 +32,9 @@ interface LibraryReferencePaneProps<T extends Listable> {
   showSortControl?: boolean;
   launchQuickAddPrompt?: () => void;
   onRenameFolder?: RenameFolder;
+  // Applied after filtering, before grouping - orders both root listings and
+  // each group's listings. Ignored while sortMethod is "recent".
+  sortComparator?: (a: Listing<T>, b: Listing<T>) => number;
 }
 
 interface State<T extends Listable> {
@@ -79,6 +82,8 @@ export class LibraryReferencePane<T extends Listable> extends React.Component<
     if (this.state.sortMethod === "recent") {
       const recentItemIds = CurrentSettings().RecentItemIds;
       filteredListings = this.getRecentItems(filteredListings, recentItemIds);
+    } else if (this.props.sortComparator) {
+      filteredListings = [...filteredListings].sort(this.props.sortComparator);
     }
 
     const grouping = this.props.listingGroups[this.state.listingGroupIndex];

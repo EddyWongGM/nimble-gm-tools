@@ -178,7 +178,14 @@ export function CombatantRow(props: CombatantRowProps) {
 
             {renderHPText(props)}
             {DisplayHPBar && (
-              <span className="combatant__hp-bar">
+              <span
+                className={
+                  "combatant__hp-bar" +
+                  (props.combatantState.HasEnteredLastStage
+                    ? " combatant__hp-bar--last-stage"
+                    : "")
+                }
+              >
                 <span
                   className="combatant__hp-bar--filled"
                   style={renderHPBarStyle(props)}
@@ -190,16 +197,22 @@ export function CombatantRow(props: CombatantRowProps) {
       </td>
 
       <td className="combatant__ac">
-        <span
-          className="combatant__mobile-icon fas fa-shield-alt"
-          aria-hidden="true"
-        />
+        {StatBlockNamespace.ActsInPlayerPhase(props.combatantState.StatBlock) ? (
+          <>
+            <span
+              className="combatant__mobile-icon fas fa-shield-alt"
+              aria-hidden="true"
+            />
 
-        {props.combatantState.StatBlock.AC.Value}
-        {props.combatantState.RevealedAC && (
-          <Tippy content="Revealed in Player View">
-            <span className="combatant__ac--revealed-badge fas fa-eye" />
-          </Tippy>
+            {props.combatantState.StatBlock.AC.Value}
+            {props.combatantState.RevealedAC && (
+              <Tippy content="Revealed in Player View">
+                <span className="combatant__ac--revealed-badge fas fa-eye" />
+              </Tippy>
+            )}
+          </>
+        ) : (
+          renderArmorBadge(props)
         )}
       </td>
 
@@ -613,6 +626,23 @@ function renderDisplayName(props: CombatantRowProps) {
       )}
       {name}
     </>
+  );
+}
+
+// GM-only armor tier badge for monsters, replacing the AC column that's
+// dropped entirely for monsters (see plans/Monsters/03_MONSTER_ARMOR_HP.md) -
+// never sent to Player View, since ToPlayerViewCombatantState omits Armor.
+function renderArmorBadge(props: CombatantRowProps) {
+  const armor = props.combatantState.StatBlock.Armor;
+  if (armor !== "medium" && armor !== "heavy") {
+    return null;
+  }
+  return (
+    <Tippy content={StatBlockNamespace.ArmorDisplayNames[armor]}>
+      <strong className="combatant__armor-badge">
+        {armor === "medium" ? "M" : "H"}
+      </strong>
+    </Tippy>
   );
 }
 

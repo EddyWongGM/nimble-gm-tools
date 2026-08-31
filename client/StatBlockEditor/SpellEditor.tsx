@@ -7,7 +7,6 @@ import { probablyUniqueString } from "../../common/Toolbox";
 import { useState, useRef } from "react";
 import { Button, SubmitButton } from "../Components/Button";
 import { Listing } from "../Library/Listing";
-import { Toggle } from "../Settings/components/Toggle";
 import { EnumToggle } from "./EnumToggle";
 import { DescriptionField } from "./components/StatBlockEditorFields";
 import { TextField } from "./components/TextField";
@@ -72,6 +71,8 @@ export function SpellEditor(props: SpellEditorProps) {
           const { AllClasses, SaveAs, ...standardSpell } = submittedValues;
 
           standardSpell.Classes = AllClasses.split(",").map(c => c.trim());
+          standardSpell.Tier = castToNumberOrZero(standardSpell.Tier);
+          standardSpell.Mana = castToNumberOrZero(standardSpell.Mana);
 
           spell = standardSpell;
         } else {
@@ -163,23 +164,28 @@ function StandardEditor() {
         {!isRule && (
           <>
             <TextField label="School" fieldName="School" />
-            <TextField label="Tier" fieldName="Level" />
-            <TextField label="Classes" fieldName="AllClasses" />
-            <div className="c-spell-editor__ritual">
-              <Toggle fieldName="Ritual">Ritual</Toggle>
+            <div className="c-spell-editor__small-fields">
+              <TextField label="Tier" fieldName="Tier" />
+              <TextField label="Requires" fieldName="CastingTime" />
+              <TextField label="Mana" fieldName="Mana" />
+              <TextField label="Duration" fieldName="Duration" />
+            </div>
+            <div className="c-spell-editor__distance">
+              <EnumToggle
+                labelsByOption={{ Range: "Range", Reach: "Reach" }}
+                fieldName="DistanceType"
+              />
+              <TextField label="" fieldName="Distance" />
             </div>
           </>
         )}
       </div>
-      {!isRule && (
-        <div className="c-statblock-editor__headers">
-          <TextField label="Casting Time" fieldName="CastingTime" />
-          <TextField label="Range" fieldName="Range" />
-          <TextField label="Duration" fieldName="Duration" />
-          <TextField label="Components" fieldName="Components" />
-        </div>
-      )}
       <DescriptionField />
     </>
   );
+}
+
+function castToNumberOrZero(value: any) {
+  const parsedValue = parseInt(value, 10);
+  return isNaN(parsedValue) ? 0 : parsedValue;
 }

@@ -18,6 +18,7 @@ import { SceneImageFit } from "../../common/PlayerViewSettings";
 import { StatBlock } from "../../common/StatBlock";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { Combatant } from "../Combatant/Combatant";
+import { Tag } from "../Combatant/Tag";
 import {
   GetOrRollMaximumHP,
   VariantMaximumHP
@@ -160,7 +161,9 @@ export class Encounter {
       if (statBlock.TotalInitiativeModifier !== undefined) {
         statBlock.InitiativeModifier = statBlock.TotalInitiativeModifier;
       }
-      const mergedStatBlock = deepMerge(StatBlock.Default(), statBlock);
+      const mergedStatBlock = StatBlock.Update(
+        deepMerge(StatBlock.Default(), statBlock)
+      );
       ConvertStringsToNumbersWhereNeeded(mergedStatBlock);
       this.AddCombatantFromStatBlock(mergedStatBlock);
     };
@@ -177,9 +180,8 @@ export class Encounter {
             .get(`/statblocks/${c.Id}`)
             .then(r => r.data)
             .then(statBlockFromLibrary => {
-              const modifiedStatBlockFromLibrary = deepMerge(
-                statBlockFromLibrary,
-                statBlock
+              const modifiedStatBlockFromLibrary = StatBlock.Update(
+                deepMerge(statBlockFromLibrary, statBlock)
               );
               ConvertStringsToNumbersWhereNeeded(modifiedStatBlockFromLibrary);
               this.AddCombatantFromStatBlock(modifiedStatBlockFromLibrary);
@@ -222,10 +224,28 @@ export class Encounter {
   ): void => {
     try {
       const statBlock: StatBlock = { ...StatBlock.Default(), ...statBlockJson };
+      if (!StatBlock.ActsInPlayerPhase(statBlock)) {
+        if (statBlock.Armor === "medium" && statBlock.HPMediumArmor) {
+          statBlock.HP = statBlock.HPMediumArmor;
+        } else if (statBlock.Armor === "heavy" && statBlock.HPHeavyArmor) {
+          statBlock.HP = statBlock.HPHeavyArmor;
+        }
+      }
       statBlock.HP = {
         ...statBlock.HP,
         Value: GetOrRollMaximumHP(statBlock, variantMaximumHP)
       };
+      let legendaryHeroCount: number | null = null;
+      if (statBlock.Player === "legendary") {
+        legendaryHeroCount = Math.max(
+          1,
+          this.combatants().filter(c => c.IsPlayerCharacter()).length
+        );
+        statBlock.HP = {
+          ...statBlock.HP,
+          Value: statBlock.HP.Value * legendaryHeroCount
+        };
+      }
 
       const initialState: CombatantState = {
         Id: probablyUniqueString(),
@@ -245,7 +265,16 @@ export class Encounter {
         InterfaceVersion: process.env.VERSION || "unknown"
       };
 
-      this.AddCombatantFromState(initialState);
+      const combatant = this.AddCombatantFromState(initialState);
+      // Surfaces the multiplier that was actually applied - including a
+      // caution-worthy "x1" when no heroes were in the encounter yet - as a
+      // persistent tag rather than a one-off toast, since there's no
+      // toast/notification system in this app to reuse.
+      if (legendaryHeroCount !== null) {
+        combatant.Tags.push(
+          new Tag(`HP ×${legendaryHeroCount} (heroes)`, combatant, true)
+        );
+      }
     } catch (e) {
       console.warn("Couldn't add statblock: " + e);
       console.warn(JSON.stringify(statBlockJson));
