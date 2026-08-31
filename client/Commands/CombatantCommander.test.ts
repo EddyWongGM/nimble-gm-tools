@@ -67,23 +67,6 @@ describe("CombatantCommander", () => {
     expect(combatantViewModel.Combatant.KeepHidden()).toBe(false);
   });
 
-  test("Toggle Reveal Gold", () => {
-    encounter.AddCombatantFromStatBlock({
-      ...StatBlock.Default(),
-      Player: "player"
-    });
-    const combatantViewModel = trackerViewModel.CombatantViewModels()[0];
-
-    expect(combatantViewModel.Combatant.RevealedGold()).toBe(false);
-
-    combatantCommander.Select(combatantViewModel);
-    combatantCommander.ToggleRevealedGold();
-    expect(combatantViewModel.Combatant.RevealedGold()).toBe(true);
-
-    combatantCommander.ToggleRevealedGold();
-    expect(combatantViewModel.Combatant.RevealedGold()).toBe(false);
-  });
-
   test("Toggle Reveal Hit Dice", () => {
     encounter.AddCombatantFromStatBlock({
       ...StatBlock.Default(),

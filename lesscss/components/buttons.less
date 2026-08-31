@@ -141,6 +141,47 @@ button.button {
   }
 }
 
+// Hide Gold from Players reads as "gold" rather than a generic active
+// toggle - icon is the same --gold used for the coins icon elsewhere (e.g.
+// combatants.less, InitiativeListHeader) while gold IS showing to players,
+// and turns white once the toggle hides it - so white means "not showing
+// to players", matching the toggle's own on/off meaning rather than the
+// generic "active = highlighted" convention.
+.commands-encounter .c-button--toggle-hide-gold-player-view {
+  .colors(var(--gold), var(--black), transparent);
+
+  &:hover {
+    .colors(var(--gold), var(--hover-grey), transparent);
+  }
+
+  &.c-button--active {
+    .colors(var(--white), var(--black), transparent);
+
+    &:hover {
+      .colors(var(--white), var(--hover-grey), transparent);
+    }
+  }
+}
+
+// Hide Inventory from Players gets the same treatment as gold above - the
+// scroll icon is light brown while inventory IS showing to players, and
+// turns white once hidden.
+.commands-encounter .c-button--toggle-hide-inventory-player-view {
+  .colors(var(--parchment), var(--black), transparent);
+
+  &:hover {
+    .colors(var(--parchment), var(--hover-grey), transparent);
+  }
+
+  &.c-button--active {
+    .colors(var(--white), var(--black), transparent);
+
+    &:hover {
+      .colors(var(--white), var(--hover-grey), transparent);
+    }
+  }
+}
+
 // A small "+" badge in the corner of the base stat icon, so each
 // "apply temporary X" button reads as "add to <stat>" rather than every
 // stat sharing the same generic medkit glyph, distinguished only by color.
@@ -211,10 +252,6 @@ button.button {
   &::after {
     color: var(--wound-red);
   }
-}
-
-.c-button--toggle-reveal-gold .fas {
-  color: var(--gold);
 }
 
 .c-button--toggle-reveal-hit-dice .fas {

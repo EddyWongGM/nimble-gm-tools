@@ -509,28 +509,29 @@ describe("Combatant", () => {
         ...StatBlock.Default()
       });
       combatant.CurrentGold(50);
-      combatant.RevealedGold(true);
       expect(ToPlayerViewCombatantState(combatant).GoldDisplay).toBeUndefined();
     });
 
-    test("GoldDisplay is undefined for a player character whose gold is not revealed", () => {
+    test("GoldDisplay is undefined for a player character when gold is hidden from players", () => {
+      InitializeTestSettings({
+        Rules: { EnableGold: true },
+        PlayerView: { HideGoldNumbers: true }
+      });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player"
       });
       combatant.CurrentGold(50);
-      expect(combatant.RevealedGold()).toBe(false);
       expect(ToPlayerViewCombatantState(combatant).GoldDisplay).toBeUndefined();
     });
 
-    test("GoldDisplay shows once a player character's gold is revealed", () => {
+    test("GoldDisplay shows for a player character's gold", () => {
       InitializeTestSettings({ Rules: { EnableGold: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player"
       });
       combatant.CurrentGold(50);
-      combatant.RevealedGold(true);
       expect(ToPlayerViewCombatantState(combatant).GoldDisplay).toEqual("50");
     });
 
@@ -544,19 +545,22 @@ describe("Combatant", () => {
       ).toBeUndefined();
     });
 
-    test("InventoryDisplay is undefined for a player character whose inventory is not revealed", () => {
+    test("InventoryDisplay is undefined for a player character when inventory is hidden from players", () => {
+      InitializeTestSettings({
+        Rules: { EnableInventory: true },
+        PlayerView: { HideInventoryNumbers: true }
+      });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player"
       });
       combatant.ApplyItemChange("Torch", true, 1, 1);
-      expect(combatant.RevealedItems()).toBe(false);
       expect(
         ToPlayerViewCombatantState(combatant).InventoryDisplay
       ).toBeUndefined();
     });
 
-    test("InventoryDisplay shows slots used over max once a player character's inventory is revealed", () => {
+    test("InventoryDisplay shows slots used over max for a player character's inventory", () => {
       InitializeTestSettings({ Rules: { EnableInventory: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
@@ -564,13 +568,12 @@ describe("Combatant", () => {
       });
       combatant.ApplyItemChange("Torch", true, 1, 1);
       combatant.ApplyItemChange("Bedroll", false, 1, 2);
-      combatant.RevealedItems(true);
 
       expect(ToPlayerViewCombatantState(combatant).InventoryDisplay).toEqual(
         "3/10"
       );
       expect(ToPlayerViewCombatantState(combatant).InventoryColor).toEqual(
-        "var(--text-face)"
+        "var(--parchment)"
       );
     });
 
@@ -583,7 +586,6 @@ describe("Combatant", () => {
       for (let i = 0; i < 11; i++) {
         combatant.ApplyItemChange(`Item ${i}`, false, 1, 1);
       }
-      combatant.RevealedItems(true);
 
       expect(ToPlayerViewCombatantState(combatant).InventoryColor).toEqual(
         "rgb(200,30,30)"

@@ -21,23 +21,9 @@ export function OptionsSettings(props: {
           king icon will add it with the maximum possible HP roll.
         </Info>
       </Toggle> */}
-      <Toggle fieldName="Rules.AllowNegativeHP">
+      {/* <Toggle fieldName="Rules.AllowNegativeHP">
         Allow negative hit points
-      </Toggle>
-      <Toggle fieldName="Rules.EnableInventory">
-        Enable Inventory
-        <Info>
-          When disabled, Inventory is hidden from the combatant details pane,
-          the Player View, and the sidebar for all combatants.
-        </Info>
-      </Toggle>
-      <Toggle fieldName="Rules.EnableGold">
-        Enable Gold
-        <Info>
-          When disabled, Gold is hidden from the initiative list and the
-          Player View for all combatants.
-        </Info>
-      </Toggle>
+      </Toggle> */}
       <Toggle fieldName="Rules.AlwaysNumberMonsters">
         Always number Creatures and NPCs
         <Info>
@@ -57,9 +43,10 @@ export function OptionsSettings(props: {
       </Toggle>
 
       <DisplaysToggleHeader />
-      <DisplaysToggle fieldName="DisplayRoundCounter">
+      <DisplaysToggle fieldName="DarkMode">Dark Mode</DisplaysToggle>
+      {/* <DisplaysToggle fieldName="DisplayRoundCounter">
         Round Counter
-      </DisplaysToggle>
+      </DisplaysToggle> */}
       <DisplaysToggle fieldName="DisplayCombatantColor">
         Name Colors
         <Info>Enables a widget to assign a color to each name.</Info>
@@ -68,14 +55,31 @@ export function OptionsSettings(props: {
         Reaction Tracker
       </DisplaysToggle>
       <DisplaysToggle
+        encounterViewFieldName="Rules.EnableInventory"
+        playerViewFieldName="PlayerView.HideInventoryNumbers"
+      >
+        Inventory
+        <Info>
+          Encounter View toggle controls the Inventory feature entirely.
+        </Info>
+      </DisplaysToggle>
+      <DisplaysToggle
+        encounterViewFieldName="Rules.EnableGold"
+        playerViewFieldName="PlayerView.HideGoldNumbers"
+      >
+        Gold
+        <Info>
+          Encounter View toggle controls the Gold feature entirely.
+        </Info>
+      </DisplaysToggle>
+      <DisplaysToggle
         fieldName="DisplayPortraits"
         requireEpicTierForPlayerViewToggle
       >
         Portraits
-      </DisplaysToggle>
+      </DisplaysToggle>      
 
       <h3>Encounter View</h3>
-      <Toggle fieldName="TrackerView.DarkMode">Dark Mode</Toggle>
       {/* <Toggle fieldName="TrackerView.DisplayDifficulty">
         Display Encounter Difficulty
         <Info>
@@ -109,38 +113,23 @@ export function OptionsSettings(props: {
         </Info>
       </Toggle>
       <h3>Player View</h3>
-      <Toggle fieldName="PlayerView.DarkMode">Dark Mode</Toggle>
-      <Dropdown
-        fieldName="PlayerView.MonsterHPVerbosity"
-        options={HpVerbosityOption}
-      >
-        Creature and NPC HP/Mana/Resources Verbosity
-        <Info>
-          Control how much information about combatants' HP, Mana, and
-          Resources is revealed in the Player View window. Colored Label will
-          change from green to red, so keen-eyed players might deduce exact
-          percentages.
-        </Info>
-      </Dropdown>
       <Dropdown
         fieldName="PlayerView.PlayerHPVerbosity"
         options={HpVerbosityOption}
       >
-        Player Character HP/Mana/Resources/Hit Dice/Wounds Verbosity
+        Heroes Verbosity
       </Dropdown>
-      <Toggle fieldName="PlayerView.HideInventoryNumbers">
-        Hide Inventory from players
+      <Dropdown
+        fieldName="PlayerView.MonsterHPVerbosity"
+        options={HpVerbosityOption}
+      >
+        Monster Verbosity
         <Info>
-          The Inventory column is hidden entirely from the Player View. Gold
-          is not affected.
+          Control how Health is revealed in the Player View window. Colored Label will
+          change from green to red, so keen-eyed players might deduce exact
+          percentages.
         </Info>
-      </Toggle>
-      <Toggle fieldName="PlayerView.HideGoldNumbers">
-        Hide Gold from players
-        <Info>
-          The Gold column is hidden entirely from the Player View.
-        </Info>
-      </Toggle>
+      </Dropdown>
       <Toggle fieldName="PlayerView.AllowPlayerSuggestions">
         Allow players to suggest damage/healing
         <Info>

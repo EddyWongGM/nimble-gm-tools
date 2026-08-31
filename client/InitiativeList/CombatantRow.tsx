@@ -395,11 +395,6 @@ export function CombatantRow(props: CombatantRowProps) {
                 />
 
                 {renderItemsText(props)}
-                {props.combatantState.RevealedItems === false && (
-                  <Tippy content="Hidden from Player View">
-                    <span className="combatant__items-slots--hidden-badge fas fa-eye-slash" />
-                  </Tippy>
-                )}
               </div>
             </div>
           ) : (
@@ -430,11 +425,6 @@ export function CombatantRow(props: CombatantRowProps) {
                 />
 
                 {renderGoldText(props)}
-                {props.combatantState.RevealedGold === false && (
-                  <Tippy content="Hidden from Player View">
-                    <span className="combatant__gold--hidden-badge fas fa-eye-slash" />
-                  </Tippy>
-                )}
               </div>
             </div>
           ) : (
@@ -564,26 +554,18 @@ function CommandButton(props: { command: Command }) {
   if (!showInCombatantRow) {
     return null;
   }
-  const isGoldToggle = command.Id === "toggle-reveal-gold";
   const isHitDiceToggle = command.Id === "toggle-reveal-hit-dice";
-  const isStackedIcon = isGoldToggle || isHitDiceToggle;
   return (
     <Tippy content={`${command.Description} [${command.KeyBinding}]`}>
       <button
         className={
           "combatant__command-button fa-clickable c-button--" +
           command.Id +
-          (isStackedIcon ? "" : " fa-" + fontAwesomeIcon)
+          (isHitDiceToggle ? "" : " fa-" + fontAwesomeIcon)
         }
         onClick={command.ActionBinding}
         aria-label={command.Description}
       >
-        {isGoldToggle && (
-          <span className="fa-stack">
-            <i className="fas fa-coins fa-stack-2x"></i>
-            <i className="fas fa-slash fa-stack-2x"></i>
-          </span>
-        )}
         {isHitDiceToggle && (
           <span className="fa-stack">
             <i className="fas fa-dice-d6 fa-stack-2x"></i>
@@ -743,7 +725,7 @@ function getItemsStyle(props: CombatantRowProps) {
   if (slotsUsed > maxSlots) {
     return { color: "rgb(200,30,30)" };
   }
-  return { color: "var(--text-face)" };
+  return { color: "var(--parchment)" };
 }
 
 function renderItemsText(props: CombatantRowProps) {

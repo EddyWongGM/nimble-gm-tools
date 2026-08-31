@@ -79,8 +79,6 @@ export class Combatant {
   public Hidden = ko.observable(false);
   public KeepHidden = ko.observable(false);
   public RevealedAC = ko.observable(false);
-  public RevealedGold = ko.observable(true);
-  public RevealedItems = ko.observable(true);
   public RevealedHitDice = ko.observable(true);
   public HasTakenTurn = ko.observable(false);
   public IndexLabel = ko.observable(0);
@@ -139,8 +137,6 @@ export class Combatant {
     this.Hidden(savedCombatant.Hidden);
     this.KeepHidden(savedCombatant.KeepHidden ?? false);
     this.RevealedAC(savedCombatant.RevealedAC);
-    this.RevealedGold(savedCombatant.RevealedGold ?? true);
-    this.RevealedItems(savedCombatant.RevealedItems ?? true);
     this.RevealedHitDice(savedCombatant.RevealedHitDice ?? true);
     this.HasTakenTurn(savedCombatant.HasTakenTurn || false);
     this.Color(savedCombatant.Color || "");
@@ -580,11 +576,9 @@ export class Combatant {
         .filter(t => t.NotExpired())
         .map(t => t.GetState()),
       Items: this.Items(),
-      RevealedItems: this.RevealedItems(),
       Hidden: this.Hidden(),
       KeepHidden: this.KeepHidden(),
       RevealedAC: this.RevealedAC(),
-      RevealedGold: this.RevealedGold(),
       RevealedHitDice: this.RevealedHitDice(),
       HasTakenTurn: this.HasTakenTurn(),
       Color: this.Color(),

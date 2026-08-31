@@ -5,11 +5,18 @@ import { env } from "../../Environment";
 
 export function DisplaysToggle(props: {
   children: React.ReactNode;
-  fieldName: string;
+  fieldName?: string;
+  encounterViewFieldName?: string;
+  playerViewFieldName?: string;
   requireEpicTierForPlayerViewToggle?: boolean;
 }) {
-  const fieldEncounterViewId = `toggle_TrackerView.${props.fieldName}`;
-  const fieldPlayerViewId = `toggle_PlayerView.${props.fieldName}`;
+  const encounterViewFieldName =
+    props.encounterViewFieldName ?? `TrackerView.${props.fieldName}`;
+  const playerViewFieldName =
+    props.playerViewFieldName ?? `PlayerView.${props.fieldName}`;
+
+  const fieldEncounterViewId = `toggle_${encounterViewFieldName}`;
+  const fieldPlayerViewId = `toggle_${playerViewFieldName}`;
 
   const showEpicTierNotice =
     props.requireEpicTierForPlayerViewToggle && !env.HasEpicInitiative;
@@ -23,14 +30,14 @@ export function DisplaysToggle(props: {
       <div className="c-display-toggles__label">{props.children}</div>
       <div className="c-display-toggles__toggle">
         <ToggleButton
-          fieldName={"TrackerView." + props.fieldName}
+          fieldName={encounterViewFieldName}
           id={fieldEncounterViewId}
         />
       </div>
       <div className="c-display-toggles__toggle">
         {epicTierNotice || (
           <ToggleButton
-            fieldName={"PlayerView." + props.fieldName}
+            fieldName={playerViewFieldName}
             id={fieldPlayerViewId}
           />
         )}

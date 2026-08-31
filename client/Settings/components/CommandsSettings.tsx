@@ -57,9 +57,14 @@ const HIDDEN_FROM_COMMAND_SETTINGS = new Set([
   "previous-turn",
   "set-initiative",
   "shutdown-server",
-  "toggle-reveal-gold",
-  "toggle-reveal-items",
-  "toggle-keep-hidden"
+  "toggle-keep-hidden",
+  "spend-hit-dice",
+  "restore-hit-dice",
+  "spend-wounds",
+  "restore-wounds",
+  "add-gold",
+  "subtract-gold",
+  "add-item"
 ]);
 
 export function CommandsSettings(props: CommandsSettingsProps) {
