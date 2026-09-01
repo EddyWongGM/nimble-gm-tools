@@ -459,11 +459,15 @@ export class StatBlockEditor extends React.Component<
   };
 
   private willOverwriteStatBlock = _.memoize(
-    (path: string, name: string) =>
+    (path: string, name: string, challenge: string) =>
       this.props.currentListings?.some(
-        l => l.Meta().Path == path && l.Meta().Name == name
+        l =>
+          l.Meta().Path == path &&
+          l.Meta().Name == name &&
+          (l.Meta().FilterDimensions?.Level || "") == challenge
       ),
-    (path: string, name: string) => JSON.stringify({ path, name })
+    (path: string, name: string, challenge: string) =>
+      JSON.stringify({ path, name, challenge })
   );
 
   private validate = async values => {
@@ -506,9 +510,16 @@ export class StatBlockEditor extends React.Component<
     const originalPath = this.props.statBlock.Path || "";
     const originalName = this.props.statBlock.Name || "";
 
-    if (path === originalPath && name === originalName) {
+    const challenge = values.Challenge || "";
+    const originalChallenge = this.props.statBlock.Challenge || "";
+
+    if (
+      path === originalPath &&
+      name === originalName &&
+      challenge === originalChallenge
+    ) {
       errors.PathAndName = "Error: Save as a copy requires a different name.";
-    } else if (this.willOverwriteStatBlock(path, name)) {
+    } else if (this.willOverwriteStatBlock(path, name, challenge)) {
       errors.PathAndName =
         "Error: This copy will overwrite an existing statblock. Please change the name or folder.";
     }

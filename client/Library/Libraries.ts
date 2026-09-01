@@ -304,6 +304,8 @@ async function preloadEncounters(
 
 export const SAMPLE_HEROES_FOLDER_NAME = "Sample Heroes";
 
+export const MONSTER_BUILDER_FOLDER_NAME = "Monster Builder";
+
 async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
   const enabledSources = _.pickBy(
     settings.PreloadedSpellSources,

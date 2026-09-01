@@ -68,7 +68,19 @@ export class Library<TItem extends Listable> {
       if (!(c.Name && c.Source)) {
         throw `Missing Name or Source: Couldn't import ${JSON.stringify(c)}`;
       }
-      c.Id = createId(c.Name, c.Source);
+      const baseId = createId(c.Name, c.Source);
+      // Name+Source doesn't guarantee uniqueness - e.g. basic_rules_creatures.json
+      // has two entries both named "Goblin" from "Nimble GMG" (Challenge Minion
+      // and Challenge 1/2). Without this, the second entry would silently
+      // overwrite the first in `items`, so GetById(id) for either would always
+      // return the later one, regardless of which listing was requested.
+      let id = baseId;
+      let suffix = 2;
+      while (id in this.items) {
+        id = `${baseId}-${suffix}`;
+        suffix++;
+      }
+      c.Id = id;
       this.items[c.Id] = c;
       const listing: ListingMeta = {
         Name: c.Name,

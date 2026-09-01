@@ -19,6 +19,7 @@ import { StatBlock } from "../../common/StatBlock";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { Combatant } from "../Combatant/Combatant";
 import { Tag } from "../Combatant/Tag";
+import { TagChallengeCollisions } from "../Combatant/TagChallengeCollisions";
 import {
   GetOrRollMaximumHP,
   VariantMaximumHP
@@ -203,6 +204,7 @@ export class Encounter {
     this.combatants.push(combatant);
 
     combatant.UpdateIndexLabel();
+    TagChallengeCollisions(combatant, this.combatants());
 
     if (this.EncounterFlow.State() === "active") {
       this.promptEditCombatantInitiative(combatant.Id);

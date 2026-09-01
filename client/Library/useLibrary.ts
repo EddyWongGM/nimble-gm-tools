@@ -119,11 +119,13 @@ export function useLibrary<T extends Listable>(
 
   const SaveNewListing = React.useCallback(
     async (newListable: T) => {
+      const newLevel = callbacks.getFilterDimensions(newListable).Level;
       const listingsToOverwrite = listings.filter(
         l =>
           (l.Origin === "localAsync" || l.Origin === "localStorage") &&
           l.Meta().Path == newListable.Path &&
-          l.Meta().Name == newListable.Name
+          l.Meta().Name == newListable.Name &&
+          l.Meta().FilterDimensions?.Level == newLevel
       );
 
       const listing = new Listing<T>(
@@ -150,11 +152,13 @@ export function useLibrary<T extends Listable>(
 
   const SaveEditedListing = React.useCallback(
     async (listing: Listing<T>, newListable: T) => {
+      const editedLevel = callbacks.getFilterDimensions(newListable).Level;
       const listingsToOverwrite = listings.filter(
         l =>
           l.Meta().Id == listing.Meta().Id ||
-          l.Meta().Path + l.Meta().Name ==
-            listing.Meta().Path + listing.Meta().Name
+          (l.Meta().Path + l.Meta().Name ==
+            listing.Meta().Path + listing.Meta().Name &&
+            l.Meta().FilterDimensions?.Level == editedLevel)
       );
 
       for (const listingToOverwrite of listingsToOverwrite) {
