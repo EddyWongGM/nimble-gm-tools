@@ -44,6 +44,8 @@
 }
 
 .c-combatant-details__defense-resources {
+  > * + .stat-label.CRRating,
+  > * + .stat-label.SaveDC,
   > * + .stat-label.Resources {
     margin-left: @medium-spacer;
   }
@@ -252,9 +254,8 @@ input[type="number"].c-combatant-details__item-quantity {
 // @font-size-h3) - the right-pane combatant details panel is narrower and
 // a large name crowds the HP/AC/Mana row below it.
 //
-// Name and Type sit on the same line when they fit; Type wraps to its own
-// line once a long Name crowds it out. Source (rarely populated here)
-// always gets its own full-width line below.
+// Name, Type, and Source (rarely populated here) each get their own
+// full-width line.
 .c-combatant-details .c-statblock-header {
   flex-direction: row;
   flex-wrap: wrap;
@@ -265,11 +266,13 @@ input[type="number"].c-combatant-details__item-quantity {
 
   .Name {
     order: 1;
+    flex-basis: 100%;
     font-size: @font-size-large;
   }
 
   .Type {
     order: 2;
+    flex-basis: 100%;
   }
 
   .Source {

@@ -217,12 +217,22 @@ export class Combatant {
   }
 
   public UpdateIndexLabel(oldName?: string) {
+    // Legendary monsters are solo/unique by design, so they're excluded from
+    // the shared AlwaysNumberMonsters sequence entirely - both so they don't
+    // themselves take a number from it, and so they don't consume a number
+    // that would otherwise go to a non-Legendary monster. They still fall
+    // through to the per-name numbering below, for the rare case of two
+    // Legendaries sharing a name.
     if (
       CurrentSettings().Rules.AlwaysNumberMonsters &&
-      !this.ActsInPlayerPhase()
+      !this.ActsInPlayerPhase() &&
+      !StatBlock.IsLegendary(this.StatBlock())
     ) {
       const otherMonsters = this.Encounter.Combatants().filter(
-        c => c !== this && !c.ActsInPlayerPhase()
+        c =>
+          c !== this &&
+          !c.ActsInPlayerPhase() &&
+          !StatBlock.IsLegendary(c.StatBlock())
       );
       // A duplicated combatant inherits its source's IndexLabel, which
       // collides with the still-present source - treat that the same as

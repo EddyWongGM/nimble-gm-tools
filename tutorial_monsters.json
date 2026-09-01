@@ -1,9 +1,9 @@
 [
   {
-    "Name": "LV 0.5 (CR: 0.25)",
+    "Name": "LV 0.5 (CR: 1/4)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 12,
       "Notes": ""
@@ -29,7 +29,7 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "0.5",
+    "Challenge": "1/2",
     "Traits": [],
     "Actions": [],
     "BonusActions": [],
@@ -42,13 +42,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 11,
-	"CRRating": "0.25"	
+	"CRRating": "1/4"	
   },
   {
-    "Name": "LV 01 (CR: 0.5)",
+    "Name": "LV 01 (CR: 1/2)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 25,
       "Notes": ""
@@ -87,13 +87,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 11,
-	"CRRating": "0.5"	
+	"CRRating": "1/2"	
   },
   {
     "Name": "LV 02 (CR: 1)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 33,
       "Notes": ""
@@ -138,7 +138,7 @@
     "Name": "LV 03 (CR: 1)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 42,
       "Notes": ""
@@ -183,7 +183,7 @@
     "Name": "LV 04 (CR: 2)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 50,
       "Notes": ""
@@ -228,7 +228,7 @@
     "Name": "LV 05 (CR: 2)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 58,
       "Notes": ""
@@ -273,7 +273,7 @@
     "Name": "LV 06 (CR: 3)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 69,
       "Notes": ""
@@ -318,7 +318,7 @@
     "Name": "LV 07 (CR: 3)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 82,
       "Notes": ""
@@ -363,7 +363,7 @@
     "Name": "LV 08 (CR: 4)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 95,
       "Notes": ""
@@ -408,7 +408,7 @@
     "Name": "LV 09 (CR: 4)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 108,
       "Notes": ""
@@ -453,7 +453,7 @@
     "Name": "LV 10 (CR: 5)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 122,
       "Notes": ""
@@ -498,7 +498,7 @@
     "Name": "LV 11 (CR: 6)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 135,
       "Notes": ""
@@ -543,7 +543,7 @@
     "Name": "LV 12 (CR: 7)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 148,
       "Notes": ""
@@ -588,7 +588,7 @@
     "Name": "LV 13 (CR: 8)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 162,
       "Notes": ""
@@ -633,7 +633,7 @@
     "Name": "LV 14 (CR: 9)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 176,
       "Notes": ""
@@ -678,7 +678,7 @@
     "Name": "LV 15 (CR: 9)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 190,
       "Notes": ""
@@ -723,7 +723,7 @@
     "Name": "LV 16 (CR: 10)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 204,
       "Notes": ""
@@ -768,7 +768,7 @@
     "Name": "LV 17 (CR: 11)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 219,
       "Notes": ""
@@ -813,7 +813,7 @@
     "Name": "LV 18 (CR: 12)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 234,
       "Notes": ""
@@ -858,7 +858,7 @@
     "Name": "LV 19 (CR: 13)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 249,
       "Notes": ""
@@ -903,7 +903,7 @@
     "Name": "LV 20 (CR: 14)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "",
+    "Type": "Template Normal",
     "HP": {
       "Value": 269,
       "Notes": ""

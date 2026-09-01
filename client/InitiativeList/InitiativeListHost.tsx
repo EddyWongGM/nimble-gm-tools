@@ -133,6 +133,17 @@ export function InitiativeListHost(props: { tracker: TrackerViewModel }) {
     [tracker]
   );
 
+  const cycleArmorTierForCombatant = useCallback(
+    (combatantId: string) => {
+      const combatantViewModel = tracker
+        .CombatantViewModels()
+        .find(c => c.Combatant.Id == combatantId);
+
+      combatantViewModel?.CycleArmorTier();
+    },
+    [tracker]
+  );
+
   const moveCombatantFromDrag = useCallback(
     (draggedCombatantId: string, droppedOntoCombatantId: string | null) => {
       const combatants = tracker.Encounter.Combatants();
@@ -199,6 +210,7 @@ export function InitiativeListHost(props: { tracker: TrackerViewModel }) {
         ApplyWoundsToCombatant: applyWoundsToCombatant,
         ApplyGoldToCombatant: applyGoldToCombatant,
         AddItemToCombatant: addItemToCombatant,
+        CycleArmorTierForCombatant: cycleArmorTierForCombatant,
         CombatantCommands: tracker.CombatantCommander.Commands,
         MoveCombatantFromDrag: moveCombatantFromDrag,
         SetCombatantColor: setCombatantColor,

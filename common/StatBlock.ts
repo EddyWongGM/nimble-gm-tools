@@ -99,6 +99,8 @@ export namespace StatBlock {
     heavy: "Heavy Armor"
   };
 
+  export const ArmorTierOrder: ArmorTier[] = ["", "medium", "heavy"];
+
   export const GetSearchHint = (statBlock: StatBlock): string =>
     statBlock.Type.toLocaleLowerCase().replace(/[^\w\s]/g, "");
 

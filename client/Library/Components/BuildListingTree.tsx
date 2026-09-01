@@ -8,6 +8,13 @@ import { Folder } from "./Folder";
 
 export type ListingGroup = {
   label?: string;
+  // When set, listings with no value for this grouping's key (e.g. spells
+  // with no School) are omitted entirely instead of falling back to the
+  // ungrouped root list.
+  hideUngrouped?: boolean;
+  // When set, only listings matching this predicate are shown under this
+  // grouping (e.g. Tier only makes sense for spells, not rules).
+  filterFn?: (l: Listing<any>) => boolean;
   groupFn: (l: Listing<any>) => {
     label?: string;
     key: string;
@@ -41,9 +48,17 @@ export function BuildListingTree<T extends Listable>(
 
   const foldersByKey: Record<string, FolderModel> = {};
 
-  listings.forEach((listing, index, array) => {
+  const filteredListings = listingGroup.filterFn
+    ? listings.filter(listingGroup.filterFn)
+    : listings;
+
+  filteredListings.forEach((listing, index, array) => {
     const group = listingGroup.groupFn(listing);
     if (group.key == "" || group.key === undefined) {
+      if (listingGroup.hideUngrouped) {
+        return;
+      }
+
       const component = buildListingComponent(listing, index, array);
 
       rootListingComponents.push(component);

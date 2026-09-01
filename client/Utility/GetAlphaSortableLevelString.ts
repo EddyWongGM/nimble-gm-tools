@@ -1,10 +1,20 @@
 import * as _ from "lodash";
 
+const FractionLevels: Record<string, number> = {
+  "1/8": 0.125,
+  "1/4": 0.25,
+  "1/2": 0.5
+};
+
 export function GetAlphaSortableLevelString(level: string) {
-  if (level == "0") return "0001";
-  if (level == "1/8") return "0002";
-  if (level == "1/4") return "0003";
-  if (level == "1/2") return "0004";
-  if (isNaN(parseInt(level))) return "0000" + level;
-  return _.padStart(level + "0", 4, "0");
+  if (level?.toLowerCase() == "minion") return "0000";
+
+  const numericLevel =
+    level in FractionLevels ? FractionLevels[level] : parseFloat(level);
+
+  if (!isNaN(numericLevel)) {
+    return "1" + _.padStart(Math.round(numericLevel * 8).toString(), 6, "0");
+  }
+
+  return "9999" + level;
 }

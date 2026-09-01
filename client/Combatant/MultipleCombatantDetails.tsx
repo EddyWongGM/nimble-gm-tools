@@ -9,6 +9,7 @@ interface MultipleCombatantDetailsProps {
   combatants: CombatantViewModel[];
   onRemoveItem?: (combatant: Combatant, item: InventoryItem) => void;
   onShowInventoryCard?: (combatant: Combatant) => void;
+  showChallengeInfo?: boolean;
 }
 
 export class MultipleCombatantDetails extends React.Component<MultipleCombatantDetailsProps> {
@@ -22,6 +23,7 @@ export class MultipleCombatantDetails extends React.Component<MultipleCombatantD
             key={c.Combatant.Id}
             onRemoveItem={this.props.onRemoveItem}
             onShowInventoryCard={this.props.onShowInventoryCard}
+            showChallengeInfo={this.props.showChallengeInfo}
           />
         ))}
       </div>

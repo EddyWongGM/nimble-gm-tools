@@ -288,6 +288,15 @@ export class StatBlockEditor extends React.Component<
                 fieldName="Armor"
               />
             )}
+          {this.props.editorTarget == "combatant" &&
+            api.values.Player !== "player" &&
+            api.values.Player !== "companion" && (
+              <Info>
+                This Name's HP was already set for its Armor tier when it
+                entered combat. Changing Armor here won't rescale current or
+                max HP — edit the HP fields below directly if needed.
+              </Info>
+            )}
           {(this.props.editorTarget == "library" ||
             this.props.editorTarget == "combatant") &&
             api.values.Player === "" && (

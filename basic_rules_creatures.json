@@ -3,7 +3,7 @@
     "Name": "Goblin Minion",
     "Path": "",
     "Source": "Nimble GMG",
-    "Type": "Goblin",
+    "Type": "Goblins",
     "HP": {
       "Value": 15,
       "Notes": ""
@@ -60,13 +60,13 @@
     "CustomFields": [],
     "LastUpdateMs": 1787998819258,
 	"SaveDC": 10,
-	"CRRating": "0.25"
+	"CRRating": "0"
   },
    {
     "Name": "Goblin",
     "Path": "",
     "Source": "Nimble GMG",
-    "Type": "Goblin",
+    "Type": "Goblins",
     "HP": {
       "Value": 15,
       "Notes": ""
@@ -92,7 +92,7 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "0.5",
+    "Challenge": "1/2",
     "Traits": [
       {
         "Name": "Small",
@@ -134,13 +134,87 @@
     "CustomFields": [],
     "LastUpdateMs": 1787998819258,
 	"SaveDC": 11,
-	"CRRating": "0.25"
+	"CRRating": "1/4"
+  },
+   {
+    "Name": "Goblin Taskmaster",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Goblins",
+	  "Armor": "medium",
+    "HP": {
+      "Value": 24,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": ["10"],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Meat Shield!",
+        "Content": "Can force other goblins to Interpose for him.",
+        "Usage": ""
+      },
+      {
+        "Name": "Haha, Missed Me!",
+        "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Stab",
+        "Content": "1d6 (or Shoot, Range 8)",
+        "Usage": ""
+      },
+	  {
+        "Name": "",
+        "Content": "Then:",
+        "Usage": ""
+      },
+	  {
+        "Name": "Get in here!",
+        "Content": "Call a goblin minion to the fight.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1"
   },
    {
     "Name": "Goblin Ratrider",
     "Path": "",
     "Source": "Nimble GMG",
-    "Type": "Goblin",
+    "Type": "Goblins",
     "HP": {
       "Value": 30,
       "Notes": ""
@@ -203,7 +277,7 @@
     "Name": "Krogg, Goblin King",
     "Path": "",
     "Source": "Nimble GMG",
-    "Type": "Goblin",
+    "Type": "Goblins",
 	"Armor": "medium",
     "HP": {
       "Value": 30,
@@ -215,7 +289,7 @@
     },
     "InitiativeModifier": -99,
     "InitiativeAdvantage": false,
-    "Speed": ["10"],
+    "Speed": [],
     "Abilities": {
       "Str": 0,
       "Dex": 0,

@@ -272,7 +272,7 @@ export class Encounter {
       // toast/notification system in this app to reuse.
       if (legendaryHeroCount !== null) {
         combatant.Tags.push(
-          new Tag(`HP ×${legendaryHeroCount} (heroes)`, combatant, true)
+          new Tag(`HP ×${legendaryHeroCount}`, combatant, true)
         );
       }
     } catch (e) {

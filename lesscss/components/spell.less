@@ -37,9 +37,12 @@
     flex-basis: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: @medium-spacer 0;
-    border-top: 3px solid var(--red);
-    border-bottom: 3px solid var(--red);
+    background-color: var(--surface-khaki-light);
+    border: 1px solid var(--surface-khaki);
+    border-radius: @border-radius;
+    margin-top: @small-spacer;
+    margin-bottom: @small-spacer;
+    padding: @small-spacer @medium-spacer;
     justify-content: space-between;
 
     p {
@@ -52,11 +55,6 @@
     }
   }
 
-  .spell-type {
-    font-style: italic;
-    margin-bottom: @large-spacer;
-  }
-
   .spell-source {
     flex-basis: 100%;
     font-style: italic;
@@ -65,16 +63,23 @@
 
   h3 {
     flex-basis: 100%;
+    font-size: @font-size-large;
+  }
+
+  // Rule entries skip the .spell-details card, so the description would
+  // otherwise sit right under the title with only h3's own small margin.
+  h3 + .spell-description {
+    margin-top: @medium-spacer;
   }
 
   .spell-description {
     flex-basis: 100%;
-    margin: @large-spacer 0 @medium-spacer;
+    margin: 0 0 @medium-spacer;
     padding: 0 !important;
 
     p:not(:last-child),
     li:not(:last-child) {
-      margin-bottom: @small-spacer;
+      margin-bottom: @extra-small-spacer / 2;
     }
   }
 

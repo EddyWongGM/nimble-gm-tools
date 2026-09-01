@@ -70,7 +70,7 @@ describe("Encounter", () => {
 
     const monsterCombatant = encounter.Combatants()[3];
     expect(monsterCombatant.Tags().map(t => t.Text)).toContain(
-      "HP ×3 (heroes)"
+      "HP ×3"
     );
   });
 
@@ -83,7 +83,7 @@ describe("Encounter", () => {
     encounter.AddCombatantFromStatBlock(legendaryMonster);
 
     expect(encounter.Combatants()[0].Tags().map(t => t.Text)).toContain(
-      "HP ×1 (heroes)"
+      "HP ×1"
     );
   });
 
