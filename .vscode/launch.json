@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Develop Improved Initiative",
+      "name": "Develop Nimble RPG App",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "autoAttachChildProcesses": true,
@@ -17,7 +17,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Run Improved Initiative Server",
+      "name": "Run Nimble RPG App Server",
       "program": "${workspaceRoot}\\server\\server.js",
       "runtimeVersion": "18.15.0",
       "autoAttachChildProcesses": true,
