@@ -1,11 +1,11 @@
 [
   {
-    "Name": "Goblin Minion",
+    "Name": "Goblin",
     "Path": "",
     "Source": "Nimble GMG",
     "Type": "Goblins",
     "HP": {
-      "Value": 15,
+      "Value": 1,
       "Notes": ""
     },
     "AC": {
@@ -60,7 +60,7 @@
     "CustomFields": [],
     "LastUpdateMs": 1787998819258,
 	"SaveDC": 10,
-	"CRRating": "0"
+	"CRRating": "1/8"
   },
    {
     "Name": "Goblin",
@@ -275,7 +275,7 @@
   },
    {
     "Name": "Krogg, Goblin King",
-    "Path": "",
+    "Path": "Legendary",
     "Source": "Nimble GMG",
     "Type": "Goblins",
 	"Armor": "medium",

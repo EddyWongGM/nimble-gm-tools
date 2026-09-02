@@ -138,10 +138,13 @@ export function getDefaultSettings(): Settings {
     },
     PreloadedStatBlockSources: {
       "local-basic-rules": true,
-      "tutorial-monsters": true
+      "monster-builder-set": true
     },
     PreloadedSpellSources: { "local-basic-rules": true },
-    PreloadedHeroSources: { "local-basic-rules": false, "tutorial-heroes": true },
+    PreloadedHeroSources: {
+      "local-basic-rules": false,
+      "heroes-tutorial-set": true
+    },
     PreloadedEncounterSources: { "local-basic-rules": true },
     RecentItemIds: [],
     Version: process.env.VERSION || "0.0.0"

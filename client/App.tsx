@@ -82,7 +82,7 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
       ...settings,
       PreloadedHeroSources: {
         ...settings.PreloadedHeroSources,
-        "tutorial-heroes": false,
+        "heroes-tutorial-set": false,
         "local-basic-rules": true
       }
     });
@@ -108,7 +108,7 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   // of the Monsters regardless of which network fetch resolves first. Falls
   // back to the first available bundled Encounter if the intro one hasn't
   // loaded for some reason. The tutorial Heroes are always preloaded ahead
-  // of this step (see PreloadedHeroSources["tutorial-heroes"] in Settings.ts
+  // of this step (see PreloadedHeroSources["heroes-tutorial-set"] in Settings.ts
   // and TrackerViewModel.RepeatTutorial), so no extra fetch is needed for
   // them.
   const loadSampleEncounter = React.useCallback(async () => {

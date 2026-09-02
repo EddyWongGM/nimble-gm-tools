@@ -283,13 +283,13 @@ export class TrackerViewModel {
 
   public RepeatTutorial = (): void => {
     const settings = CurrentSettings();
-    if (!settings.PreloadedHeroSources["tutorial-heroes"]) {
+    if (!settings.PreloadedHeroSources["heroes-tutorial-set"]) {
       this.didTriggerRepeatTutorialReload = true;
       this.SaveUpdatedSettings({
         ...settings,
         PreloadedHeroSources: {
           ...settings.PreloadedHeroSources,
-          "tutorial-heroes": true
+          "heroes-tutorial-set": true
         }
       });
       LegacySynchronousLocalStore.Save(
