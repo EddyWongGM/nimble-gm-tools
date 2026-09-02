@@ -42,27 +42,3 @@
     justify-content: flex-start;
   }
 }
-
-@media (max-width: @phone) {
-  @toolbar-width-phone: 48px;
-
-  // Force the icon-only layout regardless of the desktop wide/narrow
-  // toggle (tracker.ToolbarWide) - there's no room for labels at phone
-  // width, and no way to reach the toggle to turn it off anyway.
-  .c-toolbar.s-wide,
-  .c-toolbar.s-narrow {
-    .scrollframe {
-      max-width: none;
-      width: @toolbar-width-phone;
-      overflow-x: hidden;
-    }
-
-    width: @toolbar-width-phone;
-    overflow: hidden;
-
-    .c-button {
-      min-width: 44px;
-      min-height: 44px;
-    }
-  }
-}

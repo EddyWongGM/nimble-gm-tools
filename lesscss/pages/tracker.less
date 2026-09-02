@@ -48,21 +48,9 @@
   .vertical-resizer {
     width: 6px;
     cursor: col-resize;
-    position: relative;
     &:hover,
     &.drag-active {
       border: 3px dotted var(--red);
-    }
-
-    // Invisible touch-hit padding: the visible bar stays 6px, but touch
-    // (and mouse) drags start from a much more forgiving ~30px zone.
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: -12px;
-      right: -12px;
     }
   }
 
@@ -71,10 +59,6 @@
     padding: @small-spacer;
     img {
       max-width: 100%;
-    }
-
-    @media (max-width: @small) {
-      display: none;
     }
   }
 

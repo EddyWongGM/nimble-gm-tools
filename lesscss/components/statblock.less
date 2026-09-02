@@ -74,26 +74,6 @@
   }
 }
 
-@media (max-width: @phone) {
-  // These rows are a sequence of label+value pairs (HP, Mana, Level, ...)
-  // in one nowrap flex row. At full desktop width the right column is
-  // wide enough for that, but at phone width a fully-populated combatant
-  // (HP+Mana+Level, or Armor+CRRating+SaveDC+Resources) overflows the
-  // column with no ancestor to catch it, causing real horizontal scroll.
-  // speed-initiative already wraps (see above); these didn't.
-  .c-combatant-details__hp,
-  .c-combatant-details__defense-resources,
-  .c-combatant-details__hitdice-wounds,
-  .c-combatant-details__tags {
-    flex-wrap: wrap;
-    row-gap: @extra-small-spacer;
-  }
-
-  .c-combatant-details__items-header {
-    flex-wrap: wrap;
-  }
-}
-
 .c-combatant-details__items-header {
   flex-direction: row;
   align-items: center;
@@ -149,28 +129,6 @@
   cursor: grab;
   margin-right: @small-spacer;
   color: var(--text-faded);
-}
-
-@media (max-width: @phone) {
-  // Two CSS columns of item rows (grip + name + qty input + remove button
-  // each) get too cramped to use at phone width - drop to one.
-  .c-combatant-details__item-list {
-    column-count: 1;
-  }
-
-  // Enlarge these without changing their visual icon size - they're the
-  // exact touch-drag handle and remove control the reorder work depends
-  // on, and were sized for a mouse pointer. Rows get a bit taller as a
-  // result; an easy tradeoff for a usable tap target.
-  .c-combatant-details__item-grip {
-    padding: @medium-spacer;
-    margin: -@medium-spacer 0;
-  }
-
-  .c-combatant-details__item-remove {
-    min-width: 44px;
-    min-height: 44px;
-  }
 }
 
 input[type="number"].c-combatant-details__item-quantity {

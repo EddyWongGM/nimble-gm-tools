@@ -65,8 +65,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
   );
 
   const { DisplayHPBar } = useContext(SettingsContext).TrackerView;
-  const { EnableInventory, EnableMana, EnableResources, EnableHitDice } =
-    useContext(SettingsContext).Rules;
+  const { EnableInventory } = useContext(SettingsContext).Rules;
   if (!props.combatantViewModel) {
     return null;
   }
@@ -130,7 +129,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             </span>
           )}
         </span>
-        {EnableMana && currentMana && (
+        {currentMana && (
           <>
             <span className="stat-label Mana">Mana</span>
             <span>
@@ -176,7 +175,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             <span className="stat-value">{statBlock.SaveDC}</span>
           </>
         )}
-        {EnableResources && currentResources && (
+        {currentResources && (
           <>
             <span className="stat-label Resources">Resources</span>
             <span>
@@ -193,9 +192,9 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
           </>
         )}
       </div>
-      {((EnableHitDice && currentHitDice) || currentWounds) && (
+      {(currentHitDice || currentWounds) && (
         <div className="c-combatant-details__hitdice-wounds">
-          {EnableHitDice && currentHitDice && (
+          {currentHitDice && (
             <>
               <span className="stat-label HitDice">Hit Dice</span>
               <span>
@@ -403,11 +402,13 @@ function ItemDetails(props: {
   }
 
   return (
-    <li className={classNames.join(" ")} ref={drop}>
+    <li
+      className={classNames.join(" ")}
+      ref={node => drag(drop(node))}
+    >
       <span
         className="c-combatant-details__item-grip fas fa-grip-vertical"
         aria-hidden="true"
-        ref={drag}
       />
       {item.Name}
       {item.Stackable && (

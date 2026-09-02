@@ -8,10 +8,6 @@
   transform: translate(-50%, -50%);
 
   font-size: initial;
-
-  @media (max-width: @phone) {
-    max-width: calc(100vw - (2 * @large-spacer));
-  }
 }
 
 #playerview {
@@ -159,10 +155,7 @@
     width: 80%;
     object-fit: contain;
     max-width: 80%;
-    // dvh accounts for mobile Safari's collapsing address bar; the vh
-    // line above is an automatic fallback for browsers without dvh support.
     max-height: 80vh;
-    max-height: 80dvh;
     margin: auto;
   }
 
@@ -170,7 +163,6 @@
     .card-bg-2(@large-spacer, @medium-spacer);
     margin: auto;
     margin-top: 85vh;
-    margin-top: 85dvh;
   }
 
   .damage-suggestion {
@@ -200,14 +192,6 @@
     .suggestion-prompt();
   }
 
-  .player-view-explainer {
-    .suggestion-prompt();
-
-    .c-button {
-      align-self: flex-end;
-    }
-  }
-
   .combat-stats {
     flex-direction: row;
     flex-wrap: wrap;
@@ -224,14 +208,6 @@
       }
 
       &:last-of-type {
-        margin-right: 0;
-      }
-
-      @media (max-width: @phone) {
-        // Two side-by-side lists of prose sentences get unreadably narrow
-        // at phone width - stack them instead.
-        flex-basis: 100%;
-        margin-left: 0;
         margin-right: 0;
       }
     }
@@ -262,7 +238,6 @@
     .suggestion-prompt();
     position: fixed;
     max-height: 80vh;
-    max-height: 80dvh;
     overflow-y: auto;
     width: 40vw;
     min-width: 24rem;
@@ -271,14 +246,6 @@
     // column, instead of a flat card fill.
     background: var(--card-background-white) url("../img/paper-bg.jpg")
       no-repeat center/cover;
-
-    @media (max-width: @phone) {
-      // The 24rem (384px) min-width above doesn't fit a phone screen at
-      // all - it needs its own override rather than the shared
-      // .suggestion-prompt() one, which only caps max-width.
-      width: calc(100vw - (2 * @large-spacer));
-      min-width: 0;
-    }
   }
 
   &.dark-mode .inventory-display-popup {
@@ -310,47 +277,6 @@
     margin: @medium-spacer;
     flex-flow: row;
     justify-content: space-between;
-  }
-
-  @media (max-width: @phone) {
-    // Unlike the Tracker's initiative table (a fixed set of columns, just
-    // hidden/shown), Player View's stat columns are conditionally rendered
-    // per-encounter (up to 7 of them, plus portrait). A named CSS-grid
-    // template would need a different template for every combination, so
-    // this reflows with flex-wrap instead: name fills the rest of the
-    // portrait's row, each stat cell claims ~40% width (2 fit per row,
-    // wrapping to as many rows as there are columns), and tags always
-    // start their own row.
-    .combatant,
-    .combatant--header {
-      flex-wrap: wrap;
-      gap: @small-spacer @medium-spacer;
-    }
-
-    .combatant__portrait {
-      flex: 0 0 auto;
-    }
-
-    .combatant__name {
-      flex: 1 1 auto;
-    }
-
-    .combatant__hp,
-    .combatant__mana,
-    .combatant__resources,
-    .combatant__hitdice,
-    .combatant__wounds,
-    .combatant__inventory,
-    .combatant__ac,
-    .combatant__gold {
-      flex: 1 1 40%;
-      // The gap above replaces these desktop single-row spacers.
-      margin-left: 0;
-    }
-
-    .combatant__tags {
-      flex: 0 0 100%;
-    }
   }
 
   /* Add Animation */
