@@ -1,10 +1,7 @@
 import * as _ from "lodash";
 import * as React from "react";
 import { Listable } from "../../../common/Listable";
-import {
-  MONSTER_BUILDER_FOLDER_NAME,
-  SAMPLE_HEROES_FOLDER_NAME
-} from "../Libraries";
+import { SAMPLE_HEROES_FOLDER_NAME } from "../Libraries";
 import { Listing } from "../Listing";
 import { RenameResult } from "../RenameResult";
 import { Folder } from "./Folder";
@@ -102,10 +99,6 @@ function buildFolderComponents<T extends Listable>(
       // regardless of what they name them.
       if (a === SAMPLE_HEROES_FOLDER_NAME) return 1;
       if (b === SAMPLE_HEROES_FOLDER_NAME) return -1;
-      // Keep the preloaded Monster Builder templates above any folders the
-      // GM creates, regardless of what they name them.
-      if (a === MONSTER_BUILDER_FOLDER_NAME) return -1;
-      if (b === MONSTER_BUILDER_FOLDER_NAME) return 1;
       return a < b ? -1 : a > b ? 1 : 0;
     })
     .map(key => {

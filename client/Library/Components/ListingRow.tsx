@@ -3,7 +3,6 @@ import * as _ from "lodash";
 import * as React from "react";
 import { Listable } from "../../../common/Listable";
 import { linkComponentToObservables } from "../../Combatant/linkComponentToObservables";
-import { GetChallengeSuffix } from "../../Utility/GetChallengeSuffix";
 import { Listing } from "../Listing";
 import { RenameResult } from "../RenameResult";
 import { InlineNameEditor } from "./InlineNameEditor";
@@ -31,7 +30,6 @@ export interface ListingProps<T extends Listable> {
   extraButtons?: ExtraButton<T>[];
   showCount?: boolean;
   showSource?: boolean;
-  showChallenge?: boolean;
   /** Persists a rename and reports a recoverable result to the editor. */
   onRename?: (listing: Listing<T>, newName: string) => Promise<RenameResult>;
 }
@@ -59,7 +57,6 @@ export class ListingRow<T extends Listable> extends React.Component<
   private moveFn = () => this.props.onMove(this.props.listing);
   private previewFn = e => this.props.onPreview(this.props.listing, e);
   private previewOutFn = () => this.props.onPreviewOut(this.props.listing);
-
   private makeExtraButtonFn = (extraButton: ExtraButton<T>) => {
     if (!extraButton.onClick) {
       return undefined;
@@ -94,19 +91,6 @@ export class ListingRow<T extends Listable> extends React.Component<
       }
     }
 
-    let displayNameNode: React.ReactNode = displayName;
-    if (this.props.showChallenge) {
-      const challenge = this.props.listing.Meta().FilterDimensions?.Level;
-      const suffix = GetChallengeSuffix(listingName, challenge);
-      if (suffix) {
-        displayNameNode = (
-          <>
-            {displayName} <span className="c-listing__challenge">{suffix}</span>
-          </>
-        );
-      }
-    }
-
     const extraButtons = this.props.extraButtons || [];
     return (
       <li className="c-listing">
@@ -119,7 +103,7 @@ export class ListingRow<T extends Listable> extends React.Component<
         ) : (
           <ListingButton
             buttonClass="add c-listing-button--wide"
-            text={displayNameNode}
+            text={displayName}
             onClick={this.addFn}
           >
             {countElements}

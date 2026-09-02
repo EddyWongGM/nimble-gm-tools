@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import * as React from "react";
 
 interface Props {
-  text?: React.ReactNode;
+  text?: string;
   buttonClass: string;
   faClass?: string;
   onClick: React.MouseEventHandler<HTMLSpanElement>;

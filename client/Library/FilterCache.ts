@@ -1,6 +1,5 @@
 import _ = require("lodash");
 import { Listable } from "../../common/Listable";
-import { GetAlphaSortableLevelString } from "../Utility/GetAlphaSortableLevelString";
 import { Listing, ListingOrigin } from "./Listing";
 
 function DedupeByRankAndFilterListings<T extends Listing<Listable>>(
@@ -27,14 +26,8 @@ function DedupeByRankAndFilterListings<T extends Listing<Listable>>(
       listingMeta.FilterDimensions.Source === "Systems Reference Document"
         ? " Systems Reference Document"
         : listingMeta.FilterDimensions.Source;
-    // Sort same-name listings weakest-to-strongest (Minion, then ascending
-    // numeric/fraction Challenge, then other labels) rather than
-    // alphabetically by the raw Challenge string.
-    const levelSortable = GetAlphaSortableLevelString(
-      listingMeta.FilterDimensions.Level
-    );
     const dedupeKey =
-      `${listingMeta.Path}-${listingMeta.Name} -${sourceSortable}-${levelSortable}`.toLocaleLowerCase();
+      `${listingMeta.Path}-${listingMeta.Name} -${sourceSortable}`.toLocaleLowerCase();
 
     if (dedupedItems[dedupeKey] == undefined) {
       dedupedItems[dedupeKey] = listing;
