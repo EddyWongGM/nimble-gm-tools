@@ -85,7 +85,7 @@ export class Combatant {
   public Color = ko.observable("");
   public ReactionsSpent = ko.observable(0);
   public IsPendingRemoval = ko.observable(false);
-  public HasEnteredLastStage = ko.observable(false);
+  public HasEnteredLastStand = ko.observable(false);
 
   public CombatTimer = new CombatTimer();
 
@@ -142,7 +142,13 @@ export class Combatant {
     this.HasTakenTurn(savedCombatant.HasTakenTurn || false);
     this.Color(savedCombatant.Color || "");
     this.ReactionsSpent(savedCombatant.ReactionsSpent || 0);
-    this.HasEnteredLastStage(savedCombatant.HasEnteredLastStage || false);
+    // "Last Stage" was renamed to "Last Stand"; migrate the old field name
+    // so in-progress encounters saved before the rename keep the flag.
+    this.HasEnteredLastStand(
+      savedCombatant.HasEnteredLastStand ??
+        (savedCombatant as any).HasEnteredLastStage ??
+        false
+    );
     this.CombatTimer.SetElapsedRounds(savedCombatant.RoundCounter || 0);
     this.CombatTimer.SetElapsedSeconds(savedCombatant.ElapsedSeconds || 0);
   }
@@ -361,17 +367,17 @@ export class Combatant {
       tempHP = 0;
     }
 
-    const lastStageHP = this.StatBlock().LastStageHP?.Value ?? 0;
+    const lastStandHP = this.StatBlock().LastStandHP?.Value ?? 0;
     if (
       currHP <= 0 &&
       this.StatBlock().Player === "legendary" &&
-      !this.HasEnteredLastStage() &&
-      lastStageHP > 0
+      !this.HasEnteredLastStand() &&
+      lastStandHP > 0
     ) {
-      currHP = lastStageHP;
-      this.HasEnteredLastStage(true);
-      this.Tags.push(new Tag("Last Stage", this, false));
-      Metrics.TrackEvent(Metrics.Event.CombatantEnteredLastStage, {
+      currHP = lastStandHP;
+      this.HasEnteredLastStand(true);
+      this.Tags.push(new Tag("Last Stand", this, false));
+      Metrics.TrackEvent(Metrics.Event.CombatantEnteredLastStand, {
         name: this.DisplayName()
       });
     } else if (currHP <= 0 && !allowNegativeHP) {
@@ -609,7 +615,7 @@ export class Combatant {
       HasTakenTurn: this.HasTakenTurn(),
       Color: this.Color(),
       ReactionsSpent: this.ReactionsSpent(),
-      HasEnteredLastStage: this.HasEnteredLastStage(),
+      HasEnteredLastStand: this.HasEnteredLastStand(),
       RoundCounter: this.CombatTimer.ElapsedRounds(),
       InterfaceVersion: process.env.VERSION || "unknown"
     };

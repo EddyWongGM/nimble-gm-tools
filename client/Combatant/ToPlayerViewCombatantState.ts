@@ -290,7 +290,12 @@ function GetHitDiceColor(combatant: Combatant): string | undefined {
 function GetWoundsDisplay(combatant: Combatant): string | undefined {
   const maxWounds = combatant.MaxWounds();
   const currentWounds = combatant.CurrentWounds();
-  if (maxWounds === undefined || currentWounds <= 0) {
+  if (
+    maxWounds === undefined ||
+    currentWounds <= 0 ||
+    !CurrentSettings().Rules.EnableWounds ||
+    CurrentSettings().PlayerView.HideWoundsNumbers
+  ) {
     // Don't reveal the Wounds track in Player View until a wound has
     // actually been taken.
     return undefined;
@@ -322,7 +327,12 @@ function GetWoundsDisplay(combatant: Combatant): string | undefined {
 function GetWoundsColor(combatant: Combatant): string | undefined {
   const maxWounds = combatant.MaxWounds();
   const currentWounds = combatant.CurrentWounds();
-  if (maxWounds === undefined || currentWounds <= 0) {
+  if (
+    maxWounds === undefined ||
+    currentWounds <= 0 ||
+    !CurrentSettings().Rules.EnableWounds ||
+    CurrentSettings().PlayerView.HideWoundsNumbers
+  ) {
     return undefined;
   }
 

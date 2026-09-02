@@ -82,6 +82,16 @@ export function OptionsSettings(props: {
         </Info>
       </DisplaysToggle>
       <DisplaysToggle
+        encounterViewFieldName="Rules.EnableWounds"
+        playerViewFieldName="PlayerView.HideWoundsNumbers"
+        invertPlayerView
+      >
+        Wounds
+        <Info>
+          Encounter View toggle controls the Wounds feature entirely.
+        </Info>
+      </DisplaysToggle>
+      <DisplaysToggle
         encounterViewFieldName="Rules.EnableInventory"
         playerViewFieldName="PlayerView.HideInventoryNumbers"
         invertPlayerView

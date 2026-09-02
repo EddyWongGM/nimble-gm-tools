@@ -50,7 +50,7 @@ export interface StatBlock extends Listable {
   HP: ValueAndNotes;
   HPMediumArmor?: ValueAndNotes;
   HPHeavyArmor?: ValueAndNotes;
-  LastStageHP?: ValueAndNotes;
+  LastStandHP?: ValueAndNotes;
   AC: ValueAndNotes;
   Mana?: ValueAndNotes;
   Resources?: ValueAndNotes;
@@ -134,6 +134,16 @@ export namespace StatBlock {
           Int: GetModifierFromScore(abilities.Int),
           Wis: GetModifierFromScore(abilities.Wis)
         }
+      };
+    }
+
+    // "Last Stage" was renamed to "Last Stand"; migrate the old field name
+    // so already-authored Legendary monsters keep their configured value.
+    if (updated?.LastStageHP && updated?.LastStandHP === undefined) {
+      const { LastStageHP, ...rest } = updated;
+      updated = {
+        ...rest,
+        LastStandHP: LastStageHP
       };
     }
 

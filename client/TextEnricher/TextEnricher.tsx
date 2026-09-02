@@ -330,15 +330,20 @@ export class TextEnricher {
           );
         }
       },
+      // fa-dove, or [fa-dove] to match the bracketed style of the other
+      // tags below (e.g. [d20], [A1]) - either form renders the same icon.
       icon: {
-        pattern: /(\bfa-[a-z0-9]+(?:-[a-z0-9]+)*\b)/g,
-        matcherFn: (rawText, processed, key) => (
-          <span
-            className={"inline-icon fas " + rawText}
-            key={key}
-            title={rawText}
-          />
-        )
+        pattern: /(\[?\bfa-[a-z0-9]+(?:-[a-z0-9]+)*\]?)/g,
+        matcherFn: (rawText, processed, key) => {
+          const iconClass = rawText.replace(/^\[|\]$/g, "");
+          return (
+            <span
+              className={"inline-icon fas " + iconClass}
+              key={key}
+              title={iconClass}
+            />
+          );
+        }
       },
       // [d4]/[d6]/[d8]/[d10]/[d12]/[d20] - shorthand for the matching
       // fa-dice-dN icon, easier to type than the full FontAwesome class name.

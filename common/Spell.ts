@@ -9,15 +9,14 @@ export interface Spell extends Listable {
   Source: string;
   Tier: number;
   School: string;
-  CastingTime: string;
+  Actions: number;
   DistanceType: SpellDistanceType;
   Distance: string;
-  Mana: number;
   Components: string;
-  Duration: string;
   Classes: string[];
   Description: string;
-  Ritual: boolean;
+  CastCondition: string;
+  Upcast: string;
 }
 
 export namespace Spell {
@@ -40,16 +39,15 @@ export namespace Spell {
       Path: "",
       EntryType: "spell",
       Source: "",
-      CastingTime: "",
+      Actions: 0,
       Classes: [],
       Components: "",
       Description: "",
-      Duration: "",
       Tier: 0,
       DistanceType: "Range",
       Distance: "",
-      Mana: 0,
-      Ritual: false,
+      CastCondition: "",
+      Upcast: "",
       School: ""
     };
   };
@@ -74,8 +72,16 @@ export namespace Spell {
       };
     }
 
-    if (updated?.Mana === undefined) {
-      updated = { ...updated, Mana: 0 };
+    if (updated?.Actions === undefined) {
+      updated = { ...updated, Actions: 0 };
+    }
+
+    if (updated?.CastCondition === undefined) {
+      updated = { ...updated, CastCondition: "" };
+    }
+
+    if (updated?.Upcast === undefined) {
+      updated = { ...updated, Upcast: "" };
     }
 
     return updated;

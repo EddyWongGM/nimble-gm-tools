@@ -18,7 +18,7 @@ export function BetaDataWarningPrompt(): PromptProps<{}> {
             Nimble RPG App is in a beta state. Your Heroes, Monsters, and
             Encounters are saved only in this browser unless you export them
             or set up Account Sync. Export your data periodically from
-            {" "}
+            <br />
             <strong>Settings &gt; Account</strong> to avoid losing it.
           </>
         }

@@ -16,9 +16,9 @@ export const ConvertStringsToNumbersWhereNeeded = (statBlock: StatBlock) => {
       statBlock.HPHeavyArmor.Value
     );
   }
-  if (statBlock.LastStageHP) {
-    statBlock.LastStageHP.Value = castToNumberOrZero(
-      statBlock.LastStageHP.Value
+  if (statBlock.LastStandHP) {
+    statBlock.LastStandHP.Value = castToNumberOrZero(
+      statBlock.LastStandHP.Value
     );
   }
   if (statBlock.Mana) {

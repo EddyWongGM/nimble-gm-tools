@@ -28,9 +28,11 @@ export function InitiativeList(props: {
   const showHitDiceColumn =
     settings.Rules.EnableHitDice &&
     encounterState.Combatants.some(c => c.StatBlock.HitDice);
-  const showWoundsColumn = encounterState.Combatants.some(
-    c => c.StatBlock.Wounds && StatBlock.ActsInPlayerPhase(c.StatBlock)
-  );
+  const showWoundsColumn =
+    settings.Rules.EnableWounds &&
+    encounterState.Combatants.some(
+      c => c.StatBlock.Wounds && StatBlock.ActsInPlayerPhase(c.StatBlock)
+    );
   const showItemsColumn =
     settings.Rules.EnableInventory &&
     encounterState.Combatants.some(c => StatBlock.IsPlayerCharacter(c.StatBlock));

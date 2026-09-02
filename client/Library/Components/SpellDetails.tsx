@@ -17,49 +17,56 @@ export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
     );
   }
 
+  // The stat clause (Range/Reach) reads as a bold-labeled lead-in to the
+  // description's first paragraph, not a separate line - fold it into the
+  // same text passed to EnrichText.
+  const statLine = !isRule ? getStatLine(spell) : "";
+  const descriptionText = statLine
+    ? `${statLine} ${spell.Description}`
+    : spell.Description;
+  const hasUpcast = !isRule && !!spell.Upcast;
+
   return (
     <div className="spell">
-      <h3>{spell.Name}</h3>
-      {!isRule && (
-        <div className="spell-details">
-          <p>
-            <label>Tier</label>
-            <span className="spell-value">{getTierValue(spell)}</span>
-          </p>
-          {spell.Mana != null && (
-            <p>
-              <label>Mana</label>
-              <span className="spell-value">{spell.Mana}</span>
-            </p>
-          )}
-          {!!spell.Distance && (
-            <p>
-              <label>{spell.DistanceType}</label>
-              <span className="spell-value">{spell.Distance}</span>
-            </p>
-          )}
-          {!!spell.Duration && (
-            <p>
-              <label>Duration</label>
-              <span className="spell-value">{spell.Duration}</span>
-            </p>
-          )}
-          {!!spell.CastingTime && (
-            <p>
-              <label>Requires</label>
-              <span className="spell-value">{spell.CastingTime}</span>
-            </p>
-          )}
-        </div>
+      {!isRule && <div className="spell-badge">{getTierBadge(spell)}</div>}
+      <h3>
+        <span>{spell.Name}</span>
+        {!isRule && (
+          <span className="spell-actions">{getActionsLabel(spell.Actions)}</span>
+        )}
+      </h3>
+      {!isRule && !!spell.CastCondition && (
+        <p className="spell-condition">{spell.CastCondition}</p>
       )}
       <div className="spell-description">
-        {textEnricher.EnrichText(spell.Description)}
+        {textEnricher.EnrichText(descriptionText)}
       </div>
-      <div className="spell-source">Source: {spell.Source}</div>
+      <div className="spell-footer">
+        {hasUpcast && (
+          <p className="spell-upcast">
+            <strong>{spell.Tier === 0 ? "High Levels" : "Upcast"}:</strong>{" "}
+            {textEnricher.EnrichText(spell.Upcast)}
+          </p>
+        )}
+        <div className="spell-source">Source: {spell.Source}</div>
+      </div>
     </div>
   );
 }
 
-function getTierValue(spell: Spell) {
-  return spell.Tier === 0 ? "Cantrip" : spell.Tier;
+function getTierBadge(spell: Spell) {
+  return spell.Tier === 0 ? "Cantrip" : `Tier ${spell.Tier}`;
+}
+
+function getActionsLabel(actions: number) {
+  const value = actions || 0;
+  return `${value} Action${value === 1 ? "" : "s"}`;
+}
+
+function getStatLine(spell: Spell) {
+  const clauses: string[] = [];
+  if (spell.Distance) {
+    clauses.push(`**${spell.DistanceType}:** ${spell.Distance}.`);
+  }
+  return clauses.join(" ");
 }

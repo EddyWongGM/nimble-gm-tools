@@ -44,6 +44,7 @@ export interface Settings {
     EnableMana: boolean;
     EnableResources: boolean;
     EnableHitDice: boolean;
+    EnableWounds: boolean;
   };
   TrackerView: {
     DarkMode: boolean;
@@ -83,9 +84,10 @@ export function getDefaultSettings(): Settings {
       AlwaysNumberMonsters: true,
       EnableInventory: false,
       EnableGold: false,
-      EnableMana: true,
-      EnableResources: true,
-      EnableHitDice: true
+      EnableMana: false,
+      EnableResources: false,
+      EnableHitDice: false,
+      EnableWounds: false
     },
     TrackerView: {
       DarkMode: false,
@@ -112,6 +114,7 @@ export function getDefaultSettings(): Settings {
       HideManaNumbers: false,
       HideResourcesNumbers: false,
       HideHitDiceNumbers: false,
+      HideWoundsNumbers: false,
       DarkMode: false,
       DisplayRoundCounter: false,
       DisplayTurnTimer: false,

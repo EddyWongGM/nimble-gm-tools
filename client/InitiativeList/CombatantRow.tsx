@@ -181,8 +181,8 @@ export function CombatantRow(props: CombatantRowProps) {
               <span
                 className={
                   "combatant__hp-bar" +
-                  (props.combatantState.HasEnteredLastStage
-                    ? " combatant__hp-bar--last-stage"
+                  (props.combatantState.HasEnteredLastStand
+                    ? " combatant__hp-bar--last-stand"
                     : "")
                 }
               >

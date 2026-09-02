@@ -19,6 +19,13 @@
 
   .spell {
     min-width: 100%;
+
+    // The prompt's submit (checkmark) button floats over the card's
+    // top-right corner (see > .c-button above) - reserve room in the title
+    // row so "X Actions" doesn't render underneath it.
+    h3 {
+      padding-right: 4.5rem;
+    }
   }
 }
 
@@ -28,46 +35,42 @@
   flex-wrap: wrap;
   align-self: stretch;
 
-  label {
-    font-weight: bold;
-    padding-right: @medium-spacer;
-  }
-
-  .spell-details {
+  .spell-badge {
     flex-basis: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
+    align-self: flex-start;
+    font-size: small;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     background-color: var(--surface-khaki-light);
     border: 1px solid var(--surface-khaki);
     border-radius: @border-radius;
-    margin-top: @small-spacer;
-    margin-bottom: @small-spacer;
-    padding: @small-spacer @medium-spacer;
-    justify-content: space-between;
-
-    p {
-      flex-basis: 50%;
-      padding: @extra-small-spacer @large-spacer @extra-small-spacer 0;
-
-      &:nth-child(even) {
-        padding: @extra-small-spacer 0 @extra-small-spacer @large-spacer;
-      }
-    }
-  }
-
-  .spell-source {
-    flex-basis: 100%;
-    font-style: italic;
-    font-size: small;
+    padding: @extra-small-spacer @small-spacer;
+    margin-bottom: @extra-small-spacer;
   }
 
   h3 {
     flex-basis: 100%;
     font-size: @font-size-large;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: @small-spacer;
   }
 
-  // Rule entries skip the .spell-details card, so the description would
-  // otherwise sit right under the title with only h3's own small margin.
+  .spell-actions {
+    white-space: nowrap;
+  }
+
+  .spell-condition {
+    flex-basis: 100%;
+    font-style: italic;
+    margin: 0 0 @extra-small-spacer;
+  }
+
+  // Rule entries skip the badge/actions/condition/stat-line, so the
+  // description would otherwise sit right under the title with only h3's
+  // own small margin.
   h3 + .spell-description {
     margin-top: @medium-spacer;
   }
@@ -83,10 +86,33 @@
     }
   }
 
-  .spell-value + .spell-value,
-  .spell-value__item + .spell-value__item {
-    &::before {
-      content: ", ";
+  // Upcast (when present) and Source share one row, pushed to opposite
+  // ends - keeps Source from claiming a whole line of its own.
+  .spell-footer {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: @medium-spacer;
+    padding-top: @extra-small-spacer;
+    border-top: 1px solid var(--surface-khaki);
+  }
+
+  .spell-upcast {
+    margin: 0;
+
+    // EnrichText wraps its output in a block-level <p> - flatten it back
+    // onto the same line as the bold "Upcast"/"High Levels" label.
+    p {
+      display: inline;
+      margin: 0;
     }
+  }
+
+  .spell-source {
+    flex-shrink: 0;
+    font-style: italic;
+    font-size: small;
   }
 }

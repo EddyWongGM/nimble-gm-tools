@@ -19,7 +19,7 @@ enum MetricEvent {
   CombatantAdded = "combatant_added",
   CombatantArmorTierChanged = "combatant_armor_tier_changed",
   CombatantDefeated = "combatant_defeated",
-  CombatantEnteredLastStage = "combatant_entered_last_stage",
+  CombatantEnteredLastStand = "combatant_entered_last_stand",
   CombatantHidden = "combatant_hidden",
   CombatantHitDiceHidden = "combatant_hit_dice_hidden",
   CombatantHitDiceRevealed = "combatant_hit_dice_revealed",

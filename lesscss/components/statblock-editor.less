@@ -103,6 +103,17 @@
   flex: 2 1 10rem;
   min-width: 0;
 
+  // The row's `.label { flex-basis: 20% }` rule resolves against this
+  // container's own (often narrow) width, not the whole row - on a tight
+  // row that can force the "Name" label's box narrower than its text,
+  // leaving the overflow to render underneath the input beside it. Size
+  // the label to its content instead and let the input's flex-grow claim
+  // whatever space is left.
+  .label {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   input {
     flex: 1;
     min-width: 0;
@@ -122,6 +133,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  // Same fix as .c-statblock-editor__name-field's .label above: this
+  // container is only as wide as the folder input, so the row's
+  // `.label { flex-basis: 20% }` rule can squeeze "Folder:" narrower than
+  // its text, and the overflow renders underneath the input next to it.
+  .label {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
 }
 
 .c-statblock-editor__save-as {

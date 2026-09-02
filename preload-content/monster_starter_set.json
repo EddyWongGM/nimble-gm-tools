@@ -117,13 +117,13 @@
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "Dove",
-        "Content": "Very injured Goblins can run past multiple heroes, and less injured Goblins can remain adjacent to melee heroes rather than running away to same them an action moving.",
+        "Name": "",
+        "Content": "[fa-dove] Very injured Goblins can run past multiple heroes, and less injured Goblins can remain adjacent to melee heroes rather than running away to same them an action moving.",
         "Usage": ""
       },
       {
-        "Name": "Doom",
-        "Content": "If a hero is within Reach 6, run up to them, stab, then run away in hopes of triggering an Opportunity Attack. Goad heroes into it with verbal taunts: \"You can't catch me!\" feigning fear (especially if you miss, or seeing them survive your best stab) \"Ahh! Run awaayy!\"",
+        "Name": "",
+        "Content": "[fa-skull] If a hero is within Reach 6, run up to them, stab, then run away in hopes of triggering an Opportunity Attack. Goad heroes into it with verbal taunts: \"You can't catch me!\" feigning fear (especially if you miss, or seeing them survive your best stab) \"Ahh! Run awaayy!\"",
         "Usage": ""
       }
     ],
@@ -357,7 +357,7 @@
 	"Value": 20
 	},	
     "LastUpdateMs": 1787998819258,
-	"LastStageHP": {
+	"LastStandHP": {
 	"Value": 20
 	}
   }

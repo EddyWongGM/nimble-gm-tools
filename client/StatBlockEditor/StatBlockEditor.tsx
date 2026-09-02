@@ -206,9 +206,9 @@ export class StatBlockEditor extends React.Component<
     if (player === "legendary") {
       fields.push(
         <ValueAndNotesField
-          key="laststagehp"
-          label="Last Stage HP"
-          fieldName="LastStageHP"
+          key="laststandhp"
+          label="Last Stand HP"
+          fieldName="LastStandHP"
         />
       );
     }
