@@ -101,13 +101,9 @@ export function CombatantRow(props: CombatantRowProps) {
   }
 
   return (
-    <tr
-      ref={node => drag(drop(node))}
-      className={classNames.join(" ")}
-      onClick={selectCombatant}
-    >
+    <tr ref={drop} className={classNames.join(" ")} onClick={selectCombatant}>
       {
-        <td className="combatant__left-gutter">
+        <td className="combatant__left-gutter" ref={drag}>
           <i className="fas fa-grip-vertical" />
         </td>
       }
@@ -533,6 +529,15 @@ function CombatantColorPicker(props: { combatantState: CombatantState }) {
               )
             }
           />
+          <button
+            className="combatant__color-clear-button c-button"
+            disabled={!hasColorSet}
+            onClick={() =>
+              commandContext.SetCombatantColor(props.combatantState.Id, "")
+            }
+          >
+            Clear color
+          </button>
         </div>
       }
     >

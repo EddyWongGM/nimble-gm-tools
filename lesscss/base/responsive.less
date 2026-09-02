@@ -4,12 +4,6 @@
     display: none;
   }
 
-  #tracker {
-    .toolbar-narrow {
-      width: 52px;
-    }
-  }
-
   .encounter-view.show-center-left-right,
   .encounter-view.show-left-center-right {
     .right-column {
@@ -156,5 +150,49 @@
         flex: 1;
       }
     }
+  }
+}
+
+// Phone: the one-column collapse above (from @small) already applies here
+// since @phone < @small. These rules only refine what's inside that single
+// visible column.
+@media (max-width: @phone) {
+  // The left/right column itself has no overflow-y of its own (see
+  // .card-bg usage in tracker.less), so without this the deselect/back
+  // button can scroll away with a long stat block and never come back.
+  .encounter-view.show-left-center-right .left-column,
+  .encounter-view.show-right-center-left .right-column {
+    overflow-y: auto;
+  }
+
+  .combatant-details__header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--card-background-white);
+    padding: @small-spacer 0;
+
+    .c-button {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: @small-spacer;
+
+      // Icon-only close button reads as "dismiss this modal" on desktop,
+      // where the initiative list is always visible alongside it. At phone
+      // width it's the only way back to the list, so it needs a label.
+      &::after {
+        content: "Back to Initiative";
+        font-size: 0.75rem;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .libraries__header .c-button {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
