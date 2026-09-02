@@ -6,10 +6,22 @@
       "src": "/img/book-white-on-black-192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "maskable"
+      "purpose": "any"
     },
     {
       "src": "/img/book-white-on-black-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/book-white-on-black-192-maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/img/book-white-on-black-512-maskable.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"

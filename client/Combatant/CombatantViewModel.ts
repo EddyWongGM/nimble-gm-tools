@@ -4,6 +4,7 @@ import * as _ from "lodash";
 import { CombatantCommander } from "../Commands/CombatantCommander";
 import { ConcentrationTagText } from "../Prompts/ConcentrationPrompt";
 import { CurrentSettings } from "../Settings/Settings";
+import { NotifyTutorialOfAction } from "../Tutorial/NotifyTutorialOfAction";
 import { Metrics } from "../Utility/Metrics";
 import { Combatant } from "./Combatant";
 import { Tag } from "./Tag";
@@ -292,6 +293,7 @@ export class CombatantViewModel {
 
   public ToggleHasTakenTurn(): void {
     this.Combatant.HasTakenTurn(!this.Combatant.HasTakenTurn());
+    NotifyTutorialOfAction("ToggleHasTakenTurn");
   }
 
   public ToggleHidden() {

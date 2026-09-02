@@ -41,6 +41,9 @@ export interface Settings {
     AlwaysNumberMonsters: boolean;
     EnableInventory: boolean;
     EnableGold: boolean;
+    EnableMana: boolean;
+    EnableResources: boolean;
+    EnableHitDice: boolean;
   };
   TrackerView: {
     DarkMode: boolean;
@@ -79,7 +82,10 @@ export function getDefaultSettings(): Settings {
       AutoRerollInitiative: AutoRerollInitiativeOption.No,
       AlwaysNumberMonsters: true,
       EnableInventory: false,
-      EnableGold: false
+      EnableGold: false,
+      EnableMana: true,
+      EnableResources: true,
+      EnableHitDice: true
     },
     TrackerView: {
       DarkMode: false,
@@ -103,6 +109,9 @@ export function getDefaultSettings(): Settings {
       HideMonstersOutsideEncounter: false,
       HideInventoryNumbers: false,
       HideGoldNumbers: false,
+      HideManaNumbers: false,
+      HideResourcesNumbers: false,
+      HideHitDiceNumbers: false,
       DarkMode: false,
       DisplayRoundCounter: false,
       DisplayTurnTimer: false,
@@ -133,7 +142,7 @@ export function getDefaultSettings(): Settings {
     },
     PreloadedSpellSources: { "local-basic-rules": true },
     PreloadedHeroSources: { "local-basic-rules": false, "tutorial-heroes": true },
-    PreloadedEncounterSources: { "local-basic-rules": false },
+    PreloadedEncounterSources: { "local-basic-rules": true },
     RecentItemIds: [],
     Version: process.env.VERSION || "0.0.0"
   };

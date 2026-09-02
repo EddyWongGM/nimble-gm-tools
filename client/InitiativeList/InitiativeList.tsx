@@ -19,15 +19,15 @@ export function InitiativeList(props: {
   const settings = React.useContext(SettingsContext);
   const alwaysNumberMonsters = settings.Rules.AlwaysNumberMonsters;
   const encounterState = props.encounterState;
-  const showManaColumn = encounterState.Combatants.some(
-    c => c.StatBlock.Mana
-  );
-  const showResourcesColumn = encounterState.Combatants.some(
-    c => c.StatBlock.Resources
-  );
-  const showHitDiceColumn = encounterState.Combatants.some(
-    c => c.StatBlock.HitDice
-  );
+  const showManaColumn =
+    settings.Rules.EnableMana &&
+    encounterState.Combatants.some(c => c.StatBlock.Mana);
+  const showResourcesColumn =
+    settings.Rules.EnableResources &&
+    encounterState.Combatants.some(c => c.StatBlock.Resources);
+  const showHitDiceColumn =
+    settings.Rules.EnableHitDice &&
+    encounterState.Combatants.some(c => c.StatBlock.HitDice);
   const showWoundsColumn = encounterState.Combatants.some(
     c => c.StatBlock.Wounds && StatBlock.ActsInPlayerPhase(c.StatBlock)
   );

@@ -277,6 +277,22 @@ export function unloadTutorialHeroes(
     .forEach(l => PersistentCharacters.DeleteListing(l.Meta().Id));
 }
 
+export async function loadBasicRulesHeroes(
+  PersistentCharacters: Library<PersistentCharacter>
+) {
+  try {
+    const response = await axios.get("/basic-rules-heroes/");
+    const localListings: ListingMeta[] = response.data;
+    PersistentCharacters.AddListings(
+      localListings,
+      "server",
+      PersistentCharacter.Initialize
+    );
+  } catch (error) {
+    console.warn(`Problem loading Basic Rules Heroes: ${error}`);
+  }
+}
+
 async function preloadEncounters(
   Encounters: Library<SavedEncounter>,
   settings: Settings

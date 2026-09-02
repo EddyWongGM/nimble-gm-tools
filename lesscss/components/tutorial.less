@@ -42,3 +42,54 @@
   outline: 3px solid var(--button-face-green);
   outline-offset: -3px;
 }
+
+.post-tutorial-nudge {
+  .card-bg-2(0, @medium-spacer);
+  position: fixed;
+  bottom: 0;
+  left: @large-spacer;
+  z-index: 1;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  max-width: 360px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  span {
+    flex: 1 1 auto;
+    // Without this, a flex item's default min-width:auto refuses to shrink
+    // below its unwrapped text width, pushing the dismiss button out past
+    // the container's bound (and off narrow viewports) instead of wrapping.
+    min-width: 0;
+    margin-right: @small-spacer;
+  }
+
+  .c-button {
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: @small) {
+    max-width: 90%;
+  }
+
+  // At phone width the fixed "Log In with Patreon" button
+  // (.encounter-view > .login.button in nimble-rpg-app.less) also anchors to
+  // bottom: 0; right, and at this width the two nearly-full-width elements
+  // would overlap. Anchoring the nudge to the top instead avoids fighting
+  // over the same corner rather than trying to carve out shared space.
+  @media (max-width: @phone) {
+    top: 0;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    // A bound (not "none") so the flex row has a definite width to shrink
+    // the message span against - see the span rule above.
+    max-width: 100%;
+    box-sizing: border-box;
+    border-bottom-left-radius: @border-radius;
+    border-bottom-right-radius: @border-radius;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}

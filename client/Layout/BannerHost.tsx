@@ -15,7 +15,10 @@ export function BannerHost(): JSX.Element {
     return null;
   }
 
-  if (env.IsLoggedIn && (env.HasStorage || env.HasEpicInitiative)) {
+  if (
+    env.IsLoggedIn &&
+    (env.HasStorage || env.HasEpicInitiative || env.HasMythic)
+  ) {
     return null;
   }
 
@@ -30,14 +33,12 @@ export function BannerHost(): JSX.Element {
             image_url: banner.src
           });
 
-          if (banner.href.indexOf("patreon.com") > -1) {
-            Metrics.TrackPatreonSignupIntent(Metrics.LeadSource.FooterBanner, {
-              link_url: banner.href,
-              creative_name: banner.src
-            });
-          }
+          Metrics.TrackPatreonSignupIntent(Metrics.LeadSource.FooterBanner, {
+            link_url: banner.href,
+            creative_name: banner.src
+          });
         }}
-        title="Affiliate banners support the free app, and are hidden for subscribed Patrons."
+        title="Support the free app on Patreon. Hidden for subscribed Patrons."
       >
         <img src={banner.src} alt={banner.altText} />
       </a>
@@ -47,53 +48,13 @@ export function BannerHost(): JSX.Element {
 
 const Banners: { href: string; src: string; altText: string }[] = [
   {
-    href: "https://www.drivethrurpg.com/browse.php?affiliate_id=282190",
-    src: "https://www.drivethrurpg.com/themes/dtrpg/images/728x90indies.png",
-    altText: "Indie RPGs at DriveThruRPG.com"
-  },
-  {
-    href: "https://www.drivethrurpg.com/browse.php?filters=0_0_220_0_0&src=affiliate282190&affiliate_id=282190",
-    src: "https://www.drivethrurpg.com/themes/dtrpg/images/728X90Cthulhu.png",
-    altText: "Cthulhu Mythos at DriveThruRPG.com"
-  },
-  {
-    href: "https://www.drivethrurpg.com/browse.php?filters=0_0_100226_0_0&src=affiliate282190&affiliate_id=282190",
-    src: "https://www.drivethrurpg.com/themes/dtrpg/images/728x90forged.png",
-    altText: "Forged in the Dark at DriveThruRPG.com"
-  },
-  {
-    href: "https://www.drivethrurpg.com/browse/pub/5549/Paizo/subcategory/21918_40173/Pathfinder-and-Starfinder-Infinite?src=affiliate282190&affiliate_id=282190",
-    src: "https://www.drivethrurpg.com/themes/dtrpg/images/728x90dtrpgpfi.png",
-    altText: "Pathfinder at DriveThruRPG.com"
-  },
-  {
-    href: "https://www.dmsguild.com/index.php?src=affiliate282190&affiliate_id=282190",
-    src: "https://www.dmsguild.com/themes/dmg/images/728x90dmsguild.png",
-    altText: "Adventures at DMsGuild.com"
-  },
-  {
-    href: "https://www.dmsguild.com/browse.php?filters=45680_0_0_0_0_0&src=affiliate282190&affiliate_id=282190",
-    src: "https://www.dmsguild.com/images/site_resources/DMsGuild-GuildAdept-Banner-sm.png",
-    altText: "Adventures at DMsGuild.com"
-  },
-  {
-    href: "https://www.dmsguild.com/product/247882/Wayfinders-Guide-to-Eberron-5e?filters=0_0_0_0_0_0_0_1000100&src=affiliate282190&affiliate_id=282190",
-    src: "https://www.dmsguild.com/themes/dmg/images/affiliatebanner2.jpg",
-    altText: "Eberron Adventures at DMsGuild.com"
+    href: "https://www.patreon.com/join/NimbleRPGApp",
+    src: "../img/become_a_patron_button.png",
+    altText: "Become a Patron"
   },
   {
     href: "https://www.patreon.com/join/NimbleRPGApp",
-    src: "../img/banner-annual.png",
-    altText: "Nimble RPG App Epic Tier Annual Subscriptions"
-  },
-  {
-    href: "https://www.patreon.com/join/NimbleRPGApp",
-    src: "../img/banner-features.png",
-    altText: "Nimble RPG App Epic Tier Features"
-  },
-  {
-    href: "https://www.patreon.com/join/NimbleRPGApp",
-    src: "../img/banner-trial.png",
-    altText: "Nimble RPG App Epic Tier Free Trial"
+    src: "../img/pledge-orange.png",
+    altText: "Support Nimble RPG App on Patreon"
   }
 ];

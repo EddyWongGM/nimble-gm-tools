@@ -57,6 +57,7 @@ enum MetricEvent {
   PersistentCharacterAdded = "persistent_character_added",
   PhaseOrderSwapped = "phase_order_swapped",
   PlayerViewLaunched = "player_view_launched",
+  SampleEncounterLoaded = "sample_encounter_loaded",
   SceneApplied = "scene_applied",
   SceneDeleted = "scene_deleted",
   SceneDismissed = "scene_dismissed",
@@ -73,8 +74,10 @@ enum MetricEvent {
   TemporaryManaAdded = "temporary_mana_added",
   TemporaryResourcesAdded = "temporary_resources_added",
   TemporaryWoundsAdded = "temporary_wounds_added",
+  TutorialAbandoned = "tutorial_abandoned",
   TutorialBegin = "tutorial_begin",
   TutorialComplete = "tutorial_complete",
+  TutorialStepViewed = "tutorial_step_viewed",
   TurnCompleted = "turn_completed",
   ViewPromotion = "view_promotion"
 }

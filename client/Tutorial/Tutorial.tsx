@@ -7,7 +7,14 @@ import { NotifyTutorialOfAction } from "./NotifyTutorialOfAction";
 import { useCallback } from "react";
 import { Metrics } from "../Utility/Metrics";
 
-export function Tutorial(props: { onClose: () => void }): JSX.Element {
+export function Tutorial(props: {
+  onClose: () => void;
+  onLoadSampleEncounter?: () => void;
+  librariesVisible?: boolean;
+  onHideLibraries?: () => void;
+  isCombatantSelected?: boolean;
+  onDeselectCombatant?: () => void;
+}): JSX.Element {
   const [stepIndex, setStepIndex] = useState(0);
   const close = useCallback(() => {
     document
@@ -28,7 +35,30 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
     setStepIndex(nextStepIndex);
   };
 
+  const endEarly = useCallback(() => {
+    Metrics.TrackEvent(Metrics.Event.TutorialAbandoned, {
+      step_index: stepIndex,
+      step_count: TutorialSteps.length
+    });
+    close();
+  }, [close, stepIndex]);
+
+  const loadSampleEncounter = useCallback(() => {
+    Metrics.TrackEvent(Metrics.Event.SampleEncounterLoaded, {
+      source: "tutorial_welcome"
+    });
+    props.onLoadSampleEncounter();
+    close();
+  }, [close, props.onLoadSampleEncounter]);
+
   const step = TutorialSteps[stepIndex];
+
+  useEffect(() => {
+    Metrics.TrackEvent(Metrics.Event.TutorialStepViewed, {
+      step_index: stepIndex,
+      step_count: TutorialSteps.length
+    });
+  }, [stepIndex]);
 
   useEffect(() => {
     const subscription = NotifyTutorialOfAction.subscribe(action => {
@@ -40,8 +70,16 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
     return () => subscription.dispose();
   }, [stepIndex]);
 
+  useEffect(() => {
+    if (step.HideLibrariesOnEnter) {
+      props.onHideLibraries?.();
+    }
+    if (step.DeselectCombatantOnEnter) {
+      props.onDeselectCombatant?.();
+    }
+  }, [stepIndex]);
+
   useLayoutEffect(() => {
-    console.log("[TutorialDebug] Tutorial useLayoutEffect, stepIndex =", stepIndex);
     document
       .querySelectorAll(".tutorial-focus")
       .forEach(e => e.classList.remove("tutorial-focus"));
@@ -61,7 +99,12 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
     }
     tutorialWidget.style.setProperty("left", position.left + "px");
     tutorialWidget.style.setProperty("top", position.top + "px");
-  }, [stepIndex]);
+    // librariesVisible/isCombatantSelected are included so a step that hides
+    // the Library pane or clears the selection (see the effect above)
+    // re-measures once that change actually lands and the Combatants list's
+    // real layout is in the DOM, instead of measuring against the stale
+    // (still-hidden) layout from this render.
+  }, [stepIndex, props.librariesVisible, props.isCombatantSelected]);
 
   return (
     <div className="tutorial">
@@ -88,7 +131,14 @@ export function Tutorial(props: { onClose: () => void }): JSX.Element {
         disabled={step.AwaitAction !== undefined}
         key={"next-button-" + stepIndex}
       />
-      <Button onClick={close} text="End Tutorial" />
+      {stepIndex === 0 && props.onLoadSampleEncounter && (
+        <Button
+          onClick={loadSampleEncounter}
+          text="Load a Sample Encounter Instead"
+          tooltip="Skip the guided steps and jump straight into a ready-made Encounter to explore on your own."
+        />
+      )}
+      <Button onClick={endEarly} text="End Tutorial" />
     </div>
   );
 }

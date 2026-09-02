@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 import { TrackerViewModel } from "./TrackerViewModel";
 import { useSubscription } from "./Combatant/linkComponentToObservables";
@@ -16,8 +16,10 @@ import { interfacePriorityClass } from "./Layout/interfacePriorityClass";
 import { centerColumnView } from "./Layout/centerColumnView";
 import { ThreeColumnLayout } from "./Layout/ThreeColumnLayout";
 import { LibraryManager } from "./Library/Manager/LibraryManager";
+import { Button } from "./Components/Button";
 import {
   LibrariesContext,
+  loadBasicRulesHeroes,
   unloadTutorialHeroes,
   useLibraries
 } from "./Library/Libraries";
@@ -30,12 +32,20 @@ import { Metrics } from "./Utility/Metrics";
  * TrackerViewModel was the top level Knockout viewmodel for binding to ko components.
  */
 
+// enableMouseEvents lets one backend serve both touch and mouse, so no
+// react-dnd-multi-backend/per-surface branching is needed. delayTouchStart
+// gives a quick tap time to register as a scroll/select before a drag starts.
+const DND_BACKEND_OPTIONS = { enableMouseEvents: true, delayTouchStart: 200 };
+
 export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   const { tracker } = props;
   const settings = useSubscription<Settings>(CurrentSettings);
 
   const settingsVisible = useSubscription(tracker.SettingsVisible);
   const tutorialVisible = useSubscription(tracker.TutorialVisible);
+  const postTutorialNudgeVisible = useSubscription(
+    tracker.PostTutorialNudgeVisible
+  );
   const libraryManagerPane = useSubscription(tracker.LibraryManagerPane);
   const librariesVisible = useSubscription(tracker.LibrariesVisible);
   const statblockEditorProps = useSubscription(tracker.StatBlockEditorProps);
@@ -51,14 +61,12 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   );
 
   const libraries = useLibraries(settings, new AccountClient(), () => {
-    console.log("[TutorialDebug] allPersistentCharactersLoaded fired");
     tracker.LoadAutoSavedEncounterIfAvailable();
     tracker.ContinuePendingRepeatTutorialIfNeeded();
+    tracker.ShowPostTutorialNudgeIfPending();
   });
 
   tracker.SetLibraries(libraries);
-
-  console.log("[TutorialDebug] App render, tutorialVisible =", tutorialVisible);
 
   const centerColumn = centerColumnView(statblockEditorProps, spellEditorProps);
   const interfacePriority = interfacePriorityClass(
@@ -71,6 +79,66 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
 
   const blurVisible = tutorialVisible || settingsVisible;
 
+  const closeTutorial = React.useCallback(() => {
+    tracker.TutorialVisible(false);
+    unloadTutorialHeroes(libraries.PersistentCharacters);
+    loadBasicRulesHeroes(libraries.PersistentCharacters);
+    tracker.SaveUpdatedSettings({
+      ...settings,
+      PreloadedHeroSources: {
+        ...settings.PreloadedHeroSources,
+        "tutorial-heroes": false,
+        "local-basic-rules": true
+      }
+    });
+    LegacySynchronousLocalStore.Save(
+      LegacySynchronousLocalStore.User,
+      "SkipIntro",
+      true
+    );
+    // Checked on a later page load (see ShowPostTutorialNudgeIfPending) so
+    // the nudge lands on the GM's next session instead of piling onto this
+    // one right after the tutorial and its other one-time prompts.
+    LegacySynchronousLocalStore.Save(
+      LegacySynchronousLocalStore.User,
+      "PendingPostTutorialNudge",
+      true
+    );
+  }, [tracker, libraries, settings]);
+
+  // Adds the tutorial's Berserker and Cheat Heroes, then the bundled intro
+  // Encounter (a couple of ready-made Monsters), so a first-timer sees a
+  // complete fight in the tracker instead of monsters with no one to fight
+  // them - Heroes are awaited first so they land in the combatant list ahead
+  // of the Monsters regardless of which network fetch resolves first. Falls
+  // back to the first available bundled Encounter if the intro one hasn't
+  // loaded for some reason. The tutorial Heroes are always preloaded ahead
+  // of this step (see PreloadedHeroSources["tutorial-heroes"] in Settings.ts
+  // and TrackerViewModel.RepeatTutorial), so no extra fetch is needed for
+  // them.
+  const loadSampleEncounter = React.useCallback(async () => {
+    const sampleHeroNames = ["Berserker", "Cheat"];
+    const heroListings = libraries.PersistentCharacters.GetAllListings().filter(
+      l => sampleHeroNames.includes(l.Meta().Name)
+    );
+    for (const heroListing of heroListings) {
+      await tracker.LibrariesCommander.AddPersistentCharacterFromListing(
+        heroListing,
+        false
+      );
+    }
+
+    const encounterListings = libraries.Encounters.GetAllListings();
+    const sampleListing =
+      encounterListings.find(l => l.Meta().Path?.includes("Intro")) ??
+      encounterListings[0];
+    if (sampleListing) {
+      sampleListing.GetAsyncWithUpdatedId(savedEncounter => {
+        tracker.LibrariesCommander.LoadEncounter(savedEncounter, false);
+      });
+    }
+  }, [libraries, tracker]);
+
   React.useEffect(() => {
     if (!env.IsLoggedIn) {
       Metrics.TrackPatreonCtaViewed(Metrics.LeadSource.StickyPatreonLogin, {
@@ -81,7 +149,7 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   }, []);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={TouchBackend} options={DND_BACKEND_OPTIONS}>
       <SettingsContext.Provider value={settings}>
         <TextEnricherContext.Provider value={tracker.StatBlockTextEnricher}>
           <LibrariesContext.Provider value={libraries}>
@@ -103,23 +171,27 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
               )}
               {tutorialVisible && (
                 <Tutorial
-                  onClose={() => {
-                    tracker.TutorialVisible(false);
-                    unloadTutorialHeroes(libraries.PersistentCharacters);
-                    tracker.SaveUpdatedSettings({
-                      ...settings,
-                      PreloadedHeroSources: {
-                        ...settings.PreloadedHeroSources,
-                        "tutorial-heroes": false
-                      }
-                    });
-                    LegacySynchronousLocalStore.Save(
-                      LegacySynchronousLocalStore.User,
-                      "SkipIntro",
-                      true
-                    );
-                  }}
+                  onClose={closeTutorial}
+                  onLoadSampleEncounter={loadSampleEncounter}
+                  librariesVisible={librariesVisible}
+                  onHideLibraries={tracker.EncounterCommander.HideLibraries}
+                  isCombatantSelected={isACombatantSelected}
+                  onDeselectCombatant={tracker.CombatantCommander.Deselect}
                 />
+              )}
+              {postTutorialNudgeVisible && (
+                <div className="post-tutorial-nudge">
+                  <span>
+                    Welcome back! Next time you run a session, try adding one
+                    of your own Heroes from the Compendium or "Add New" in the
+                    Heroes tab.
+                  </span>
+                  <Button
+                    fontAwesomeIcon="times"
+                    onClick={tracker.DismissPostTutorialNudge}
+                    tooltip="Dismiss"
+                  />
+                </div>
               )}
               {!env.IsLoggedIn && (
                 <a

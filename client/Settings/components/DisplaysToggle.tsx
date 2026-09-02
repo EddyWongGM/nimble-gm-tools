@@ -9,6 +9,8 @@ export function DisplaysToggle(props: {
   encounterViewFieldName?: string;
   playerViewFieldName?: string;
   requireEpicTierForPlayerViewToggle?: boolean;
+  /** playerViewFieldName is a "Hide" field; show/toggle it as "Show" (checked = visible in Player View). */
+  invertPlayerView?: boolean;
 }) {
   const encounterViewFieldName =
     props.encounterViewFieldName ?? `TrackerView.${props.fieldName}`;
@@ -39,6 +41,7 @@ export function DisplaysToggle(props: {
           <ToggleButton
             fieldName={playerViewFieldName}
             id={fieldPlayerViewId}
+            inverted={props.invertPlayerView}
           />
         )}
       </div>

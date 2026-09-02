@@ -9,6 +9,19 @@ export interface TutorialStep {
   Message: string;
   RaiseSelector: string;
   AwaitAction?: string;
+  // At phone width the Library pane and the Combatants list occupy the same
+  // single visible column - a step whose RaiseSelector targets the
+  // Combatants list needs the Library pane closed first, or its target is
+  // invisible and (for AwaitAction steps) unreachable. Desktop shows both
+  // side by side, so this is harmless there too.
+  HideLibrariesOnEnter?: boolean;
+  // At phone width, selecting a Combatant (as the previous step asks for)
+  // swaps the Combatants list for that Combatant's full details - so a step
+  // whose RaiseSelector targets the list (like the HP cell here) needs the
+  // selection cleared first, for the same reason HideLibrariesOnEnter exists
+  // above. Applying damage/toggling "has taken turn" from the list doesn't
+  // depend on anything being selected, so clearing it is harmless.
+  DeselectCombatantOnEnter?: boolean;
   CalculatePosition: (elements: NodeListOf<HTMLElement>) => Position;
 }
 
@@ -60,6 +73,7 @@ export const TutorialSteps: TutorialStep[] = [
     Message:
       "Select a combatant by clicking.",
     RaiseSelector: ".combatants, .right-column",
+    HideLibrariesOnEnter: true,
     CalculatePosition: elements => {
       const element = elements[0];
       const location = getLocation(element);
@@ -73,6 +87,7 @@ export const TutorialSteps: TutorialStep[] = [
       "Press on the health value to apply damage to selected combatants. You can enter a negative number to apply healing.",
     RaiseSelector: ".combatants, .combatant__hp-outer, .prompts, .prompt",
     AwaitAction: "ApplyDamage",
+    DeselectCombatantOnEnter: true,
     CalculatePosition: elements => {
       // Positioned beside (not below) the combatants table, since the
       // Apply Damage prompt renders directly below it and a position
@@ -84,16 +99,19 @@ export const TutorialSteps: TutorialStep[] = [
       return { left, top };
     }
   },
-  /*{
-        Message: "Press 'n' or click 'Next Turn' to advance the tracker. The active combatant's statblock is displayed for convenience.",
-        RaiseSelector: ".c-button--next-turn, .left-column, .combatants",
-        CalculatePosition: elements => {
-            const element = elements.first();
-            const left = location.left + element.outerWidth() + 10;
-            const top = location.top + 5;
-            return { left, top };
-        }
-    },*/
+  {
+    Message:
+      "Nimble doesn't use a strict turn order- once a Combatant has acted, check the box next to their name to mark that they've taken their turn this round.",
+    RaiseSelector: ".combatants, .combatant__has-taken-turn",
+    AwaitAction: "ToggleHasTakenTurn",
+    CalculatePosition: elements => {
+      const element = elements[0];
+      const location = getLocation(element);
+      const left = location.left + location.width + 10;
+      const top = location.top + 5;
+      return { left, top };
+    }
+  },
   {
     Message:
       "Click 'Settings' to set keyboard shortcuts and explore advanced features, or choose <strong>End Tutorial</strong>.",

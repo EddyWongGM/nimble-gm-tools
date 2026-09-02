@@ -288,8 +288,8 @@
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "Taste for the finer things (Adv. Influence vs Noble)",
-        "Content": "",
+        "Name": "Taste for the finer things",
+        "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
         "Usage": ""
       },
       {
@@ -299,6 +299,148 @@
       },
       {
         "Name": "Lithe (Advantage on Initiative, +1 speed)",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1
+    }
+  },
+  {
+    "Name": "Mage LV1",
+    "Path": "Sample Heroes/Mage",
+    "Source": "Sample Heroes",
+    "Type": "Mage",
+    "HP": {
+      "Value": 10,
+      "Notes": "10 + 0d6"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 1,
+      "Int": 2,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Spells",
+        "Content": "Cantrips: Flame Dart, Heart's Fire, Ice Lance, Snowblind, Zap, Overload",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Staff 1d8 - 1",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Taste for the finer things",
+        "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1
+    }
+  },
+  {
+    "Name": "Oathsworn LV1",
+    "Path": "Sample Heroes/Oathsworn",
+    "Source": "Sample Heroes",
+    "Type": "Oathsworn",
+    "HP": {
+      "Value": 17,
+      "Notes": "17 + 0d10"
+    },
+    "AC": {
+      "Value": 12,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + 2",
+        "Usage": ""
+      },
+      {
+        "Name": "Lay on Hands - Pool 5 (5×LVL)",
+        "Content": "[A1] Touch Heal\n— Safe Rest: recharge.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+	  {
+	    "Name": "Relentless",
+	    "Content": "— If 0 HP, HP becomes 4 (LVL). (+1 Might)",
+	    "Usage": ""
+	  }	
+	],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "History Buff (Advantage on Lore checks)",
         "Content": "",
         "Usage": ""
       }

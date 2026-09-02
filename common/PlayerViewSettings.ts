@@ -15,6 +15,9 @@ export interface PlayerViewSettings {
   HideMonstersOutsideEncounter: boolean;
   HideInventoryNumbers: boolean;
   HideGoldNumbers: boolean;
+  HideManaNumbers: boolean;
+  HideResourcesNumbers: boolean;
+  HideHitDiceNumbers: boolean;
   DarkMode: boolean;
   DisplayRoundCounter: boolean;
   DisplayTurnTimer: boolean;
