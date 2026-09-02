@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TouchBackend } from "react-dnd-touch-backend";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { TrackerViewModel } from "./TrackerViewModel";
 import { useSubscription } from "./Combatant/linkComponentToObservables";
@@ -31,11 +31,6 @@ import { Metrics } from "./Utility/Metrics";
  * This file is new as of 05/2020. Most of the logic was extracted from TrackerViewModel.
  * TrackerViewModel was the top level Knockout viewmodel for binding to ko components.
  */
-
-// enableMouseEvents lets one backend serve both touch and mouse, so no
-// react-dnd-multi-backend/per-surface branching is needed. delayTouchStart
-// gives a quick tap time to register as a scroll/select before a drag starts.
-const DND_BACKEND_OPTIONS = { enableMouseEvents: true, delayTouchStart: 200 };
 
 export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   const { tracker } = props;
@@ -149,7 +144,7 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
   }, []);
 
   return (
-    <DndProvider backend={TouchBackend} options={DND_BACKEND_OPTIONS}>
+    <DndProvider backend={HTML5Backend}>
       <SettingsContext.Provider value={settings}>
         <TextEnricherContext.Provider value={tracker.StatBlockTextEnricher}>
           <LibrariesContext.Provider value={libraries}>
