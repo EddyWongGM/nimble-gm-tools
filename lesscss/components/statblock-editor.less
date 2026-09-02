@@ -161,6 +161,64 @@
   }
 }
 
+.c-statblock-editor__identity-grid {
+  // A 2-column grid (not just a flex row) so that row 2's CR Rating lines
+  // up under row 1's Source field - matching flex-basis percentages alone
+  // can't guarantee that alignment once the rows have different content.
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: @medium-spacer;
+  align-items: center;
+
+  // .c-text-field's own `.label`/`input` sizing (flex-basis: 20%/80%)
+  // assumes it's the only field on the line, filling the full row width.
+  // Inside a grid cell that's already sized by the column track, so this
+  // shrinks the label to its content width and lets the input fill the
+  // rest of the cell instead.
+  > .c-text-field {
+    flex-wrap: nowrap;
+
+    .label {
+      flex: 0 0 auto;
+      margin-right: @small-spacer;
+    }
+
+    input {
+      flex: 1 1 auto;
+      width: auto;
+      // .c-statblock-editor's global `input { margin: @small-spacer 0 }`
+      // adds an 8px margin-box on top of the input's own height. Grid row
+      // tracks size to the tallest cell, so a row with CR Rating (which
+      // carries that margin) ends up taller than one without it - drop it
+      // here since `gap` above already spaces the grid cells out.
+      margin: 0;
+    }
+  }
+}
+
+.c-statblock-editor__type-and-armor {
+  // Same global `div { flex-direction: column }` gotcha as elsewhere in
+  // this file - without this, the Armor toggle, the Normal/Legendary/Titan
+  // toggle, and their info icons stack instead of sitting on one line.
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: @medium-spacer;
+  // Matches CR Rating's input height (see .c-statblock-editor input) so
+  // this row stays the same height whether or not CR Rating is showing
+  // in the grid cell next to it.
+  min-height: 3rem;
+
+  // Let the two toggle buttons grow to share the grid column's width
+  // instead of hugging their label text, so they don't leave the rest of
+  // the row's space empty next to the (fixed-size) info icons.
+  .c-button {
+    flex: 1 1 0;
+    min-width: 6rem;
+  }
+}
+
 .c-statblock-editor__mode-toggle {
   .inline();
   flex-shrink: 0;
@@ -408,6 +466,13 @@ span.c-statblock-editor__label {
   select {
     width: 9rem;
   }
+
+  // Hit Dice sits in a 2-up row alongside the number input, so it needs to
+  // be narrower than the general 9rem select above - its longest option
+  // ("d12") is short enough that 9rem would waste most of the row.
+  .c-statblock-editor__hitdice-size {
+    width: 4.5rem;
+  }
 }
 
 .c-statblock-editor__abilityscores {
@@ -421,11 +486,27 @@ span.c-statblock-editor__label {
 }
 
 .c-statblock-editor__ability {
+  // The save-advantage select sits under the label+input row rather than
+  // beside it - alongside it, 4 abilities' worth of label+input+select no
+  // longer fit on one line and wrap, which is the layout this is fixing.
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: @small-spacer;
   margin: @small-spacer;
+
+  .c-statblock-editor__ability-score {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: @small-spacer;
+  }
+
+  // Matches the label+input row's width instead of the browser's
+  // fit-to-longest-option default, so the column doesn't grow to fit it.
+  .c-statblock-editor__save-advantage {
+    width: 100%;
+  }
 }
 
 .c-statblock-editor__textarea {

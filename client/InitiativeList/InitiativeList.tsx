@@ -44,20 +44,24 @@ export function InitiativeList(props: {
   return (
     <div className="initiative-list">
       <div className="initiative-list__header">
+        <div className="initiative-list__header-side initiative-list__header-side--left">
+          {anyHasTakenTurn && (
+            <Button
+              text="Reset Turns"
+              tooltip="Uncheck 'has taken turn' for everyone"
+              onClick={commandContext.ResetHasTakenTurnForAllCombatants}
+              additionalClassNames="c-button--reset-turns"
+            />
+          )}
+        </div>
         <h2>Nimble RPG App</h2>
-        {encounterState.MonstersActFirst && (
-          <span className="initiative-list__phase-indicator">
-            Monsters act first
-          </span>
-        )}
-        {anyHasTakenTurn && (
-          <Button
-            text="Reset Turns"
-            tooltip="Uncheck 'has taken turn' for everyone"
-            onClick={commandContext.ResetHasTakenTurnForAllCombatants}
-            additionalClassNames="c-button--reset-turns"
-          />
-        )}
+        <div className="initiative-list__header-side initiative-list__header-side--right">
+          {encounterState.MonstersActFirst && (
+            <span className="initiative-list__phase-indicator">
+              Monsters act first
+            </span>
+          )}
+        </div>
       </div>
       <table className="combatants">
         <InitiativeListHeader

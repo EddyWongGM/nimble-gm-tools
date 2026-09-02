@@ -196,7 +196,10 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         <div className="c-combatant-details__hitdice-wounds">
           {currentHitDice && (
             <>
-              <span className="stat-label HitDice">Hit Dice</span>
+              <span className="stat-label HitDice">
+                Hit Dice
+                {statBlock.HitDice?.Notes && ` (${statBlock.HitDice.Notes})`}
+              </span>
               <span>
                 {currentHitDice}
                 {DisplayHPBar && (

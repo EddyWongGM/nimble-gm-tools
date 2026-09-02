@@ -16,6 +16,7 @@ import {
   abilityScoreField,
   getAnonymizedStatBlockJSON,
   DescriptionField,
+  HitDiceField,
   InitiativeField,
   KeywordFields,
   NameAndAdvantageFields,
@@ -51,9 +52,23 @@ export class StatBlockEditor extends React.Component<
   StatBlockEditorProps,
   StatBlockEditorState
 > {
+  private formRef = React.createRef<HTMLFormElement>();
+
   constructor(props) {
     super(props);
     this.state = { editorMode: "standard" };
+  }
+
+  public componentDidMount() {
+    // .c-statblock-editor scrolls its own overflow, but it also sits inside
+    // ancestor scroll containers (e.g. the tracker's .center-column) that
+    // don't remount alongside it and so keep whatever scroll position was
+    // left over from before this editor opened - reset both so the editor
+    // reliably opens at the top regardless of which container is scrolled.
+    if (this.formRef.current) {
+      this.formRef.current.scrollTop = 0;
+      this.formRef.current.scrollIntoView?.({ block: "start" });
+    }
   }
 
   public componentDidCatch(error, info) {
@@ -128,6 +143,7 @@ export class StatBlockEditor extends React.Component<
                   className="c-statblock-editor"
                   autoComplete="false"
                   translate="no"
+                  ref={this.formRef}
                 >
                   <div className="c-statblock-editor__title-row">
                     <h2 className="c-statblock-editor__title">{header}</h2>
@@ -170,37 +186,68 @@ export class StatBlockEditor extends React.Component<
   private statFields = (player: string): JSX.Element[][] => {
     const actsInPlayerPhase = player == "player" || player == "companion";
 
-    const fields: JSX.Element[] = [
+    const rows: JSX.Element[][] = [];
+
+    const levelField = (
       <TextField
         key="level"
         label={player == "player" ? "Level" : "Challenge"}
         fieldName="Challenge"
       />
-    ];
+    );
 
-    if (!actsInPlayerPhase) {
-      fields.push(<NumberField key="savedc" label="Save DC" fieldName="SaveDC" />);
-    }
+    const fields: JSX.Element[] = actsInPlayerPhase ? [levelField] : [];
+
+    // Chunks whatever's accumulated in `fields` so far into rows of 2 and
+    // empties it out.
+    const flushFieldsIntoRows = () => {
+      rows.push(..._.chunk(fields, 2));
+      fields.length = 0;
+    };
 
     if (actsInPlayerPhase) {
       fields.push(
         <ValueAndNotesField key="defense" label="Defense" fieldName="AC" />,
-        <ValueAndNotesField key="hp" label="Hit Points" fieldName="HP" />
+        <ValueAndNotesField
+          key="hp"
+          label="Hit Points"
+          fieldName="HP"
+          hideNotes
+        />
       );
     } else {
-      fields.push(
-        <ValueAndNotesField key="hp" label="HP (No Armor)" fieldName="HP" />,
+      // Level/Challenge and Save DC are built as an explicit 3-wide row
+      // (with an empty third cell) instead of the generic 2-up chunking, so
+      // Save DC lines up in the same column as M Armor in the HP row below.
+      // Monster armor tiers likewise read as one HP-by-armor-type row rather
+      // than spilling HP (H Armor) onto its own line; their labels drop the
+      // redundant "HP" prefix (row context already makes that clear) so
+      // they fit on one line at this row's narrower per-field width.
+      rows.push([
+        levelField,
+        <NumberField key="savedc" label="Save DC" fieldName="SaveDC" />,
+        <div key="savedc-spacer" />
+      ]);
+      rows.push([
+        <ValueAndNotesField
+          key="hp"
+          label="No Armor"
+          fieldName="HP"
+          hideNotes
+        />,
         <ValueAndNotesField
           key="hpmediumarmor"
-          label="HP (M Armor)"
+          label="M Armor"
           fieldName="HPMediumArmor"
+          hideNotes
         />,
         <ValueAndNotesField
           key="hpheavyarmor"
-          label="HP (H Armor)"
+          label="H Armor"
           fieldName="HPHeavyArmor"
+          hideNotes
         />
-      );
+      ]);
     }
 
     if (player === "legendary") {
@@ -209,33 +256,34 @@ export class StatBlockEditor extends React.Component<
           key="laststandhp"
           label="Last Stand HP"
           fieldName="LastStandHP"
+          hideNotes
         />
       );
     }
 
     if (actsInPlayerPhase) {
       fields.push(
-        <ValueAndNotesField key="mana" label="Mana" fieldName="Mana" />,
-        <ValueAndNotesField key="resources" label="Resources" fieldName="Resources" />
+        <ValueAndNotesField key="mana" label="Mana" fieldName="Mana" hideNotes />,
+        <ValueAndNotesField
+          key="resources"
+          label="Resources"
+          fieldName="Resources"
+          hideNotes
+        />
       );
     }
 
     if (player == "player") {
-      fields.push(
-        <ValueAndNotesField key="hitdice" label="Hit Dice" fieldName="HitDice" />
-      );
+      fields.push(<HitDiceField key="hitdice" />);
     }
     if (actsInPlayerPhase) {
       fields.push(
-        <ValueAndNotesField key="wounds" label="Wounds" fieldName="Wounds" />,
+        <ValueAndNotesField key="wounds" label="Wounds" fieldName="Wounds" hideNotes />,
         <InitiativeField key="initiative" />
       );
     }
 
-    const rows: JSX.Element[][] = [];
-    for (let i = 0; i < fields.length; i += 2) {
-      rows.push(fields.slice(i, i + 2));
-    }
+    flushFieldsIntoRows();
     return rows;
   };
 
@@ -248,8 +296,53 @@ export class StatBlockEditor extends React.Component<
           {api.errors.ImageURL && (
             <p className="c-statblock-editor__error">{api.errors.ImageURL}</p>
           )}
-          <TextField label="Source" fieldName="Source" />
-          <TextField label="Type" fieldName="Type" />
+          <div className="c-statblock-editor__identity-grid">
+            <TextField label="Type" fieldName="Type" />
+            <TextField label="Source" fieldName="Source" />
+            {(this.props.editorTarget == "library" ||
+              this.props.editorTarget == "combatant") && (
+              <>
+                <div className="c-statblock-editor__type-and-armor">
+                  {api.values.Player !== "player" &&
+                    api.values.Player !== "companion" && (
+                      <EnumToggle
+                        labelsByOption={StatBlock.ArmorDisplayNames}
+                        fieldName="Armor"
+                      />
+                    )}
+                  <EnumToggle
+                    labelsByOption={{
+                      "": "Normal",
+                      legendary: "Legendary",
+                      titan: "Titan"
+                    }}
+                    fieldName="Player"
+                  />
+                  {api.values.Player === "legendary" && (
+                    <Info>
+                      A Legendary monster's max HP is multiplied by the
+                      number of heroes already in the encounter, calculated
+                      once when it's added to the tracker. Add heroes to the
+                      encounter first, or the multiplier will under-count.
+                    </Info>
+                  )}
+                  {this.props.editorTarget == "combatant" &&
+                    api.values.Player !== "player" &&
+                    api.values.Player !== "companion" && (
+                      <Info>
+                        This Name's HP was already set for its Armor tier
+                        when it entered combat. Changing Armor here won't
+                        rescale current or max HP — edit the HP fields below
+                        directly if needed.
+                      </Info>
+                    )}
+                </div>
+                {api.values.Player === "" && (
+                  <TextField label="CR Rating" fieldName="CRRating" />
+                )}
+              </>
+            )}
+          </div>
           {this.props.editorTarget == "persistentcharacter" && (
             <EnumToggle
               labelsByOption={{
@@ -260,52 +353,12 @@ export class StatBlockEditor extends React.Component<
               fieldName="Player"
             />
           )}
-          {(this.props.editorTarget == "library" ||
-            this.props.editorTarget == "combatant") && (
-            <EnumToggle
-              labelsByOption={{
-                "": "Normal",
-                legendary: "Legendary",
-                titan: "Titan"
-              }}
-              fieldName="Player"
-            />
-          )}
-          {api.values.Player === "legendary" && (
-            <Info>
-              A Legendary monster's max HP is multiplied by the number of
-              heroes already in the encounter, calculated once when it's
-              added to the tracker. Add heroes to the encounter first, or
-              the multiplier will under-count.
-            </Info>
-          )}
-          {(this.props.editorTarget == "library" ||
-            this.props.editorTarget == "combatant") &&
-            api.values.Player !== "player" &&
-            api.values.Player !== "companion" && (
-              <EnumToggle
-                labelsByOption={StatBlock.ArmorDisplayNames}
-                fieldName="Armor"
-              />
-            )}
-          {this.props.editorTarget == "combatant" &&
-            api.values.Player !== "player" &&
-            api.values.Player !== "companion" && (
-              <Info>
-                This Name's HP was already set for its Armor tier when it
-                entered combat. Changing Armor here won't rescale current or
-                max HP — edit the HP fields below directly if needed.
-              </Info>
-            )}
-          {(this.props.editorTarget == "library" ||
-            this.props.editorTarget == "combatant") &&
-            api.values.Player === "" && (
-              <TextField label="CR Rating" fieldName="CRRating" />
-            )}
         </div>
         {api.values.Player === "player" && (
           <div className="c-statblock-editor__abilityscores">
-            {StatBlock.VisibleAbilityNames.map(abilityScoreField)}
+            {StatBlock.VisibleAbilityNames.map(name =>
+              abilityScoreField(name, true)
+            )}
           </div>
         )}
         <div className="c-statblock-editor__stats">

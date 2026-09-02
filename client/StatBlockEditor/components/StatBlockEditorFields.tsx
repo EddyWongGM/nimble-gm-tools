@@ -13,6 +13,7 @@ type FormApi = FormikProps<any>;
 export const ValueAndNotesField = (props: {
   label: string;
   fieldName: string;
+  hideNotes?: boolean;
 }) => (
   <label className="c-statblock-editor__text">
     <span className="c-statblock-editor__label">{props.label}</span>
@@ -22,12 +23,37 @@ export const ValueAndNotesField = (props: {
         className="value"
         name={`${props.fieldName}.Value`}
       />
+      {!props.hideNotes && (
+        <Field
+          type="text"
+          className="notes"
+          name={`${props.fieldName}.Notes`}
+          autoComplete="off"
+        />
+      )}
+    </div>
+  </label>
+);
+
+const HitDieSizes = ["d4", "d6", "d8", "d10", "d12"];
+
+export const HitDiceField = () => (
+  <label className="c-statblock-editor__text">
+    <span className="c-statblock-editor__label">Hit Dice</span>
+    <div className="inline">
+      <Field type="number" className="value" name="HitDice.Value" />
       <Field
-        type="text"
-        className="notes"
-        name={`${props.fieldName}.Notes`}
-        autoComplete="off"
-      />
+        component="select"
+        className="c-statblock-editor__hitdice-size"
+        name="HitDice.Notes"
+      >
+        <option value="">-</option>
+        {HitDieSizes.map(size => (
+          <option key={size} value={size}>
+            {size}
+          </option>
+        ))}
+      </Field>
     </div>
   </label>
 );
@@ -64,16 +90,33 @@ export const InitiativeField = () => (
   </div>
 );
 
-export const abilityScoreField = (abilityName: string) => (
+export const abilityScoreField = (
+  abilityName: string,
+  showSaveAdvantage?: boolean
+) => (
   <div key={abilityName} className="c-statblock-editor__ability">
-    <label className="c-statblock-editor__label" htmlFor={`ability-${abilityName}`}>
-      {StatBlock.AbilityDisplayNames[abilityName] || abilityName}
-    </label>
-    <Field
-      type="number"
-      id={`ability-${abilityName}`}
-      name={`Abilities.${abilityName}`}
-    />
+    <div className="c-statblock-editor__ability-score">
+      <label className="c-statblock-editor__label" htmlFor={`ability-${abilityName}`}>
+        {StatBlock.AbilityDisplayNames[abilityName] || abilityName}
+      </label>
+      <Field
+        type="number"
+        id={`ability-${abilityName}`}
+        name={`Abilities.${abilityName}`}
+      />
+    </div>
+    {showSaveAdvantage && (
+      <Field
+        component="select"
+        className="c-statblock-editor__save-advantage"
+        name={`SaveAdvantages.${abilityName}`}
+        title="Save Advantage"
+      >
+        <option value="">Normal</option>
+        <option value="-">Disadvantage</option>
+        <option value="+">Advantage</option>
+      </Field>
+    )}
   </div>
 );
 

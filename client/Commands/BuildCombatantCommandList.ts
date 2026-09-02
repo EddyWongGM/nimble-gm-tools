@@ -48,7 +48,8 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-mana",
     description: "Apply Temporary Mana",
     actionBinding: c.AddTemporaryMana,
-    fontAwesomeIcon: "tint"
+    fontAwesomeIcon: "tint",
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "spend-resources",
