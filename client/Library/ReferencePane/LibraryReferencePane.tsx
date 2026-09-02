@@ -23,7 +23,8 @@ interface LibraryReferencePaneProps<T extends Listable> {
       e: React.MouseEvent<HTMLDivElement>
     ) => void,
     onPreviewOut: () => void,
-    showSource?: boolean
+    showSource?: boolean,
+    showChallenge?: boolean
   ) => JSX.Element;
   listingGroups: ListingGroup[];
   addNewText?: string;
@@ -90,19 +91,25 @@ export class LibraryReferencePane<T extends Listable> extends React.Component<
 
     const listingAndFolderComponents = BuildListingTree(
       (listing, index, array) => {
-        // If an adjacent listing has the same name, show the source
-        let showSource = false;
-        if (
-          array[index - 1]?.Meta().Name === listing.Meta().Name ||
-          array[index + 1]?.Meta().Name === listing.Meta().Name
-        ) {
-          showSource = true;
-        }
+        // If an adjacent listing has the same name, show whichever of
+        // Source/Challenge actually differs, to help tell the two listings
+        // apart without showing a value that's identical between them.
+        const collidesOn = (dimension: "Source" | "Level") => {
+          const value = listing.Meta().FilterDimensions?.[dimension];
+          const adjacentDiffers = (adjacent?: Listing<T>) =>
+            adjacent?.Meta().Name === listing.Meta().Name &&
+            adjacent.Meta().FilterDimensions?.[dimension] !== value;
+          return (
+            adjacentDiffers(array[index - 1]) || adjacentDiffers(array[index + 1])
+          );
+        };
+
         return this.props.renderListingRow(
           listing,
           this.previewItem,
           this.onPreviewOut,
-          showSource
+          collidesOn("Source"),
+          collidesOn("Level")
         );
       },
       grouping,
