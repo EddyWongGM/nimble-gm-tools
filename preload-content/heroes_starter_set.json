@@ -153,7 +153,7 @@
     "Traits": [],
     "Actions": [
       {
-        "Name": "Vicious Opportunist (1/turn) (melee & distracted)",
+        "Name": "\\Vicious Opportunist (1/turn) (melee & distracted)",
         "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
         "Usage": ""
       },
@@ -173,7 +173,7 @@
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "Adaptable",
+        "Name": "Tenacious",
         "Content": "[tab] (+1 to all skills. +1 to Initiative)",
         "Usage": ""
       }
@@ -335,8 +335,8 @@
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "Taste for the finer things",
-        "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
+        "Name": "Taste for the Finer Things",
+        "Content": "Advantage on Influence checks with the upper class.",
         "Usage": ""
       },
       {
