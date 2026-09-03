@@ -5,6 +5,8 @@ interface ToggleButtonProps {
   fieldName: string;
   id?: string;
   disabled?: boolean;
+  /** Display and toggle the negation of the underlying field, e.g. a "Hide" field shown as a "Show" checkbox. */
+  inverted?: boolean;
 }
 
 export class ToggleButton extends React.Component<ToggleButtonProps> {
@@ -12,7 +14,10 @@ export class ToggleButton extends React.Component<ToggleButtonProps> {
     return (
       <Field name={this.props.fieldName}>
         {(fieldProps: FieldProps) => {
-          const stateString = fieldProps.field.value
+          const checked = this.props.inverted
+            ? !fieldProps.field.value
+            : fieldProps.field.value;
+          const stateString = checked
             ? "fas fa-check-circle"
             : "far fa-circle";
           return (

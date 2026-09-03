@@ -101,7 +101,11 @@ function GetHPDisplay(combatant: Combatant): string {
 
 function GetManaDisplay(combatant: Combatant): string | undefined {
   const maxMana = combatant.MaxMana();
-  if (maxMana === undefined) {
+  if (
+    maxMana === undefined ||
+    !CurrentSettings().Rules.EnableMana ||
+    CurrentSettings().PlayerView.HideManaNumbers
+  ) {
     return undefined;
   }
 
@@ -135,7 +139,11 @@ function GetManaDisplay(combatant: Combatant): string | undefined {
 
 function GetManaColor(combatant: Combatant): string | undefined {
   const maxMana = combatant.MaxMana();
-  if (maxMana === undefined) {
+  if (
+    maxMana === undefined ||
+    !CurrentSettings().Rules.EnableMana ||
+    CurrentSettings().PlayerView.HideManaNumbers
+  ) {
     return undefined;
   }
 
@@ -154,7 +162,11 @@ function GetManaColor(combatant: Combatant): string | undefined {
 
 function GetResourcesDisplay(combatant: Combatant): string | undefined {
   const maxResources = combatant.MaxResources();
-  if (maxResources === undefined) {
+  if (
+    maxResources === undefined ||
+    !CurrentSettings().Rules.EnableResources ||
+    CurrentSettings().PlayerView.HideResourcesNumbers
+  ) {
     return undefined;
   }
 
@@ -188,7 +200,11 @@ function GetResourcesDisplay(combatant: Combatant): string | undefined {
 
 function GetResourcesColor(combatant: Combatant): string | undefined {
   const maxResources = combatant.MaxResources();
-  if (maxResources === undefined) {
+  if (
+    maxResources === undefined ||
+    !CurrentSettings().Rules.EnableResources ||
+    CurrentSettings().PlayerView.HideResourcesNumbers
+  ) {
     return undefined;
   }
 
@@ -211,7 +227,9 @@ function GetHitDiceDisplay(combatant: Combatant): string | undefined {
   if (
     maxHitDice === undefined ||
     !combatant.RevealedHitDice() ||
-    currentHitDice >= maxHitDice
+    currentHitDice >= maxHitDice ||
+    !CurrentSettings().Rules.EnableHitDice ||
+    CurrentSettings().PlayerView.HideHitDiceNumbers
   ) {
     // Don't reveal the Hit Dice track in Player View while it's still full -
     // only show it once at least one has been spent.
@@ -251,7 +269,9 @@ function GetHitDiceColor(combatant: Combatant): string | undefined {
   if (
     maxHitDice === undefined ||
     !combatant.RevealedHitDice() ||
-    currentHitDice >= maxHitDice
+    currentHitDice >= maxHitDice ||
+    !CurrentSettings().Rules.EnableHitDice ||
+    CurrentSettings().PlayerView.HideHitDiceNumbers
   ) {
     return undefined;
   }
@@ -270,7 +290,12 @@ function GetHitDiceColor(combatant: Combatant): string | undefined {
 function GetWoundsDisplay(combatant: Combatant): string | undefined {
   const maxWounds = combatant.MaxWounds();
   const currentWounds = combatant.CurrentWounds();
-  if (maxWounds === undefined || currentWounds <= 0) {
+  if (
+    maxWounds === undefined ||
+    currentWounds <= 0 ||
+    !CurrentSettings().Rules.EnableWounds ||
+    CurrentSettings().PlayerView.HideWoundsNumbers
+  ) {
     // Don't reveal the Wounds track in Player View until a wound has
     // actually been taken.
     return undefined;
@@ -302,7 +327,12 @@ function GetWoundsDisplay(combatant: Combatant): string | undefined {
 function GetWoundsColor(combatant: Combatant): string | undefined {
   const maxWounds = combatant.MaxWounds();
   const currentWounds = combatant.CurrentWounds();
-  if (maxWounds === undefined || currentWounds <= 0) {
+  if (
+    maxWounds === undefined ||
+    currentWounds <= 0 ||
+    !CurrentSettings().Rules.EnableWounds ||
+    CurrentSettings().PlayerView.HideWoundsNumbers
+  ) {
     return undefined;
   }
 

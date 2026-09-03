@@ -19,18 +19,20 @@ export function InitiativeList(props: {
   const settings = React.useContext(SettingsContext);
   const alwaysNumberMonsters = settings.Rules.AlwaysNumberMonsters;
   const encounterState = props.encounterState;
-  const showManaColumn = encounterState.Combatants.some(
-    c => c.StatBlock.Mana
-  );
-  const showResourcesColumn = encounterState.Combatants.some(
-    c => c.StatBlock.Resources
-  );
-  const showHitDiceColumn = encounterState.Combatants.some(
-    c => c.StatBlock.HitDice
-  );
-  const showWoundsColumn = encounterState.Combatants.some(
-    c => c.StatBlock.Wounds && StatBlock.ActsInPlayerPhase(c.StatBlock)
-  );
+  const showManaColumn =
+    settings.Rules.EnableMana &&
+    encounterState.Combatants.some(c => c.StatBlock.Mana);
+  const showResourcesColumn =
+    settings.Rules.EnableResources &&
+    encounterState.Combatants.some(c => c.StatBlock.Resources);
+  const showHitDiceColumn =
+    settings.Rules.EnableHitDice &&
+    encounterState.Combatants.some(c => c.StatBlock.HitDice);
+  const showWoundsColumn =
+    settings.Rules.EnableWounds &&
+    encounterState.Combatants.some(
+      c => c.StatBlock.Wounds && StatBlock.ActsInPlayerPhase(c.StatBlock)
+    );
   const showItemsColumn =
     settings.Rules.EnableInventory &&
     encounterState.Combatants.some(c => StatBlock.IsPlayerCharacter(c.StatBlock));
@@ -42,20 +44,24 @@ export function InitiativeList(props: {
   return (
     <div className="initiative-list">
       <div className="initiative-list__header">
+        <div className="initiative-list__header-side initiative-list__header-side--left">
+          {anyHasTakenTurn && (
+            <Button
+              text="Reset Turns"
+              tooltip="Uncheck 'has taken turn' for everyone"
+              onClick={commandContext.ResetHasTakenTurnForAllCombatants}
+              additionalClassNames="c-button--reset-turns"
+            />
+          )}
+        </div>
         <h2>Nimble RPG App</h2>
-        {encounterState.MonstersActFirst && (
-          <span className="initiative-list__phase-indicator">
-            Monsters act first
-          </span>
-        )}
-        {anyHasTakenTurn && (
-          <Button
-            text="Reset Turns"
-            tooltip="Uncheck 'has taken turn' for everyone"
-            onClick={commandContext.ResetHasTakenTurnForAllCombatants}
-            additionalClassNames="c-button--reset-turns"
-          />
-        )}
+        <div className="initiative-list__header-side initiative-list__header-side--right">
+          {encounterState.MonstersActFirst && (
+            <span className="initiative-list__phase-indicator">
+              Monsters act first
+            </span>
+          )}
+        </div>
       </div>
       <table className="combatants">
         <InitiativeListHeader

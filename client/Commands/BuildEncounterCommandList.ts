@@ -72,18 +72,18 @@ export const BuildEncounterCommandList = (
     //   defaultShowOnActionBar: false
     // }),
     new Command({
-      id: "clear-encounter",
-      description: "Clear Encounter",
-      actionBinding: c.ClearEncounter,
-      fontAwesomeIcon: "trash",
-      defaultShowOnActionBar: false
-    }),
-    new Command({
       id: "clean-encounter",
       description: "Clean Encounter",
       actionBinding: c.CleanEncounter,
       fontAwesomeIcon: "broom"
     }),
+    new Command({
+      id: "clear-encounter",
+      description: "Clear Encounter",
+      actionBinding: c.ClearEncounter,
+      fontAwesomeIcon: "trash",
+      defaultShowOnActionBar: false
+    }),    
     new Command({
       id: "open-library",
       description: "Library Reference Pane",

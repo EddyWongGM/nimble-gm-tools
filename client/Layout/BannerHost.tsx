@@ -15,7 +15,10 @@ export function BannerHost(): JSX.Element {
     return null;
   }
 
-  if (env.IsLoggedIn && (env.HasStorage || env.HasEpicInitiative)) {
+  if (
+    env.IsLoggedIn &&
+    (env.HasStorage || env.HasEpicInitiative || env.HasMythic)
+  ) {
     return null;
   }
 
@@ -30,14 +33,12 @@ export function BannerHost(): JSX.Element {
             image_url: banner.src
           });
 
-          if (banner.href.indexOf("patreon.com") > -1) {
-            Metrics.TrackPatreonSignupIntent(Metrics.LeadSource.FooterBanner, {
-              link_url: banner.href,
-              creative_name: banner.src
-            });
-          }
+          Metrics.TrackPatreonSignupIntent(Metrics.LeadSource.FooterBanner, {
+            link_url: banner.href,
+            creative_name: banner.src
+          });
         }}
-        title="Affiliate banners support the free app, and are hidden for subscribed Patrons."
+        title="Support the free app on Patreon. Hidden for subscribed Patrons."
       >
         <img src={banner.src} alt={banner.altText} />
       </a>
@@ -80,20 +81,21 @@ const Banners: { href: string; src: string; altText: string }[] = [
     href: "https://www.dmsguild.com/product/247882/Wayfinders-Guide-to-Eberron-5e?filters=0_0_0_0_0_0_0_1000100&src=affiliate282190&affiliate_id=282190",
     src: "https://www.dmsguild.com/themes/dmg/images/affiliatebanner2.jpg",
     altText: "Eberron Adventures at DMsGuild.com"
-  },
-  {
-    href: "https://www.patreon.com/join/NimbleRPGApp",
-    src: "../img/banner-annual.png",
-    altText: "Nimble RPG App Epic Tier Annual Subscriptions"
-  },
-  {
-    href: "https://www.patreon.com/join/NimbleRPGApp",
-    src: "../img/banner-features.png",
-    altText: "Nimble RPG App Epic Tier Features"
-  },
-  {
-    href: "https://www.patreon.com/join/NimbleRPGApp",
-    src: "../img/banner-trial.png",
-    altText: "Nimble RPG App Epic Tier Free Trial"
   }
+  // ,
+  // {
+  //   href: "https://www.patreon.com/join/NimbleRPGApp",
+  //   src: "../img/banner-annual.png",
+  //   altText: "Nimble RPG App Epic Tier Annual Subscriptions"
+  // },
+  // {
+  //   href: "https://www.patreon.com/join/NimbleRPGApp",
+  //   src: "../img/banner-features.png",
+  //   altText: "Nimble RPG App Epic Tier Features"
+  // },
+  // {
+  //   href: "https://www.patreon.com/join/NimbleRPGApp",
+  //   src: "../img/banner-trial.png",
+  //   altText: "Nimble RPG App Epic Tier Free Trial"
+  // }
 ];

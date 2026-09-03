@@ -19,6 +19,7 @@ import { StatBlock } from "../../common/StatBlock";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { Combatant } from "../Combatant/Combatant";
 import { Tag } from "../Combatant/Tag";
+import { TagChallengeCollisions } from "../Combatant/TagChallengeCollisions";
 import {
   GetOrRollMaximumHP,
   VariantMaximumHP
@@ -203,6 +204,7 @@ export class Encounter {
     this.combatants.push(combatant);
 
     combatant.UpdateIndexLabel();
+    TagChallengeCollisions(combatant, this.combatants());
 
     if (this.EncounterFlow.State() === "active") {
       this.promptEditCombatantInitiative(combatant.Id);
@@ -223,7 +225,15 @@ export class Encounter {
     variantMaximumHP: VariantMaximumHP = VariantMaximumHP.DEFAULT
   ): void => {
     try {
-      const statBlock: StatBlock = { ...StatBlock.Default(), ...statBlockJson };
+      const { Items: startingItems, ...statBlockJsonWithoutItems } =
+        statBlockJson as { Items?: InventoryItem[] } & Record<
+          string,
+          unknown
+        >;
+      const statBlock: StatBlock = {
+        ...StatBlock.Default(),
+        ...statBlockJsonWithoutItems
+      };
       if (!StatBlock.ActsInPlayerPhase(statBlock)) {
         if (statBlock.Armor === "medium" && statBlock.HPMediumArmor) {
           statBlock.HP = statBlock.HPMediumArmor;
@@ -260,6 +270,7 @@ export class Encounter {
         RevealedHitDice: true,
         Initiative: 0,
         Tags: [],
+        Items: startingItems ?? [],
         RoundCounter: 0,
         ElapsedSeconds: 0,
         InterfaceVersion: process.env.VERSION || "unknown"
@@ -272,7 +283,7 @@ export class Encounter {
       // toast/notification system in this app to reuse.
       if (legendaryHeroCount !== null) {
         combatant.Tags.push(
-          new Tag(`HP ×${legendaryHeroCount} (heroes)`, combatant, true)
+          new Tag(`HP ×${legendaryHeroCount}`, combatant, true)
         );
       }
     } catch (e) {

@@ -50,7 +50,7 @@ export interface StatBlock extends Listable {
   HP: ValueAndNotes;
   HPMediumArmor?: ValueAndNotes;
   HPHeavyArmor?: ValueAndNotes;
-  LastStageHP?: ValueAndNotes;
+  LastStandHP?: ValueAndNotes;
   AC: ValueAndNotes;
   Mana?: ValueAndNotes;
   Resources?: ValueAndNotes;
@@ -58,6 +58,7 @@ export interface StatBlock extends Listable {
   Wounds?: ValueAndNotes;
   Speed: string[];
   Abilities: AbilityScores;
+  SaveAdvantages?: Partial<Record<keyof AbilityScores, AdvantageLevel>>;
   InitiativeModifier?: number;
   InitiativeSpecialRoll?: InitiativeSpecialRoll;
   InitiativeAdvantage?: boolean;
@@ -99,6 +100,8 @@ export namespace StatBlock {
     heavy: "Heavy Armor"
   };
 
+  export const ArmorTierOrder: ArmorTier[] = ["", "medium", "heavy"];
+
   export const GetSearchHint = (statBlock: StatBlock): string =>
     statBlock.Type.toLocaleLowerCase().replace(/[^\w\s]/g, "");
 
@@ -135,10 +138,31 @@ export namespace StatBlock {
       };
     }
 
+    // "Last Stage" was renamed to "Last Stand"; migrate the old field name
+    // so already-authored Legendary monsters keep their configured value.
+    if (updated?.LastStageHP && updated?.LastStandHP === undefined) {
+      const { LastStageHP, ...rest } = updated;
+      updated = {
+        ...rest,
+        LastStandHP: LastStageHP
+      };
+    }
+
     return {
       ...updated,
       Saves: dropLegacyModifierEntries(updated?.Saves),
-      Skills: dropLegacyModifierEntries(updated?.Skills)
+      Skills: dropLegacyModifierEntries(updated?.Skills),
+      // Every ability needs an explicit "" (Normal) entry, not just a missing
+      // key - a missing key reads as undefined everywhere else, but the
+      // <select> in the editor still needs a real "" match to be reliably
+      // controlled by Formik rather than falling back to the DOM's default.
+      SaveAdvantages: {
+        Str: "",
+        Dex: "",
+        Int: "",
+        Wis: "",
+        ...updated?.SaveAdvantages
+      }
     };
   };
 
@@ -183,6 +207,7 @@ export namespace StatBlock {
     InitiativeAdvantage: false,
     Speed: [],
     Abilities: { Str: 0, Dex: 0, Int: 0, Wis: 0 },
+    SaveAdvantages: { Str: "", Dex: "", Int: "", Wis: "" },
     DamageVulnerabilities: [],
     DamageResistances: [],
     DamageImmunities: [],

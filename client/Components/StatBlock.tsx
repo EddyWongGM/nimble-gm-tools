@@ -27,14 +27,33 @@ export function AbilityScores(props: { statBlock: StatBlock }) {
         const abilityModifier = textEnricher.EnrichModifier(
           props.statBlock.Abilities[abilityName]
         );
+        const saveAdvantage = props.statBlock.SaveAdvantages?.[abilityName];
         return (
           <div className="Ability" key={abilityName}>
             <div className="stat-label">
               {StatBlock.AbilityDisplayNames[abilityName] || abilityName}
             </div>
-            <span className={"modifier " + abilityName}>
-              {abilityModifier}
-            </span>
+            <div className="modifier-wrap">
+              <span
+                className={
+                  "save-triangle save-triangle--up" +
+                  (saveAdvantage === "+" ? "" : " save-triangle--hidden")
+                }
+                title={saveAdvantage === "+" ? "Advantage on Save" : undefined}
+              />
+              <span className={"modifier " + abilityName}>
+                {abilityModifier}
+              </span>
+              <span
+                className={
+                  "save-triangle save-triangle--down" +
+                  (saveAdvantage === "-" ? "" : " save-triangle--hidden")
+                }
+                title={
+                  saveAdvantage === "-" ? "Disadvantage on Save" : undefined
+                }
+              />
+            </div>
           </div>
         );
       })}

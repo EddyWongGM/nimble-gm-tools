@@ -48,7 +48,8 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-mana",
     description: "Apply Temporary Mana",
     actionBinding: c.AddTemporaryMana,
-    fontAwesomeIcon: "tint"
+    fontAwesomeIcon: "tint",
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "spend-resources",
@@ -68,7 +69,8 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-resources",
     description: "Apply Temporary Resources",
     actionBinding: c.AddTemporaryResources,
-    fontAwesomeIcon: "bolt"
+    fontAwesomeIcon: "bolt",
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "spend-hit-dice",
@@ -88,7 +90,8 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-hit-dice",
     description: "Apply Temporary Hit Dice",
     actionBinding: c.AddTemporaryHitDice,
-    fontAwesomeIcon: "dice-d6"
+    fontAwesomeIcon: "dice-d6",
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "spend-wounds",
@@ -108,7 +111,8 @@ export const BuildCombatantCommandList: (
     id: "apply-temporary-wounds",
     description: "Apply Wound Protection",
     actionBinding: c.AddTemporaryWounds,
-    fontAwesomeIcon: "skull"
+    fontAwesomeIcon: "skull",
+    defaultShowOnActionBar: false
   }),
   new Command({
     id: "add-gold",
@@ -197,7 +201,7 @@ export const BuildCombatantCommandList: (
   }),
   new Command({
     id: "edit-statblock",
-    description: "Edit Unique Statblock",
+    description: "Create Unique Monster",
     actionBinding: c.EditOwnStatBlock,
     fontAwesomeIcon: "edit",
     defaultShowOnActionBar: true

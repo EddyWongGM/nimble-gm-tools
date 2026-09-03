@@ -8,11 +8,29 @@
 }
 
 .initiative-list__header {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 0.5rem;
+
+  h2 {
+    justify-self: center;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.initiative-list__header-side {
+  display: flex;
+  align-items: center;
+
+  &--left {
+    justify-self: start;
+  }
+
+  &--right {
+    justify-self: end;
+  }
 }
 
 .initiative-list__phase-indicator {
@@ -434,8 +452,8 @@
   }
 }
 
-// GM-only indicator that a Legendary monster has entered its last stage.
-.combatant__hp-bar--last-stage {
+// GM-only indicator that a Legendary monster has entered its last stand.
+.combatant__hp-bar--last-stand {
   .combatant__hp-bar--filled {
     background: var(--gold);
   }
@@ -495,6 +513,10 @@
   width: 1.5em;
   text-align: center;
   color: var(--text-faded);
+}
+
+.combatant__armor-badge--clickable {
+  cursor: pointer;
 }
 
 .combatant__hitdice--hidden-badge {

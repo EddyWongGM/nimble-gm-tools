@@ -168,6 +168,23 @@ describe("Index labeling", () => {
       const combatant = addCombatantFromStatBlock(encounter, statBlock);
       expect(combatant.DisplayName()).toEqual("Ancient Dragon");
     });
+
+    test("A Legendary monster added between two same-named monsters doesn't take a number from their shared sequence", () => {
+      const goblin = { ...StatBlock.Default(), Name: "Goblin" };
+      const dragon = {
+        ...StatBlock.Default(),
+        Name: "Ancient Dragon",
+        Player: "legendary"
+      };
+
+      const goblin1 = addCombatantFromStatBlock(encounter, goblin);
+      const legendary = addCombatantFromStatBlock(encounter, dragon);
+      const goblin2 = addCombatantFromStatBlock(encounter, goblin);
+
+      expect(goblin1.DisplayName()).toEqual("Goblin 1");
+      expect(legendary.DisplayName()).toEqual("Ancient Dragon");
+      expect(goblin2.DisplayName()).toEqual("Goblin 2");
+    });
   });
 
   test("Two Legendary monsters sharing a name are still numbered, for disambiguation (AlwaysNumberMonsters off)", () => {

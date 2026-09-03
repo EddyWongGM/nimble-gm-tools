@@ -7,6 +7,7 @@ import { probablyUniqueString } from "../../common/Toolbox";
 import { useState, useRef } from "react";
 import { Button, SubmitButton } from "../Components/Button";
 import { Listing } from "../Library/Listing";
+import { SpellDetails } from "../Library/Components/SpellDetails";
 import { EnumToggle } from "./EnumToggle";
 import { DescriptionField } from "./components/StatBlockEditorFields";
 import { TextField } from "./components/TextField";
@@ -72,7 +73,7 @@ export function SpellEditor(props: SpellEditorProps) {
 
           standardSpell.Classes = AllClasses.split(",").map(c => c.trim());
           standardSpell.Tier = castToNumberOrZero(standardSpell.Tier);
-          standardSpell.Mana = castToNumberOrZero(standardSpell.Mana);
+          standardSpell.Actions = castToNumberOrZero(standardSpell.Actions);
 
           spell = standardSpell;
         } else {
@@ -110,7 +111,14 @@ export function SpellEditor(props: SpellEditorProps) {
               setEditorMode={setEditorMode}
             />
           </div>
-          {editorMode === "standard" && <StandardEditor />}
+          {editorMode === "standard" && (
+            <div className="c-spell-editor__body">
+              <div className="c-spell-editor__fields">
+                <StandardEditor />
+              </div>
+              <SpellEditorPreview />
+            </div>
+          )}
           {editorMode === "json" && (
             <textarea
               className="json-editor"
@@ -150,8 +158,9 @@ function buttons(props: SpellEditorProps) {
 }
 
 function StandardEditor() {
-  const { values } = useFormikContext<{ EntryType: "spell" | "rule" }>();
+  const { values } = useFormikContext<{ EntryType: "spell" | "rule"; Tier: any }>();
   const isRule = values.EntryType === "rule";
+  const isCantrip = castToNumberOrZero(values.Tier) === 0;
 
   return (
     <>
@@ -166,10 +175,9 @@ function StandardEditor() {
             <TextField label="School" fieldName="School" />
             <div className="c-spell-editor__small-fields">
               <TextField label="Tier" fieldName="Tier" />
-              <TextField label="Requires" fieldName="CastingTime" />
-              <TextField label="Mana" fieldName="Mana" />
-              <TextField label="Duration" fieldName="Duration" />
+              <TextField label="Actions" fieldName="Actions" />
             </div>
+            <TextField label="Cast Condition" fieldName="CastCondition" />
             <div className="c-spell-editor__distance">
               <EnumToggle
                 labelsByOption={{ Range: "Range", Reach: "Reach" }}
@@ -181,7 +189,30 @@ function StandardEditor() {
         )}
       </div>
       <DescriptionField />
+      {!isRule && (
+        <TextField
+          label={isCantrip ? "High Levels" : "Upcast"}
+          fieldName="Upcast"
+        />
+      )}
     </>
+  );
+}
+
+function SpellEditorPreview() {
+  const { values } = useFormikContext<Record<string, any>>();
+
+  const spell: Spell = {
+    ...Spell.Default(),
+    ...values,
+    Tier: castToNumberOrZero(values.Tier),
+    Actions: castToNumberOrZero(values.Actions)
+  };
+
+  return (
+    <div className="spell-preview">
+      <SpellDetails Spell={spell} />
+    </div>
   );
 }
 

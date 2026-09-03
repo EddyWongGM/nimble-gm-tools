@@ -180,13 +180,13 @@ async function preloadStatBlocks(
       continue;
     }
 
-    if (sourceSlug === "tutorial-monsters") {
+    if (sourceSlug === "monster-builder-set") {
       try {
-        const response = await axios.get("/tutorial-monsters/");
+        const response = await axios.get("/monster-builder-set/");
         const localListings: ListingMeta[] = response.data;
         StatBlocks.AddListings(localListings, "server");
       } catch (error) {
-        console.warn(`Problem loading Tutorial Monsters: ${error}`);
+        console.warn(`Problem loading Monster Builder Set: ${error}`);
       }
       continue;
     }
@@ -216,9 +216,9 @@ async function preloadHeroes(
     isEnabled => isEnabled
   );
   for (const sourceSlug in enabledSources) {
-    if (sourceSlug === "tutorial-heroes") {
+    if (sourceSlug === "heroes-tutorial-set") {
       try {
-        const response = await axios.get("/heroes/");
+        const response = await axios.get("/heroes-tutorial-set/");
         const localListings: ListingMeta[] = response.data;
         PersistentCharacters.AddListings(
           localListings,
@@ -226,13 +226,13 @@ async function preloadHeroes(
           PersistentCharacter.Initialize
         );
       } catch (error) {
-        console.warn(`Problem loading Tutorial Heroes: ${error}`);
+        console.warn(`Problem loading Heroes Tutorial Set: ${error}`);
       }
     }
 
     if (sourceSlug === "local-basic-rules") {
       try {
-        const response = await axios.get("/basic-rules-heroes/");
+        const response = await axios.get("/heroes-starter-set/");
         const localListings: ListingMeta[] = response.data;
         PersistentCharacters.AddListings(
           localListings,
@@ -240,7 +240,7 @@ async function preloadHeroes(
           PersistentCharacter.Initialize
         );
       } catch (error) {
-        console.warn(`Problem loading Basic Rules Heroes: ${error}`);
+        console.warn(`Problem loading Heroes Starter Set: ${error}`);
       }
     }
   }
@@ -257,7 +257,7 @@ export async function loadTutorialHeroes(
   }
 
   try {
-    const response = await axios.get("/heroes/");
+    const response = await axios.get("/heroes-tutorial-set/");
     const localListings: ListingMeta[] = response.data;
     PersistentCharacters.AddListings(
       localListings,
@@ -265,7 +265,7 @@ export async function loadTutorialHeroes(
       PersistentCharacter.Initialize
     );
   } catch (error) {
-    console.warn(`Problem loading Tutorial Heroes: ${error}`);
+    console.warn(`Problem loading Heroes Tutorial Set: ${error}`);
   }
 }
 
@@ -275,6 +275,22 @@ export function unloadTutorialHeroes(
   PersistentCharacters.GetAllListings()
     .filter(l => l.Origin === "server")
     .forEach(l => PersistentCharacters.DeleteListing(l.Meta().Id));
+}
+
+export async function loadBasicRulesHeroes(
+  PersistentCharacters: Library<PersistentCharacter>
+) {
+  try {
+    const response = await axios.get("/heroes-starter-set/");
+    const localListings: ListingMeta[] = response.data;
+    PersistentCharacters.AddListings(
+      localListings,
+      "server",
+      PersistentCharacter.Initialize
+    );
+  } catch (error) {
+    console.warn(`Problem loading Heroes Starter Set: ${error}`);
+  }
 }
 
 async function preloadEncounters(
@@ -288,7 +304,7 @@ async function preloadEncounters(
   for (const sourceSlug in enabledSources) {
     if (sourceSlug === "local-basic-rules") {
       try {
-        const response = await axios.get("/basic-rules-encounters/");
+        const response = await axios.get("/encounters-starter-set/");
         const localListings: ListingMeta[] = response.data;
         Encounters.AddListings(
           localListings,
@@ -296,13 +312,15 @@ async function preloadEncounters(
           UpdateLegacySavedEncounter
         );
       } catch (error) {
-        console.warn(`Problem loading Basic Rules Encounters: ${error}`);
+        console.warn(`Problem loading Encounters Starter Set: ${error}`);
       }
     }
   }
 }
 
 export const SAMPLE_HEROES_FOLDER_NAME = "Sample Heroes";
+
+export const MONSTER_BUILDER_FOLDER_NAME = "Monster Builder";
 
 async function preloadSpells(Spells: Library<Spell>, settings: Settings) {
   const enabledSources = _.pickBy(

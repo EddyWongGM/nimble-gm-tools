@@ -44,12 +44,9 @@ export class SpellImporter extends Importer {
     spell.Tier = this.getInt("level");
     const initial = this.getString("school");
     spell.School = SpellImporter.schoolsByInitials[initial];
-    spell.CastingTime = this.getString("time");
     spell.Distance = this.getString("range");
     spell.Components = this.getString("components");
-    spell.Duration = this.getString("duration");
     spell.Classes = this.getCommaSeparatedStrings("classes");
-    spell.Ritual = this.getString("ritual") === "YES";
     spell.Description = this.getDescription();
     spell.Source = this.getSource();
     return spell;

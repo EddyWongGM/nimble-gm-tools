@@ -16,6 +16,7 @@ import { BuildEncounterCommandList } from "./Commands/BuildEncounterCommandList"
 import { CombatantCommander } from "./Commands/CombatantCommander";
 import { EncounterCommander } from "./Commands/EncounterCommander";
 import { LibrariesCommander } from "./Commands/LibrariesCommander";
+import { BetaDataWarningPrompt } from "./Prompts/BetaDataWarningPrompt";
 import { PrivacyPolicyPrompt } from "./Prompts/PrivacyPolicyPrompt";
 import { PromptQueue } from "./Commands/PromptQueue";
 import { SubmitButton } from "./Components/Button";
@@ -70,6 +71,7 @@ export class TrackerViewModel {
       "SkipIntro"
     )
   );
+  public PostTutorialNudgeVisible = ko.observable(false);
   public SettingsVisible = ko.observable(false);
   public LibrariesVisible = ko.observable(true);
   public LibraryManagerPane = ko.observable<LibraryType | null>(null);
@@ -149,7 +151,6 @@ export class TrackerViewModel {
       LegacySynchronousLocalStore.User,
       "PendingRepeatTutorial"
     );
-    console.log("[TutorialDebug] ContinuePendingRepeatTutorialIfNeeded, pending =", pending);
     if (pending) {
       LegacySynchronousLocalStore.Delete(
         LegacySynchronousLocalStore.User,
@@ -157,6 +158,37 @@ export class TrackerViewModel {
       );
       this.RepeatTutorial();
     }
+  };
+
+  // Guards against allPersistentCharactersLoaded's repeated firing (see its
+  // comment above ContinuePendingRepeatTutorialIfNeeded) - without this, a
+  // tutorial closed in the current session sets the pending flag, then a
+  // later same-session firing of this same callback would immediately
+  // consume it, showing the nudge right on top of the tutorial's own
+  // closing prompts instead of on the GM's next session.
+  private hasCheckedPostTutorialNudge = false;
+
+  public ShowPostTutorialNudgeIfPending = (): void => {
+    if (this.hasCheckedPostTutorialNudge) {
+      return;
+    }
+    this.hasCheckedPostTutorialNudge = true;
+
+    const pending = LegacySynchronousLocalStore.Load(
+      LegacySynchronousLocalStore.User,
+      "PendingPostTutorialNudge"
+    );
+    if (pending) {
+      LegacySynchronousLocalStore.Delete(
+        LegacySynchronousLocalStore.User,
+        "PendingPostTutorialNudge"
+      );
+      this.PostTutorialNudgeVisible(true);
+    }
+  };
+
+  public DismissPostTutorialNudge = (): void => {
+    this.PostTutorialNudgeVisible(false);
   };
 
   public StatBlockTextEnricher: TextEnricher;
@@ -251,17 +283,13 @@ export class TrackerViewModel {
 
   public RepeatTutorial = (): void => {
     const settings = CurrentSettings();
-    console.log(
-      "[TutorialDebug] RepeatTutorial called, tutorial-heroes =",
-      settings.PreloadedHeroSources["tutorial-heroes"]
-    );
-    if (!settings.PreloadedHeroSources["tutorial-heroes"]) {
+    if (!settings.PreloadedHeroSources["heroes-tutorial-set"]) {
       this.didTriggerRepeatTutorialReload = true;
       this.SaveUpdatedSettings({
         ...settings,
         PreloadedHeroSources: {
           ...settings.PreloadedHeroSources,
-          "tutorial-heroes": true
+          "heroes-tutorial-set": true
         }
       });
       LegacySynchronousLocalStore.Save(
@@ -269,7 +297,6 @@ export class TrackerViewModel {
         "PendingRepeatTutorial",
         true
       );
-      console.log("[TutorialDebug] RepeatTutorial reloading page");
       window.location.reload();
       return;
     }
@@ -278,10 +305,6 @@ export class TrackerViewModel {
     this.EncounterCommander.ShowLibraries();
     this.SettingsVisible(false);
     this.TutorialVisible(true);
-    console.log(
-      "[TutorialDebug] RepeatTutorial set TutorialVisible(true), current value =",
-      this.TutorialVisible()
-    );
     loadTutorialHeroes(this.Libraries.PersistentCharacters);
   };
 
@@ -542,10 +565,22 @@ export class TrackerViewModel {
   private showPrivacyNotificationAfterTutorial() {
     this.TutorialVisible.subscribe(v => {
       if (v == false) {
+        this.displayBetaWarningIfNeeded();
         this.displayPrivacyNotificationIfNeeded();
       }
     });
   }
+
+  private displayBetaWarningIfNeeded = () => {
+    if (
+      LegacySynchronousLocalStore.Load(
+        LegacySynchronousLocalStore.User,
+        "AcknowledgedBetaWarning"
+      ) == null
+    ) {
+      this.PromptQueue.Add(BetaDataWarningPrompt());
+    }
+  };
 
   private buildCombatantViewModel = (combatant: Combatant) => {
     const vm = new CombatantViewModel(

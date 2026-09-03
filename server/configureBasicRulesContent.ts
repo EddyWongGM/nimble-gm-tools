@@ -8,7 +8,7 @@ import { Req, Res } from "./routes";
 
 export function configureBasicRulesContent(app: express.Application) {
   const statBlockLibrary = Library.FromFile<StatBlock>(
-    "basic_rules_creatures.json",
+    "preload-content/monster_starter_set.json",
     "/statblocks/",
     StatBlock.GetSearchHint,
     StatBlock.FilterDimensions
@@ -22,23 +22,23 @@ export function configureBasicRulesContent(app: express.Application) {
     res.json(statBlockLibrary.GetById(req.params.id));
   });
 
-  const tutorialMonsterLibrary = Library.FromFile<StatBlock>(
-    "tutorial_monsters.json",
-    "/tutorial-monsters/",
+  const monsterBuilderSetLibrary = Library.FromFile<StatBlock>(
+    "preload-content/monster_builder_set.json",
+    "/monster-builder-set/",
     StatBlock.GetSearchHint,
     StatBlock.FilterDimensions
   );
 
-  app.get(tutorialMonsterLibrary.Route(), (req: Req, res: Res) => {
-    res.json(tutorialMonsterLibrary.GetListings());
+  app.get(monsterBuilderSetLibrary.Route(), (req: Req, res: Res) => {
+    res.json(monsterBuilderSetLibrary.GetListings());
   });
 
-  app.get(tutorialMonsterLibrary.Route() + ":id", (req: Req, res: Res) => {
-    res.json(tutorialMonsterLibrary.GetById(req.params.id));
+  app.get(monsterBuilderSetLibrary.Route() + ":id", (req: Req, res: Res) => {
+    res.json(monsterBuilderSetLibrary.GetById(req.params.id));
   });
 
   const spellLibrary = Library.FromFile<Spell>(
-    "basic_rules_spells.json",
+    "preload-content/compendium_starter_set.json",
     "/spells/",
     Spell.GetSearchHint,
     Spell.GetFilterDimensions
@@ -52,48 +52,51 @@ export function configureBasicRulesContent(app: express.Application) {
     res.json(spellLibrary.GetById(req.params.id));
   });
 
-  const heroLibrary = Library.FromFile<StatBlock>(
-    "tutorial_heroes.json",
-    "/heroes/",
+  const heroesTutorialSetLibrary = Library.FromFile<StatBlock>(
+    "preload-content/heroes_tutorial_set.json",
+    "/heroes-tutorial-set/",
     StatBlock.GetSearchHint,
     StatBlock.FilterDimensions
   );
 
-  app.get(heroLibrary.Route(), (req: Req, res: Res) => {
-    res.json(heroLibrary.GetListings());
+  app.get(heroesTutorialSetLibrary.Route(), (req: Req, res: Res) => {
+    res.json(heroesTutorialSetLibrary.GetListings());
   });
 
-  app.get(heroLibrary.Route() + ":id", (req: Req, res: Res) => {
-    res.json(heroLibrary.GetById(req.params.id));
+  app.get(heroesTutorialSetLibrary.Route() + ":id", (req: Req, res: Res) => {
+    res.json(heroesTutorialSetLibrary.GetById(req.params.id));
   });
 
-  const basicRulesHeroLibrary = Library.FromFile<StatBlock>(
-    "basic_rules_heroes.json",
-    "/basic-rules-heroes/",
+  const heroesStarterSetLibrary = Library.FromFile<StatBlock>(
+    "preload-content/heroes_starter_set.json",
+    "/heroes-starter-set/",
     StatBlock.GetSearchHint,
     StatBlock.FilterDimensions
   );
 
-  app.get(basicRulesHeroLibrary.Route(), (req: Req, res: Res) => {
-    res.json(basicRulesHeroLibrary.GetListings());
+  app.get(heroesStarterSetLibrary.Route(), (req: Req, res: Res) => {
+    res.json(heroesStarterSetLibrary.GetListings());
   });
 
-  app.get(basicRulesHeroLibrary.Route() + ":id", (req: Req, res: Res) => {
-    res.json(basicRulesHeroLibrary.GetById(req.params.id));
+  app.get(heroesStarterSetLibrary.Route() + ":id", (req: Req, res: Res) => {
+    res.json(heroesStarterSetLibrary.GetById(req.params.id));
   });
 
-  const basicRulesEncounterLibrary = Library.FromFile<SavedEncounter>(
-    "basic_rules_encounters.json",
-    "/basic-rules-encounters/",
+  const encountersStarterSetLibrary = Library.FromFile<SavedEncounter>(
+    "preload-content/encounters_starter_set.json",
+    "/encounters-starter-set/",
     SavedEncounter.GetSearchHint,
     () => ({})
   );
 
-  app.get(basicRulesEncounterLibrary.Route(), (req: Req, res: Res) => {
-    res.json(basicRulesEncounterLibrary.GetListings());
+  app.get(encountersStarterSetLibrary.Route(), (req: Req, res: Res) => {
+    res.json(encountersStarterSetLibrary.GetListings());
   });
 
-  app.get(basicRulesEncounterLibrary.Route() + ":id", (req: Req, res: Res) => {
-    res.json(basicRulesEncounterLibrary.GetById(req.params.id));
-  });
+  app.get(
+    encountersStarterSetLibrary.Route() + ":id",
+    (req: Req, res: Res) => {
+      res.json(encountersStarterSetLibrary.GetById(req.params.id));
+    }
+  );
 }

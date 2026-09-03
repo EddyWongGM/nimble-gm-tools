@@ -1,13 +1,23 @@
 import * as _ from "lodash";
 import * as React from "react";
 import { Listable } from "../../../common/Listable";
-import { SAMPLE_HEROES_FOLDER_NAME } from "../Libraries";
+import {
+  MONSTER_BUILDER_FOLDER_NAME,
+  SAMPLE_HEROES_FOLDER_NAME
+} from "../Libraries";
 import { Listing } from "../Listing";
 import { RenameResult } from "../RenameResult";
 import { Folder } from "./Folder";
 
 export type ListingGroup = {
   label?: string;
+  // When set, listings with no value for this grouping's key (e.g. spells
+  // with no School) are omitted entirely instead of falling back to the
+  // ungrouped root list.
+  hideUngrouped?: boolean;
+  // When set, only listings matching this predicate are shown under this
+  // grouping (e.g. Tier only makes sense for spells, not rules).
+  filterFn?: (l: Listing<any>) => boolean;
   groupFn: (l: Listing<any>) => {
     label?: string;
     key: string;
@@ -41,9 +51,17 @@ export function BuildListingTree<T extends Listable>(
 
   const foldersByKey: Record<string, FolderModel> = {};
 
-  listings.forEach((listing, index, array) => {
+  const filteredListings = listingGroup.filterFn
+    ? listings.filter(listingGroup.filterFn)
+    : listings;
+
+  filteredListings.forEach((listing, index, array) => {
     const group = listingGroup.groupFn(listing);
     if (group.key == "" || group.key === undefined) {
+      if (listingGroup.hideUngrouped) {
+        return;
+      }
+
       const component = buildListingComponent(listing, index, array);
 
       rootListingComponents.push(component);
@@ -84,6 +102,10 @@ function buildFolderComponents<T extends Listable>(
       // regardless of what they name them.
       if (a === SAMPLE_HEROES_FOLDER_NAME) return 1;
       if (b === SAMPLE_HEROES_FOLDER_NAME) return -1;
+      // Keep the preloaded Monster Builder templates above any folders the
+      // GM creates, regardless of what they name them.
+      if (a === MONSTER_BUILDER_FOLDER_NAME) return -1;
+      if (b === MONSTER_BUILDER_FOLDER_NAME) return 1;
       return a < b ? -1 : a > b ? 1 : 0;
     })
     .map(key => {

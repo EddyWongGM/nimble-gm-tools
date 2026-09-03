@@ -37,6 +37,7 @@ export function SelectedCombatants(props: {
           displayMode="default"
           onRemoveItem={combatantCommander.PromptRemoveItem}
           onShowInventoryCard={combatantCommander.ShowInventoryCard}
+          showChallengeInfo
         />
       </div>
     );
@@ -54,6 +55,7 @@ export function SelectedCombatants(props: {
           combatants={selectedCombatants}
           onRemoveItem={combatantCommander.PromptRemoveItem}
           onShowInventoryCard={combatantCommander.ShowInventoryCard}
+          showChallengeInfo
         />
       </div>
     );

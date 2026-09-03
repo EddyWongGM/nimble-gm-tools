@@ -51,12 +51,50 @@ export function OptionsSettings(props: {
         Name Colors
         <Info>Enables a widget to assign a color to each name.</Info>
       </DisplaysToggle>
-      <DisplaysToggle fieldName="DisplayReactionTracker">
-        Reaction Tracker
+      <DisplaysToggle
+        encounterViewFieldName="Rules.EnableMana"
+        playerViewFieldName="PlayerView.HideManaNumbers"
+        invertPlayerView
+      >
+        Mana
+        <Info>
+          Encounter View toggle controls the Mana feature entirely.
+        </Info>
+      </DisplaysToggle>
+      <DisplaysToggle
+        encounterViewFieldName="Rules.EnableResources"
+        playerViewFieldName="PlayerView.HideResourcesNumbers"
+        invertPlayerView
+      >
+        Resources
+        <Info>
+          Encounter View toggle controls the Resources feature entirely.
+        </Info>
+      </DisplaysToggle>
+      <DisplaysToggle
+        encounterViewFieldName="Rules.EnableHitDice"
+        playerViewFieldName="PlayerView.HideHitDiceNumbers"
+        invertPlayerView
+      >
+        Hit Dice
+        <Info>
+          Encounter View toggle controls the Hit Dice feature entirely.
+        </Info>
+      </DisplaysToggle>
+      <DisplaysToggle
+        encounterViewFieldName="Rules.EnableWounds"
+        playerViewFieldName="PlayerView.HideWoundsNumbers"
+        invertPlayerView
+      >
+        Wounds
+        <Info>
+          Encounter View toggle controls the Wounds feature entirely.
+        </Info>
       </DisplaysToggle>
       <DisplaysToggle
         encounterViewFieldName="Rules.EnableInventory"
         playerViewFieldName="PlayerView.HideInventoryNumbers"
+        invertPlayerView
       >
         Inventory
         <Info>
@@ -66,12 +104,16 @@ export function OptionsSettings(props: {
       <DisplaysToggle
         encounterViewFieldName="Rules.EnableGold"
         playerViewFieldName="PlayerView.HideGoldNumbers"
+        invertPlayerView
       >
         Gold
         <Info>
           Encounter View toggle controls the Gold feature entirely.
         </Info>
       </DisplaysToggle>
+      <DisplaysToggle fieldName="DisplayReactionTracker">
+        Reaction Tracker
+      </DisplaysToggle>      
       <DisplaysToggle
         fieldName="DisplayPortraits"
         requireEpicTierForPlayerViewToggle

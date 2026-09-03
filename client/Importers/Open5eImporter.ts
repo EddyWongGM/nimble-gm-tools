@@ -58,14 +58,11 @@ export function ImportOpen5eSpell(open5eSpell: Record<string, any>): Spell {
     Source: open5eSpell.document__title,
     Tier: open5eSpell.level_int,
     School: open5eSpell.school,
-    CastingTime: open5eSpell.casting_time,
     DistanceType: "Range" as const,
     Distance: open5eSpell.range,
     Components: open5eSpell.components,
-    Duration: open5eSpell.duration,
     Classes: open5eSpell.dnd_class.split(", "),
-    Description: open5eSpell.desc + "\n\n" + open5eSpell.higher_level,
-    Ritual: open5eSpell.ritual === "yes" || open5eSpell.ritual === true
+    Description: open5eSpell.desc + "\n\n" + open5eSpell.higher_level
   };
 
   return spell;

@@ -5,7 +5,7 @@
   overflow-y: scroll;
 
   textarea[name="Description"] {
-    height: 200px;
+    height: 140px;
   }
 
   input,
@@ -32,37 +32,50 @@
     padding: @medium-spacer;
   }
 
-  // Same global `div { flex-direction: column }` gotcha as statblock-editor.less
-  // - without this, the Ritual toggle's label and button stack instead of
-  // sitting side by side.
-  .c-spell-editor__ritual {
-    display: flex;
-    align-items: center;
-    margin: @medium-spacer 0;
+  // Every label in this editor's header block (Source/School/Cast Condition
+  // as well as the paired Tier/Actions below) shares one fixed
+  // width instead of the default 20%/80% split - .c-text-field's percentage
+  // split resolves against each row's own container, which is a full-width
+  // row for Source/School/Cast Condition but only half that (one grid
+  // column) for the paired fields below, so percentages alone never land on
+  // the same pixel column. A single fixed width for every label keeps the
+  // inputs above and below lined up in one column regardless of container
+  // width - matches the fixed-width convention already used for
+  // c-statblock-editor__stats labels (see statblock-editor.less).
+  .c-statblock-editor__headers > .c-text-field {
+    // .c-text-field wraps by default, which only stayed on one line before
+    // because the label/input split was percentage-based (20%/80%, summing
+    // to exactly 100%). The fixed label width above doesn't sum neatly with
+    // the input's 80% basis, so left wrapping on, the input drops to its own
+    // line - force one line and let the input fill the remaining space
+    // instead.
+    flex-wrap: nowrap;
 
-    .c-button-with-label {
-      display: flex;
-      flex-flow: row;
+    > .label {
+      flex: 0 0 9rem;
+    }
+
+    > input {
+      flex: 1;
     }
   }
 
-  // Tier/Mana/Requires/Duration only ever hold a short value - lay them out
-  // 2 by 2 instead of each claiming a full-width row like Source/School.
+  // Tier/Actions only ever hold a short value - lay them out side by side
+  // instead of each claiming a full-width row like Source/School.
   .c-spell-editor__small-fields {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0 @medium-spacer;
 
-    // .c-text-field's label/input split (20%/80%) assumes a full-width row.
-    // Halved into a grid column, "Requires"/"Duration" no longer fit 20% and
-    // wrap onto their own line - give every label here the same fixed width
-    // (sized for the longest label, "Requires"/"Duration") instead, so the
-    // inputs line up in a column regardless of each row's label length.
     .c-text-field {
       flex-wrap: nowrap;
 
+      // Same fixed label width as the full-width rows above (see rule
+      // above) - both grid columns are equal width, so giving both columns'
+      // labels the same width also keeps the two number inputs the same
+      // size as each other.
       .label {
-        flex: 0 0 5.5rem;
+        flex: 0 0 9rem;
       }
 
       input {
@@ -71,16 +84,23 @@
     }
   }
 
-  // Same flex-direction gotcha as .c-spell-editor__ritual above - without
-  // this the Range/Reach toggle and its value field stack instead of sitting
-  // side by side.
+  // Same global `div { flex-direction: column }` gotcha noted elsewhere in
+  // this file - without this the Range/Reach toggle and its value field
+  // stack instead of sitting side by side.
   .c-spell-editor__distance {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
 
+    // The Range/Reach toggle stands in for a field label here (like
+    // "Upcast"/"High Levels" does via .c-text-field > .label) - match that
+    // label's text styling so the two read as the same kind of thing
+    // instead of one looking like a button and the other like a label.
     .c-button {
       margin: @small-spacer @small-spacer @small-spacer 0;
+      font-size: @font-size-h4;
+      font-family: @font-family-headers;
+      color: var(--red);
     }
 
     // .c-text-field sizes its label/input via percentage flex-basis, which
@@ -90,6 +110,18 @@
     .c-text-field {
       flex: 1;
     }
+  }
+
+  .c-spell-editor__body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: @medium-spacer;
+  }
+
+  .c-spell-editor__fields {
+    flex: 1;
+    min-width: 0;
   }
 
   .json-editor {

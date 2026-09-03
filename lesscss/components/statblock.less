@@ -44,6 +44,8 @@
 }
 
 .c-combatant-details__defense-resources {
+  > * + .stat-label.CRRating,
+  > * + .stat-label.SaveDC,
   > * + .stat-label.Resources {
     margin-left: @medium-spacer;
   }
@@ -168,7 +170,15 @@ input[type="number"].c-combatant-details__item-quantity {
 
   .Ability {
     flex: 0 0 auto;
-    display: block;
+    // The save-triangle slots make .modifier-wrap taller than a single text
+    // line, so a plain inline flow left the label sitting at its own
+    // shorter line height instead of matching the value's - center them
+    // against each other on the same row instead. flex-direction must be
+    // set explicitly - the global `div { flex-direction: column }` rule
+    // (layout/base.less) otherwise wins over the row default.
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     text-align: left;
     margin-right: @medium-spacer;
   }
@@ -187,10 +197,52 @@ input[type="number"].c-combatant-details__item-quantity {
     font-size: @font-size-small;
     text-align: center;
   }
+
+  // Holds the modifier plus its optional save-advantage triangle, stacked
+  // (triangle, value, triangle) so the indicator adds height, not width -
+  // keeps each ability the same slim column it was without it.
+  .modifier-wrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  // Pure-CSS triangles (no icon font glyph reads this small) - green
+  // pointing up for Advantage, wound-red pointing down for Disadvantage,
+  // matching the HP-loss color already used elsewhere in the statblock.
+  // Always rendered (hidden via visibility, not display/mounting) so every
+  // ability reserves the same top/bottom slot - otherwise the modifier
+  // value shifts up or down depending on which neighbors have a triangle.
+  .save-triangle {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  }
+
+  .save-triangle--up {
+    border-bottom: 6px solid var(--green);
+    margin-bottom: 2px;
+  }
+
+  .save-triangle--down {
+    border-top: 6px solid var(--wound-red);
+    margin-top: 2px;
+  }
+
+  .save-triangle--hidden {
+    visibility: hidden;
+  }
 }
 
 .c-combatant-details > .Abilities {
   .ability-scores();
+
+  // This panel is wide enough that flex-start left the 4 abilities bunched
+  // together on the left with unused space to their right - spread them
+  // across the full row instead.
+  justify-content: space-between;
 }
 
 .c-combatant-details__scrollable {
@@ -237,7 +289,7 @@ input[type="number"].c-combatant-details__item-quantity {
   .Source {
     font-size: @font-size-mice;
     line-height: 1;
-    font-weight: bold;
+    font-weight: normal;
     margin-bottom: 0.25rem;
   }
 
@@ -252,9 +304,8 @@ input[type="number"].c-combatant-details__item-quantity {
 // @font-size-h3) - the right-pane combatant details panel is narrower and
 // a large name crowds the HP/AC/Mana row below it.
 //
-// Name and Type sit on the same line when they fit; Type wraps to its own
-// line once a long Name crowds it out. Source (rarely populated here)
-// always gets its own full-width line below.
+// Name, Type, and Source (rarely populated here) each get their own
+// full-width line.
 .c-combatant-details .c-statblock-header {
   flex-direction: row;
   flex-wrap: wrap;
@@ -265,11 +316,13 @@ input[type="number"].c-combatant-details__item-quantity {
 
   .Name {
     order: 1;
+    flex-basis: 100%;
     font-size: @font-size-large;
   }
 
   .Type {
     order: 2;
+    flex-basis: 100%;
   }
 
   .Source {

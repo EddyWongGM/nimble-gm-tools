@@ -36,8 +36,8 @@ export class StatBlockHeader extends React.Component<
           {this.props.name}
           {nameNeedsFallback && statBlockName}
         </h3>
-        <div className="Source">{this.props.source}</div>
         <div className="Type">{this.props.type}</div>
+        <div className="Source">{this.props.source}</div>
       </div>
     );
 

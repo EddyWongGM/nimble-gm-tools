@@ -311,11 +311,11 @@ describe("StatBlockEditor", () => {
     dndEditor.unmount();
   });
 
-  test("Hides Last Stage HP field for a Normal monster", () => {
-    expect(editor.find(`input[name="LastStageHP.Value"]`)).toHaveLength(0);
+  test("Hides Last Stand HP field for a Normal monster", () => {
+    expect(editor.find(`input[name="LastStandHP.Value"]`)).toHaveLength(0);
   });
 
-  test("Shows and saves Last Stage HP field once the monster is Legendary", async () => {
+  test("Shows and saves Last Stand HP field once the monster is Legendary", async () => {
     const tierToggle = editor
       .find(EnumToggle)
       .filterWhere(w => w.prop("fieldName") === "Player");
@@ -324,8 +324,8 @@ describe("StatBlockEditor", () => {
     });
     editor.update();
 
-    simulate(`input[name="LastStageHP.Value"]`, "change", {
-      target: { name: "LastStageHP.Value", value: "10" }
+    simulate(`input[name="LastStandHP.Value"]`, "change", {
+      target: { name: "LastStandHP.Value", value: "10" }
     });
 
     await submitEditor();
@@ -333,7 +333,7 @@ describe("StatBlockEditor", () => {
     expect(saveCallback).toHaveBeenCalledWith(
       expect.objectContaining({
         Player: "legendary",
-        LastStageHP: expect.objectContaining({ Value: 10 })
+        LastStandHP: expect.objectContaining({ Value: 10 })
       })
     );
   });

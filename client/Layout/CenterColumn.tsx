@@ -8,6 +8,7 @@ import { CombatFooter } from "../CombatFooter/CombatFooter";
 import { InitiativeListHost } from "../InitiativeList/InitiativeListHost";
 import { useVerticalResizerDrop } from "./VerticalResizer";
 import { centerColumnView } from "./centerColumnView";
+import { BannerHost } from "./BannerHost";
 
 export function CenterColumn(props: {
   tracker: TrackerViewModel;
@@ -43,6 +44,7 @@ export function CenterColumn(props: {
         encounter={props.tracker.Encounter}
         eventLog={props.tracker.EventLog}
       />
+      <BannerHost />
     </div>
   );
 }

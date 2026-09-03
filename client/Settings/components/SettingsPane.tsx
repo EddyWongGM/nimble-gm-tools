@@ -58,6 +58,10 @@ export function SettingsPane(props: SettingsPaneProps) {
         !_.isEqual(
           settings.PreloadedHeroSources,
           newSettings.PreloadedHeroSources
+        ) ||
+        !_.isEqual(
+          settings.PreloadedEncounterSources,
+          newSettings.PreloadedEncounterSources
         );
 
       if (preloadedContentChanged) {

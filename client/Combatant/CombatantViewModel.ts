@@ -4,13 +4,16 @@ import * as _ from "lodash";
 import { CombatantCommander } from "../Commands/CombatantCommander";
 import { ConcentrationTagText } from "../Prompts/ConcentrationPrompt";
 import { CurrentSettings } from "../Settings/Settings";
+import { NotifyTutorialOfAction } from "../Tutorial/NotifyTutorialOfAction";
 import { Metrics } from "../Utility/Metrics";
 import { Combatant } from "./Combatant";
 import { Tag } from "./Tag";
 import { TagState } from "../../common/CombatantState";
+import { StatBlock } from "../../common/StatBlock";
 import { EditInitiativePrompt } from "../Prompts/EditInitiativePrompt";
 import { PromptProps } from "../Prompts/PendingPrompts";
 import { EditAliasPrompt } from "../Prompts/EditAliasPrompt";
+import { CycleArmorTierPrompt } from "../Prompts/CycleArmorTierPrompt";
 
 const animatedCombatantIds = ko.observableArray<string>([]);
 
@@ -290,6 +293,7 @@ export class CombatantViewModel {
 
   public ToggleHasTakenTurn(): void {
     this.Combatant.HasTakenTurn(!this.Combatant.HasTakenTurn());
+    NotifyTutorialOfAction("ToggleHasTakenTurn");
   }
 
   public ToggleHidden() {
@@ -324,6 +328,32 @@ export class CombatantViewModel {
         name: this.Name()
       });
     }
+  }
+
+  // GM-only, monster-only: cycles Heavy -> Medium -> Unarmored -> Heavy.
+  // Only changes which HP pool a monster would enter combat with next time
+  // it's added - doesn't touch this combatant's already-baked current/max
+  // HP (see plans/Monsters/03_MONSTER_ARMOR_HP.md).
+  public CycleArmorTier() {
+    const statBlock = this.Combatant.StatBlock();
+    const tierCount = StatBlock.ArmorTierOrder.length;
+    const currentIndex = StatBlock.ArmorTierOrder.indexOf(statBlock.Armor ?? "");
+    const nextTier =
+      StatBlock.ArmorTierOrder[
+        (currentIndex - 1 + tierCount) % tierCount
+      ];
+
+    const prompt = CycleArmorTierPrompt(this.Combatant, nextTier, () => {
+      this.Combatant.StatBlock({ ...statBlock, Armor: nextTier });
+      this.LogEvent(
+        `${this.Name()} Armor set to ${StatBlock.ArmorDisplayNames[nextTier]}.`
+      );
+      Metrics.TrackEvent(Metrics.Event.CombatantArmorTierChanged, {
+        name: this.Name(),
+        armor: nextTier
+      });
+    });
+    this.EnqueuePrompt(prompt);
   }
 
   public ToggleRevealedAC() {

@@ -14,7 +14,7 @@ export class TipCarousel extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      tipIndex: 0
+      tipIndex: Math.floor(Math.random() * tips.length)
     };
   }
 

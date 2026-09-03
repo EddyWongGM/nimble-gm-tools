@@ -181,8 +181,8 @@ export function CombatantRow(props: CombatantRowProps) {
               <span
                 className={
                   "combatant__hp-bar" +
-                  (props.combatantState.HasEnteredLastStage
-                    ? " combatant__hp-bar--last-stage"
+                  (props.combatantState.HasEnteredLastStand
+                    ? " combatant__hp-bar--last-stand"
                     : "")
                 }
               >
@@ -212,7 +212,7 @@ export function CombatantRow(props: CombatantRowProps) {
             )}
           </>
         ) : (
-          renderArmorBadge(props)
+          renderArmorBadge(props, commandContext)
         )}
       </td>
 
@@ -632,15 +632,27 @@ function renderDisplayName(props: CombatantRowProps) {
 // GM-only armor tier badge for monsters, replacing the AC column that's
 // dropped entirely for monsters (see plans/Monsters/03_MONSTER_ARMOR_HP.md) -
 // never sent to Player View, since ToPlayerViewCombatantState omits Armor.
-function renderArmorBadge(props: CombatantRowProps) {
-  const armor = props.combatantState.StatBlock.Armor;
-  if (armor !== "medium" && armor !== "heavy") {
-    return null;
-  }
+// Clicking it cycles the tier (Unarmored -> Medium -> Heavy -> ...); this
+// only changes which HP pool the monster would use next time it's added -
+// it does not rescale this combatant's already-baked current/max HP.
+function renderArmorBadge(
+  props: CombatantRowProps,
+  commandContext: React.ContextType<typeof CommandContext>
+) {
+  const armor = props.combatantState.StatBlock.Armor || "";
+  const label = armor === "medium" ? "M" : armor === "heavy" ? "H" : "-";
   return (
-    <Tippy content={StatBlockNamespace.ArmorDisplayNames[armor]}>
-      <strong className="combatant__armor-badge">
-        {armor === "medium" ? "M" : "H"}
+    <Tippy
+      content={`${StatBlockNamespace.ArmorDisplayNames[armor]} (click to change)`}
+    >
+      <strong
+        className="combatant__armor-badge combatant__armor-badge--clickable"
+        onClick={event => {
+          commandContext.CycleArmorTierForCombatant(props.combatantState.Id);
+          event.stopPropagation();
+        }}
+      >
+        {label}
       </strong>
     </Tippy>
   );

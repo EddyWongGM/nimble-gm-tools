@@ -34,11 +34,11 @@ export function ContentSettings() {
       <Toggle fieldName="PreloadedHeroSources.local-basic-rules">
         (WIP) Starter Set
       </Toggle>
-      <Toggle fieldName="PreloadedHeroSources.tutorial-heroes">
+      <Toggle fieldName="PreloadedHeroSources.heroes-tutorial-set">
         (WIP) Tutorial Set
       </Toggle>      
       <h2>Monsters</h2>
-      <Toggle fieldName="PreloadedStatBlockSources.tutorial-monsters">
+      <Toggle fieldName="PreloadedStatBlockSources.monster-builder-set">
         (WIP) Monster Builder Set
       </Toggle>
       <Toggle fieldName="PreloadedStatBlockSources.local-basic-rules">

@@ -20,6 +20,7 @@ interface CombatantDetailsProps {
   key: string;
   onRemoveItem?: (combatant: Combatant, item: InventoryItem) => void;
   onShowInventoryCard?: (combatant: Combatant) => void;
+  showChallengeInfo?: boolean;
 }
 
 export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
@@ -82,6 +83,21 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         {statBlock.Player == "player" ? "Level" : "Challenge"}
       </span>
       <span className="stat-value">{statBlock.Challenge}</span>
+      {!StatBlock.ActsInPlayerPhase(statBlock) && statBlock.Speed.length > 0 && (
+        <>
+          <span className="stat-label Speed">Speed</span>
+          <span className="stat-value">
+            {statBlock.Speed.map((speed, i) => (
+              <span
+                className="stat-value__item"
+                key={"stat-value__speed-" + i}
+              >
+                {speed}
+              </span>
+            ))}
+          </span>
+        </>
+      )}
     </>
   );
 
@@ -138,11 +154,25 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             <span className="stat-value">{statBlock.AC.Value}</span>
           </>
         ) : (
+          statBlock.Armor && (
+            <>
+              <span className="stat-label">Armor</span>
+              <span className="stat-value">
+                {StatBlock.ArmorDisplayNames[statBlock.Armor]}
+              </span>
+            </>
+          )
+        )}
+        {props.showChallengeInfo && statBlock.CRRating && (
           <>
-            <span className="stat-label">Armor</span>
-            <span className="stat-value">
-              {StatBlock.ArmorDisplayNames[statBlock.Armor || ""]}
-            </span>
+            <span className="stat-label CRRating">CR Rating</span>
+            <span className="stat-value">{statBlock.CRRating}</span>
+          </>
+        )}
+        {props.showChallengeInfo && statBlock.SaveDC != null && (
+          <>
+            <span className="stat-label SaveDC">Save DC</span>
+            <span className="stat-value">{statBlock.SaveDC}</span>
           </>
         )}
         {currentResources && (
@@ -166,7 +196,10 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         <div className="c-combatant-details__hitdice-wounds">
           {currentHitDice && (
             <>
-              <span className="stat-label HitDice">Hit Dice</span>
+              <span className="stat-label HitDice">
+                Hit Dice
+                {statBlock.HitDice?.Notes && ` (${statBlock.HitDice.Notes})`}
+              </span>
               <span>
                 {currentHitDice}
                 {DisplayHPBar && (
@@ -198,7 +231,7 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
           )}
         </div>
       )}
-      {(statBlock.Speed.length > 0 || StatBlock.ActsInPlayerPhase(statBlock)) && (
+      {StatBlock.ActsInPlayerPhase(statBlock) && (
         <div className="c-combatant-details__speed-initiative">
           {statBlock.Speed.length > 0 && (
             <>

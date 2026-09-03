@@ -410,6 +410,7 @@ describe("Combatant", () => {
     });
 
     test("ManaDisplay shows only the current value to players (max is DM-only)", () => {
+      InitializeTestSettings({ Rules: { EnableMana: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player",
@@ -420,6 +421,7 @@ describe("Combatant", () => {
     });
 
     test("ManaDisplay shows a qualitative label for monsters, using MonsterHPVerbosity", () => {
+      InitializeTestSettings({ Rules: { EnableMana: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Mana: { Value: 10, Notes: "" }
@@ -452,6 +454,7 @@ describe("Combatant", () => {
     });
 
     test("HitDiceDisplay shows once at least one Hit Die is spent", () => {
+      InitializeTestSettings({ Rules: { EnableHitDice: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player",
@@ -498,6 +501,7 @@ describe("Combatant", () => {
     });
 
     test("WoundsDisplay shows the current value once a wound is taken", () => {
+      InitializeTestSettings({ Rules: { EnableWounds: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player",
@@ -508,6 +512,7 @@ describe("Combatant", () => {
     });
 
     test("A companion tracks Wounds the same as a player character", () => {
+      InitializeTestSettings({ Rules: { EnableWounds: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "companion",
@@ -622,20 +627,20 @@ describe("Combatant", () => {
     });
   });
 
-  describe("Legendary last stage", () => {
-    test("ApplyDamage drops a Legendary monster to its Last Stage HP instead of defeating it, the first time it hits 0", () => {
+  describe("Legendary last stand", () => {
+    test("ApplyDamage drops a Legendary monster to its Last Stand HP instead of defeating it, the first time it hits 0", () => {
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "legendary",
         HP: { Value: 10, Notes: "" },
-        LastStageHP: { Value: 4, Notes: "" }
+        LastStandHP: { Value: 4, Notes: "" }
       });
 
       combatant.ApplyDamage(10);
 
       expect(combatant.CurrentHP()).toBe(4);
-      expect(combatant.HasEnteredLastStage()).toBe(true);
-      expect(combatant.Tags().map(t => t.Text)).toContain("Last Stage");
+      expect(combatant.HasEnteredLastStand()).toBe(true);
+      expect(combatant.Tags().map(t => t.Text)).toContain("Last Stand");
     });
 
     test("ApplyDamage defeats a Legendary monster normally the second time it hits 0", () => {
@@ -643,17 +648,17 @@ describe("Combatant", () => {
         ...StatBlock.Default(),
         Player: "legendary",
         HP: { Value: 10, Notes: "" },
-        LastStageHP: { Value: 4, Notes: "" }
+        LastStandHP: { Value: 4, Notes: "" }
       });
 
       combatant.ApplyDamage(10);
       combatant.ApplyDamage(4);
 
       expect(combatant.CurrentHP()).toBe(0);
-      expect(combatant.HasEnteredLastStage()).toBe(true);
+      expect(combatant.HasEnteredLastStand()).toBe(true);
     });
 
-    test("ApplyDamage does not trigger a last stage without an authored Last Stage HP", () => {
+    test("ApplyDamage does not trigger a last stand without an authored Last Stand HP", () => {
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "legendary",
@@ -663,20 +668,20 @@ describe("Combatant", () => {
       combatant.ApplyDamage(10);
 
       expect(combatant.CurrentHP()).toBe(0);
-      expect(combatant.HasEnteredLastStage()).toBe(false);
+      expect(combatant.HasEnteredLastStand()).toBe(false);
     });
 
-    test("ApplyDamage does not trigger a last stage for a non-Legendary monster", () => {
+    test("ApplyDamage does not trigger a last stand for a non-Legendary monster", () => {
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         HP: { Value: 10, Notes: "" },
-        LastStageHP: { Value: 4, Notes: "" }
+        LastStandHP: { Value: 4, Notes: "" }
       });
 
       combatant.ApplyDamage(10);
 
       expect(combatant.CurrentHP()).toBe(0);
-      expect(combatant.HasEnteredLastStage()).toBe(false);
+      expect(combatant.HasEnteredLastStand()).toBe(false);
     });
   });
 });
