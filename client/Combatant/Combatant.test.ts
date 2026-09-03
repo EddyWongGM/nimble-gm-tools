@@ -410,6 +410,7 @@ describe("Combatant", () => {
     });
 
     test("ManaDisplay shows only the current value to players (max is DM-only)", () => {
+      InitializeTestSettings({ Rules: { EnableMana: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player",
@@ -420,6 +421,7 @@ describe("Combatant", () => {
     });
 
     test("ManaDisplay shows a qualitative label for monsters, using MonsterHPVerbosity", () => {
+      InitializeTestSettings({ Rules: { EnableMana: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Mana: { Value: 10, Notes: "" }
@@ -452,6 +454,7 @@ describe("Combatant", () => {
     });
 
     test("HitDiceDisplay shows once at least one Hit Die is spent", () => {
+      InitializeTestSettings({ Rules: { EnableHitDice: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player",
@@ -498,6 +501,7 @@ describe("Combatant", () => {
     });
 
     test("WoundsDisplay shows the current value once a wound is taken", () => {
+      InitializeTestSettings({ Rules: { EnableWounds: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "player",
@@ -508,6 +512,7 @@ describe("Combatant", () => {
     });
 
     test("A companion tracks Wounds the same as a player character", () => {
+      InitializeTestSettings({ Rules: { EnableWounds: true } });
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
         Player: "companion",
