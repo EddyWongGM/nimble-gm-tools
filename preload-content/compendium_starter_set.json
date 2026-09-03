@@ -10,8 +10,216 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble GM Tools"
+    "Source": "Core Rules"
   },
+  {
+    "Name": "Vicious",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Roll 1 additional die whenever you roll crit damage.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Dwarf (Medium)",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Dwarf, in the old language, means “stone.” You are resilient, solid, stout. Even when driven to exhaustion, you will not falter. Forgoing speed, you are gifted with physical vitality and a belly that can handle the finest (and worst) consumables this world has to offer.\n\n\n<b>Stout.</b> +2 max Hit Dice, +1 max Wounds, –1 Speed. You know Dwarvish if your INT isn’t negative.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Ancestries/Common",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Elf (Medium)",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Elves epitomize swiftness and grace. Their tall, slender forms belie their innate speed, grace, and wit. Formidable in both diplomacy and combat, elves strike swiftly, often preventing the worst by acting first.\n\n\n<b>Lithe.</b> Advantage on Initiative, +1 Speed. You know Elvish if your INT isn’t negative.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Ancestries/Common",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Human (Medium)",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Found in every terrain and environment, their curiosity and ambition drive them to explore every corner of the world, making them a ubiquitous and versatile race.\n\n\n<b>Tenacious.</b> +1 to all skills and Initiative.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Ancestries/Common",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },  
+  {
+    "Name": "Lithe",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Advantage on Initiative, +1 Speed. You know Elvish if your INT isn’t negative.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Ancestries",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Stout",
+    "Classes": [""],
+    "Components": "",
+    "Description": "+2 max Hit Dice, +1 max Wounds, –1 Speed. You know Dwarvish if your INT isn’t negative.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Ancestries",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+    {
+    "Name": "Tenacious",
+    "Classes": [""],
+    "Components": "",
+    "Description": "+1 to all skills and Initiative.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Ancestries",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Academy Dropout",
+    "Classes": [""],
+    "Components": "",
+    "Description": "School just isn’t for everyone! You learn by experience in the real world (or at least that’s what you tell yourself). Learn any 1 Utility Spell.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Fearless",
+    "Classes": [""],
+    "Components": "",
+    "Description": "You are immune to the Frightened condition. +1 Initiative. –1 Defense.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },   
+  {
+    "Name": "Haunted Past",
+    "Classes": [""],
+    "Components": "",
+    "Description": "You are haunted by voices that occasionally give you cryptic advice. The voices are sometimes VERY helpful. Other times they only want to see you suffer. Advantage against fear.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },  
+  {
+    "Name": "Home at Sea",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Recover twice as many Wounds and HP while Resting on a ship or near water. You can fill in for a first mate or captain in a pinch. Advantage on water-related skill checks.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "(Secretly) Undead",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Unnatural Resilience: You are immune to disease and do not need to eat, drink, or breathe. Children, animals, and Celestials are uneasy in your presence; many will be horrified to discover your true nature.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Taste for the Finer Things",
+    "Classes": [""],
+    "Components": "",
+    "Description": "You always have up-to-date knowledge of the customs and dress of the upper classes and may even know many of their secrets.\nAdvantage on Influence checks with the upper class.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },  
+  {
+    "Name": "What? I’ve Been Around",
+    "Classes": [""],
+    "Components": "",
+    "Description": "(1/per location; or at the GM’s discretion). You happen to know JUST the person who has the information you’re looking for, or could get you out of a jam, and… Roll 1d20:\n<b>• 1–5.</b> They want you DEAD.\n<b>• 6–12.</b> You owe them money.\n<b>• 13–19.</b> They can be convinced to help you.\n<b>• 20.</b> They are your biggest fan/are madly in love with you.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },  
+  {
+    "Name": "Wild One",
+    "Classes": [""],
+    "Components": "",
+    "Description": "Whether it is the sticks or flowers in your hair, your smell, or the way you carry yourself, wild creatures are less frightened of you and more willing to aid you. +1 Naturecraft. While Field Resting in the wild, your Hit Dice recover +KEY HP.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Survivalist",
+    "Classes": [""],
+    "Components": "",
+    "Description": "You never run out of your own personal rations. Anything can be food if you try hard enough! (1/Safe Rest) End poison on yourself. Advantage against poison saves. +1 max Hit Die.",
+    "EntryType": "rule",
+    "Tier": 0,
+    "Path": "Backgrounds",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },  
   {
     "Name": "Field Rest - Catch Breath (10 min)",
     "Classes": [""],
@@ -23,7 +231,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble GM Tools"
+    "Source": "Core Rules"
   },
   {
     "Name": "Field Rest - Make Camp (8 hrs)",
@@ -36,7 +244,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble GM Tools"
+    "Source": "Core Rules"
   },
   {
     "Name": "Safe Rest (8 hrs)",
@@ -49,7 +257,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble GM Tools"
+    "Source": "Core Rules"
   },
   {
     "Name": "Charmed",
@@ -62,7 +270,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Clobbered",
@@ -75,7 +283,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble GM Tools"
+    "Source": "Core Rules"
   },
   {
     "Name": "Dazed",
@@ -88,7 +296,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Dying",
@@ -101,7 +309,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Frightened",
@@ -114,7 +322,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Grappled",
@@ -127,7 +335,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Hampered",
@@ -140,7 +348,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Incapacitated",
@@ -153,7 +361,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Invisible",
@@ -166,7 +374,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Petrified",
@@ -179,7 +387,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Prone",
@@ -192,7 +400,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Restrained",
@@ -205,7 +413,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Riding",
@@ -218,7 +426,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Silenced",
@@ -231,7 +439,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Slowed",
@@ -244,7 +452,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Taunted",
@@ -257,7 +465,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "The Upper Hand",
@@ -270,7 +478,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble GM Tools"
+    "Source": "Core Rules"
   },
   {
     "Name": "Wounded",
@@ -283,7 +491,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Core Rules"
+    "Source": "Core Rules Conditions"
   },
   {
     "Name": "Death Blow",
@@ -296,7 +504,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Deathless Rage",
@@ -309,7 +517,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Eager for Battle",
@@ -322,7 +530,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Into the Fray",
@@ -335,7 +543,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Mighty Endurance",
@@ -348,7 +556,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "MORE BLOOD",
@@ -361,7 +569,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Rampage",
@@ -374,7 +582,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Swift Fury",
@@ -387,7 +595,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Thunderous Steps",
@@ -400,7 +608,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Unstoppable Force",
@@ -413,7 +621,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Whirlwind",
@@ -426,7 +634,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "You're Next",
@@ -439,7 +647,7 @@
     "DistanceType": "Range",
     "Distance": "",
     "School": "",
-    "Source": "Nimble Heroes"
+    "Source": "Core Rules Heroes"
   },
   {
     "Name": "Flame Dart",
@@ -455,7 +663,7 @@
     "CastCondition": "",
     "Upcast": "+5 damage every 5 levels.",    
     "School": "Fire",
-    "Source": "Nimble Spells"
+    "Source": "Core Rules Spells"
   },
   {
     "Name": "Heart's Fire",
@@ -471,7 +679,7 @@
     "CastCondition": "",
     "Upcast": "+2 Range every 5 levels.",        
     "School": "Fire",
-    "Source": "Nimble Spells"
+    "Source": "Core Rules Spells"
   },
   {
     "Name": "Ignite",
@@ -485,9 +693,105 @@
     "DistanceType": "Range",
     "Distance": "8",
     "CastCondition": "",
-    "Upcast": "+10 damage",  
+    "Upcast": "+10 damage.",  
     "School": "Fire",
-    "Source": "Nimble Spells"
+    "Source": "Core Rules Spells"
+  },  
+  {
+    "Name": "Enchant Weapon",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "A weapon you choose gains +KEY damage and inflicts Smoldering on crit.",
+    "EntryType": "spell",
+    "Tier": 2,
+    "Path": "Spells/Fire",
+    "DistanceType": "Reach",
+    "Distance": "8",
+    "CastCondition": "Concentration: Up to 1 min.",
+    "Upcast": "+KEY damage.",  
+    "School": "Fire",
+    "Source": "Core Rules Spells"
+  }, 
+  {
+    "Name": "Flame Barrier",
+    "Actions": 0,
+    "Classes": [""],
+    "Components": "",
+    "Description": "AoE, <b>Damage:</b> KEY and Smoldering. Triggers whenever you are attacked in melee this round.",
+    "EntryType": "spell",
+    "Tier": 3,
+    "Path": "Spells/Fire",
+    "DistanceType": "Reach",
+    "Distance": "1",
+    "CastCondition": "Castable only while Defending.",
+    "Upcast": "+KEY damage OR +1 Reach.",  
+    "School": "Fire",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Pyroclasm",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "AoE, <b>Damage:</b> 2d20+10 to others on a failed DEX save (Smoldering creatures fail); half on save.",
+    "EntryType": "spell",
+    "Tier": 4,
+    "Path": "Spells/Fire",
+    "DistanceType": "Reach",
+    "Distance": "3",
+    "CastCondition": "",
+    "Upcast": "Advantage 1, +1 Reach.",  
+    "School": "Fire",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Fiery Embrace",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "AoE, AoE. An ally gains the effects of Enchant Weapon. Enemies gain Smoldering, lose damage resistance, and damage immunity is reduced to resistance.",
+    "EntryType": "spell",
+    "Tier": 5,
+    "Path": "Spells/Fire",
+    "DistanceType": "Reach",
+    "Distance": "8",
+    "CastCondition": "Concentration: Up to 1 min.",
+    "Upcast": "+1 ally, +2 Reach",  
+    "School": "Fire",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Living Inferno",
+    "Actions": 3,
+    "Classes": [""],
+    "Components": "",
+    "Description": "Gain the effects of Flame Barrier until your next turn. At the end of this turn and your next turn, cast Pyroclasm for free.",
+    "EntryType": "spell",
+    "Tier": 7,
+    "Path": "Spells/Fire",
+    "DistanceType": "Reach",
+    "Distance": "",
+    "CastCondition": "",
+    "Upcast": "Upcast Flame Barrier and Pyroclasm.",  
+    "School": "Fire",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Dragonform",
+    "Actions": 5,
+    "Classes": [""],
+    "Components": "",
+    "Description": "Transform into a Huge dragon. Gain 3 actions, a fly Speed of 12, LVL Defense, 10×LVL temp HP, and: \n\n<b>• Tooth & Claw. 1 Action:</b> (Reach 2) 1d20+LVL damage (ignoring armor). Inflicts Smoldering. \n\n<b>• Immolating Breath. 2 Actions:</b> Cone 8, AoE. KEY d20 damage, half on save (Smoldering targets fail). \n\n\n<b>Note.</b> You can maintain this form for as long as the temp HP granted by this spell remain (max. 10 min). When it ends, you drop to 0 HP.",
+    "EntryType": "spell",
+    "Tier": 9,
+    "Path": "Spells/Fire",
+    "DistanceType": "Reach",
+    "Distance": "",
+    "CastCondition": "",
+    "Upcast": "",  
+    "School": "Fire",
+    "Source": "Core Rules Spells"
   },  
   {
     "Name": "Ice Lance",
@@ -503,7 +807,7 @@
     "CastCondition": "",
     "Upcast": "+3 damage every 5 levels.",
     "School": "Ice",
-    "Source": "Nimble Spells"
+    "Source": "Core Rules Spells"
   }, 
   {
     "Name": "Snowblind",
@@ -519,7 +823,7 @@
     "CastCondition": "",
     "Upcast": "+3 damage every 5 levels.",    
     "School": "Ice",
-    "Source": "Nimble Spells"
+    "Source": "Core Rules Spells"
   }, 
   {
     "Name": "Frost Shield",
@@ -535,8 +839,104 @@
     "CastCondition": "Castable only while Defending.",
     "Upcast": "+2×KEY temp HP.",
     "School": "Ice",
-    "Source": "Nimble Spells"
-  }, 
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Shatter",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 3d6. ANY die can crit vs a Hampered target. On crit: +20 damage (instead of rolling any additional dice).",
+    "EntryType": "spell",
+    "Tier": 2,
+    "Path": "Spells/Ice",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "Increase a die roll by 1. +5 damage on crit.",
+    "School": "Ice",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Cryosleep",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "2×2 AoE. Incapacitate creatures on a failed WIL save for 2 of their turns (damage wakes them). On save, Dazed instead.",
+    "EntryType": "spell",
+    "Tier": 3,
+    "Path": "Spells/Ice",
+    "DistanceType": "Reach",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+1 area, +1 turn asleep.",
+    "School": "Ice",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Rimeblades",
+    "Actions": 3,
+    "Classes": [""],
+    "Components": "",
+    "Description": "AoE <b>Concentration:</b> Up to 1 min. Conjure icy blades in 5 contiguous spaces; this area is difficult terrain. Creatures there (or who enter later) suffer 2d6 damage for each space they touch.",
+    "EntryType": "spell",
+    "Tier": 4,
+    "Path": "Spells/Ice",
+    "DistanceType": "Reach",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+1 space, +1 damage.",
+    "School": "Ice",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Artic Blast",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "Cone, AoE <b>Damage:</b> 4d6+10. This area is difficult terrain for 1 round. Any already Hampered creatures there are Restrained (frozen in place).",
+    "EntryType": "spell",
+    "Tier": 5,
+    "Path": "Spells/Ice",
+    "DistanceType": "Reach",
+    "Distance": "4",
+    "CastCondition": "",
+    "Upcast": "+1 Reach.",
+    "School": "Ice",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Glacier Strike",
+    "Actions": 3,
+    "Classes": [""],
+    "Components": "",
+    "Description": "3×3 AoE. <b>Damage:</b> d66 bludgeoning. Creatures adjacent to that area take half as much. The entire area permanently becomes difficult terrain. \n\n<b>D66.</b> Roll 2d6. The leftmost die is the tens place, and the second is the ones (e.g., 4 and 5 deal 45 damage).",
+    "EntryType": "spell",
+    "Tier": 8,
+    "Path": "Spells/Ice",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+1 initial area.",
+    "School": "Ice",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Arctic Annihilation",
+    "Actions": 3,
+    "Classes": [""],
+    "Components": "",
+    "Description": "3×3 AoE. Any targets you choose are encased in ice and immune to damage and negative effects until the start of their next turn. All others take d66 damage, then make a STR save or be Incapacitated their next turn. \n\n <b>Note.</b> Once you cast this spell, you must Safe Rest for 1 week before using it again.",
+    "EntryType": "spell",
+    "Tier": 9,
+    "Path": "Spells/Ice",
+    "DistanceType": "Reach",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "",
+    "School": "Ice",
+    "Source": "Core Rules Spells"
+  },
   {
     "Name": "Zap",
     "Actions": 1,
@@ -551,7 +951,7 @@
     "CastCondition": "",
     "Upcast": "On hit: +4 damage every 5 levels.",    
     "School": "Lightning",
-    "Source": "Nimble Spells"
+    "Source": "Core Rules Spells"
   }, 
   {
     "Name": "Overload",
@@ -567,7 +967,7 @@
     "CastCondition": "Castable only if Charged, ending the condition.",
     "Upcast": "+4 damage every 5 levels.",    
     "School": "Lightning",
-    "Source": "Nimble Spells"
+    "Source": "Core Rules Spells"
   }, 
   {
     "Name": "Arc Lightning",
@@ -578,11 +978,251 @@
     "EntryType": "spell",
     "Tier": 1,
     "Path": "Spells/Lightning",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+4 damage.",
+    "School": "Lightning",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Alacrity",
+    "Actions": 0,
+    "Classes": [""],
+    "Components": "",
+    "Description": "(1/turn) Teleport up to your Speed, gain Charged (can be cast while Defending, after damage).",
+    "EntryType": "spell",
+    "Tier": 2,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Range",
+    "Distance": "",
+    "CastCondition": "",
+    "Upcast": "+4 spaces.",
+    "School": "Lightning",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Stormlash",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "Line, AoE. <b>Damage:</b> 3d8+4 (ignoring metal armor) and Dazed on a failed STR save (or Incapacitated for their next turn if they fail by 5 or more). Creatures with a large amount of metal (e.g., armor or a longsword) roll with disadvantage.",
+    "EntryType": "spell",
+    "Tier": 3,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+4 damage.",
+    "School": "Lightning",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Electrickery",
+    "Actions": 3,
+    "Classes": [""],
+    "Components": "",
+    "Description": "They teleport away. Teleport another creature there (making them the target) on a failed WIL save. Costs <b>1 Action</b> if Charged, ending the condition.",
+    "EntryType": "spell",
+    "Tier": 4,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Range",
+    "Distance": "8",
+    "CastCondition": "Castable when an ally is attacked.",
+    "Upcast": "+4 Range.",
+    "School": "Lightning",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Electrocharge",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Concentration:</b> Up to 1 min. Give a creature Charged, +1 max action, +5 Defense, 2× Speed, and advantage on DEX saves.",
+    "EntryType": "spell",
+    "Tier": 5,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Reach",
+    "Distance": "4",
+    "CastCondition": "",
+    "Upcast": "+4 Reach.",
+    "School": "Lightning",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Ride the Lightning",
+    "Actions": 3,
+    "Classes": [""],
+    "Components": "",
+    "Description": "AoE. Teleport to a spot you can see (if a willing creature is there, swap places with them). Adjacent creatures take d88 damage and are Knockedback 2 spaces. Creatures moved 2+ spaces are also knocked Prone, Dazed, and deafened for 1 day.",
+    "EntryType": "spell",
+    "Tier": 6,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Reach",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+1 Knockback.",
+    "School": "Lightning",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Seething Storm",
+    "Actions": 3,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Concentration:</b> 1 min. Become a cloud of tempestuous storm. You can fly, move for free 1/round, and attacks against you are disadvantaged. At the end of each of your turns, strike up to 4 creatures within Reach 4 with a bolt of lightning for d88 damage (a creature can only be struck 1/round). \n\n <b>Note.</b> Once you cast this spell, you must Safe Rest for 1 week before you can use it again.",
+    "EntryType": "spell",
+    "Tier": 9,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Reach",
+    "Distance": "",
+    "CastCondition": "Costs 3 Actions each round to maintain. +2 Reach and +2 lightning bolts each round.",
+    "Upcast": "",
+    "School": "Lightning",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Razor Wind",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 1d4 slashing (Vicious). Roll with advantage or damage 1 adjacent target as well",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Wind",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+3 damage every 5 levels.",    
+    "School": "Wind",
+    "Source": "Core Rules Spells"
+  }, 
+  {
+    "Name": "Breath of Life",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "Restore 1d4 HP to a Dying creature. If healed for 4+: they also regain 1 action.",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Wind",
+    "DistanceType": "Range",
+    "Distance": "6",
+    "CastCondition": "",
+    "Upcast": "+2 Range and healing every 5 levels.",    
+    "School": "Wind",
+    "Source": "Core Rules Spells"
+  }, 
+  {
+    "Name": "Blustery Gale",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 3d4 bludgeoning, knockback 2 (advantage vs flying/Small/Tiny). Forced movement deals +5 damage instead of rolling additional dice.",
+    "EntryType": "spell",
+    "Tier": 1,
+    "Path": "Spells/Wind",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "+1 knockback.",
+    "School": "Wind",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Rebuke",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 1d6 (ignoring armor). 2× damage against undead or cowardly (those Frightened or behind Cover).",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Radiant",
+    "DistanceType": "Reach",
+    "Distance": "4",
+    "CastCondition": "",
+    "Upcast": "+2 damage every 5 levels.",    
+    "School": "Radiant",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "True Strike",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "A target gains advantage (ignoring all sources of disadvantage) and +1 Reach on the next melee attack they make this encounter.",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Radiant",
+    "DistanceType": "Reach",
+    "Distance": "4",
+    "CastCondition": "",
+    "Upcast": "+1 Reach every 5 levels.",    
+    "School": "Radiant",
+    "Source": "Core Rules Spells"
+  }, 
+  {
+    "Name": "Heal",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "\\Heal a target 1d6+KEY HP. \n\n<b>Powerful Healing.</b> <i>If 5+ mana is spent, heal a negative condition as well (e.g., Blind, 1 Wound).</i>",
+    "EntryType": "spell",
+    "Tier": 1,
+    "Path": "Spells/Radiant",
+    "DistanceType": "Reach",
+    "Distance": "1",
+    "CastCondition": "",
+    "Upcast": "(Choose 1) +1d6, +1 target, OR +4 Reach.",
+    "School": "Radiant",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Entice",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 1d4+KEY (ignoring armor), target moves Primary Die spaces closer.",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Necrotic",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "Increment the die size 1 step every 5 levels (d6 » d8 » d10 » d12).",    
+    "School": "Necrotic",
+    "Source": "Core Rules Spells"
+  },
+  {
+    "Name": "Withering Touch",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 1d12. On damage, target is considered undead for 1 round.",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Necrotic",
+    "DistanceType": "Reach",
+    "Distance": "1",
+    "CastCondition": "",
+    "Upcast": "+6 damage every 5 levels.",
+    "School": "Necrotic",
+    "Source": "Core Rules Spells"
+  }, 
+  {
+    "Name": "Shadow Trap",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Concentration:</b> Up to 1 min. <b>Damage:</b> 3d12 to the next creature to move adjacent to you; if Small/Tiny, it is also Restrained for as long as you maintain Concentration or until they escape.",
+    "EntryType": "spell",
+    "Tier": 1,
+    "Path": "Spells/Necrotic",
     "DistanceType": "Reach",
     "Distance": "",
     "CastCondition": "",
-    "Upcast": "Upcast: +4 damage.",
-    "School": "Lightning",
-    "Source": "Nimble Spells"
+    "Upcast": "+1 size category, +1d12 damage on escape.",
+    "School": "Necrotic",
+    "Source": "Core Rules Spells"
   }
 ]
