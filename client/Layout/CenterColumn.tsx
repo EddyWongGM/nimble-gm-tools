@@ -45,6 +45,9 @@ export function CenterColumn(props: {
         eventLog={props.tracker.EventLog}
       />
       <BannerHost />
+      <div className="unofficial-notice">
+        Unofficial fan project — not affiliated with or endorsed by Nimble Co.
+      </div>
     </div>
   );
 }
