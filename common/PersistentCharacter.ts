@@ -23,6 +23,12 @@ export interface PersistentCharacter {
 
 export namespace PersistentCharacter {
   export function Initialize(statBlock: StatBlock): PersistentCharacter {
+    // Preload content (e.g. the Sample Heroes starter set) can carry a
+    // starting Items array on its raw JSON even though Items isn't part of
+    // the StatBlock type - pull it off here rather than dropping it.
+    const { Items: startingItems, ...statBlockWithoutItems } = statBlock as {
+      Items?: InventoryItem[];
+    } & StatBlock;
     return {
       Id: statBlock.Id || probablyUniqueString(),
       Version: statBlock.Version,
@@ -35,10 +41,10 @@ export namespace PersistentCharacter {
       CurrentHitDice: statBlock.HitDice?.Value,
       CurrentWounds: statBlock.Wounds ? 0 : undefined,
       CurrentGold: 0,
-      StatBlock: statBlock,
+      StatBlock: statBlockWithoutItems,
       Notes: "",
       Tags: [],
-      Items: []
+      Items: startingItems ?? []
     };
   }
 

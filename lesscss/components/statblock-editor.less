@@ -196,6 +196,14 @@
   }
 }
 
+// The Player/Non Player Character/Companion toggle for persistent
+// characters renders as a bare button, a direct sibling of
+// .c-statblock-editor__identity-grid above it - without its own margin it
+// sits flush against the Type/Source row.
+.c-statblock-editor__headers > .c-button {
+  margin-top: @medium-spacer;
+}
+
 .c-statblock-editor__type-and-armor {
   // Same global `div { flex-direction: column }` gotcha as elsewhere in
   // this file - without this, the Armor toggle, the Normal/Legendary/Titan

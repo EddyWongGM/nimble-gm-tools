@@ -23,6 +23,12 @@
       "Int": -1,
       "Wis": -1
     },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "",
+      "Int": "-",
+      "Wis": ""
+    },    
     "DamageVulnerabilities": [],
     "DamageResistances": [],
     "DamageImmunities": [],
@@ -81,8 +87,29 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1
-    }
+      "Value": 1,
+      "Notes": "d12"
+    },
+    "Items": [
+      {
+        "Name": "Battleaxe",
+        "Stackable": false,
+        "Quantity": 1,
+        "SlotCost": 1
+      },
+      {
+        "Name": "Rations (meat)",
+        "Stackable": true,
+        "Quantity": 1,
+        "SlotCost": 1
+      },
+      {
+        "Name": "Rope (50 ft.)",
+        "Stackable": true,
+        "Quantity": 1,
+        "SlotCost": 1
+      }
+    ]
   },
   {
     "Name": "Cheat LV1",
@@ -108,6 +135,12 @@
       "Int": 2,
       "Wis": -1
     },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "",
+      "Wis": "-"
+    },    
     "DamageVulnerabilities": [],
     "DamageResistances": [],
     "DamageImmunities": [],
@@ -154,7 +187,8 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1
+      "Value": 1,
+      "Notes": "d6"
     }
   },
   {
@@ -181,6 +215,12 @@
       "Int": 2,
       "Wis": -1
     },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
+    },    
     "DamageVulnerabilities": [],
     "DamageResistances": [],
     "DamageImmunities": [],
@@ -229,7 +269,8 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1
+      "Value": 1,
+      "Notes": "d10"
     }
   },
   {
@@ -256,6 +297,12 @@
       "Int": 0,
       "Wis": 1
     },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "-",
+      "Wis": ""
+    },     
     "DamageVulnerabilities": [],
     "DamageResistances": [],
     "DamageImmunities": [],
@@ -312,7 +359,8 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1
+      "Value": 1,
+      "Notes": "d8"
     }
   },
   {
@@ -339,6 +387,12 @@
       "Int": 2,
       "Wis": 0
     },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "+",
+      "Wis": ""
+    },     
     "DamageVulnerabilities": [],
     "DamageResistances": [],
     "DamageImmunities": [],
@@ -380,7 +434,8 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1
+      "Value": 1,
+      "Notes": "d6"
     }
   },
   {
@@ -406,6 +461,12 @@
       "Dex": 0,
       "Int": -1,
       "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
     },
     "DamageVulnerabilities": [],
     "DamageResistances": [],
@@ -454,7 +515,8 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1
+      "Value": 1,
+      "Notes": "d10"
     }
   }
 ]
