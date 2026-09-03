@@ -536,5 +536,53 @@
     "Upcast": "+2×KEY temp HP.",
     "School": "Ice",
     "Source": "Nimble Spells"
+  }, 
+  {
+    "Name": "Zap",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 2d8. On miss: the lightning fails to find ground, and strikes you instead.",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Range",
+    "Distance": "12",
+    "CastCondition": "",
+    "Upcast": "On hit: +4 damage every 5 levels.",    
+    "School": "Lightning",
+    "Source": "Nimble Spells"
+  }, 
+  {
+    "Name": "Overload",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "AoE, <b>Damage:</b> 2d8.",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Reach",
+    "Distance": "2",
+    "CastCondition": "Castable only if Charged, ending the condition.",
+    "Upcast": "+4 damage every 5 levels.",    
+    "School": "Lightning",
+    "Source": "Nimble Spells"
+  }, 
+  {
+    "Name": "Arc Lightning",
+    "Actions": 2,
+    "Classes": [""],
+    "Components": "",
+    "Description": "<b>Damage:</b> 3d8. Also hits the next closest creature.\n\n\n<b>Next Closest Creature.</b> If you are the closest, you are hit! If 2 creatures are equally close, the GM can select randomly, the taller one, or whoever has the most metal.",
+    "EntryType": "spell",
+    "Tier": 1,
+    "Path": "Spells/Lightning",
+    "DistanceType": "Reach",
+    "Distance": "",
+    "CastCondition": "",
+    "Upcast": "Upcast: +4 damage.",
+    "School": "Lightning",
+    "Source": "Nimble Spells"
   }
 ]

@@ -6,7 +6,7 @@
     "Type": "Berserker",
     "HP": {
       "Value": 20,
-      "Notes": "20 + 0d12"
+      "Notes": "20"
     },
     "AC": {
       "Value": 1,
@@ -48,7 +48,7 @@
     "Actions": [
       {
         "Name": "Rage (1/round) ",
-        "Content": "Roll 1d4▲. Rage adds STR based attacks. \n[tab] Fury Dice are Lost when your Rage ends.",
+        "Content": "[tab] Roll 1d4▲. Rage adds STR based attacks. \n[tab] Fury Dice are Lost when your Rage ends.",
         "Usage": ""
       },
       {
@@ -118,7 +118,7 @@
     "Type": "The Cheat",
     "HP": {
       "Value": 10,
-      "Notes": "10+0d6"
+      "Notes": "10"
     },
     "AC": {
       "Value": 5,
@@ -198,7 +198,7 @@
     "Type": "Commander",
     "HP": {
       "Value": 17,
-      "Notes": "17 + 0d10"
+      "Notes": "17"
     },
     "AC": {
       "Value": 8,
@@ -280,7 +280,7 @@
     "Type": "Hunter",
     "HP": {
       "Value": 13,
-      "Notes": "13 + 0d8"
+      "Notes": "13"
     },
     "AC": {
       "Value": 5,
@@ -321,12 +321,12 @@
       },
       {
         "Name": "",
-        "Content": "[A1] Short Bow 1d6 + 2 , Range 12\n[dash] If adjacent, ranged attacks: Disadvantage.",
+        "Content": "[A1] Short Bow 1d6 + [DEX] , Range 12\n[dash] If adjacent, ranged attacks: Disadvantage.",
         "Usage": ""
       },
       {
         "Name": "",
-        "Content": "[A1] Hand axe : 1d6 + 1, Thrown 4",
+        "Content": "[A1] Hand axe : 1d6 + [STR], Thrown 4",
         "Usage": ""
       }
     ],
@@ -370,7 +370,7 @@
     "Type": "Mage",
     "HP": {
       "Value": 10,
-      "Notes": "10 + 0d6"
+      "Notes": "10"
     },
     "AC": {
       "Value": 4,
@@ -411,7 +411,7 @@
       },
       {
         "Name": "",
-        "Content": "[A1] Staff 1d8 - 1",
+        "Content": "[A1] Staff 1d8 - [STR]",
         "Usage": ""
       }
     ],
@@ -445,7 +445,7 @@
     "Type": "Oathsworn",
     "HP": {
       "Value": 17,
-      "Notes": "17 + 0d10"
+      "Notes": "17"
     },
     "AC": {
       "Value": 12,
@@ -481,7 +481,7 @@
     "Actions": [
       {
         "Name": "",
-        "Content": "[A1] Mace : 1d6 + 2",
+        "Content": "[A1] Mace : 1d6 + [STR]",
         "Usage": ""
       },
       {
@@ -494,15 +494,15 @@
     "Reactions": [
 	  {
 	    "Name": "Relentless",
-	    "Content": "— If 0 HP, HP becomes 4 (LVL). (+1 Might)",
+	    "Content": "(1/Safe Rest) When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
 	    "Usage": ""
 	  }	
 	],
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "History Buff (Advantage on Lore checks)",
-        "Content": "",
+        "Name": "History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
         "Usage": ""
       }
     ],
