@@ -54,6 +54,11 @@ export interface StatBlock extends Listable {
   AC: ValueAndNotes;
   Mana?: ValueAndNotes;
   Resources?: ValueAndNotes;
+  // Most Nimble resource pools (Mana, Hit Dice) start full and deplete.
+  // A few classes (e.g. a Fury-style builder) instead start empty and
+  // accumulate toward the max over the course of an encounter - this
+  // only changes the starting value, not the spend/restore mechanics.
+  ResourcesStartEmpty?: boolean;
   HitDice?: ValueAndNotes;
   Wounds?: ValueAndNotes;
   Speed: string[];
@@ -193,6 +198,9 @@ export namespace StatBlock {
 
   export const IsLegendary = (statBlock: StatBlock): boolean =>
     statBlock.Player == "legendary";
+
+  export const IsTitan = (statBlock: StatBlock): boolean =>
+    statBlock.Player == "titan";
 
   export const Default = (): StatBlock => ({
     Id: probablyUniqueString(),

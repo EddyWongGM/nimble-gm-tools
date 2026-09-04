@@ -112,8 +112,8 @@ export const BuildEncounterCommandList = (
     }),
     new Command({
       id: "restore-all-player-character-hp",
-      description: "Restore all Player Hero HP",
-      actionBinding: c.RestoreAllPlayerCharacterHP,
+      description: "Safe Rest",
+      actionBinding: c.SafeRest,
       fontAwesomeIcon: "clinic-medical",
       defaultShowOnActionBar: false
     }),

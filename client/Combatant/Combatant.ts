@@ -40,7 +40,7 @@ export class Combatant {
       combatantState.CurrentMana ?? this.MaxMana() ?? 0
     );
     this.CurrentResources = ko.observable(
-      combatantState.CurrentResources ?? this.MaxResources() ?? 0
+      combatantState.CurrentResources ?? this.DefaultResources()
     );
     this.CurrentHitDice = ko.observable(
       combatantState.CurrentHitDice ?? this.MaxHitDice() ?? 0
@@ -116,7 +116,7 @@ export class Combatant {
     this.CurrentNotes(savedCombatant.CurrentNotes || "");
     this.CurrentMana(savedCombatant.CurrentMana ?? this.MaxMana() ?? 0);
     this.CurrentResources(
-      savedCombatant.CurrentResources ?? this.MaxResources() ?? 0
+      savedCombatant.CurrentResources ?? this.DefaultResources()
     );
     this.CurrentHitDice(
       savedCombatant.CurrentHitDice ?? this.MaxHitDice() ?? 0
@@ -315,6 +315,9 @@ export class Combatant {
   public MaxMana = ko.computed(() => this.StatBlock().Mana?.Value);
 
   public MaxResources = ko.computed(() => this.StatBlock().Resources?.Value);
+
+  public DefaultResources = () =>
+    this.StatBlock().ResourcesStartEmpty ? 0 : (this.MaxResources() ?? 0);
 
   public MaxHitDice = ko.computed(() =>
     this.IsPlayerCharacter() ? this.StatBlock().HitDice?.Value : undefined

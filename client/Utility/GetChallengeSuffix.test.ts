@@ -1,4 +1,8 @@
-import { GetChallengeSuffix, IsNumericChallenge } from "./GetChallengeSuffix";
+import {
+  GetChallengeLevel,
+  GetChallengeSuffix,
+  IsNumericChallenge
+} from "./GetChallengeSuffix";
 
 describe("IsNumericChallenge", () => {
   test("numeric and fraction Challenges are numeric", () => {
@@ -40,5 +44,24 @@ describe("GetChallengeSuffix", () => {
 
   test("returns null when there is no Challenge", () => {
     expect(GetChallengeSuffix("Goblin", "")).toBeNull();
+  });
+});
+
+describe("GetChallengeLevel", () => {
+  test("returns the numeric value of a numeric Challenge", () => {
+    expect(GetChallengeLevel("4")).toBe(4);
+  });
+
+  test("evaluates a fraction", () => {
+    expect(GetChallengeLevel("1/2")).toBe(0.5);
+  });
+
+  test("returns 0 for a word-based Challenge", () => {
+    expect(GetChallengeLevel("Minion")).toBe(0);
+    expect(GetChallengeLevel("Solo")).toBe(0);
+  });
+
+  test("returns 0 for an empty Challenge", () => {
+    expect(GetChallengeLevel("")).toBe(0);
   });
 });

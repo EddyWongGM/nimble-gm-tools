@@ -3,7 +3,10 @@ import { EventLog } from "../Widgets/EventLog";
 import { Encounter } from "../Encounter/Encounter";
 import { SettingsContext } from "../Settings/SettingsContext";
 import { useSubscription } from "../Combatant/linkComponentToObservables";
-import { EncounterDifficulty } from "../Widgets/DifficultyCalculator";
+import {
+  FormatEncounterDifficulty,
+  GetEncounterDifficultyTooltip
+} from "../Widgets/DifficultyCalculator";
 import ReactMarkdown from "react-markdown";
 
 type CombatFooterProps = {
@@ -42,21 +45,16 @@ export function CombatFooter(props: CombatFooterProps) {
           <span className="round-counter">Current Round: {elapsedRounds}</span>
         )}
         {settingsContext.TrackerView.DisplayDifficulty && (
-          <span className="encounter-challenge">
-            {getDifficultyString(encounterDifficulty)}
+          <span
+            className="encounter-challenge"
+            title={GetEncounterDifficultyTooltip(encounterDifficulty)}
+          >
+            {FormatEncounterDifficulty(encounterDifficulty)}
           </span>
         )}
       </div>
     </div>
   );
-}
-
-function getDifficultyString(difficulty: EncounterDifficulty) {
-  const xpString = difficulty.EarnedExperience + " XP";
-  if (difficulty.Difficulty.length == 0) {
-    return xpString;
-  }
-  return difficulty.Difficulty + ": " + xpString;
 }
 
 function FullEventLog(props: { eventsTail: string[] }) {

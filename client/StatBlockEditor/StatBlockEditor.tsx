@@ -269,6 +269,7 @@ export class StatBlockEditor extends React.Component<
           label="Resources"
           fieldName="Resources"
           hideNotes
+          startsEmptyFieldName="ResourcesStartEmpty"
         />
       );
     }

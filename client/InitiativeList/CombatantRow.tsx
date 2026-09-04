@@ -722,10 +722,16 @@ function renderResourcesText(props: CombatantRowProps) {
   if (!maxResources) {
     return "";
   }
-  if (props.combatantState.TemporaryResources) {
-    return `${props.combatantState.CurrentResources ?? 0}+${props.combatantState.TemporaryResources}/${maxResources}`;
+  const currentResources = props.combatantState.CurrentResources ?? 0;
+  if (props.combatantState.StatBlock.ResourcesStartEmpty) {
+    return props.combatantState.TemporaryResources
+      ? `${currentResources}+${props.combatantState.TemporaryResources}`
+      : `${currentResources}`;
   }
-  return `${props.combatantState.CurrentResources ?? 0}/${maxResources}`;
+  if (props.combatantState.TemporaryResources) {
+    return `${currentResources}+${props.combatantState.TemporaryResources}/${maxResources}`;
+  }
+  return `${currentResources}/${maxResources}`;
 }
 
 function renderResourcesBarStyle(props: CombatantRowProps) {

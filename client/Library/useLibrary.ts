@@ -56,6 +56,12 @@ export function useLibrary<T extends Listable>(
   const addListing = React.useCallback(
     newListing =>
       setListings(currentListings => {
+        // saveListing mutates an already-listed Listing in place (Meta().Id,
+        // SetValue) and then re-adds it here; skip the re-add so edits don't
+        // duplicate the entry in the array.
+        if (currentListings.includes(newListing)) {
+          return currentListings;
+        }
         return [...currentListings, newListing];
       }),
     [setListings]
@@ -170,7 +176,23 @@ export function useLibrary<T extends Listable>(
       }
 
       if (listing.Origin === "server") {
+        // Preloaded content is immutable: fork into a brand new local
+        // listing instead of mutating the shared preloaded Listing object,
+        // so the original preloaded entry stays in the list unchanged.
         newListable.Id = probablyUniqueString();
+        const forkedListing = new Listing<T>(
+          {
+            Id: newListable.Id,
+            Path: newListable.Path,
+            Name: newListable.Name,
+            SearchHint: callbacks.getSearchHint(newListable),
+            FilterDimensions: callbacks.getFilterDimensions(newListable),
+            Link: storeName,
+            LastUpdateMs: moment.now()
+          },
+          "localAsync"
+        );
+        return await saveListing(forkedListing, newListable);
       }
 
       return await saveListing(listing, newListable);

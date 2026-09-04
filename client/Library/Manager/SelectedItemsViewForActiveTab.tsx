@@ -5,7 +5,10 @@ import { Spell } from "../../../common/Spell";
 import { StatBlock } from "../../../common/StatBlock";
 import { StatBlockComponent } from "../../Components/StatBlock";
 import { TextEnricherContext } from "../../TextEnricher/TextEnricher";
-import { DifficultyCalculator } from "../../Widgets/DifficultyCalculator";
+import {
+  DifficultyCalculator,
+  FormatEncounterDifficulty
+} from "../../Widgets/DifficultyCalculator";
 import { SpellDetails } from "../Components/SpellDetails";
 import { GetDefaultForLibrary, LibraryType } from "../Libraries";
 import { Listing } from "../Listing";
@@ -60,14 +63,16 @@ export function SelectedItemsViewForActiveTab({
         {...partialViewProps}
         renderListing={(listing: SavedEncounter) => {
           const encounterDifficulty = DifficultyCalculator.Calculate(
-            listing.Combatants.map(c => c.StatBlock.Challenge),
+            listing.Combatants.filter(
+              c => !StatBlock.ActsInPlayerPhase(c.StatBlock)
+            ).map(c => c.StatBlock.Challenge),
             []
           );
 
           return (
             <div>
               <h2>{listing.Name}</h2>
-              <div>XP: {encounterDifficulty.EarnedExperience}</div>
+              <div>Monster levels: {FormatEncounterDifficulty(encounterDifficulty)}</div>
               {listing.Combatants.map(c => (
                 <div key={c.Id}>
                   <span>{c.StatBlock.Name}</span>

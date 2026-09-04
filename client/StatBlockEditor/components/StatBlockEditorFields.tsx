@@ -14,6 +14,7 @@ export const ValueAndNotesField = (props: {
   label: string;
   fieldName: string;
   hideNotes?: boolean;
+  startsEmptyFieldName?: string;
 }) => (
   <label className="c-statblock-editor__text">
     <span className="c-statblock-editor__label">{props.label}</span>
@@ -30,6 +31,12 @@ export const ValueAndNotesField = (props: {
           name={`${props.fieldName}.Notes`}
           autoComplete="off"
         />
+      )}
+      {props.startsEmptyFieldName && (
+        <label className="c-statblock-editor__checkbox-label">
+          <Field type="checkbox" name={props.startsEmptyFieldName} />
+          Starts at 0
+        </label>
       )}
     </div>
   </label>

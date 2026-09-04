@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Command } from "./Command";
 import { CommandButton } from "./CommandButton";
+import { env } from "../Environment";
 
 interface ToolbarProps {
   encounterCommands: Command[];
@@ -39,10 +40,16 @@ export function Toolbar(props: ToolbarProps) {
   const style: React.CSSProperties =
     props.width == "narrow" ? { width: widthStyle } : {};
 
+  const commandsEncounterClassName =
+    "commands-encounter" +
+    (env.HasEpicInitiative ? " commands-encounter--epic-colors" : "");
+
   return (
     <div className={className} ref={outerElement}>
       <div className="scrollframe" ref={innerElement} style={style}>
-        <div className="commands-encounter">{encounterCommandButtons}</div>
+        <div className={commandsEncounterClassName}>
+          {encounterCommandButtons}
+        </div>
         {props.showCombatantCommands && (
           <div className="commands-combatant">{combatantCommandButtons}</div>
         )}

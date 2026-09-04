@@ -374,6 +374,24 @@ span.c-statblock-editor__label {
   vertical-align: baseline;
 }
 
+.c-statblock-editor__checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: @small-spacer;
+  padding-left: @small-spacer;
+  font-size: @font-size-h4;
+  white-space: nowrap;
+
+  input {
+    width: 1.1rem;
+    height: 1.1rem;
+    min-width: 1.1rem;
+    flex-grow: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 // The 7 keyword types (Speed, Senses, damage types, etc.) used to each get
 // their own full card - most hold just one short field, so that was mostly
 // empty margin/padding/border repeated 7 times. They now share a single

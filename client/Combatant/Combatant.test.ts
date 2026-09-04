@@ -158,6 +158,22 @@ describe("Combatant", () => {
       expect(combatant.CurrentResources()).toBe(10);
     });
 
+    test("A statblock with ResourcesStartEmpty starts at 0 instead of Max, and can still build up to Max", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Resources: { Value: 10, Notes: "" },
+        ResourcesStartEmpty: true
+      });
+
+      expect(combatant.CurrentResources()).toBe(0);
+
+      combatant.ApplyResourcesChange(-6);
+      expect(combatant.CurrentResources()).toBe(6);
+
+      combatant.ApplyResourcesChange(-100);
+      expect(combatant.CurrentResources()).toBe(10);
+    });
+
     test("ApplyHitDiceChange spends from TemporaryHitDice first, then spills over, and clamps at 0", () => {
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),

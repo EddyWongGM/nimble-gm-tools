@@ -37,7 +37,9 @@ export namespace PersistentCharacter {
       LastUpdateMs: now(),
       CurrentHP: statBlock.HP.Value,
       CurrentMana: statBlock.Mana?.Value,
-      CurrentResources: statBlock.Resources?.Value,
+      CurrentResources: statBlock.ResourcesStartEmpty
+        ? 0
+        : statBlock.Resources?.Value,
       CurrentHitDice: statBlock.HitDice?.Value,
       CurrentWounds: statBlock.Wounds ? 0 : undefined,
       CurrentGold: 0,

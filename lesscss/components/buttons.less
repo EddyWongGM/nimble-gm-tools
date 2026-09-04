@@ -141,13 +141,34 @@ button.button {
   }
 }
 
+// Below Epic Tier, Hide Gold/Hide Inventory just read as a generic on/off
+// toggle - white icon while showing to players, gray once hidden. The
+// gold/parchment color treatment (below) is an Epic Tier perk layered on
+// top via the commands-encounter--epic-colors modifier.
+.commands-encounter .c-button--toggle-hide-gold-player-view,
+.commands-encounter .c-button--toggle-hide-inventory-player-view {
+  .colors(var(--white), var(--black), transparent);
+
+  &:hover {
+    .colors(var(--white), var(--hover-grey), transparent);
+  }
+
+  &.c-button--active {
+    .colors(var(--light-grey), var(--black), transparent);
+
+    &:hover {
+      .colors(var(--light-grey), var(--hover-grey), transparent);
+    }
+  }
+}
+
 // Hide Gold from Players reads as "gold" rather than a generic active
 // toggle - icon is the same --gold used for the coins icon elsewhere (e.g.
 // combatants.less, InitiativeListHeader) while gold IS showing to players,
 // and turns white once the toggle hides it - so white means "not showing
 // to players", matching the toggle's own on/off meaning rather than the
-// generic "active = highlighted" convention.
-.commands-encounter .c-button--toggle-hide-gold-player-view {
+// generic "active = highlighted" convention. Epic Tier only.
+.commands-encounter.commands-encounter--epic-colors .c-button--toggle-hide-gold-player-view {
   .colors(var(--gold), var(--black), transparent);
 
   &:hover {
@@ -165,8 +186,8 @@ button.button {
 
 // Hide Inventory from Players gets the same treatment as gold above - the
 // scroll icon is light brown while inventory IS showing to players, and
-// turns white once hidden.
-.commands-encounter .c-button--toggle-hide-inventory-player-view {
+// turns white once hidden. Epic Tier only.
+.commands-encounter.commands-encounter--epic-colors .c-button--toggle-hide-inventory-player-view {
   .colors(var(--parchment), var(--black), transparent);
 
   &:hover {

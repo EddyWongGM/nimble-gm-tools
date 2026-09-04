@@ -9,6 +9,21 @@ export function IsNumericChallenge(challenge: string): boolean {
 }
 
 /**
+ * A combatant's Challenge as a plain number, for encounter-difficulty math.
+ * `0` for a word-based Challenge ("Minion", "Solo", ...) or an empty value -
+ * those don't have a level to add to a monster/hero level total. A
+ * fraction ("1/2") evaluates to its numeric value.
+ */
+export function GetChallengeLevel(challenge: string): number {
+  if (!challenge || !IsNumericChallenge(challenge)) {
+    return 0;
+  }
+
+  const [numerator, denominator] = challenge.trim().split("/").map(Number);
+  return denominator ? numerator / denominator : numerator;
+}
+
+/**
  * "LV 2" for a numeric/fraction Challenge; the raw value (e.g. "Minion")
  * otherwise; null if there's no Challenge to show, or the name already
  * ends with that Challenge word (e.g. "Goblin Minion" at Challenge
