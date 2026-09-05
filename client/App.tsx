@@ -150,9 +150,10 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
         <TextEnricherContext.Provider value={tracker.StatBlockTextEnricher}>
           <LibrariesContext.Provider value={libraries}>
             <div className={"encounter-view " + interfacePriority}>
-              {env.HasEpicInitiative && (
-                <StatColorStyles customStyles={settings.PlayerView.CustomStyles} />
-              )}
+              <StatColorStyles
+                customStyles={settings.PlayerView.CustomStyles}
+                hasEpicInitiative={env.HasEpicInitiative}
+              />
               {blurVisible && (
                 <div className="modal-blur" onClick={tracker.CloseSettings} />
               )}

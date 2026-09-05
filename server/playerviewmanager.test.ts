@@ -16,7 +16,8 @@ function TestPlayerViewManagerImplementation(
       const playerView = await playerViewManager.Get("someId");
       expect(playerView).toEqual({
         encounterState: EncounterState.Default<PlayerViewCombatantState>(),
-        settings: getDefaultSettings().PlayerView
+        settings: getDefaultSettings().PlayerView,
+        hasEpicInitiative: false
       });
     });
 
@@ -40,7 +41,7 @@ function TestPlayerViewManagerImplementation(
         ...EncounterState.Default(),
         RoundCounter: 3
       };
-      await playerViewManager.UpdateEncounter("someId", encounterState);
+      await playerViewManager.UpdateEncounter("someId", encounterState, false);
 
       const isAvailable = await playerViewManager.IdAvailable("someId");
       expect(isAvailable).toBe(false);
@@ -48,8 +49,34 @@ function TestPlayerViewManagerImplementation(
       const playerView = await playerViewManager.Get("someId");
       expect(playerView).toEqual({
         encounterState: encounterState,
-        settings: getDefaultSettings().PlayerView
+        settings: getDefaultSettings().PlayerView,
+        hasEpicInitiative: false
       });
+    });
+
+    it("Should persist the GM's Epic Tier status alongside settings, for Player View to gate stat colors on", async () => {
+      const playerViewManager = makePlayerViewManager();
+      const customSettings = {
+        ...getDefaultSettings().PlayerView,
+        DarkMode: true
+      };
+      await playerViewManager.UpdateSettings("someId", customSettings, true);
+
+      const playerView = await playerViewManager.Get("someId");
+      expect(playerView.hasEpicInitiative).toBe(true);
+      expect(playerView.settings).toEqual(customSettings);
+    });
+
+    it("Should persist a GM's Epic Tier status from UpdateEncounter too", async () => {
+      const playerViewManager = makePlayerViewManager();
+      const encounterState = {
+        ...EncounterState.Default(),
+        RoundCounter: 5
+      };
+      await playerViewManager.UpdateEncounter("someId", encounterState, true);
+
+      const playerView = await playerViewManager.Get("someId");
+      expect(playerView.hasEpicInitiative).toBe(true);
     });
   });
 }

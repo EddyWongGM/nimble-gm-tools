@@ -15,18 +15,39 @@ const STAT_LABELS: Record<StatColorField, string> = {
   goldColor: "Gold"
 };
 
+/**
+ * The underlying hue var each stat's --stat-* alias (STAT_COLOR_CSS_VARS)
+ * points at by default, used ONLY for reading today's actual displayed
+ * color below - not the same lookup CSSFrom's override writes to. Reading
+ * `--stat-hp` itself here instead would risk returning the literal
+ * unresolved string "var(--green)" rather than a real color: per the CSS
+ * Custom Properties spec, a custom property's own getComputedStyle value
+ * is its specified value, with var() references to *other* custom
+ * properties not necessarily substituted - unlike var() used as an actual
+ * property value (color, background, etc), which always resolves fully.
+ */
+const DISPLAY_HUE_VAR: Record<StatColorField, string> = {
+  hpIconColor: "--green-bright",
+  manaColor: "--blue",
+  resourcesColor: "--magenta",
+  hitDiceColor: "--orange",
+  woundsColor: "--wound-red",
+  inventoryColor: "--parchment",
+  goldColor: "--gold"
+};
+
 /** The color a stat's row shows before the GM has picked anything - today's
  * fixed identity color for that stat, read live off the page so it's
  * already theme-correct (light/dark) with no hardcoded hex to keep in sync.
  * Purely a display default: nothing is written to settings until the GM
  * actually changes a color, so anyone who never touches a row keeps
  * tracking the shipped default if it's ever changed later. */
-function currentFixedDefault(cssVar: string): string {
+function currentFixedDefault(field: StatColorField): string {
   if (typeof document === "undefined") {
     return "";
   }
   return getComputedStyle(document.documentElement)
-    .getPropertyValue(cssVar)
+    .getPropertyValue(DISPLAY_HUE_VAR[field])
     .trim();
 }
 
@@ -44,17 +65,12 @@ export class StatColorsChooser extends React.Component<
   }
 
   public render() {
-    const selectedEntry = STAT_COLOR_CSS_VARS.find(
-      ([field]) => field === this.state.selectedStat
-    );
-    const selectedCssVar = selectedEntry ? selectedEntry[1] : "";
-
     return (
       <div className="c-styles-chooser-colors">
         <div className="c-styles-chooser-slot-chooser">
           <h4>Stat Colors</h4>
-          {STAT_COLOR_CSS_VARS.map(([field, cssVar]) =>
-            this.getLabelAndColorBlock(STAT_LABELS[field], field, cssVar)
+          {STAT_COLOR_CSS_VARS.map(([field]) =>
+            this.getLabelAndColorBlock(STAT_LABELS[field], field)
           )}
         </div>
         <Field name={"PlayerView.CustomStyles." + this.state.selectedStat}>
@@ -62,7 +78,10 @@ export class StatColorsChooser extends React.Component<
             <div className="c-styles-chooser-color-wheel">
               <SketchPicker
                 presetColors={[]}
-                color={fieldProps.field.value || currentFixedDefault(selectedCssVar)}
+                color={
+                  fieldProps.field.value ||
+                  currentFixedDefault(this.state.selectedStat)
+                }
                 onChangeComplete={color =>
                   this.handleChangeComplete(color, fieldProps)
                 }
@@ -79,11 +98,7 @@ export class StatColorsChooser extends React.Component<
     );
   }
 
-  private getLabelAndColorBlock(
-    label: string,
-    field: StatColorField,
-    cssVar: string
-  ) {
+  private getLabelAndColorBlock(label: string, field: StatColorField) {
     const labelSelectedClass =
       this.state.selectedStat == field ? " s-selected" : "";
 
@@ -96,7 +111,7 @@ export class StatColorsChooser extends React.Component<
           >
             <span>{label}</span>
             <ColorBlock
-              color={fieldProps.field.value || currentFixedDefault(cssVar)}
+              color={fieldProps.field.value || currentFixedDefault(field)}
               click={this.bindClickToSelectStat(field)}
             />
           </div>

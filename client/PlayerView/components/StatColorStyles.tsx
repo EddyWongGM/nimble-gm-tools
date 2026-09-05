@@ -9,12 +9,20 @@ import { StatColorCSSFrom } from "../CSSFrom";
  * the stat-color subset of CSSFrom, not the GM's freeform
  * PlayerView.CustomCSS/CustomStyles fields - those are Player-View-only by
  * design and shouldn't leak into the DM's own screen.
+ *
+ * Always mounted (not conditional on hasEpicInitiative at the call site) -
+ * StatColorCSSFrom itself decides whether to neutralize or allow color
+ * based on the flag, since it needs to actively override the fixed colorful
+ * defaults with a neutral color below Epic Tier, not just skip overriding.
  */
-export function StatColorStyles(props: { customStyles: PlayerViewCustomStyles }) {
+export function StatColorStyles(props: {
+  customStyles: PlayerViewCustomStyles;
+  hasEpicInitiative: boolean;
+}) {
   return (
     <style
       dangerouslySetInnerHTML={{
-        __html: StatColorCSSFrom(props.customStyles)
+        __html: StatColorCSSFrom(props.customStyles, props.hasEpicInitiative)
       }}
     />
   );

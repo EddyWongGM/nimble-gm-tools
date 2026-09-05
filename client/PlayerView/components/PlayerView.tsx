@@ -7,8 +7,6 @@ import { TagState } from "../../../common/CombatantState";
 import { InventoryDisplayPayload } from "../../../common/InventoryDisplay";
 import { PlayerViewCombatantState } from "../../../common/PlayerViewCombatantState";
 import { PlayerViewState } from "../../../common/PlayerViewState";
-import { LegacySynchronousLocalStore } from "../../Utility/LegacySynchronousLocalStore";
-import { Button } from "../../Components/Button";
 import { CombatFooter } from "./CombatFooter";
 import { CombatStatsPopup } from "./CombatStatsPopup";
 import { CustomStyles } from "./CustomStyles";
@@ -23,7 +21,6 @@ interface LocalState {
   showPortrait: boolean;
   showCombatStats: boolean;
   showInventoryDisplay: boolean;
-  showExplainer: boolean;
   portraitWasRequestedByClick: boolean;
   portraitURL: string;
   portraitCaption: string;
@@ -49,11 +46,6 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
       showPortrait: false,
       showCombatStats: false,
       showInventoryDisplay: false,
-      showExplainer:
-        LegacySynchronousLocalStore.Load(
-          LegacySynchronousLocalStore.User,
-          "DismissedPlayerViewExplainer"
-        ) == null,
       portraitWasRequestedByClick: false,
       portraitURL: "",
       portraitCaption: "",
@@ -101,8 +93,7 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
       this.state.suggestDamageCombatant ||
       this.state.suggestTagCombatant ||
       this.state.showCombatStats ||
-      this.state.showInventoryDisplay ||
-      this.state.showExplainer;
+      this.state.showInventoryDisplay;
 
     const combatantsById = _.keyBy(
       this.props.encounterState.Combatants,
@@ -121,27 +112,10 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
           TemporaryBackgroundImageFit={
             this.props.encounterState.BackgroundImageFit
           }
+          HasEpicInitiative={this.props.hasEpicInitiative || false}
         />
         {modalVisible && (
           <div className="modal-blur" onClick={this.closeAllModals} />
-        )}
-        {this.state.showExplainer && (
-          <div className="player-view-explainer">
-            <h4>Welcome!</h4>
-            <p>
-              The highlighted row is whose turn it is. A checkmark means
-              they've already acted this round.
-            </p>
-            {this.props.settings.AllowPlayerSuggestions && (
-              <p>Tap a Combatant's health value to suggest damage or healing.</p>
-            )}
-            {this.props.settings.AllowTagSuggestions && (
-              <p>
-                Tap the tag icon next to a Combatant to suggest a condition.
-              </p>
-            )}
-            <Button text="Got it" onClick={this.dismissExplainer} />
-          </div>
         )}
         {this.state.showPortrait && (
           <PortraitWithCaption
@@ -330,9 +304,6 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
   };
 
   private closeAllModals = () => {
-    if (this.state.showExplainer) {
-      this.dismissExplainer();
-    }
     this.setState({
       showPortrait: false,
       showCombatStats: false,
@@ -341,15 +312,6 @@ export class PlayerView extends React.Component<PlayerViewProps, LocalState> {
       suggestDamageCombatant: null,
       suggestTagCombatant: null
     });
-  };
-
-  private dismissExplainer = () => {
-    LegacySynchronousLocalStore.Save(
-      LegacySynchronousLocalStore.User,
-      "DismissedPlayerViewExplainer",
-      true
-    );
-    this.setState({ showExplainer: false });
   };
 
   private hasImages = () => {

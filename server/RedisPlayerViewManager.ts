@@ -21,7 +21,8 @@ export class RedisPlayerViewManager implements PlayerViewManager {
         fields.encounterState,
         defaultPlayerView.encounterState
       ),
-      settings: ParseJSONOrDefault(fields.settings, defaultPlayerView.settings)
+      settings: ParseJSONOrDefault(fields.settings, defaultPlayerView.settings),
+      hasEpicInitiative: fields.hasEpicInitiative === "true"
     };
   }
 
@@ -30,20 +31,26 @@ export class RedisPlayerViewManager implements PlayerViewManager {
     return Object.keys(fields).length == 0;
   }
 
-  public async UpdateEncounter(id: string, newState: any): Promise<void> {
-    this.redisClient.hset(
-      `playerviews_${id}`,
-      "encounterState",
-      JSON.stringify(newState)
-    );
+  public async UpdateEncounter(
+    id: string,
+    newState: any,
+    hasEpicInitiative: boolean
+  ): Promise<void> {
+    this.redisClient.hset(`playerviews_${id}`, {
+      encounterState: JSON.stringify(newState),
+      hasEpicInitiative: hasEpicInitiative.toString()
+    });
   }
 
-  public async UpdateSettings(id: string, newSettings: any): Promise<void> {
-    this.redisClient.hset(
-      `playerviews_${id}`,
-      "settings",
-      JSON.stringify(newSettings)
-    );
+  public async UpdateSettings(
+    id: string,
+    newSettings: any,
+    hasEpicInitiative: boolean
+  ): Promise<void> {
+    this.redisClient.hset(`playerviews_${id}`, {
+      settings: JSON.stringify(newSettings),
+      hasEpicInitiative: hasEpicInitiative.toString()
+    });
   }
 
   public async InitializeNew(): Promise<string> {
@@ -53,12 +60,18 @@ export class RedisPlayerViewManager implements PlayerViewManager {
       encounterState: JSON.stringify(
         EncounterState.Default<PlayerViewCombatantState>()
       ),
-      settings: JSON.stringify(getDefaultSettings().PlayerView)
+      settings: JSON.stringify(getDefaultSettings().PlayerView),
+      hasEpicInitiative: "false"
     });
     return id;
   }
 
   public async Destroy(id: string): Promise<void> {
-    this.redisClient.hdel(`playerviews_${id}`, "encounterState", "settings");
+    this.redisClient.hdel(
+      `playerviews_${id}`,
+      "encounterState",
+      "settings",
+      "hasEpicInitiative"
+    );
   }
 }

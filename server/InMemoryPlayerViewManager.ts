@@ -20,21 +20,32 @@ export class InMemoryPlayerViewManager implements PlayerViewManager {
     return this.playerViews[id] === undefined;
   }
 
-  public UpdateEncounter(id: string, newState: any) {
+  public UpdateEncounter(
+    id: string,
+    newState: any,
+    hasEpicInitiative: boolean
+  ) {
     const playerViewState = this.createOrGet(id);
     playerViewState.encounterState = newState;
+    playerViewState.hasEpicInitiative = hasEpicInitiative;
   }
 
-  public UpdateSettings(id: string, newSettings: any) {
+  public UpdateSettings(
+    id: string,
+    newSettings: any,
+    hasEpicInitiative: boolean
+  ) {
     const playerViewState = this.createOrGet(id);
     playerViewState.settings = newSettings;
+    playerViewState.hasEpicInitiative = hasEpicInitiative;
   }
 
   public async InitializeNew() {
     const encounterId = probablyUniqueString();
     this.playerViews[encounterId] = {
       encounterState: EncounterState.Default(),
-      settings: getDefaultSettings().PlayerView
+      settings: getDefaultSettings().PlayerView,
+      hasEpicInitiative: false
     };
     return encounterId;
   }
@@ -44,7 +55,8 @@ export class InMemoryPlayerViewManager implements PlayerViewManager {
     if (playerViewState === undefined) {
       const newPlayerView = {
         encounterState: EncounterState.Default<PlayerViewCombatantState>(),
-        settings: getDefaultSettings().PlayerView
+        settings: getDefaultSettings().PlayerView,
+        hasEpicInitiative: false
       };
       this.playerViews[id] = newPlayerView;
       return newPlayerView;

@@ -7,9 +7,13 @@ export interface PlayerViewManager {
 
   IdAvailable(id: string): Promise<boolean>;
 
-  UpdateEncounter(id: string, newState: any): void;
+  UpdateEncounter(id: string, newState: any, hasEpicInitiative: boolean): void;
 
-  UpdateSettings(id: string, newSettings: any): void;
+  UpdateSettings(
+    id: string,
+    newSettings: any,
+    hasEpicInitiative: boolean
+  ): void;
 
   InitializeNew(): Promise<string>;
 

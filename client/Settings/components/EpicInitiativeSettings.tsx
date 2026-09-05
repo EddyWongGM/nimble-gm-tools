@@ -149,9 +149,9 @@ function epicInitiativeFeatures() {
       <li>Player View Enhancements:</li>
       <ul className="bulleted">
         <li>Access a custom Player View Encounter URL</li>
-        {/* <li>
+        <li>
           Customize the look and feel of your Player View with colors and CSS
-        </li> */}
+        </li>
         <li>Display Name Portraits and Encounter Background Images</li>
         <li>Players can suggest Tags for any combatant</li>
       </ul>

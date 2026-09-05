@@ -1,7 +1,7 @@
 :root {
   --green: #3e885b;
   --dark-green: #275439;
-  --green-2: #339966;
+  --green-bright: #339966;
 
   // Formerly an oxblood red accent (headers, danger buttons, focus rings,
   // active-combatant border, etc.) - kept the variable names since ~40
@@ -19,6 +19,31 @@
   --gold: #d4a32a;
   --parchment: #c8996b;
   --magenta: #a6267d;
+
+  // Dedicated aliases for combatant stat identity colors (client/PlayerView/CSSFrom.ts's
+  // STAT_COLOR_CSS_VARS), kept separate from the hue vars above even though they
+  // point at the same values by default. --green/--blue are reused elsewhere for
+  // unrelated generic UI (--text-link, --button-face-green, .c-button--active) -
+  // overriding them directly for stat color customization/neutralization
+  // (plans/private/COLOR_CUSTOMIZATION.md) recolored links and "Opt In"/"Repeat
+  // Tutorial" buttons as a side effect the first time this was tried. Only these
+  // --stat-* vars should ever be touched by that feature; --green/--blue/etc.
+  // above must stay untouched by it. Only a single definition is needed (not
+  // repeated per theme block below) since each is a live reference to the hue
+  // var, which already resolves per-theme on its own.
+  //
+  // --stat-hp deliberately points at --green-bright rather than plain --green -
+  // --green alone (as used by --text-link/--button-face-green) reads as dull/
+  // muted next to the other stat colors, so HP's fixed default before a GM
+  // customizes it uses the brighter shade instead (still only used as a
+  // hover-face accent elsewhere, via --button-face-hover-green).
+  --stat-hp: var(--green-bright);
+  --stat-mana: var(--blue);
+  --stat-resources: var(--magenta);
+  --stat-hitdice: var(--orange);
+  --stat-wounds: var(--wound-red);
+  --stat-inventory: var(--parchment);
+  --stat-gold: var(--gold);
 
   --white: #f7f5f3;
   --off-white: #f8f5e9;
@@ -62,7 +87,7 @@
   --button-text-disabled: var(--grey-2);
   --button-face: var(--white);
   --button-face-green: var(--green);
-  --button-face-hover-green: var(--green-2);
+  --button-face-hover-green: var(--green-bright);
   --button-face-disabled: var(--white-2);
 
   --modal-bg: rgba(0, 0, 0, 0.7);
@@ -112,7 +137,7 @@
   --button-text-disabled: var(--light-grey);
   --button-face: var(--light-grey);
   --button-face-green: var(--green);
-  --button-face-hover-green: var(--green-2);
+  --button-face-hover-green: var(--green-bright);
   --button-face-disabled: var(--grey);
 
   --modal-bg: rgba(0, 0, 0, 0.7);

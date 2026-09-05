@@ -613,7 +613,7 @@ describe("Combatant", () => {
         "3/10"
       );
       expect(ToPlayerViewCombatantState(combatant).InventoryColor).toEqual(
-        "var(--parchment)"
+        "var(--stat-inventory)"
       );
     });
 

@@ -10,6 +10,7 @@ export class CustomStyles extends React.Component<{
   CustomStyles: PlayerViewCustomStyles;
   TemporaryBackgroundImageUrl?: string;
   TemporaryBackgroundImageFit?: SceneImageFit;
+  HasEpicInitiative: boolean;
 }> {
   public render() {
     return (
@@ -19,7 +20,8 @@ export class CustomStyles extends React.Component<{
             __html: CSSFrom(
               this.props.CustomStyles,
               this.props.TemporaryBackgroundImageUrl,
-              this.props.TemporaryBackgroundImageFit
+              this.props.TemporaryBackgroundImageFit,
+              this.props.HasEpicInitiative
             )
           }}
         />
