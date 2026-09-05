@@ -356,6 +356,7 @@ function ItemDetails(props: {
   onRemoveItem?: (combatant: Combatant, item: InventoryItem) => void;
 }) {
   const { item, index, combatant, dragDropType } = props;
+  const textEnricher = useContext(TextEnricherContext);
 
   const removeItem = () =>
     props.onRemoveItem
@@ -413,7 +414,7 @@ function ItemDetails(props: {
         className="c-combatant-details__item-grip fas fa-grip-vertical"
         aria-hidden="true"
       />
-      {item.Name}
+      {textEnricher.EnrichInlineText(item.Name)}
       {item.Stackable && (
         <>
           {" "}

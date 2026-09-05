@@ -45,7 +45,7 @@ export class SpellLibraryReferencePane extends React.Component<SpellLibraryRefer
     },
     {
       label: "Tier",
-      filterFn: l => l.Meta().FilterDimensions.Category !== "Rule",
+      filterFn: l => l.Meta().FilterDimensions.Category === "Spell",
       groupFn: l => ({
         label: TierOrCantrip(l.Meta().FilterDimensions.Tier),
         key: GetAlphaSortableLevelString(l.Meta().FilterDimensions.Tier)

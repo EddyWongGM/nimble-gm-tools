@@ -132,7 +132,10 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 11,
-	"CRRating": "1"	
+	"CRRating": "1",
+  "HPMediumArmor": {
+    "Value": 23
+  }	
   },
   {
     "Name": "LV 03 (CR: 1)",
@@ -177,7 +180,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 12,
-	"CRRating": "1"	
+	"CRRating": "1",
+  "HPMediumArmor": {
+    "Value": 29
+  },
+  "HPHeavyArmor": {
+    "Value": 19
+  } 
   },
   {
     "Name": "LV 04 (CR: 2)",
@@ -222,7 +231,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 12,
-	"CRRating": "2"	
+	"CRRating": "2",
+  "HPMediumArmor": {
+    "Value": 35
+  },
+  "HPHeavyArmor": {
+    "Value": 22
+  }
   },
   {
     "Name": "LV 05 (CR: 2)",
@@ -267,7 +282,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 13,
-	"CRRating": "2"	
+	"CRRating": "2",
+  "HPMediumArmor": {
+    "Value": 40
+  },
+  "HPHeavyArmor": {
+    "Value": 26
+  }
   },
   {
     "Name": "LV 06 (CR: 3)",
@@ -312,7 +333,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 13,
-	"CRRating": "3"	
+	"CRRating": "3",
+  "HPMediumArmor": {
+    "Value": 49
+  },
+  "HPHeavyArmor": {
+    "Value": 31
+  }
   },
   {
     "Name": "LV 07 (CR: 3)",
@@ -357,7 +384,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 13,
-	"CRRating": "3"	
+	"CRRating": "3",
+  "HPMediumArmor": {
+    "Value": 57
+  },
+  "HPHeavyArmor": {
+    "Value": 37
+  }
   },
   {
     "Name": "LV 08 (CR: 4)",
@@ -402,7 +435,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 13,
-	"CRRating": "4"	
+	"CRRating": "4",
+  "HPMediumArmor": {
+    "Value": 66
+  },
+  "HPHeavyArmor": {
+    "Value": 43
+  }
   },
   {
     "Name": "LV 09 (CR: 4)",
@@ -447,7 +486,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 14,
-	"CRRating": "4"	
+	"CRRating": "4",
+  "HPMediumArmor": {
+    "Value": 76
+  },
+  "HPHeavyArmor": {
+    "Value": 49
+  }
   },
   {
     "Name": "LV 10 (CR: 5)",
@@ -492,7 +537,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 14,
-	"CRRating": "5"	
+	"CRRating": "5",
+  "HPMediumArmor": {
+    "Value": 85
+  },
+  "HPHeavyArmor": {
+    "Value": 55
+  }	
   },
   {
     "Name": "LV 11 (CR: 6)",
@@ -537,7 +588,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 14,
-	"CRRating": "6"	
+	"CRRating": "6",
+  "HPMediumArmor": {
+    "Value": 96
+  },
+  "HPHeavyArmor": {
+    "Value": 64
+  }
   },
   {
     "Name": "LV 12 (CR: 7)",
@@ -582,7 +639,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 15,
-	"CRRating": "7"	
+	"CRRating": "7",
+  "HPMediumArmor": {
+    "Value": 108
+  },
+  "HPHeavyArmor": {
+    "Value": 73
+  }
   },
   {
     "Name": "LV 13 (CR: 8)",
@@ -627,7 +690,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 15,
-	"CRRating": "8"	
+	"CRRating": "8",
+  "HPMediumArmor": {
+    "Value": 121
+  },
+  "HPHeavyArmor": {
+    "Value": 83
+  }
   },
   {
     "Name": "LV 14 (CR: 9)",
@@ -672,7 +741,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 15,
-	"CRRating": "9"	
+	"CRRating": "9",
+  "HPMediumArmor": {
+    "Value": 134
+  },
+  "HPHeavyArmor": {
+    "Value": 94
+  }
   },
   {
     "Name": "LV 15 (CR: 9)",
@@ -717,7 +792,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 15,
-	"CRRating": "9"	
+	"CRRating": "9",
+  "HPMediumArmor": {
+    "Value": 148
+  },
+  "HPHeavyArmor": {
+    "Value": 106
+  }  
   },
   {
     "Name": "LV 16 (CR: 10)",
@@ -762,7 +843,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 16,
-	"CRRating": "10"	
+	"CRRating": "10",
+  "HPMediumArmor": {
+    "Value": 161
+  },
+  "HPHeavyArmor": {
+    "Value": 118
+  }
   },
   {
     "Name": "LV 17 (CR: 11)",
@@ -807,7 +894,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 16,
-	"CRRating": "11"	
+	"CRRating": "11",
+  "HPMediumArmor": {
+    "Value": 174
+  },
+  "HPHeavyArmor": {
+    "Value": 131
+  }
   },
   {
     "Name": "LV 18 (CR: 12)",
@@ -852,7 +945,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 16,
-	"CRRating": "12"	
+	"CRRating": "12",
+  "HPMediumArmor": {
+    "Value": 188
+  },
+  "HPHeavyArmor": {
+    "Value": 145
+  }
   },
   {
     "Name": "LV 19 (CR: 13)",
@@ -897,7 +996,13 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 17,
-	"CRRating": "13"	
+	"CRRating": "13",
+  "HPMediumArmor": {
+    "Value": 202
+  },
+  "HPHeavyArmor": {
+    "Value": 159
+  }
   },
   {
     "Name": "LV 20 (CR: 14)",
@@ -942,6 +1047,213 @@
     "ImageURL": "",
     "CustomFields": [],
 	"SaveDC": 17,
-	"CRRating": "14"	
+	"CRRating": "14",
+  "HPMediumArmor": {
+    "Value": 220
+  },
+  "HPHeavyArmor": {
+    "Value": 177
+  }
+  },
+  {
+    "Name": "LV 01",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Template Legendary",
+    "HP": {
+      "Value": 22,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 6",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 10",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 10,
+    "CRRating": "",
+    "LastStandHP": {
+      "Value": 10
+    }  	
+  },
+  {
+    "Name": "LV 02",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Template Legendary",
+    "HP": {
+      "Value": 28,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 7",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 13",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 11,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 20
+    },  
+    "LastStandHP": {
+        "Value": 20
+      }  	
+  },
+  {
+    "Name": "LV 03",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Template Legendary",
+    "HP": {
+      "Value": 40,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 8",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 15",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 11,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 28
+    },
+    "HPHeavyArmor": {
+      "Value": 18
+    },
+    "LastStandHP": {
+        "Value": 30
+      }  	
   }
 ]

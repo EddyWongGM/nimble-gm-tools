@@ -9,6 +9,7 @@
   }
 
   input,
+  select,
   textarea,
   p {
     font-size: medium;
@@ -19,8 +20,10 @@
   // .autohide-field__open-button margin-bottom hack below is calibrated
   // against that box height to vertically center the folder icon next to
   // "Name". Without it here too, the icon and label sit at different
-  // heights.
-  input {
+  // heights. select shares it too, so a dropdown field (e.g. Rarity) lines
+  // up with the text/number fields beside it.
+  input,
+  select {
     height: 3rem;
     margin: @small-spacer 0;
   }
@@ -67,6 +70,13 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0 @medium-spacer;
 
+    // Rarity's stored/filtered value is lowercase ("common", "rare", ...) -
+    // capitalize only the on-screen text, same as the read-only rarity badge
+    // in SpellDetails.tsx.
+    select[name="Rarity"] {
+      text-transform: capitalize;
+    }
+
     .c-text-field {
       flex-wrap: nowrap;
 
@@ -78,7 +88,8 @@
         flex: 0 0 9rem;
       }
 
-      input {
+      input,
+      select {
         flex: 1;
       }
     }

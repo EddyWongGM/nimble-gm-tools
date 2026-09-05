@@ -12,6 +12,11 @@
       "Value": 1,
       "Notes": ""
     },
+    "Resources": {
+      "Value": 99,
+      "Notes": ""
+    },
+    "ResourcesStartEmpty": true,
     "InitiativeModifier": 0,
     "InitiativeAdvantage": false,
     "Speed": [
@@ -111,6 +116,128 @@
       }
     ]
   },
+{
+    "Name": "Berserker LV2",
+    "Path": "Sample Heroes/Berserker",
+    "Source": "Sample Heroes",
+    "Type": "Berserker",
+    "HP": {
+      "Value": 27,
+      "Notes": "20"
+    },
+    "AC": {
+      "Value": 1,
+      "Notes": ""
+    },
+    "Resources": {
+      "Value": 99,
+      "Notes": ""
+    },
+    "ResourcesStartEmpty": true,
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 3,
+      "Dex": 1,
+      "Int": -1,
+      "Wis": -1
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "",
+      "Int": "-",
+      "Wis": ""
+    },    
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "",
+        "Content": "Max Fury Dice : 3▲",
+        "Usage": ""
+      },
+      {
+        "Name": "Intensifying Fury",
+        "Content": "At beginning of your turn, if raged, add 1▲Fury Die.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Rage (1/round) ",
+        "Content": "[tab] Roll 1d4▲. Rage adds STR based attacks. \n[tab] Fury Dice are Lost when your Rage ends.",
+        "Usage": ""
+      },
+      {
+        "Name": "Weapons",
+        "Content": "[A1] Battleaxe : 1d10 + [STR]\n[A1] Javelin: 1d6 + [STR] Range 8",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "That all you got?! (If attacked)",
+        "Content": "[tab] Spend▲1 Fury Dice to\n[tab] Reduce 4 damage each. ([STR]+[DEX])",
+        "Usage": ""
+      },
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
+        "Usage": ""
+      }
+    ],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Wild One (+1 Naturecraft)",
+        "Content": "[tab] Beasts more friendly. Field Rest: Adv HD in wild.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.6",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d12"
+    },
+    "Items": [
+      {
+        "Name": "Battleaxe",
+        "Stackable": false,
+        "Quantity": 1,
+        "SlotCost": 1
+      },
+      {
+        "Name": "Rations (meat)",
+        "Stackable": true,
+        "Quantity": 1,
+        "SlotCost": 1
+      },
+      {
+        "Name": "Rope (50 ft.)",
+        "Stackable": true,
+        "Quantity": 1,
+        "SlotCost": 1
+      }
+    ]
+  },  
   {
     "Name": "Cheat LV1",
     "Path": "Sample Heroes/Cheat",
@@ -191,6 +318,91 @@
       "Notes": "d6"
     }
   },
+{
+    "Name": "Cheat LV2",
+    "Path": "Sample Heroes/Cheat",
+    "Source": "Sample Heroes",
+    "Type": "The Cheat",
+    "HP": {
+      "Value": 14,
+      "Notes": "10"
+    },
+    "AC": {
+      "Value": 6,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 2,
+      "Int": 2,
+      "Wis": -1
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "",
+      "Wis": "-"
+    },    
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "\\Vicious Opportunist (1/turn) (melee & distracted)",
+        "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
+        "Usage": ""
+      },
+      {
+        "Name": "Sneak Attack (1st Crit hit + 1d6 damage)",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Weapons",
+        "Content": "[A1] Daggers : 1d4 + [DEX] Piercing\n[tab] (Dual wielding: 1/R Advantage)\n[A1] Shortbow : 1d6 + [DEX], Range 12",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Cheat",
+        "Content": "[dash] 1 / round, Move or Hide for free.\n[dash] If initiative less then 10, change it to 10.\n[dash] 1 / day: Change any skill check to 12 (10 + [INT])\n[dash] Advantage on skill checks : games / gambling.",
+        "Usage": ""
+      },      
+      {
+        "Name": "Tenacious",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d6"
+    }
+  },  
   {
     "Name": "Commander LV1",
     "Path": "Sample Heroes/Commander",
@@ -486,7 +698,7 @@
       },
       {
         "Name": "Lay on Hands - Pool 5 (5×LVL)",
-        "Content": "[A1] Touch Heal\n— Safe Rest: recharge.",
+        "Content": "[A1] Touch \\Heal\n— Safe Rest: recharge.",
         "Usage": ""
       }
     ],
@@ -517,6 +729,430 @@
     "HitDice": {
       "Value": 1,
       "Notes": "d10"
+    }
+  },
+  {
+    "Name": "Shadowmancer LV1",
+    "Path": "Sample Heroes/Shadowmancer",
+    "Source": "Sample Heroes",
+    "Type": "Shadowmancer",
+    "HP": {
+      "Value": 13,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 3,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": -1,
+      "Dex": 2,
+      "Int": 2,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "+",
+      "Wis": "-"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Shadow Blast (1/turn)",
+        "Content": "[A1] Range 8, 1d12+ [KEY]",
+        "Usage": ""
+      },
+      {
+        "Name": "Summon Shadows (Max 1, Lowest INT/LVL)",
+        "Content": "[A1] Summon 1 D12 Minion, Adjacent to yourself\n[tab] Minion: 1 HP, no dmg modifier, can't crit.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Hand Scythe : 1d4 + [DEX]\n [tab] Vicious. +1 die when crit.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Flameborn",
+        "Content": "[dash] 1 Neutral save Advantaged. Infernal if INT not neg.",
+        "Usage": ""
+      },
+      {
+        "Name": "\\Fearless (immune to Frightened)",
+        "Content": "[dash] +1 Initiative, -1 Armor.",
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d8"
+    }
+  },
+  {
+    "Name": "Shepherd LV1",
+    "Path": "Sample Heroes/Shepherd",
+    "Source": "Sample Heroes",
+    "Type": "Shepherd",
+    "HP": {
+      "Value": 17,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 8,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "-",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + 2",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "Cantrips: Searing Light, Rebuke, True Strike, Entice, Withering Touch",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "\\History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
+        "Usage": ""
+      },
+      {
+        "Name": "Tenacious",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d10"
+    }
+  },
+  {
+    "Name": "Songweaver LV1",
+    "Path": "Sample Heroes/Songweaver",
+    "Source": "Sample Heroes",
+    "Type": "Songweaver",
+    "HP": {
+      "Value": 13,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 3,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": -1,
+      "Dex": 0,
+      "Int": 1,
+      "Wis": 1
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "-",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Songweaver’s Inspiration (Free Reaction)",
+        "Content": "Reroll 1 die for atk or save. 4 (2×[WIL]) / Safe Rest.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Spells",
+        "Content": "Cantrips: Breath of Life, Flame Dart, Heart's Fire, Razor Wind, Vicious Mockery",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Dagger : 1d4 + [DEX]",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "\\What? I’ve been around (1/location (GM’s rules))",
+        "Content": "You know a person who has information.\n• 1–5. They want you dead.\n• 6–12. You owe them money.\n• 13–19. They can be convinced to help you.\n• 20. Biggest fan/are madly in love with you.",
+        "Usage": ""
+      },
+      {
+        "Name": "Song of Rest (1/day, when Field Rest)",
+        "Content": "Song: Anyone use HD heal +2 HP (WIL).",
+        "Usage": ""
+      },      
+      {
+        "Name": "Tenacious",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d8"
+    }
+  },
+  {
+    "Name": "Stormshifter LV1",
+    "Path": "Sample Heroes/Stormshifter",
+    "Source": "Sample Heroes",
+    "Type": "Stormshifter",
+    "HP": {
+      "Value": 13,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "7"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 2,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+    ],
+    "Actions": [
+      {
+        "Name": "Beastshift (2 shifts (DEX) / Safe Rest)",
+        "Content": "Shift Harmless beast and speak to animals.\nLasts until 0 HP, cast spell, or until you end it.",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "Cantrips Zap, Overload, Razor Wind, Breath of Life",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "Staff : 1d8 + [STR]",
+        "Usage": ""
+      }       
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Wild One (+1 Naturecraft)",
+        "Content": "Beasts more friendly. Field Rest: Adv HD in wild.",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe (Adv. on Initiative, +1 speed)",
+        "Content": "",
+        "Usage": ""
+      }   
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d8"
+    }
+  },
+  {
+    "Name": "Zephyr LV1",
+    "Path": "Sample Heroes/Zephyr",
+    "Source": "Sample Heroes",
+    "Type": "Zephyr",
+    "HP": {
+      "Value": 13,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 2,
+      "Int": -1,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "-",
+      "Wis": ""
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "Staff : 1d8 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "Swift Fists : 1d4 + [STR] No disadvantage",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "Elusive (1/Safe Rest)",
+        "Content": "Failing Save, can succeed instead. (+1 Stealth)",
+        "Usage": ""
+      }       
+    ],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "• Iron Defense (No armor. Armor 4 (DEX+STR ))\n• Survivalist (always personal rations) Advantage vs poison saves. +1 max HD.",
+        "Usage": ""
+      }  
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d8"
     }
   }
 ]
