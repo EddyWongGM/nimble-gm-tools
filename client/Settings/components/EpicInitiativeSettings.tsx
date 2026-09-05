@@ -5,6 +5,7 @@ import { Info } from "../../Components/Info";
 import { env } from "../../Environment";
 import { Metrics } from "../../Utility/Metrics";
 import { StylesChooser } from "./StylesChooser";
+import { StatColorsChooser } from "./StatColorsChooser";
 import { Toggle } from "./Toggle";
 import { StatBlockCustomFields } from "./StatBlockCustomFields";
 
@@ -39,6 +40,7 @@ export function EpicInitiativeSettings() {
         </Info>
       </Toggle>
       <StylesChooser />
+      <StatColorsChooser />
       <h4>Other Styles</h4>
       <Field name="PlayerView.CustomStyles.font">
         {(fieldProps: FieldProps) => (

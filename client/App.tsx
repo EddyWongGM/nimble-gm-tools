@@ -26,6 +26,7 @@ import {
 import { Store } from "./Utility/Store";
 import { Settings } from "../common/Settings";
 import { Metrics } from "./Utility/Metrics";
+import { StatColorStyles } from "./PlayerView/components/StatColorStyles";
 
 /*
  * This file is new as of 05/2020. Most of the logic was extracted from TrackerViewModel.
@@ -149,6 +150,9 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
         <TextEnricherContext.Provider value={tracker.StatBlockTextEnricher}>
           <LibrariesContext.Provider value={libraries}>
             <div className={"encounter-view " + interfacePriority}>
+              {env.HasEpicInitiative && (
+                <StatColorStyles customStyles={settings.PlayerView.CustomStyles} />
+              )}
               {blurVisible && (
                 <div className="modal-blur" onClick={tracker.CloseSettings} />
               )}

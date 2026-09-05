@@ -49,4 +49,36 @@ describe("CSSFrom", () => {
       "#playerview, #playerview.dark-mode { background-image: url(http://example.com/scene.png); }"
     );
   });
+
+  test("no stat colors set emits no custom-property overrides", () => {
+    const css = CSSFrom(customStyles);
+
+    expect(css).not.toContain("--blue");
+    expect(css).not.toContain("--green");
+  });
+
+  test("a chosen Mana color overrides --blue at :root, .combatant--header, and .c-toolbar", () => {
+    const css = CSSFrom({ ...customStyles, manaColor: "#123456" });
+
+    expect(css).toContain(":root { --blue: #123456; }");
+    expect(css).toContain(".combatant--header { --blue: #123456; }");
+    expect(css).toContain(".c-toolbar { --blue: #123456; }");
+  });
+
+  test("a chosen HP icon color overrides --green, with no matching value-color property", () => {
+    const css = CSSFrom({ ...customStyles, hpIconColor: "#abcdef" });
+
+    expect(css).toContain("--green: #abcdef;");
+  });
+
+  test("multiple chosen stat colors all appear in one declaration block", () => {
+    const css = CSSFrom({
+      ...customStyles,
+      manaColor: "#111111",
+      goldColor: "#222222"
+    });
+
+    expect(css).toContain("--blue: #111111;");
+    expect(css).toContain("--gold: #222222;");
+  });
 });

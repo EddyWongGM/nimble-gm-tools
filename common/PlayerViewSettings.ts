@@ -59,4 +59,18 @@ export interface PlayerViewCustomStyles {
   headerText: string;
   backgroundUrl: string;
   font: string;
+  /**
+   * Epic Tier stat identity colors. Empty string means "use the fixed
+   * default" (--green/--blue/--magenta/--orange/--wound-red/--parchment/
+   * --gold) - see plans/private/COLOR_CUSTOMIZATION.md. hpIconColor is the
+   * only one of these with no matching value-color field: HP's value stays
+   * the hardcoded severity gradient (GetHPColor), never GM-colorable.
+   */
+  hpIconColor: string;
+  manaColor: string;
+  resourcesColor: string;
+  hitDiceColor: string;
+  woundsColor: string;
+  inventoryColor: string;
+  goldColor: string;
 }
