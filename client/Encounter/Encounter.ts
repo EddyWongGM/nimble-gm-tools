@@ -292,7 +292,8 @@ export class Encounter {
         Items: startingItems ?? [],
         RoundCounter: 0,
         ElapsedSeconds: 0,
-        InterfaceVersion: process.env.VERSION || "unknown"
+        InterfaceVersion: process.env.VERSION || "unknown",
+        LegendaryHeroCount: legendaryHeroCount ?? undefined
       };
 
       const combatant = this.AddCombatantFromState(initialState);

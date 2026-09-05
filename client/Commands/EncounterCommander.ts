@@ -18,6 +18,7 @@ import { SafeRestPrompt } from "../Prompts/SafeRestPrompt";
 import { ScenePrompt } from "../Prompts/ScenePrompt";
 import { ToggleFullscreen } from "./ToggleFullscreen";
 import { PersistentCharacter } from "../../common/PersistentCharacter";
+import { StatBlock } from "../../common/StatBlock";
 import { SavedScene } from "../../common/PlayerViewSettings";
 import { ConfirmAndShutdownServer } from "../Utility/ShutdownServer";
 
@@ -447,6 +448,20 @@ export class EncounterCommander {
     });
 
     await Promise.all(persistentCharactersPromise);
+
+    // Legendary monsters are saved with HP already scaled to whatever party
+    // size the encounter was built for; rescale them to the party size
+    // actually present now that every PC has been loaded.
+    const heroCount = Math.max(
+      1,
+      this.tracker.Encounter.Combatants().filter(c => c.IsPlayerCharacter())
+        .length
+    );
+    this.tracker.Encounter.Combatants().forEach(c => {
+      if (StatBlock.IsLegendary(c.StatBlock())) {
+        c.RescaleLegendaryHP(heroCount);
+      }
+    });
 
     this.tracker.Encounter.SortByInitiative(true);
   };
