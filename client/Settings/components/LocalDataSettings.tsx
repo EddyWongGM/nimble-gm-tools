@@ -40,7 +40,7 @@ export class LocalDataSettings extends React.Component {
           <Button fontAwesomeIcon="sliders-h" onClick={this.exportSettings} />
         </div>
         <div className="c-button-with-label">
-          <span>Replace onlyyour Settings by uploading a JSON file</span>
+          <span>Replace only your Settings by uploading a JSON file</span>
           <FileUploadButton
             acceptFileType=".json"
             fontAwesomeIcon="undo"

@@ -27,12 +27,13 @@ export class TipCarousel extends React.Component<
           onClick={this.previousTip}
           title="Previous Tip"
         />
-        <span
-          className="tip"
-          dangerouslySetInnerHTML={{
-            __html: currentTip
-          }}
-        />
+        <span className="tip">
+          <span
+            dangerouslySetInnerHTML={{
+              __html: currentTip
+            }}
+          />
+        </span>
         <span
           className="fa-arrow-right fa-clickable"
           onClick={this.nextTip}
