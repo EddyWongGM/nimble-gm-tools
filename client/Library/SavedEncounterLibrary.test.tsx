@@ -1,9 +1,7 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { SavedEncounter } from "../../common/SavedEncounter";
 import { Store } from "../Utility/Store";
-import { FilterCache } from "./FilterCache";
 import { useLibrary } from "./useLibrary";
-import { Listing } from "./Listing";
 
 function buildSavedEncounter(
   Id: string,
@@ -93,9 +91,7 @@ describe("Saved Encounter Library", () => {
     ]);
   });
 
-  // TODO(encounter-rename-persistence): Restore the one-row expectation when
-  // UpdateListings stops delegating to the append-based legacy save method.
-  test("the filter hides the duplicate row appended by legacy UpdateListings", async () => {
+  test("UpdateListings renames a listing in place without appending a duplicate row", async () => {
     const accountSave = jest.fn();
     const { result } = renderSavedEncounterLibrary(accountSave);
     const original = buildSavedEncounter(
@@ -118,20 +114,12 @@ describe("Saved Encounter Library", () => {
       ]);
     });
 
-    expect(result.current.GetAllListings()).toHaveLength(2);
-    for (const updatedListing of result.current.GetAllListings()) {
-      expect(updatedListing.Meta()).toMatchObject({
-        Id: "encounter-id",
-        Name: "Finale",
-        Path: "Chapter 1"
-      });
-    }
-    // FilterCache's invariant value type is irrelevant here; this test only
-    // exercises its metadata-based duplicate filtering.
-    const visibleListings = new FilterCache<Listing<any>>(
-      result.current.GetAllListings()
-    ).GetFilteredEntries("");
-    expect(visibleListings).toHaveLength(1);
+    expect(result.current.GetAllListings()).toHaveLength(1);
+    expect(result.current.GetAllListings()[0].Meta()).toMatchObject({
+      Id: "encounter-id",
+      Name: "Finale",
+      Path: "Chapter 1"
+    });
     expect(Store.Save).toHaveBeenLastCalledWith(
       Store.SavedEncounters,
       "encounter-id",
