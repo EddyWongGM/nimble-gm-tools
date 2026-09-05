@@ -3,9 +3,24 @@ import { probablyUniqueString } from "./Toolbox";
 
 export type SpellDistanceType = "Range" | "Reach";
 
+export type EquipmentRarity =
+  | "common"
+  | "uncommon"
+  | "rare"
+  | "very rare"
+  | "legendary";
+
+export const EquipmentRarities: EquipmentRarity[] = [
+  "common",
+  "uncommon",
+  "rare",
+  "very rare",
+  "legendary"
+];
+
 export interface Spell extends Listable {
   // Missing/undefined on data saved before EntryType existed - treat as "spell".
-  EntryType?: "spell" | "rule";
+  EntryType?: "spell" | "rule" | "equipment";
   Source: string;
   Tier: number;
   School: string;
@@ -17,6 +32,11 @@ export interface Spell extends Listable {
   Description: string;
   CastCondition: string;
   Upcast: string;
+  // Equipment-only fields, unused by spells/rules.
+  Cost?: number;
+  Rarity?: EquipmentRarity;
+  Charges?: number;
+  Recharge?: string;
 }
 
 export namespace Spell {
@@ -28,7 +48,13 @@ export namespace Spell {
     // listables that haven't been through Update() yet - see Update() below.
     Tier: (spell.Tier ?? (spell as any).Level ?? 0).toString(),
     Type: spell.School,
-    Category: spell.EntryType === "rule" ? "Rule" : "Spell"
+    Category:
+      spell.EntryType === "rule"
+        ? "Rule"
+        : spell.EntryType === "equipment"
+          ? "Equipment"
+          : "Spell",
+    Rarity: spell.EntryType === "equipment" ? spell.Rarity : undefined
   });
 
   export const Default: () => Spell = () => {
@@ -48,7 +74,10 @@ export namespace Spell {
       Distance: "",
       CastCondition: "",
       Upcast: "",
-      School: ""
+      School: "",
+      Cost: 0,
+      Rarity: "common",
+      Recharge: ""
     };
   };
 
@@ -82,6 +111,18 @@ export namespace Spell {
 
     if (updated?.Upcast === undefined) {
       updated = { ...updated, Upcast: "" };
+    }
+
+    if (updated?.Cost === undefined) {
+      updated = { ...updated, Cost: 0 };
+    }
+
+    if (updated?.Rarity === undefined) {
+      updated = { ...updated, Rarity: "common" };
+    }
+
+    if (updated?.Recharge === undefined) {
+      updated = { ...updated, Recharge: "" };
     }
 
     return updated;

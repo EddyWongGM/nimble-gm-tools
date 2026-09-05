@@ -28,7 +28,7 @@ export function InitiativeListHeader(props: {
             className="fas fa-heart"
             title="Health"
             aria-hidden="true"
-            style={{ color: "var(--green)" }}
+            style={{ color: "var(--stat-hp)" }}
           ></span>
         </th>
 
@@ -48,7 +48,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-tint"
               title="Mana"
               aria-hidden="true"
-              style={{ color: "var(--blue)" }}
+              style={{ color: "var(--stat-mana)" }}
             ></span>
           </th>
         )}
@@ -60,7 +60,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-bolt"
               title="Resources"
               aria-hidden="true"
-              style={{ color: "var(--magenta)" }}
+              style={{ color: "var(--stat-resources)" }}
             ></span>
           </th>
         )}
@@ -72,7 +72,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-dice-d6"
               title="Hit Dice"
               aria-hidden="true"
-              style={{ color: "var(--orange)" }}
+              style={{ color: "var(--stat-hitdice)" }}
             ></span>
           </th>
         )}
@@ -84,7 +84,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-skull"
               title="Wounds"
               aria-hidden="true"
-              style={{ color: "var(--wound-red)" }}
+              style={{ color: "var(--stat-wounds)" }}
             ></span>
           </th>
         )}
@@ -96,7 +96,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-scroll"
               title="Inventory"
               aria-hidden="true"
-              style={{ color: "var(--parchment)" }}
+              style={{ color: "var(--stat-inventory)" }}
             ></span>
           </th>
         )}
@@ -108,7 +108,7 @@ export function InitiativeListHeader(props: {
               className="fas fa-coins"
               title="Gold"
               aria-hidden="true"
-              style={{ color: "var(--gold)" }}
+              style={{ color: "var(--stat-gold)" }}
             ></span>
           </th>
         )}

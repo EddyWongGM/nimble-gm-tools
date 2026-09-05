@@ -25,8 +25,11 @@ const SettingsTab = {
   EpicTier: "Epic Tier"
 };
 
-// TODO: temporarily hidden - remove to re-enable the Epic Tier tab
-const { EpicTier: _EpicTier, ...visibleSettingsTabs } = SettingsTab;
+// TEMP for local testing only - re-comment this line and restore the
+// destructure below before this branch ships (Epic Tier tab is hidden until
+// Epic/Mythic tiers actually launch on Patreon, see PAID_FEATURES.md).
+const visibleSettingsTabs = SettingsTab;
+// const { EpicTier: _EpicTier, ...visibleSettingsTabs } = SettingsTab;
 
 interface SettingsPaneProps {
   repeatTutorial: () => void;

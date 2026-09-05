@@ -247,7 +247,8 @@
     flex-grow: 1;
   }
 
-  input {
+  input,
+  select {
     flex-basis: 80%;
   }
 }
@@ -372,6 +373,24 @@ span.c-statblock-editor__label {
 .c-statblock-editor__initiative-special-roll {
   padding-left: @medium-spacer;
   vertical-align: baseline;
+}
+
+.c-statblock-editor__checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: @small-spacer;
+  padding-left: @small-spacer;
+  font-size: @font-size-h4;
+  white-space: nowrap;
+
+  input {
+    width: 1.1rem;
+    height: 1.1rem;
+    min-width: 1.1rem;
+    flex-grow: 0;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 // The 7 keyword types (Speed, Senses, damage types, etc.) used to each get

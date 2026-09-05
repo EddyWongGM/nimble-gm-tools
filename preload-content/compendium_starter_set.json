@@ -260,6 +260,48 @@
     "Source": "Core Rules"
   },
   {
+    "Name": "Healing Potion",
+    "Classes": [""],
+    "Components": "",
+    "Description": "(action) \\Heal 2d4+4 HP.",
+    "EntryType": "equipment",
+    "Cost": 50,    
+    "Tier": 0,
+    "Path": "Equipment",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },
+  {
+    "Name": "Greater Healing Potion",
+    "Classes": [""],
+    "Components": "",
+    "Description": "(action) \\Heal 3d6+6 HP.",
+    "EntryType": "equipment",
+    "Cost": 150,    
+    "Tier": 0,
+    "Path": "Equipment",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },  
+  {
+    "Name": "Supreme Healing Potion",
+    "Classes": [""],
+    "Components": "",
+    "Description": "(action) \\Heal 4d8+8 HP.",
+    "EntryType": "equipment",
+    "Cost": 450,
+    "Tier": 0,
+    "Path": "Equipment",
+    "DistanceType": "Range",
+    "Distance": "",
+    "School": "",
+    "Source": "Core Rules"
+  },    
+  {
     "Name": "Charmed",
     "Classes": [""],
     "Components": "",

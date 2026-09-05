@@ -73,6 +73,7 @@
   }
 
   .tips {
+    display: flex;
     flex-direction: row;
     align-items: center;
 
@@ -86,6 +87,14 @@
       min-height: (1.4em * 4);
       display: flex;
       align-items: center;
+
+      // The tip HTML can contain an inline <a>. Wrapping it in its own
+      // element keeps it as a single flex item so the text and link wrap
+      // together as one paragraph instead of each being split into
+      // separate, independently-wrapping flex items.
+      > span {
+        flex-shrink: 1;
+      }
     }
   }
 

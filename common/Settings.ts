@@ -131,7 +131,14 @@ export function getDefaultSettings(): Settings {
         headerBackground: "",
         headerText: "",
         mainBackground: "",
-        backgroundUrl: ""
+        backgroundUrl: "",
+        hpIconColor: "",
+        manaColor: "",
+        resourcesColor: "",
+        hitDiceColor: "",
+        woundsColor: "",
+        inventoryColor: "",
+        goldColor: ""
       },
       CustomEncounterId: "",
       SceneLibrary: []

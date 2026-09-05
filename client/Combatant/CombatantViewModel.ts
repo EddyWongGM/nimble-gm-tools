@@ -72,6 +72,9 @@ export class CombatantViewModel {
       if (maxResources === undefined) {
         return null;
       }
+      if (this.Combatant.StatBlock().ResourcesStartEmpty) {
+        return `${this.Combatant.CurrentResources()}`;
+      }
       return `${this.Combatant.CurrentResources()}/${maxResources}`;
     });
     this.ResourcesPercentage = ko.pureComputed(() => {

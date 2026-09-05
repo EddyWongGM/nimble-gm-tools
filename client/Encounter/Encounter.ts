@@ -69,18 +69,37 @@ export class Encounter {
     public Rules: IRules
   ) {
     this.Difficulty = ko.pureComputed(() => {
-      const enemyChallengeRatings = this.combatants()
-        .filter(c => !c.IsPlayerCharacter())
-        .filter(c => c.StatBlock().Challenge)
-        .map(c => c.StatBlock().Challenge.toString());
-      const playerLevels = this.combatants()
+      // Companions act alongside the party (StatBlock.ActsInPlayerPhase),
+      // so they're excluded from the monster side rather than counted as
+      // enemy levels.
+      const monsterCombatants = this.combatants().filter(
+        c => !c.ActsInPlayerPhase()
+      );
+      const heroChallenges = this.combatants()
         .filter(c => c.IsPlayerCharacter())
         .filter(c => c.StatBlock().Challenge)
         .map(c => c.StatBlock().Challenge.toString());
-      return DifficultyCalculator.Calculate(
-        enemyChallengeRatings,
-        playerLevels
+
+      // Legendary/Titan monsters are calculated on their own (their level
+      // against the party's average level), not folded into the normal
+      // monster-level total - see plans/private/ENCOUNTER_DIFFICULTY.md.
+      const legendaryCombatant = monsterCombatants.find(
+        c =>
+          StatBlock.IsLegendary(c.StatBlock()) ||
+          StatBlock.IsTitan(c.StatBlock())
       );
+      if (legendaryCombatant) {
+        return DifficultyCalculator.Calculate(
+          [],
+          heroChallenges,
+          legendaryCombatant.StatBlock().Challenge?.toString()
+        );
+      }
+
+      const monsterChallenges = monsterCombatants
+        .filter(c => c.StatBlock().Challenge)
+        .map(c => c.StatBlock().Challenge.toString());
+      return DifficultyCalculator.Calculate(monsterChallenges, heroChallenges);
     });
 
     this.GetPlayerView.subscribe(newPlayerView => {
@@ -538,7 +557,7 @@ export class Encounter {
           persistentCharacter.CurrentMana ?? combatant.MaxMana() ?? 0
         );
         combatant.CurrentResources(
-          persistentCharacter.CurrentResources ?? combatant.MaxResources() ?? 0
+          persistentCharacter.CurrentResources ?? combatant.DefaultResources()
         );
         combatant.CurrentHitDice(
           persistentCharacter.CurrentHitDice ?? combatant.MaxHitDice() ?? 0

@@ -312,7 +312,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 <span
                   className="combatant__mobile-icon fas fa-dice-d6"
                   aria-hidden="true"
-                  style={{ color: "var(--orange)" }}
+                  style={{ color: "var(--stat-hitdice)" }}
                 />
 
                 {renderHitDiceText(props)}
@@ -362,7 +362,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 <span
                   className="combatant__mobile-icon fas fa-skull"
                   aria-hidden="true"
-                  style={{ color: "var(--wound-red)" }}
+                  style={{ color: "var(--stat-wounds)" }}
                 />
 
                 {renderWoundsText(props)}
@@ -380,7 +380,7 @@ export function CombatantRow(props: CombatantRowProps) {
             <span
               className="combatant__mobile-icon fas fa-skull"
               aria-hidden="true"
-              style={{ color: "var(--wound-red)" }}
+              style={{ color: "var(--stat-wounds)" }}
             />
           )}
         </td>
@@ -686,7 +686,7 @@ function getManaStyle(props: CombatantRowProps) {
   if (!maxMana) {
     return {};
   }
-  return { color: "var(--blue)" };
+  return { color: "var(--stat-mana)" };
 }
 
 function renderManaText(props: CombatantRowProps) {
@@ -714,7 +714,7 @@ function getResourcesStyle(props: CombatantRowProps) {
   if (!maxResources) {
     return {};
   }
-  return { color: "var(--magenta)" };
+  return { color: "var(--stat-resources)" };
 }
 
 function renderResourcesText(props: CombatantRowProps) {
@@ -722,10 +722,16 @@ function renderResourcesText(props: CombatantRowProps) {
   if (!maxResources) {
     return "";
   }
-  if (props.combatantState.TemporaryResources) {
-    return `${props.combatantState.CurrentResources ?? 0}+${props.combatantState.TemporaryResources}/${maxResources}`;
+  const currentResources = props.combatantState.CurrentResources ?? 0;
+  if (props.combatantState.StatBlock.ResourcesStartEmpty) {
+    return props.combatantState.TemporaryResources
+      ? `${currentResources}+${props.combatantState.TemporaryResources}`
+      : `${currentResources}`;
   }
-  return `${props.combatantState.CurrentResources ?? 0}/${maxResources}`;
+  if (props.combatantState.TemporaryResources) {
+    return `${currentResources}+${props.combatantState.TemporaryResources}/${maxResources}`;
+  }
+  return `${currentResources}/${maxResources}`;
 }
 
 function renderResourcesBarStyle(props: CombatantRowProps) {
@@ -738,7 +744,7 @@ function renderResourcesBarStyle(props: CombatantRowProps) {
 }
 
 function getHitDiceStyle() {
-  return { color: "var(--orange)" };
+  return { color: "var(--stat-hitdice)" };
 }
 
 function renderHitDiceText(props: CombatantRowProps) {
@@ -767,7 +773,7 @@ function getItemsStyle(props: CombatantRowProps) {
   if (slotsUsed > maxSlots) {
     return { color: "rgb(200,30,30)" };
   }
-  return { color: "var(--parchment)" };
+  return { color: "var(--stat-inventory)" };
 }
 
 function renderItemsText(props: CombatantRowProps) {
@@ -777,7 +783,7 @@ function renderItemsText(props: CombatantRowProps) {
 }
 
 function getGoldStyle() {
-  return { color: "var(--gold)" };
+  return { color: "var(--stat-gold)" };
 }
 
 function renderGoldText(props: CombatantRowProps) {
@@ -789,7 +795,7 @@ function getWoundsStyle(props: CombatantRowProps) {
   if (!maxWounds) {
     return {};
   }
-  return { color: "var(--wound-red)" };
+  return { color: "var(--stat-wounds)" };
 }
 
 function renderWoundsText(props: CombatantRowProps) {

@@ -2,15 +2,18 @@ import * as React from "react";
 
 import { Formik, Form, useFormikContext } from "formik";
 import { Listable } from "../../common/Listable";
-import { Spell } from "../../common/Spell";
+import { EquipmentRarities, Spell } from "../../common/Spell";
 import { probablyUniqueString } from "../../common/Toolbox";
 import { useState, useRef } from "react";
 import { Button, SubmitButton } from "../Components/Button";
 import { Listing } from "../Library/Listing";
 import { SpellDetails } from "../Library/Components/SpellDetails";
 import { EnumToggle } from "./EnumToggle";
-import { DescriptionField } from "./components/StatBlockEditorFields";
-import { TextField } from "./components/TextField";
+import {
+  DescriptionField,
+  NumberField
+} from "./components/StatBlockEditorFields";
+import { SelectField, TextField } from "./components/TextField";
 import { IdentityFields } from "./components/IdentityFields";
 
 export type SpellEditorProps = {
@@ -74,6 +77,8 @@ export function SpellEditor(props: SpellEditorProps) {
           standardSpell.Classes = AllClasses.split(",").map(c => c.trim());
           standardSpell.Tier = castToNumberOrZero(standardSpell.Tier);
           standardSpell.Actions = castToNumberOrZero(standardSpell.Actions);
+          standardSpell.Cost = castToNumberOrZero(standardSpell.Cost);
+          standardSpell.Charges = castToOptionalNumber(standardSpell.Charges);
 
           spell = standardSpell;
         } else {
@@ -158,19 +163,23 @@ function buttons(props: SpellEditorProps) {
 }
 
 function StandardEditor() {
-  const { values } = useFormikContext<{ EntryType: "spell" | "rule"; Tier: any }>();
-  const isRule = values.EntryType === "rule";
+  const { values } = useFormikContext<{
+    EntryType: "spell" | "rule" | "equipment";
+    Tier: any;
+  }>();
+  const isEquipment = values.EntryType === "equipment";
+  const isSimpleEntry = values.EntryType === "rule" || isEquipment;
   const isCantrip = castToNumberOrZero(values.Tier) === 0;
 
   return (
     <>
       <div className="c-statblock-editor__headers">
         <EnumToggle
-          labelsByOption={{ spell: "Spell", rule: "Rule" }}
+          labelsByOption={{ spell: "Spell", rule: "Rule", equipment: "Equipment" }}
           fieldName="EntryType"
         />
         <TextField label="Source" fieldName="Source" />
-        {!isRule && (
+        {!isSimpleEntry && (
           <>
             <TextField label="School" fieldName="School" />
             <div className="c-spell-editor__small-fields">
@@ -187,9 +196,25 @@ function StandardEditor() {
             </div>
           </>
         )}
+        {isEquipment && (
+          <>
+            <div className="c-spell-editor__small-fields">
+              <NumberField label="Cost (gp)" fieldName="Cost" />
+              <SelectField
+                label="Rarity"
+                fieldName="Rarity"
+                options={EquipmentRarities}
+              />
+            </div>
+            <div className="c-spell-editor__small-fields">
+              <NumberField label="Charges" fieldName="Charges" />
+              <TextField label="Recharge" fieldName="Recharge" />
+            </div>
+          </>
+        )}
       </div>
       <DescriptionField />
-      {!isRule && (
+      {!isSimpleEntry && (
         <TextField
           label={isCantrip ? "High Levels" : "Upcast"}
           fieldName="Upcast"
@@ -206,7 +231,9 @@ function SpellEditorPreview() {
     ...Spell.Default(),
     ...values,
     Tier: castToNumberOrZero(values.Tier),
-    Actions: castToNumberOrZero(values.Actions)
+    Actions: castToNumberOrZero(values.Actions),
+    Cost: castToNumberOrZero(values.Cost),
+    Charges: castToOptionalNumber(values.Charges)
   };
 
   return (
@@ -214,6 +241,13 @@ function SpellEditorPreview() {
       <SpellDetails Spell={spell} />
     </div>
   );
+}
+
+function castToOptionalNumber(value: any) {
+  if (value === "" || value === undefined || value === null) {
+    return undefined;
+  }
+  return castToNumberOrZero(value);
 }
 
 function castToNumberOrZero(value: any) {

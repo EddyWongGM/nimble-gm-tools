@@ -5,6 +5,7 @@ import { Info } from "../../Components/Info";
 import { env } from "../../Environment";
 import { Metrics } from "../../Utility/Metrics";
 import { StylesChooser } from "./StylesChooser";
+import { StatColorsChooser } from "./StatColorsChooser";
 import { Toggle } from "./Toggle";
 import { StatBlockCustomFields } from "./StatBlockCustomFields";
 
@@ -39,6 +40,7 @@ export function EpicInitiativeSettings() {
         </Info>
       </Toggle>
       <StylesChooser />
+      <StatColorsChooser />
       <h4>Other Styles</h4>
       <Field name="PlayerView.CustomStyles.font">
         {(fieldProps: FieldProps) => (
@@ -147,9 +149,9 @@ function epicInitiativeFeatures() {
       <li>Player View Enhancements:</li>
       <ul className="bulleted">
         <li>Access a custom Player View Encounter URL</li>
-        {/* <li>
+        <li>
           Customize the look and feel of your Player View with colors and CSS
-        </li> */}
+        </li>
         <li>Display Name Portraits and Encounter Background Images</li>
         <li>Players can suggest Tags for any combatant</li>
       </ul>

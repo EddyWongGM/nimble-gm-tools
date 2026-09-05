@@ -6,7 +6,8 @@ import { LoadingIndicator } from "../../Components/LoadingIndicator";
 export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
   const textEnricher = React.useContext(TextEnricherContext);
   const spell = props.Spell;
-  const isRule = spell.EntryType === "rule";
+  const isEquipment = spell.EntryType === "equipment";
+  const isSimpleEntry = spell.EntryType === "rule" || isEquipment;
 
   if (props.isLoading) {
     return (
@@ -20,22 +21,26 @@ export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
   // The stat clause (Range/Reach) reads as a bold-labeled lead-in to the
   // description's first paragraph, not a separate line - fold it into the
   // same text passed to EnrichText.
-  const statLine = !isRule ? getStatLine(spell) : "";
+  const statLine = !isSimpleEntry ? getStatLine(spell) : "";
   const descriptionText = statLine
     ? `${statLine} ${spell.Description}`
     : spell.Description;
-  const hasUpcast = !isRule && !!spell.Upcast;
+  const hasUpcast = !isSimpleEntry && !!spell.Upcast;
+  const hasCharges = isEquipment && spell.Charges !== undefined;
 
   return (
     <div className="spell">
-      {!isRule && <div className="spell-badge">{getTierBadge(spell)}</div>}
+      {!isSimpleEntry && <div className="spell-badge">{getTierBadge(spell)}</div>}
+      {isEquipment && !!spell.Rarity && (
+        <div className="spell-badge">{capitalizeWords(spell.Rarity)}</div>
+      )}
       <h3>
         <span>{spell.Name}</span>
-        {!isRule && (
+        {!isSimpleEntry && (
           <span className="spell-actions">{getActionsLabel(spell.Actions)}</span>
         )}
       </h3>
-      {!isRule && !!spell.CastCondition && (
+      {!isSimpleEntry && !!spell.CastCondition && (
         <p className="spell-condition">{spell.CastCondition}</p>
       )}
       <div className="spell-description">
@@ -48,7 +53,16 @@ export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
             {textEnricher.EnrichText(spell.Upcast)}
           </p>
         )}
-        <div className="spell-source">Source: {spell.Source}</div>
+        {hasCharges && (
+          <p className="spell-charges">
+            <strong>Charges:</strong> {spell.Charges}
+            {!!spell.Recharge && ` (${spell.Recharge})`}
+          </p>
+        )}
+        <div className="spell-source">
+          Source: {spell.Source}
+          {isEquipment && !!spell.Cost && ` · ${spell.Cost} gp`}
+        </div>
       </div>
     </div>
   );
@@ -56,6 +70,10 @@ export function SpellDetails(props: { Spell: Spell; isLoading?: boolean }) {
 
 function getTierBadge(spell: Spell) {
   return spell.Tier === 0 ? "Cantrip" : `Tier ${spell.Tier}`;
+}
+
+function capitalizeWords(value: string) {
+  return value.replace(/\b\w/g, char => char.toUpperCase());
 }
 
 function getActionsLabel(actions: number) {

@@ -46,29 +46,38 @@ export class ReactPlayerView {
     this.socket.on("connect", this.joinEncounter);
     this.socket.on(
       "encounter updated",
-      (encounter: EncounterState<PlayerViewCombatantState>) => {
+      (
+        encounter: EncounterState<PlayerViewCombatantState>,
+        hasEpicInitiative: boolean
+      ) => {
         this.renderPlayerView({
           encounterState: encounter,
           settings: this.playerViewState.settings,
           combatStats: this.playerViewState.combatStats,
-          inventoryDisplay: this.playerViewState.inventoryDisplay
+          inventoryDisplay: this.playerViewState.inventoryDisplay,
+          hasEpicInitiative
         });
       }
     );
-    this.socket.on("settings updated", (settings: PlayerViewSettings) => {
-      this.renderPlayerView({
-        encounterState: this.playerViewState.encounterState,
-        settings: settings,
-        combatStats: this.playerViewState.combatStats,
-        inventoryDisplay: this.playerViewState.inventoryDisplay
-      });
-    });
+    this.socket.on(
+      "settings updated",
+      (settings: PlayerViewSettings, hasEpicInitiative: boolean) => {
+        this.renderPlayerView({
+          encounterState: this.playerViewState.encounterState,
+          settings: settings,
+          combatStats: this.playerViewState.combatStats,
+          inventoryDisplay: this.playerViewState.inventoryDisplay,
+          hasEpicInitiative
+        });
+      }
+    );
     this.socket.on("combat stats", (stats: CombatStats) => {
       this.renderPlayerView({
         encounterState: this.playerViewState.encounterState,
         settings: this.playerViewState.settings,
         combatStats: stats,
-        inventoryDisplay: this.playerViewState.inventoryDisplay
+        inventoryDisplay: this.playerViewState.inventoryDisplay,
+        hasEpicInitiative: this.playerViewState.hasEpicInitiative
       });
     });
     this.socket.on(
@@ -78,7 +87,8 @@ export class ReactPlayerView {
           encounterState: this.playerViewState.encounterState,
           settings: this.playerViewState.settings,
           combatStats: this.playerViewState.combatStats,
-          inventoryDisplay: inventory
+          inventoryDisplay: inventory,
+          hasEpicInitiative: this.playerViewState.hasEpicInitiative
         });
       }
     );
@@ -103,6 +113,7 @@ export class ReactPlayerView {
         settings={this.playerViewState.settings}
         combatStats={this.playerViewState.combatStats}
         inventoryDisplay={this.playerViewState.inventoryDisplay}
+        hasEpicInitiative={this.playerViewState.hasEpicInitiative}
         onSuggestDamage={this.suggestDamage}
         onSuggestTag={this.suggestTag}
       />,

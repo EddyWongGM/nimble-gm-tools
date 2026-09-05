@@ -14,6 +14,7 @@ import { InitiativePrompt } from "../Prompts/InitiativePrompt";
 import { PlayerViewPrompt } from "../Prompts/PlayerViewPrompt";
 import { QuickAddPrompt } from "../Prompts/QuickAddPrompt";
 import { RollDicePrompt } from "../Prompts/RollDicePrompt";
+import { SafeRestPrompt } from "../Prompts/SafeRestPrompt";
 import { ScenePrompt } from "../Prompts/ScenePrompt";
 import { ToggleFullscreen } from "./ToggleFullscreen";
 import { PersistentCharacter } from "../../common/PersistentCharacter";
@@ -362,13 +363,23 @@ export class EncounterCommander {
     return false;
   };
 
-  public RestoreAllPlayerCharacterHP = (): void => {
+  public SafeRest = (): void => {
+    this.tracker.PromptQueue.Add(SafeRestPrompt(this.performSafeRest));
+  };
+
+  private performSafeRest = (): void => {
     const playerCharacters = this.tracker.Encounter.Combatants().filter(c =>
       c.IsPlayerCharacter()
     );
-    playerCharacters.forEach(pc => pc.CurrentHP(pc.MaxHP()));
-    this.tracker.EventLog.AddEvent("All player hero HP was restored.");
-    Metrics.TrackEvent(Metrics.Event.AllPlayerCharacterHpRestored);
+    playerCharacters.forEach(pc => {
+      pc.CurrentHP(pc.MaxHP());
+      pc.CurrentHitDice(pc.MaxHitDice() ?? 0);
+      pc.CurrentMana(pc.MaxMana() ?? 0);
+      pc.CurrentResources(pc.DefaultResources());
+      pc.CurrentWounds(Math.max(0, pc.CurrentWounds() - 1));
+    });
+    this.tracker.EventLog.AddEvent("Heroes took a Safe Rest.");
+    Metrics.TrackEvent(Metrics.Event.SafeRestPerformed);
   };
 
   public LoadSavedEncounter = async (

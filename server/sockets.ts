@@ -60,11 +60,19 @@ export default async function (
           }
 
           joinEncounter(id);
-          playerViews.UpdateEncounter(id, updatedEncounter);
+          playerViews.UpdateEncounter(
+            id,
+            updatedEncounter,
+            activeSession.hasEpicInitiative || false
+          );
 
           socket.broadcast
             .to(id)
-            .volatile.emit("encounter updated", updatedEncounter);
+            .volatile.emit(
+              "encounter updated",
+              updatedEncounter,
+              activeSession.hasEpicInitiative || false
+            );
         }
       );
 
@@ -76,10 +84,18 @@ export default async function (
           }
 
           joinEncounter(id);
-          playerViews.UpdateSettings(id, updatedSettings);
+          playerViews.UpdateSettings(
+            id,
+            updatedSettings,
+            activeSession.hasEpicInitiative || false
+          );
           socket.broadcast
             .to(id)
-            .volatile.emit("settings updated", updatedSettings);
+            .volatile.emit(
+              "settings updated",
+              updatedSettings,
+              activeSession.hasEpicInitiative || false
+            );
         }
       );
 

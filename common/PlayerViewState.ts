@@ -9,4 +9,14 @@ export interface PlayerViewState {
   settings: PlayerViewSettings | null;
   combatStats?: CombatStats | null;
   inventoryDisplay?: InventoryDisplayPayload | null;
+  /**
+   * Whether the GM who owns this encounter has Epic Tier - NOT the current
+   * viewer's own session (players view this page logged out, so their own
+   * env.HasEpicInitiative is always false and unrelated to the GM's tier).
+   * Set server-side from the GM's authoritative socket session whenever
+   * they push an update (see server/sockets.ts), not derived client-side.
+   * Used to gate stat color customization (plans/private/COLOR_CUSTOMIZATION.md)
+   * on Player View.
+   */
+  hasEpicInitiative?: boolean;
 }

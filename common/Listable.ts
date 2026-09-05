@@ -15,6 +15,8 @@ export interface FilterDimensions {
   Source?: string;
   Type?: string;
   Category?: string;
+  // Equipment: rarity (common/uncommon/rare/very rare/legendary).
+  Rarity?: string;
 }
 
 export interface ListingMeta {

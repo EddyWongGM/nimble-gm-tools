@@ -106,6 +106,10 @@ function buildFolderComponents<T extends Listable>(
       // GM creates, regardless of what they name them.
       if (a === MONSTER_BUILDER_FOLDER_NAME) return -1;
       if (b === MONSTER_BUILDER_FOLDER_NAME) return 1;
+      // Within Monster Builder, show Normal above Legendary even though
+      // that's not alphabetical order.
+      if (a === "Normal" && b === "Legendary") return -1;
+      if (a === "Legendary" && b === "Normal") return 1;
       return a < b ? -1 : a > b ? 1 : 0;
     })
     .map(key => {

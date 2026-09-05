@@ -268,7 +268,34 @@ describe("EncounterCommander", () => {
     expect(encounter.CombatantsHidden()).toBe(false);
   });
 
-  test("Restore Player Character HP", async () => {
+  function confirmSafeRestPrompt(accept: boolean) {
+    const prompts = trackerViewModel.PromptQueue.GetPrompts();
+    const [prompt] = prompts[prompts.length - 1];
+    prompt.onSubmit({ accept });
+  }
+
+  test("Safe Rest prompts for confirmation before restoring anything", async () => {
+    const persistentCharacter = PersistentCharacter.Initialize({
+      ...StatBlock.Default(),
+      Player: "player"
+    });
+
+    const pc = await encounter.AddCombatantFromPersistentCharacter(
+      persistentCharacter,
+      () => {},
+      false
+    );
+
+    pc.ApplyDamage(1);
+    expect(pc.CurrentHP()).toBe(0);
+
+    encounterCommander.SafeRest();
+
+    expect(trackerViewModel.PromptQueue.GetPrompts()).toHaveLength(1);
+    expect(pc.CurrentHP()).toBe(0);
+  });
+
+  test("Safe Rest restores Player Character HP only, once confirmed", async () => {
     const persistentCharacter = PersistentCharacter.Initialize({
       ...StatBlock.Default(),
       Player: "player"
@@ -290,10 +317,105 @@ describe("EncounterCommander", () => {
     expect(npc.CurrentHP()).toBe(0);
     expect(pc.CurrentHP()).toBe(0);
 
-    encounterCommander.RestoreAllPlayerCharacterHP();
+    encounterCommander.SafeRest();
+    confirmSafeRestPrompt(true);
 
     expect(npc.CurrentHP()).toBe(0);
     expect(pc.CurrentHP()).toBe(1);
+  });
+
+  test("Safe Rest does nothing if the GM declines the confirmation prompt", async () => {
+    const persistentCharacter = PersistentCharacter.Initialize({
+      ...StatBlock.Default(),
+      Player: "player"
+    });
+
+    const pc = await encounter.AddCombatantFromPersistentCharacter(
+      persistentCharacter,
+      () => {},
+      false
+    );
+
+    pc.ApplyDamage(1);
+    expect(pc.CurrentHP()).toBe(0);
+
+    encounterCommander.SafeRest();
+    confirmSafeRestPrompt(false);
+
+    expect(pc.CurrentHP()).toBe(0);
+  });
+
+  test("Safe Rest restores Hit Dice, Mana, and Resources, and removes 1 Wound", async () => {
+    const persistentCharacter = PersistentCharacter.Initialize({
+      ...StatBlock.Default(),
+      Player: "player",
+      HitDice: { Value: 4, Notes: "" },
+      Mana: { Value: 3, Notes: "" },
+      Resources: { Value: 2, Notes: "" },
+      Wounds: { Value: 6, Notes: "" }
+    });
+
+    const pc = await encounter.AddCombatantFromPersistentCharacter(
+      persistentCharacter,
+      () => {},
+      false
+    );
+
+    pc.CurrentHitDice(1);
+    pc.CurrentMana(0);
+    pc.CurrentResources(0);
+    pc.CurrentWounds(3);
+
+    encounterCommander.SafeRest();
+    confirmSafeRestPrompt(true);
+
+    expect(pc.CurrentHitDice()).toBe(4);
+    expect(pc.CurrentMana()).toBe(3);
+    expect(pc.CurrentResources()).toBe(2);
+    expect(pc.CurrentWounds()).toBe(2);
+  });
+
+  test("Safe Rest leaves resources that start empty at 0", async () => {
+    const persistentCharacter = PersistentCharacter.Initialize({
+      ...StatBlock.Default(),
+      Player: "player",
+      Resources: { Value: 5, Notes: "" },
+      ResourcesStartEmpty: true
+    });
+
+    const pc = await encounter.AddCombatantFromPersistentCharacter(
+      persistentCharacter,
+      () => {},
+      false
+    );
+
+    pc.CurrentResources(3);
+
+    encounterCommander.SafeRest();
+    confirmSafeRestPrompt(true);
+
+    expect(pc.CurrentResources()).toBe(0);
+  });
+
+  test("Safe Rest does not reduce Wounds below 0", async () => {
+    const persistentCharacter = PersistentCharacter.Initialize({
+      ...StatBlock.Default(),
+      Player: "player",
+      Wounds: { Value: 6, Notes: "" }
+    });
+
+    const pc = await encounter.AddCombatantFromPersistentCharacter(
+      persistentCharacter,
+      () => {},
+      false
+    );
+
+    expect(pc.CurrentWounds()).toBe(0);
+
+    encounterCommander.SafeRest();
+    confirmSafeRestPrompt(true);
+
+    expect(pc.CurrentWounds()).toBe(0);
   });
 
   function buildSavedEncounterWithPersistentCharacter() {

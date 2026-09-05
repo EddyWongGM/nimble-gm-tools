@@ -157,7 +157,7 @@ function GetManaColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "var(--blue)";
+  return "var(--stat-mana)";
 }
 
 function GetResourcesDisplay(combatant: Combatant): string | undefined {
@@ -218,7 +218,7 @@ function GetResourcesColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "var(--magenta)";
+  return "var(--stat-resources)";
 }
 
 function GetHitDiceDisplay(combatant: Combatant): string | undefined {
@@ -284,7 +284,7 @@ function GetHitDiceColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "var(--orange)";
+  return "var(--stat-hitdice)";
 }
 
 function GetWoundsDisplay(combatant: Combatant): string | undefined {
@@ -344,7 +344,7 @@ function GetWoundsColor(combatant: Combatant): string | undefined {
   ) {
     return "auto";
   }
-  return "var(--wound-red)";
+  return "var(--stat-wounds)";
 }
 
 function GetGoldDisplay(combatant: Combatant): string | undefined {
@@ -368,7 +368,7 @@ function GetGoldColor(combatant: Combatant): string | undefined {
     return undefined;
   }
 
-  return "var(--gold)";
+  return "var(--stat-gold)";
 }
 
 function GetInventoryDisplay(combatant: Combatant): string | undefined {
@@ -396,7 +396,7 @@ function GetInventoryColor(combatant: Combatant): string | undefined {
     return "rgb(200,30,30)";
   }
 
-  return "var(--parchment)";
+  return "var(--stat-inventory)";
 }
 
 function GetHPColor(combatant: Combatant) {

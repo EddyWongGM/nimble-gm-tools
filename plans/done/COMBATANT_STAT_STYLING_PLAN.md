@@ -21,7 +21,7 @@ way.
 |---|---|---|---|---|
 | Health | *(kept as-is — see Non-goals)* | `rgb(200,30,30)` red for label/value | same | a few identity icons only → `--green` |
 | Mana | `--blue` | `#0078dc` | `#4da3ff` | done |
-| Resources | `--yellow` | `#ab9400` | `#ffe135` | done |
+| Resources | `--magenta` *(superseded 2026-09-05 — was `--yellow`, see note below)* | `#a6267d` | `#ec5fc0` | done |
 | Hit Dice | `--orange` | `#e67814` | `#ff9a3d` | done |
 | Wounds | `--wound-red` | `#c81e1e` | `#f0453b` | done |
 | Inventory | *(none)* `var(--text-face)` | theme default (black/white) | same | done |
@@ -37,7 +37,12 @@ Colors that were tried and rejected: `--amber` (Hit Dice, then Inventory)
 and a Wounds-specific magenta — both dropped because they're hard for a
 player to identify and say out loud at the table. That's the operative
 constraint for any future color pick here, not just "looks distinct on
-screen."
+screen." **Update 2026-09-05:** Resources has since moved off `--yellow`
+onto `--magenta` (a user decision, not a regression) — magenta was only
+ever rejected *for Wounds*, and reads fine for Resources. Current defaults
+and the feature building on them now live in
+[COLOR_CUSTOMIZATION.md](../private/COLOR_CUSTOMIZATION.md); treat that
+doc as the source of truth over this table where the two disagree.
 
 ## Guiding principles
 
