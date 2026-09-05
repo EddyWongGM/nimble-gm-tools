@@ -415,6 +415,7 @@ export class StatBlockEditor extends React.Component<
           {[
             { type: "Traits", label: "Traits" },
             { type: "Actions", label: "Actions" },
+            { type: "Reactions", label: "Reactions" },
             // Only clutter the form with Special once the statblock is
             // marked Legendary or Titan, or already has some (e.g. imported
             // from a source that doesn't use this toggle). Field name stays
