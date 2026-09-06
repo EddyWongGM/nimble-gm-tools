@@ -71,7 +71,7 @@ function PlayerViewPromptComponent(props: PlayerViewPromptComponentProps) {
         ) : (
           <p>
             <label>
-              Epic Initiative patrons can configure a custom Encounter Id and
+              Legendary Tier patrons can configure a custom Encounter Id and
               other features for the Player View.{" "}
             </label>
             <a

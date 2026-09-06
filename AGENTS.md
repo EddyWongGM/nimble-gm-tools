@@ -67,7 +67,7 @@ Be especially cautious around:
   `Listing<T>` pattern (adding it to `LibraryType`) without re-adding the
   `Store.Scenes` IndexedDB store and account-synced `Library<SavedScene>`
   entry that decision was made to avoid.
-- Patreon login, account sync, and Epic Initiative rewards.
+- Patreon login, account sync, and Legendary Tier rewards.
 - Nimble resource pools (Mana/Resources/Hit Dice/Wounds/Gold/Inventory) —
   each has its own sign convention, PC-vs-companion-vs-monster gating, and
   hide/reveal-from-players default; copying one as a template for another

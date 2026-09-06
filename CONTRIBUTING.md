@@ -26,7 +26,7 @@ Here is a short list of coding guidelines (adapted from [TypeScript Coding Guide
 - Link your pull request to an open [issue](https://github.com/EddyWongGM/nimble-gm-tools/labels/help%20wanted) with the `help wanted` tag.
 - Include at least one test for your code.
 - Don't add any game content that isn't covered by the [Open-Gaming License](http://dnd.wizards.com/articles/features/systems-reference-document-srd) or the [Nimble 3rd Party Creator License](https://nimblerpg.com/pages/creators).
-- Nimble content (rules text, stat blocks, spells, bestiary entries) must never be gated behind a paid tier (Epic Initiative or otherwise) — per the Nimble 3rd Party Creator License, the app must remain completely free to use for anything covered by Nimble's published content. Paid-tier features must stay limited to cosmetic/account conveniences (e.g. Player View styling, account sync) that don't touch Nimble rules text itself.
+- Nimble content (rules text, stat blocks, spells, bestiary entries) must never be gated behind a paid tier (Legendary Tier or otherwise) — per the Nimble 3rd Party Creator License, the app must remain completely free to use for anything covered by Nimble's published content. Paid-tier features must stay limited to cosmetic/account conveniences (e.g. Player View styling, account sync) that don't touch Nimble rules text itself.
 
 ### Names
 
@@ -36,10 +36,10 @@ Here is a short list of coding guidelines (adapted from [TypeScript Coding Guide
 - Use camelCase for local variables and private properties.
 - Do not use "\_" as a prefix for private properties.
 
-## Epic Initiative
+## Legendary Tier
 
-While Nimble RPG App is open source, the MIT license allows anyone to use this code to make a profit. I've chosen to make a subset of the app's features available as rewards to [Patreon](https://www.patreon.com/NimbleRPGApp) subscribers as "Epic Initiative". At the time of this writing, this mainly covers cosmetic benefits associated with the Player View such as custom CSS. As the license indicates, you are always free to run your own instance of Nimble RPG App and modify this functionality to meet your needs.
+While Nimble RPG App is open source, the MIT license allows anyone to use this code to make a profit. I've chosen to make a subset of the app's features available as rewards to [Patreon](https://www.patreon.com/NimbleRPGApp) subscribers as "Legendary Tier". At the time of this writing, this mainly covers cosmetic benefits associated with the Player View such as custom CSS. As the license indicates, you are always free to run your own instance of Nimble RPG App and modify this functionality to meet your needs.
 
 ### thanks.ts
 
-Epic Initiative is also granted to the app's GitHub contributors. If you contribute a substantial pull request, please add your name/alias, Github URL, and Patreon ID to `thanks.ts`. Patreon doesn't surface your Patreon Id anywhere in their UI as far as I can tell, but you can find it by inspecting any Patreon link to your profile.
+Legendary Tier is also granted to the app's GitHub contributors. If you contribute a substantial pull request, please add your name/alias, Github URL, and Patreon ID to `thanks.ts`. Patreon doesn't surface your Patreon Id anywhere in their UI as far as I can tell, but you can find it by inspecting any Patreon link to your profile.

@@ -386,7 +386,7 @@ export class TrackerViewModel {
                 )
               }
             >
-              Epic Initiative
+              Legendary Tier
             </a>
             {" Patrons."}
             <SubmitButton />

@@ -64,7 +64,7 @@ You can configure your instance of Nimble RPG App with these settings. All are o
 - `BASIC_AUTH_USERNAME`, `BASIC_AUTH_PASSWORD` - If both are set, gates the entire app (pages, API routes, and the Socket.IO live-sync connection) behind a single shared HTTP Basic Auth login. Inactive unless both are set. Intended for a dev/staging deployment that would otherwise sit open at its default URL - not needed for the production instance real visitors use.
 - `METRICS_DB_CONNECTION_STRING` - Provide a DB connection string to write metrics to.
 - `PATREON_URL`, `PATREON_CLIENT_ID`, `PATREON_CLIENT_SECRET` - Configuration for Patreon integration
-- `PATREON_ACCOUNT_SYNC_TIER_IDS`, `PATREON_EPIC_TIER_IDS`, `PATREON_MYTHIC_TIER_IDS` - Comma-separated Patreon tier reward IDs that grant Account Sync/Epic/Mythic features after login. Default to the original Nimble RPG App campaign's tier IDs - set these if running your own Patreon campaign, since a different campaign's tiers get different IDs.
+- `PATREON_ACCOUNT_SYNC_TIER_IDS`, `PATREON_EPIC_TIER_IDS`, `PATREON_MYTHIC_TIER_IDS` - Comma-separated Patreon tier reward IDs that grant Account Sync/Legendary Tier/Titan Tier features after login. Default to the original Nimble RPG App campaign's tier IDs - set these if running your own Patreon campaign, since a different campaign's tiers get different IDs.
 - `GOOGLE_ANALYTICS_ID` - GA4 measurement ID used by the browser tag and Measurement Protocol events.
 - `GOOGLE_ANALYTICS_API_SECRET` - GA4 Measurement Protocol API secret used for server-side Patreon subscription events.
 

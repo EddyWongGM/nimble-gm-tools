@@ -183,7 +183,7 @@ export function OptionsSettings(props: {
       {/* <p>
         {"Additional Player View customization options available with "}
         <a href="#" onClick={props.goToEpicInitiativeSettings}>
-          Epic Tier
+          Legendary Tier
         </a>
       </p> */}
     </div>

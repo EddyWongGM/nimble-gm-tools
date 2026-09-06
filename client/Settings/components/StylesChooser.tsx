@@ -31,12 +31,6 @@ export class StylesChooser extends React.Component<
             "Name Background",
             "combatantBackground"
           )}
-          {this.getLabelAndColorBlock(
-            "Active Name Indicator",
-            "activeCombatantIndicator"
-          )}
-          {this.getLabelAndColorBlock("Header Text", "headerText")}
-          {this.getLabelAndColorBlock("Header Background", "headerBackground")}
           {this.getLabelAndColorBlock("Main Background", "mainBackground")}
         </div>
         <Field name={"PlayerView.CustomStyles." + this.state.selectedStyle}>

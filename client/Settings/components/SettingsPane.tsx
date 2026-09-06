@@ -22,12 +22,12 @@ const SettingsTab = {
   Options: "Options",
   Content: "Content",
   Account: "Account",
-  EpicTier: "Epic Tier"
+  EpicTier: "Legendary Tier"
 };
 
 // TEMP for local testing only - re-comment this line and restore the
-// destructure below before this branch ships (Epic Tier tab is hidden until
-// Epic/Mythic tiers actually launch on Patreon, see PAID_FEATURES.md).
+// destructure below before this branch ships (Legendary Tier tab is hidden
+// until Epic/Mythic tiers actually launch on Patreon, see PAID_FEATURES.md).
 const visibleSettingsTabs = SettingsTab;
 // const { EpicTier: _EpicTier, ...visibleSettingsTabs } = SettingsTab;
 
