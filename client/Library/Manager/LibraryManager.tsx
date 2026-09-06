@@ -31,7 +31,7 @@ export type LibraryManagerProps = {
 
 export function LibraryManager(props: LibraryManagerProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<LibraryType>(
-    props.initialPane || "StatBlocks"
+    props.initialPane || "PersistentCharacters"
   );
   const [leftColumnWidth, setLeftColumnWidth] = useState(500);
   const [centerColumnWidth, setCenterColumnWidth] = useState(600);

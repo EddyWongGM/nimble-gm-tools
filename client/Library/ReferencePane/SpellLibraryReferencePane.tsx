@@ -1,5 +1,9 @@
 import * as React from "react";
-import { Spell } from "../../../common/Spell";
+import {
+  EquipmentRarities,
+  EquipmentRarity,
+  Spell
+} from "../../../common/Spell";
 import { linkComponentToObservables } from "../../Combatant/linkComponentToObservables";
 import { LibrariesCommander } from "../../Commands/LibrariesCommander";
 import { TextEnricher } from "../../TextEnricher/TextEnricher";
@@ -58,7 +62,19 @@ export class SpellLibraryReferencePane extends React.Component<SpellLibraryRefer
     },
     {
       label: "Type",
-      groupFn: l => ({ key: l.Meta().FilterDimensions.Category })
+      groupFn: l => {
+        const { Category, Rarity } = l.Meta().FilterDimensions;
+        if (Category === "Equipment" && Rarity) {
+          // Prefix with rarity rank so subfolders sort by rarity instead of
+          // alphabetically, while keeping the displayed label readable.
+          const rank = EquipmentRarities.indexOf(Rarity as EquipmentRarity);
+          return {
+            key: `Equipment/${rank}_${Rarity}`,
+            label: `Equipment/${CapitalizeRarity(Rarity)}`
+          };
+        }
+        return { key: Category };
+      }
     }
   ];
 
@@ -91,6 +107,10 @@ export class SpellLibraryReferencePane extends React.Component<SpellLibraryRefer
     l.Meta.subscribe(_ => this.forceUpdate());
     this.props.librariesCommander.EditSpell(l);
   };
+}
+
+function CapitalizeRarity(rarity: string) {
+  return rarity.charAt(0).toUpperCase() + rarity.slice(1);
 }
 
 function TierOrCantrip(levelString: string) {

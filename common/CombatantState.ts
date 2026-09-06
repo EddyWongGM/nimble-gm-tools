@@ -49,4 +49,8 @@ export interface CombatantState {
   RoundCounter?: number;
   ElapsedSeconds?: number;
   InterfaceVersion: string;
+  // The hero count a Legendary monster's HP was last scaled for - lets a
+  // saved encounter's Legendary be rescaled to the current party size when
+  // reloaded, by dividing out this multiplier to recover its base HP.
+  LegendaryHeroCount?: number;
 }

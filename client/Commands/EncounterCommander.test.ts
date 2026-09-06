@@ -469,6 +469,34 @@ describe("EncounterCommander", () => {
     expect(encounter.Combatants()[1].Hidden()).toBe(true);
   });
 
+  test("LoadSavedEncounter rescales a Legendary monster's HP to the party size actually loaded", async () => {
+    const oldEncounter = buildEncounter();
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    oldEncounter.AddCombatantFromStatBlock(hero);
+    oldEncounter.AddCombatantFromStatBlock(hero);
+    oldEncounter.AddCombatantFromStatBlock(hero);
+    oldEncounter.AddCombatantFromStatBlock({
+      ...StatBlock.Default(),
+      Player: "legendary",
+      HP: { Value: 20, Notes: "" }
+    });
+    const savedEncounter = oldEncounter.ObservableEncounterState();
+    // Saved with 3 heroes present (Legendary HP scaled to 60); simulate the
+    // party this time only having 2 heroes by dropping one saved hero.
+    savedEncounter.Combatants = savedEncounter.Combatants.filter(
+      (c, i) => i !== 0
+    );
+
+    await encounterCommander.LoadSavedEncounter(savedEncounter);
+
+    const legendaryCombatant = encounter
+      .Combatants()
+      .find(c => StatBlock.IsLegendary(c.StatBlock()));
+    expect(legendaryCombatant.StatBlock().HP.Value).toBe(40);
+    expect(legendaryCombatant.CurrentHP()).toBe(40);
+    expect(legendaryCombatant.Tags().map(t => t.Text)).toContain("HP ×2");
+  });
+
   describe("Nimble phase commands", () => {
     test("GroupAllMonsters does nothing with fewer than two monsters", () => {
       addCombatantFromStatBlock(encounter, {
