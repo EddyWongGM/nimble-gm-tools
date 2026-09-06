@@ -20,6 +20,15 @@ export type StatBlockLibraryReferencePaneProps = {
 
 type StatBlockListing = Listing<StatBlock>;
 
+// Matches BuildListingTree's existing "Normal" ahead of "Legendary" sort
+// override, so grouping by Challenge nests the same way Monster Builder's
+// Folder view already does.
+const MonsterRoleFolderNames: Record<string, string> = {
+  "": "Normal",
+  legendary: "Legendary",
+  titan: "Titan"
+};
+
 interface State {
   filter: string;
   listingGroupIndex: number;
@@ -87,10 +96,20 @@ export class StatBlockLibraryReferencePane extends React.Component<
       label: "Challenge",
       groupFn: l => {
         const meta = l.Meta();
+        const roleFolder =
+          MonsterRoleFolderNames[meta.FilterDimensions.Role ?? ""] ??
+          "Normal";
+        // The raw Challenge (e.g. a fraction like "1/2") may itself contain
+        // a "/" - keep that out of the key so it can't be mistaken for a
+        // folder separator, while GetAlphaSortableLevelString's zero-padded
+        // encoding still sorts each role's Challenge folders in ascending
+        // order.
+        const levelKey = GetAlphaSortableLevelString(
+          meta.FilterDimensions.Level
+        ).replace(/\//g, "_");
         return {
-          label: "Challenge " + meta.FilterDimensions.Level,
-          key: GetAlphaSortableLevelString(meta.FilterDimensions.Level),
-          ignoreSlashes: true
+          label: `${roleFolder}/Challenge ${meta.FilterDimensions.Level}`,
+          key: `${roleFolder}/${levelKey}`
         };
       }
     },

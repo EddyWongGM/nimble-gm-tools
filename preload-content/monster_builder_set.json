@@ -3,7 +3,7 @@
     "Name": "LV 0.5 (CR: 1/4)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 12,
       "Notes": ""
@@ -48,7 +48,7 @@
     "Name": "LV 01 (CR: 1/2)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 25,
       "Notes": ""
@@ -93,7 +93,7 @@
     "Name": "LV 02 (CR: 1)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 33,
       "Notes": ""
@@ -141,7 +141,7 @@
     "Name": "LV 03 (CR: 1)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 42,
       "Notes": ""
@@ -192,7 +192,7 @@
     "Name": "LV 04 (CR: 2)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 50,
       "Notes": ""
@@ -243,7 +243,7 @@
     "Name": "LV 05 (CR: 2)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 58,
       "Notes": ""
@@ -294,7 +294,7 @@
     "Name": "LV 06 (CR: 3)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 69,
       "Notes": ""
@@ -345,7 +345,7 @@
     "Name": "LV 07 (CR: 3)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 82,
       "Notes": ""
@@ -396,7 +396,7 @@
     "Name": "LV 08 (CR: 4)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 95,
       "Notes": ""
@@ -447,7 +447,7 @@
     "Name": "LV 09 (CR: 4)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 108,
       "Notes": ""
@@ -498,7 +498,7 @@
     "Name": "LV 10 (CR: 5)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 122,
       "Notes": ""
@@ -549,7 +549,7 @@
     "Name": "LV 11 (CR: 6)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 135,
       "Notes": ""
@@ -600,7 +600,7 @@
     "Name": "LV 12 (CR: 7)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 148,
       "Notes": ""
@@ -651,7 +651,7 @@
     "Name": "LV 13 (CR: 8)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 162,
       "Notes": ""
@@ -702,7 +702,7 @@
     "Name": "LV 14 (CR: 9)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 176,
       "Notes": ""
@@ -753,7 +753,7 @@
     "Name": "LV 15 (CR: 9)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 190,
       "Notes": ""
@@ -804,7 +804,7 @@
     "Name": "LV 16 (CR: 10)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 204,
       "Notes": ""
@@ -855,7 +855,7 @@
     "Name": "LV 17 (CR: 11)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 219,
       "Notes": ""
@@ -906,7 +906,7 @@
     "Name": "LV 18 (CR: 12)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 234,
       "Notes": ""
@@ -957,7 +957,7 @@
     "Name": "LV 19 (CR: 13)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 249,
       "Notes": ""
@@ -1008,7 +1008,7 @@
     "Name": "LV 20 (CR: 14)",
     "Path": "Monster Builder/Normal",
     "Source": "Monster Builder",
-    "Type": "Template Normal",
+    "Type": "Monster Builder/Normal",
     "HP": {
       "Value": 269,
       "Notes": ""
@@ -1059,7 +1059,7 @@
     "Name": "LV 01",
     "Path": "Monster Builder/Legendary",
     "Source": "Monster Builder",
-    "Type": "Template Legendary",
+    "Type": "Monster Builder/Legendary",
     "HP": {
       "Value": 22,
       "Notes": ""
@@ -1123,7 +1123,7 @@
     "Name": "LV 02",
     "Path": "Monster Builder/Legendary",
     "Source": "Monster Builder",
-    "Type": "Template Legendary",
+    "Type": "Monster Builder/Legendary",
     "HP": {
       "Value": 28,
       "Notes": ""
@@ -1190,7 +1190,7 @@
     "Name": "LV 03",
     "Path": "Monster Builder/Legendary",
     "Source": "Monster Builder",
-    "Type": "Template Legendary",
+    "Type": "Monster Builder/Legendary",
     "HP": {
       "Value": 40,
       "Notes": ""
@@ -1216,7 +1216,7 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "2",
+    "Challenge": "3",
     "Traits": [],
     "Actions": [
       {
@@ -1254,6 +1254,1196 @@
     },
     "LastStandHP": {
         "Value": 30
+      }  	
+  },
+  {
+    "Name": "LV 04",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 44,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "4",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 10",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 17",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 12,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 31
+    },
+    "HPHeavyArmor": {
+      "Value": 20
+    },
+    "LastStandHP": {
+        "Value":40
+      }  	
+  },
+  {
+    "Name": "LV 05",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 48,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "5",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 11",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 20",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 12,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 34
+    },
+    "HPHeavyArmor": {
+      "Value": 22
+    },
+    "LastStandHP": {
+        "Value":50
+      }  	
+  },
+  {
+    "Name": "LV 06",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 56,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "6",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 13",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 23",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 13,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 39
+    },
+    "HPHeavyArmor": {
+      "Value": 25
+    },
+    "LastStandHP": {
+        "Value":60
+      }  	
+  },
+  {
+    "Name": "LV 07",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 64,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "7",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 14",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 25",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 13,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 44
+    },
+    "HPHeavyArmor": {
+      "Value": 29
+    },
+    "LastStandHP": {
+        "Value":70
+      }  	
+  },
+  {
+    "Name": "LV 08",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 71,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "8",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 16",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 28",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 14,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 50
+    },
+    "HPHeavyArmor": {
+      "Value": 32
+    },
+    "LastStandHP": {
+        "Value":80
+      }  	
+  },
+  {
+    "Name": "LV 09",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 79,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "9",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 17",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 30",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 14,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 55
+    },
+    "HPHeavyArmor": {
+      "Value": 35
+    },
+    "LastStandHP": {
+        "Value":90
+      }  	
+  },
+  {
+    "Name": "LV 10",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 86,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "10",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 19",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 33",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 15,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 60
+    },
+    "HPHeavyArmor": {
+      "Value": 39
+    },
+    "LastStandHP": {
+        "Value":100
+      }  	
+  },
+  {
+    "Name": "LV 11",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 94,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "11",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 20",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 35",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 15,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 67
+    },
+    "HPHeavyArmor": {
+      "Value": 44
+    },
+    "LastStandHP": {
+        "Value":110
+      }  	
+  },
+  {
+    "Name": "LV 12",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 102,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "12",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 22",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 38",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 16,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 74
+    },
+    "HPHeavyArmor": {
+      "Value": 50
+    },
+    "LastStandHP": {
+        "Value":120
+      }  	
+  },
+  {
+    "Name": "LV 13",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 109,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "13",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 23",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 40",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 16,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 82
+    },
+    "HPHeavyArmor": {
+      "Value": 56
+    },
+    "LastStandHP": {
+        "Value":130
+      }  	
+  },
+  {
+    "Name": "LV 14",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 117,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "14",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 24",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 43",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 17,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 89
+    },
+    "HPHeavyArmor": {
+      "Value": 63
+    },
+    "LastStandHP": {
+        "Value":140
+      }  	
+  },
+  {
+    "Name": "LV 15",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 125,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "15",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 26",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 46",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 17,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 97
+    },
+    "HPHeavyArmor": {
+      "Value": 70
+    },
+    "LastStandHP": {
+        "Value":150
+      }  	
+  },
+  {
+    "Name": "LV 16",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 132,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "16",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 28",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 49",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 18,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 104
+    },
+    "HPHeavyArmor": {
+      "Value": 77
+    },
+    "LastStandHP": {
+        "Value":160
+      }  	
+  },
+  {
+    "Name": "LV 17",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 140,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "17",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 30",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 53",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 18,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 111
+    },
+    "HPHeavyArmor": {
+      "Value": 84
+    },
+    "LastStandHP": {
+        "Value":170
+      }  	
+  },
+  {
+    "Name": "LV 18",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 147,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "18",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 32",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 56",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 19,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 118
+    },
+    "HPHeavyArmor": {
+      "Value": 91
+    },
+    "LastStandHP": {
+        "Value":180
+      }  	
+  },
+  {
+    "Name": "LV 19",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 155,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "19",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 34",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 59",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 19,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 126
+    },
+    "HPHeavyArmor": {
+      "Value": 99
+    },
+    "LastStandHP": {
+        "Value":190
+      }  	
+  },
+  {
+    "Name": "LV 20",
+    "Path": "Monster Builder/Legendary",
+    "Source": "Monster Builder",
+    "Type": "Monster Builder/Legendary",
+    "HP": {
+      "Value": 166,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "20",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage: 37",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Attack damage BIG: 64",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 20,
+    "CRRating": "",
+    "HPMediumArmor": {
+      "Value": 136
+    },
+    "HPHeavyArmor": {
+      "Value": 110
+    },
+    "LastStandHP": {
+        "Value":200
       }  	
   }
 ]

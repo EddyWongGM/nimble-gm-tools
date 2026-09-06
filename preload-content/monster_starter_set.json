@@ -52,17 +52,17 @@
     "BonusActions": [],
     "Reactions": [],
     "LegendaryActions": [],
-    "MythicActions": [],      
+    "MythicActions": [],
     "Description": "",
     "Player": "",
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
     "LastUpdateMs": 1787998819258,
-	"SaveDC": 10,
-	"CRRating": "1/8"
+    "SaveDC": 10,
+    "CRRating": "1/8"
   },
-   {
+  {
     "Name": "Goblin",
     "Path": "",
     "Source": "Nimble GMG",
@@ -127,21 +127,21 @@
         "Usage": ""
       }
     ],
-    "Description": "The backbone of any raiding party, especially when it comes to setting up makeshift traps, stealing food, and heckling  anything with a pulse.",
+    "Description": "The backbone of any raiding party, especially when it comes to setting up makeshift traps, stealing food, and heckling anything with a pulse.",
     "Player": "",
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
     "LastUpdateMs": 1787998819258,
-	"SaveDC": 11,
-	"CRRating": "1/4"
+    "SaveDC": 11,
+    "CRRating": "1/4"
   },
-   {
+  {
     "Name": "Goblin Taskmaster",
     "Path": "",
     "Source": "Nimble GMG",
     "Type": "Goblins",
-	  "Armor": "medium",
+    "Armor": "medium",
     "HP": {
       "Value": 24,
       "Notes": ""
@@ -186,12 +186,12 @@
         "Content": "1d6 (or Shoot, Range 8)",
         "Usage": ""
       },
-	  {
+      {
         "Name": "",
         "Content": "Then:",
         "Usage": ""
       },
-	  {
+      {
         "Name": "Get in here!",
         "Content": "Call a goblin minion to the fight.",
         "Usage": ""
@@ -200,7 +200,18 @@
     "BonusActions": [],
     "Reactions": [],
     "LegendaryActions": [],
-    "MythicActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] May 'run out' of minions to call to the battlefield or their minions may be out of position to Interpose for them.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Keep a minion within Interpose range at all times!",
+        "Usage": ""
+      }      
+    ],
     "Description": "",
     "Player": "",
     "Version": "3.16.1",
@@ -210,7 +221,7 @@
     "SaveDC": 11,
     "CRRating": "1"
   },
-   {
+  {
     "Name": "Goblin Ratrider",
     "Path": "",
     "Source": "Nimble GMG",
@@ -263,6 +274,80 @@
     "BonusActions": [],
     "Reactions": [],
     "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Can stay more stationary or spread their damage around, don't attack Prone targets.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Hunt down backline and isolated heroes. Stay out of reach of melee heroes, set up powerful attacks for Bugbears when they knock Heroes Prone.",
+        "Usage": ""
+      }       
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1"
+  },
+  {
+    "Name": "Bandit",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Bandits",
+    "HP": {
+      "Value": 1,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "Minion",
+    "Traits": [
+      {
+        "Name": "Small",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Parry",
+        "Content": "Treat attacks against you that roll 2 as a miss.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Stab",
+        "Content": "1d8 (follows minion rules).",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
     "MythicActions": [],
     "Description": "",
     "Player": "",
@@ -270,15 +355,632 @@
     "ImageURL": "",
     "CustomFields": [],
     "LastUpdateMs": 1787998819258,
-	"SaveDC": 11,
-	"CRRating": "1"
+    "SaveDC": 10,
+    "CRRating": "1/8"
   },
-   {
-    "Name": "Krogg, Goblin King",
-    "Path": "Legendary",
+  {
+    "Name": "Bandit",
+    "Path": "",
     "Source": "Nimble GMG",
-    "Type": "Goblins",
-	"Armor": "medium",
+    "Type": "Bandits",
+    "HP": {
+      "Value": 12,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1/3",
+    "Traits": [
+      {
+        "Name": "",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Parry",
+        "Content": "Treat attacks against you that roll 2 as a miss.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Stab",
+        "Content": "Stab 1d8+1 (or Shoot, Range 8).",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/8"
+  },
+  {
+    "Name": "Bandit Hunter",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Bandits",
+    "HP": {
+      "Value": 22,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Parry",
+        "Content": "Treat attacks against you that roll 2 as a miss.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Battlebow",
+        "Content": "2d8+2 (Range 12).",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Stay near melee heroes to attack with disadvantage.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Move each turn, stay at max Range and seek cover.",
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/2"
+  },
+  {
+    "Name": "Bandit Bruiser",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Bandits",
+    "Armor": "medium",
+    "HP": {
+      "Value": 22,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Parry",
+        "Content": "Treat attacks against you that roll 2 as a miss.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Bash",
+        "Content": "2d8+4",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1"
+  },
+  {
+    "Name": "Bandit Assassin",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Bandits",
+    "Armor": "",
+    "HP": {
+      "Value": 24,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Parry",
+        "Content": "Treat attacks against you that roll 2 as a miss.",
+        "Usage": ""
+      },
+      {
+        "Name": "Sneak",
+        "Content": "You are invisible until you attack.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Poison Blade (2×)",
+        "Content": "1d8+2. On damage: Dazed.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Hint at their presence, allow heroes a chance to spot them before they attack. Target already Dazed heroes.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Spread Dazed out as much as possible. Have extra Assassins join combat midway through once melee heroes who could interpose are already occupied.",
+        "Usage": ""
+      }       
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1"
+  },
+  {
+    "Name": "Bandit Mage",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Bandits",
+    "Armor": "",
+    "HP": {
+      "Value": 40,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Parry",
+        "Content": "Treat attacks against you that roll 2 as a miss.",
+        "Usage": ""
+      },
+      {
+        "Name": "Spark Step",
+        "Content": "When damaged, teleport up to 4 spaces.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Arc Lightning",
+        "Content": "3d8 (Range 12). Also strikes the next closest creature. On miss: damage self instead.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Strike heroes who are near bandits to include them in the damage. Teleport to poor locations.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Teleport up high (e.g., into trees, cliffsides), or into cover.",
+        "Usage": ""
+      }       
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 12,
+    "CRRating": "2"
+  },
+  {
+    "Name": "Bandit Captain",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Bandits",
+    "Armor": "medium",
+    "HP": {
+      "Value": 36,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Parry",
+        "Content": "Treat attacks against you that roll 2 as a miss.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Slice (3×)",
+        "Content": "1d8+1 (or Shoot, Range 8).",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Attack from Range.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Get into the thick of the action and deal far more damage.",
+        "Usage": ""
+      }       
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 12,
+    "CRRating": "2"
+  },
+  {
+    "Name": "Skeleton",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Undead/Corporeal Undead",
+    "HP": {
+      "Value": 10,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1/3",
+    "Traits": [
+      {
+        "Name": "Unliving, Undying.",
+        "Content": "(1 use) On death: reset to 1 HP.",
+        "Usage": ""
+      }      
+    ],
+    "Actions": [
+      {
+        "Name": "Grave Arrow",
+        "Content": "1d4+3 (Range 8)",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/8"
+  },
+  {
+    "Name": "Zombie",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Undead/Corporeal Undead",
+    "HP": {
+      "Value": 15,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1/2",
+    "Traits": [
+      {
+        "Name": "Unliving, Undying.",
+        "Content": "(1 use) On death: reset to 1 HP.",
+        "Usage": ""
+      }  
+    ],
+    "Actions": [
+      {
+        "Name": "Crunch",
+        "Content": "1d4+4, On damage: Grapple.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Take the most direct line to target, regardless of danger.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Act first to Grapple and setup strong attacks from allies.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/4"
+  },
+  {
+    "Name": "Ghoul",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Undead/Corporeal Undead",
+    "HP": {
+      "Value": 20,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Unliving, Undying.",
+        "Content": "(1 use) On death: reset to 1 HP.",
+        "Usage": ""
+      }  
+    ],
+    "Actions": [
+      {
+        "Name": "Sickening Claw",
+        "Content": "1d4+8. On damage: Dazed.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Act first, targeting already Dazed heroes or ones who have not yet Defended this round.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Act last, targeting heroes who are Grappled, Prone, or not already Dazed.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/2"
+  },  
+  {
+    "Name": "Krogg, Goblin King",
+    "Path": "Legendary/LV02",
+    "Source": "Nimble GMG",
+    "Type": "Legendary/LV02",
+    "Armor": "medium",
     "HP": {
       "Value": 30,
       "Notes": ""
@@ -301,64 +1003,262 @@
     "DamageImmunities": [],
     "ConditionImmunities": [],
     "Saves": [],
-	"Skills": [
-	{
-	  "Name": "STR",
-	  "Advantage": "+"
-	},
-	{
-	  "Name": "DEX",
-	  "Advantage": "+"
-	}
-	],
+    "Skills": [
+      {
+        "Name": "STR",
+        "Advantage": "+"
+      },
+      {
+        "Name": "DEX",
+        "Advantage": "+"
+      }
+    ],
     "Senses": [],
     "Languages": [],
     "Challenge": "2",
     "Traits": [],
-	"Actions": [
-	{
-	  "Name": "",
-	  "Content": "After each hero’s turn, choose one:",
-	  "Usage": ""
-	},
-	{
-	  "Name": "Manglemaul",
-	  "Content": "Move 6. 2d6, Grappled (escape DC 10).",
-	  "Usage": ""
-	},
-	{
-	  "Name": "",
-	  "Content": "OR:",
-	  "Usage": ""
-	},
-	{
-	  "Name": "Crack Skulls",
-	  "Content": "Move <b>6</b>. Swing a Grappled creature at another creature. \nBoth take 2d6, ending the Grapple.",
-	  "Usage": ""
-	}
-	],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Manglemaul",
+        "Content": "Move 6. 2d6, Grappled (escape DC 10).",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "OR:",
+        "Usage": ""
+      },
+      {
+        "Name": "Crack Skulls",
+        "Content": "Move <b>6</b>. Swing a Grappled creature at another creature. \nBoth take 2d6, ending the Grapple.",
+        "Usage": ""
+      }
+    ],
     "BonusActions": [],
     "Reactions": [],
-	"LegendaryActions": [
-	{
-	  "Name": "BLOODIED: ",
-	  "Content": "\n<b>Enraged</b>.\nKrogg loses Medium Armor but his damage increases to 2d8.",
-	  "Usage": ""
-	}
-	],
+    "LegendaryActions": [
+      {
+        "Name": "BLOODIED: ",
+        "Content": "\n<b>Enraged</b>.\nKrogg loses Medium Armor but his damage increases to 2d8.",
+        "Usage": ""
+      }
+    ],
     "MythicActions": [],
     "Description": "",
     "Player": "legendary",
     "Version": "3.16.1",
     "ImageURL": "",
     "CustomFields": [],
-	"SaveDC": 10,
-	"HPMediumArmor": {
-	"Value": 20
-	},	
+    "SaveDC": 10,
+    "HPMediumArmor": {
+      "Value": 20
+    },
     "LastUpdateMs": 1787998819258,
-	"LastStandHP": {
-	"Value": 20
-	}
+    "LastStandHP": {
+      "Value": 20
+    }
+  },
+  {
+    "Name": "Pudge the Blunderer",
+    "Path": "Legendary/LV02",
+    "Source": "Nimble GMG",
+    "Type": "Legendary/LV02",
+    "Armor": "",
+    "HP": {
+      "Value": 28,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [
+      {
+        "Name": "STR",
+        "Advantage": "+"
+      },
+      {
+        "Name": "INT",
+        "Advantage": "-"
+      }
+    ],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Move & Smack",
+        "Content": "Move 8, attack for 1d8. On damage, Prone.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "OR:",
+        "Usage": ""
+      },
+      {
+        "Name": "Grab & Throw",
+        "Content": "1d8. On damage, (Reach 6) throw them at another target, both take another 1d8 damage and are knocked Prone.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [
+      {
+        "Name": "BLOODIED:",
+        "Content": "Pudge’s damage increases to 1d12.",
+        "Usage": ""
+      },
+      {
+        "Name": "LAST STAND:",
+        "Content": "Pudge can move 6, and uses Grab & Throw each turn.",
+        "Usage": ""
+      }
+    ],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 10,
+    "HPMediumArmor": {
+      "Value": ""
+    },
+    "LastUpdateMs": 1787998819258,
+    "LastStandHP": {
+      "Value": 20
+    }
+  },
+  {
+    "Name": "Grimbeak, the Undying",
+    "Path": "Legendary/LV03",
+    "Source": "Nimble GMG",
+    "Type": "Legendary/LV03",
+    "Armor": "",
+    "HP": {
+      "Value": 40,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [
+      {
+        "Name": "STR",
+        "Advantage": "+"
+      }
+    ],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Brutal",
+        "Content": "Treat the highest die rolled as the Primary Die. On crit: knock Prone.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Savage Screech",
+        "Content": "(1 use, Reach 12, AoE) 2d6 (ignoring armor). DC 11 WIL save or Frightened 1 round.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "OR:",
+        "Usage": ""
+      },
+      {
+        "Name": "Beark",
+        "Content": "Move 8. Attack for 2d6 damage.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "OR:",
+        "Usage": ""
+      },
+      {
+        "Name": "Rend & Tear",
+        "Content": "Attack for 2d6+5 damage.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [
+      {
+        "Name": "BLOODIED:",
+        "Content": "Savage Screech recharges.",
+        "Usage": ""
+      },
+      {
+        "Name": "LAST STAND:",
+        "Content": "Grimbeak's attacks use d10s instead of d6s.",
+        "Usage": ""
+      }
+    ],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 11,
+    "HPMediumArmor": {
+      "Value": ""
+    },
+    "LastUpdateMs": 1787998819258,
+    "LastStandHP": {
+      "Value": 30
+    }
   }
 ]

@@ -118,7 +118,8 @@ export namespace StatBlock {
       // not a D&D creature-type category, so group by the raw value
       // rather than matching against a fixed taxonomy that no longer
       // applies.
-      Type: statBlock.Type.trim()
+      Type: statBlock.Type.trim(),
+      Role: statBlock.Player
     };
   };
 

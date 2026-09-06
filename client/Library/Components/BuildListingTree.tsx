@@ -145,12 +145,17 @@ function ensureFolder(
 ) {
   const pathDelimiter = ignoreSlashes ? undefined : "/";
   const path = keyString.split(pathDelimiter);
+  // A label segment can legitimately contain the delimiter itself (e.g. a
+  // fractional Challenge like "1/2" nested under a Normal/Legendary/Titan
+  // folder), so only split the label into as many parts as the key has -
+  // any extra delimiter occurrences stay attached to the last part.
+  const labelParts = splitKeepingTail(labelString, pathDelimiter, path.length);
   let folderCursor = outerFolder;
   for (let i = 0; i < path.length; i++) {
     const folderName = path[i];
     if (folderCursor[folderName] === undefined) {
       folderCursor[folderName] = {
-        label: labelString.split(pathDelimiter)[i],
+        label: labelParts[i],
         listings: [],
         subFoldersByKey: {}
       };
@@ -162,4 +167,24 @@ function ensureFolder(
 
     folderCursor = folderCursor[folderName].subFoldersByKey;
   }
+}
+
+function splitKeepingTail(
+  value: string,
+  delimiter: string | undefined,
+  segments: number
+): string[] {
+  if (delimiter === undefined) {
+    return [value];
+  }
+
+  const parts = value.split(delimiter);
+  if (parts.length <= segments) {
+    return parts;
+  }
+
+  return [
+    ...parts.slice(0, segments - 1),
+    parts.slice(segments - 1).join(delimiter)
+  ];
 }

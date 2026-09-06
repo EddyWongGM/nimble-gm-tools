@@ -17,6 +17,8 @@ export interface FilterDimensions {
   Category?: string;
   // Equipment: rarity (common/uncommon/rare/very rare/legendary).
   Rarity?: string;
+  // StatBlocks: monster role ("" Normal, "legendary", "titan").
+  Role?: string;
 }
 
 export interface ListingMeta {
