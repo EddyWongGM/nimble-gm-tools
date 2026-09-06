@@ -8,11 +8,16 @@ export function InitiativeListHeader(props: {
   showWoundsColumn: boolean;
   showItemsColumn: boolean;
   showGoldColumn: boolean;
+  hasOptionalStatColumn: boolean;
 }) {
   const settings = React.useContext(SettingsContext);
 
+  const className =
+    "combatant--header" +
+    (props.hasOptionalStatColumn ? "" : " combatant--inline-stats");
+
   return (
-    <thead className="combatant--header">
+    <thead className={className}>
       <tr>
         <th className="combatant__left-gutter" />
 

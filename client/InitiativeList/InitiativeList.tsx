@@ -40,6 +40,16 @@ export function InitiativeList(props: {
     settings.Rules.EnableGold &&
     encounterState.Combatants.some(c => StatBlock.IsPlayerCharacter(c.StatBlock));
   const anyHasTakenTurn = encounterState.Combatants.some(c => c.HasTakenTurn);
+  // HP and AC always show; the mobile stacked icon-over-value layout only
+  // earns its keep once optional columns are also in play and horizontal
+  // space is actually tight (see combatant--inline-stats in combatants.less).
+  const hasOptionalStatColumn =
+    showManaColumn ||
+    showResourcesColumn ||
+    showHitDiceColumn ||
+    showWoundsColumn ||
+    showItemsColumn ||
+    showGoldColumn;
 
   return (
     <div className="initiative-list">
@@ -71,6 +81,7 @@ export function InitiativeList(props: {
           showWoundsColumn={showWoundsColumn}
           showItemsColumn={showItemsColumn}
           showGoldColumn={showGoldColumn}
+          hasOptionalStatColumn={hasOptionalStatColumn}
         />
         <tbody>
           {encounterState.Combatants.map((combatantState, index) => {
@@ -105,6 +116,7 @@ export function InitiativeList(props: {
                 showWoundsColumn={showWoundsColumn}
                 showItemsColumn={showItemsColumn}
                 showGoldColumn={showGoldColumn}
+                hasOptionalStatColumn={hasOptionalStatColumn}
               />
             );
           })}
