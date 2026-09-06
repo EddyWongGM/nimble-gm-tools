@@ -198,7 +198,7 @@ export function CombatantRow(props: CombatantRowProps) {
 
       <td className="combatant__ac">
         {StatBlockNamespace.ActsInPlayerPhase(props.combatantState.StatBlock) ? (
-          <>
+          <div className="combatant__ac-inner">
             <span
               className="combatant__mobile-icon fas fa-shield-alt"
               aria-hidden="true"
@@ -210,7 +210,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 <span className="combatant__ac--revealed-badge fas fa-eye" />
               </Tippy>
             )}
-          </>
+          </div>
         ) : (
           renderArmorBadge(props, commandContext)
         )}
@@ -597,6 +597,19 @@ function getClassNames(props: CombatantRowProps) {
   }
   if (props.isSelected) {
     classNames.push("selected");
+  }
+  // HP and AC always show; the mobile stacked icon-over-value layout only
+  // earns its keep once optional columns are also in play and horizontal
+  // space is actually tight (see combatants.less .combatant--inline-stats).
+  const hasOptionalStatColumn =
+    props.showManaColumn ||
+    props.showResourcesColumn ||
+    props.showHitDiceColumn ||
+    props.showWoundsColumn ||
+    props.showItemsColumn ||
+    props.showGoldColumn;
+  if (!hasOptionalStatColumn) {
+    classNames.push("combatant--inline-stats");
   }
   return classNames;
 }

@@ -236,6 +236,32 @@
   }
 }
 
+// When only HP and AC are in play (no optional stat columns enabled), there's
+// no horizontal-overflow risk to justify stacking icon above value - put them
+// back on one line instead of spending 3 lines per combatant on 2 numbers.
+.combatant.combatant--inline-stats {
+  @media (max-width: @medium) {
+    .combatant__mobile-icon {
+      display: inline-block;
+    }
+
+    // Only HP and AC ever reach this modifier (see hasOptionalStatColumn in
+    // CombatantRow.tsx), so name doesn't need the dedicated full-width row
+    // the many-column layout above requires - it can share HP/AC's row.
+    /* prettier-ignore */
+    grid-template:
+      "leftgutter image name hp ac"
+      "leftgutter image divider divider divider"
+      "leftgutter image tagsCommands tagsCommands tagsCommands" /
+      auto auto 1fr auto auto;
+
+    .combatant__name {
+      white-space: nowrap;
+      padding-right: @small-spacer;
+    }
+  }
+}
+
 .combatant--header {
   // Always a black bar with white text, regardless of site theme - unlike
   // other elements that deliberately invert with --page-bg-inverted.
