@@ -21,6 +21,9 @@ export interface PlayerViewCombatantState {
   Id: string;
   Tags: TagState[];
   IsPlayerCharacter: boolean;
+  IsCompanion: boolean;
+  IsLegendary: boolean;
+  IsTitan: boolean;
   ImageURL: string;
   AC?: number;
   Color?: string;

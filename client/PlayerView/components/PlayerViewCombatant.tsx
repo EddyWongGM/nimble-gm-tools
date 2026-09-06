@@ -31,6 +31,15 @@ export class PlayerViewCombatant extends React.Component<PlayerViewCombatantProp
     if (this.props.combatant.IsPlayerCharacter) {
       classNames.push("playercharacter");
     }
+    if (this.props.combatant.IsCompanion) {
+      classNames.push("companion");
+    }
+    if (this.props.combatant.IsLegendary) {
+      classNames.push("legendary");
+    }
+    if (this.props.combatant.IsTitan) {
+      classNames.push("titan");
+    }
     const hasColor =
       this.props.combatant.Color && this.props.combatant.Color.length > 0;
     return (

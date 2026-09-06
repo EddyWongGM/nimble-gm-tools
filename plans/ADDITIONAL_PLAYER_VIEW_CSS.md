@@ -36,13 +36,36 @@ li.combatant { font-size: 1.4em; }
 
 /* Fade out combatants who've already taken their turn */
 .combatant__name--taken-turn { opacity: 0.5; }
+
+/* Star icon for heroes, skull icon for monsters (uses the bundled Font
+   Awesome 5 Free webfont, so no external request or extra dependency) */
+.combatant.playercharacter .combatant__name::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f005"; /* fa-star */
+  margin-right: 0.4em;
+  color: gold;
+}
+.combatant:not(.playercharacter):not(.companion) .combatant__name::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f54c"; /* fa-skull */
+  margin-right: 0.4em;
+}
 ```
 
 ## Other useful selectors
 
 - `#playerview` — root container
 - `.combatant--header` — column header row
-- `.combatant.playercharacter` — PC rows (absent on monster/NPC rows)
+- `.combatant.playercharacter` — PC rows
+- `.combatant.companion` — companion rows (a player's pet/sidekick; not a
+  PC, but acts in the player phase)
+- `.combatant.legendary` — legendary monster rows
+- `.combatant.titan` — titan monster rows
+- `.combatant:not(.playercharacter):not(.companion):not(.legendary):not(.titan)`
+  — plain monster/NPC rows (this data model doesn't distinguish an NPC from
+  an ordinary monster - both are just an unset `Player` field)
 - `.combatant__ac` — AC column (e.g. hide on monsters with
   `.combatant:not(.playercharacter) .combatant__ac { visibility: hidden; }`
   to stop players doing to-hit math)
@@ -62,3 +85,33 @@ li.combatant { font-size: 1.4em; }
 Not yet decided where these examples should live long-term — this file, or
 folded into the in-app Info tooltip on "Additional Player View CSS
 (experimental)" in `EpicInitiativeSettings.tsx`.
+
+
+
+
+
+
+test example:
+/* Enlarge combatant names */
+li.combatant { font-size: 2em; }
+
+/* Distinguish player characters from monsters at a glance */
+#playerview .combatant.playercharacter { border-left: 12px solid gold; }
+#playerview .combatant:not(.playercharacter):not(.companion) { border-left: 12px solid red; }
+
+/* Star icon for heroes, skull icon for monsters (uses the bundled Font
+   Awesome 5 Free webfont, so no external request or extra dependency) */
+.combatant.playercharacter .combatant__name::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f005"; /* fa-star */
+  margin-right: 0.4em;
+  color: gold;
+}
+.combatant:not(.playercharacter):not(.companion) .combatant__name::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f54c"; /* fa-skull */
+  margin-right: 0.4em;
+  color: red;
+}
