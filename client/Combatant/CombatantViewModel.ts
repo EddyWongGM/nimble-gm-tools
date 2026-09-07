@@ -7,6 +7,7 @@ import { CurrentSettings } from "../Settings/Settings";
 import { NotifyTutorialOfAction } from "../Tutorial/NotifyTutorialOfAction";
 import { Metrics } from "../Utility/Metrics";
 import { Combatant } from "./Combatant";
+import { EventLog } from "../Widgets/EventLog";
 import { Tag } from "./Tag";
 import { TagState } from "../../common/CombatantState";
 import { StatBlock } from "../../common/StatBlock";
@@ -35,7 +36,8 @@ export class CombatantViewModel {
     public Combatant: Combatant,
     public CombatantCommander: CombatantCommander,
     public EnqueuePrompt: (prompt: PromptProps<any>) => void,
-    public LogEvent: (message: string) => void
+    public LogEvent: (message: string) => void,
+    public EventLog: EventLog
   ) {
     this.HP = ko.pureComputed(() => {
       if (this.Combatant.TemporaryHP()) {
@@ -239,6 +241,41 @@ export class CombatantViewModel {
     }
 
     this.Combatant.ApplyTemporaryWounds(newTemporaryWounds);
+  }
+
+  // Inline right-pane editing: apply the delta via the same mutation method
+  // the modal prompts use, then log it the same way the prompts do. The
+  // prompts log separately (via a callback passed into each *Prompt) because
+  // they can batch multiple combatants under one log line; inline editing is
+  // single-combatant only, so apply+log can live together here.
+  public ApplyHPDelta(delta: number) {
+    this.ApplyDamage(delta.toString());
+    this.EventLog.LogHPChange(delta, this.Name());
+  }
+
+  public ApplyTemporaryHPGrant(amount: number) {
+    this.ApplyTemporaryHP(amount);
+    this.EventLog.LogTemporaryHP(amount, this.Name());
+  }
+
+  public ApplyManaDelta(delta: number) {
+    this.ApplyManaChange(delta.toString());
+    this.EventLog.LogManaChange(delta, this.Name());
+  }
+
+  public ApplyResourcesDelta(delta: number) {
+    this.ApplyResourcesChange(delta.toString());
+    this.EventLog.LogResourcesChange(delta, this.Name());
+  }
+
+  public ApplyHitDiceDelta(delta: number) {
+    this.ApplyHitDiceChange(delta.toString());
+    this.EventLog.LogHitDiceChange(delta, this.Name());
+  }
+
+  public ApplyWoundsDelta(delta: number) {
+    this.ApplyWoundsChange(delta.toString());
+    this.EventLog.LogWoundsChange(delta, this.Name());
   }
 
   public ApplyInitiative(initiative: number) {

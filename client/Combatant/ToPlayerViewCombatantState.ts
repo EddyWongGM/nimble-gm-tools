@@ -28,6 +28,9 @@ export function ToPlayerViewCombatantState(
     InventoryColor: GetInventoryColor(combatant),
     Initiative: combatant.Initiative(),
     IsPlayerCharacter: combatant.IsPlayerCharacter(),
+    IsCompanion: combatant.IsCompanion(),
+    IsLegendary: StatBlock.IsLegendary(combatant.StatBlock()),
+    IsTitan: StatBlock.IsTitan(combatant.StatBlock()),
     Tags: combatant
       .Tags()
       .filter(t => t.NotExpired() && !t.HiddenFromPlayerView)

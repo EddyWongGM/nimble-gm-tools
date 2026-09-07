@@ -28,6 +28,7 @@ type CombatantRowProps = {
   showWoundsColumn: boolean;
   showItemsColumn: boolean;
   showGoldColumn: boolean;
+  hasOptionalStatColumn: boolean;
 };
 
 type CombatantDragData = {
@@ -171,11 +172,7 @@ export function CombatantRow(props: CombatantRowProps) {
           }}
         >
           <div className="combatant__hp-inner" style={getHPStyle(props)}>
-            <span
-              className="combatant__mobile-icon fas fa-heart"
-              aria-hidden="true"
-            />
-
+            <span className="screen-reader-only">Health</span>
             {renderHPText(props)}
             {DisplayHPBar && (
               <span
@@ -198,19 +195,15 @@ export function CombatantRow(props: CombatantRowProps) {
 
       <td className="combatant__ac">
         {StatBlockNamespace.ActsInPlayerPhase(props.combatantState.StatBlock) ? (
-          <>
-            <span
-              className="combatant__mobile-icon fas fa-shield-alt"
-              aria-hidden="true"
-            />
-
+          <div className="combatant__ac-inner">
+            <span className="screen-reader-only">Defense</span>
             {props.combatantState.StatBlock.AC.Value}
             {props.combatantState.RevealedAC && (
               <Tippy content="Revealed in Player View">
                 <span className="combatant__ac--revealed-badge fas fa-eye" />
               </Tippy>
             )}
-          </>
+          </div>
         ) : (
           renderArmorBadge(props, commandContext)
         )}
@@ -227,11 +220,6 @@ export function CombatantRow(props: CombatantRowProps) {
               }}
             >
               <div className="combatant__mana-inner" style={getManaStyle(props)}>
-                <span
-                  className="combatant__mobile-icon fas fa-tint"
-                  aria-hidden="true"
-                />
-
                 {renderManaText(props)}
                 {DisplayHPBar && (
                   <span className="combatant__hp-bar">
@@ -243,12 +231,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 )}
               </div>
             </div>
-          ) : (
-            <span
-              className="combatant__mobile-icon fas fa-tint"
-              aria-hidden="true"
-            />
-          )}
+          ) : null}
         </td>
       )}
 
@@ -268,11 +251,6 @@ export function CombatantRow(props: CombatantRowProps) {
                 className="combatant__resources-inner"
                 style={getResourcesStyle(props)}
               >
-                <span
-                  className="combatant__mobile-icon fas fa-bolt"
-                  aria-hidden="true"
-                />
-
                 {renderResourcesText(props)}
                 {DisplayHPBar && (
                   <span className="combatant__hp-bar">
@@ -284,12 +262,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 )}
               </div>
             </div>
-          ) : (
-            <span
-              className="combatant__mobile-icon fas fa-bolt"
-              aria-hidden="true"
-            />
-          )}
+          ) : null}
         </td>
       )}
 
@@ -309,12 +282,6 @@ export function CombatantRow(props: CombatantRowProps) {
                 className="combatant__hitdice-inner"
                 style={getHitDiceStyle()}
               >
-                <span
-                  className="combatant__mobile-icon fas fa-dice-d6"
-                  aria-hidden="true"
-                  style={{ color: "var(--stat-hitdice)" }}
-                />
-
                 {renderHitDiceText(props)}
                 {DisplayHPBar && (
                   <span className="combatant__hp-bar">
@@ -331,12 +298,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 )}
               </div>
             </div>
-          ) : (
-            <span
-              className="combatant__mobile-icon fas fa-dice-d6"
-              aria-hidden="true"
-            />
-          )}
+          ) : null}
         </td>
       )}
 
@@ -359,12 +321,6 @@ export function CombatantRow(props: CombatantRowProps) {
                 className="combatant__wounds-inner"
                 style={getWoundsStyle(props)}
               >
-                <span
-                  className="combatant__mobile-icon fas fa-skull"
-                  aria-hidden="true"
-                  style={{ color: "var(--stat-wounds)" }}
-                />
-
                 {renderWoundsText(props)}
                 {DisplayHPBar && (
                   <span className="combatant__hp-bar">
@@ -376,13 +332,7 @@ export function CombatantRow(props: CombatantRowProps) {
                 )}
               </div>
             </div>
-          ) : (
-            <span
-              className="combatant__mobile-icon fas fa-skull"
-              aria-hidden="true"
-              style={{ color: "var(--stat-wounds)" }}
-            />
-          )}
+          ) : null}
         </td>
       )}
 
@@ -402,20 +352,10 @@ export function CombatantRow(props: CombatantRowProps) {
                 className="combatant__items-slots-inner"
                 style={getItemsStyle(props)}
               >
-                <span
-                  className="combatant__mobile-icon fas fa-scroll"
-                  aria-hidden="true"
-                />
-
                 {renderItemsText(props)}
               </div>
             </div>
-          ) : (
-            <span
-              className="combatant__mobile-icon fas fa-scroll"
-              aria-hidden="true"
-            />
-          )}
+          ) : null}
         </td>
       )}
 
@@ -432,20 +372,10 @@ export function CombatantRow(props: CombatantRowProps) {
               }}
             >
               <div className="combatant__gold-inner" style={getGoldStyle()}>
-                <span
-                  className="combatant__mobile-icon fas fa-coins"
-                  aria-hidden="true"
-                />
-
                 {renderGoldText(props)}
               </div>
             </div>
-          ) : (
-            <span
-              className="combatant__mobile-icon fas fa-coins"
-              aria-hidden="true"
-            />
-          )}
+          ) : null}
         </td>
       )}
 
@@ -597,6 +527,9 @@ function getClassNames(props: CombatantRowProps) {
   }
   if (props.isSelected) {
     classNames.push("selected");
+  }
+  if (!props.hasOptionalStatColumn) {
+    classNames.push("combatant--inline-stats");
   }
   return classNames;
 }

@@ -86,16 +86,16 @@ const Banners: { href: string; src: string; altText: string }[] = [
   // {
   //   href: "https://www.patreon.com/join/NimbleRPGApp",
   //   src: "../img/banner-annual.png",
-  //   altText: "Nimble RPG App Epic Tier Annual Subscriptions"
+  //   altText: "Nimble RPG App Legendary Tier Annual Subscriptions"
   // },
   // {
   //   href: "https://www.patreon.com/join/NimbleRPGApp",
   //   src: "../img/banner-features.png",
-  //   altText: "Nimble RPG App Epic Tier Features"
+  //   altText: "Nimble RPG App Legendary Tier Features"
   // },
   // {
   //   href: "https://www.patreon.com/join/NimbleRPGApp",
   //   src: "../img/banner-trial.png",
-  //   altText: "Nimble RPG App Epic Tier Free Trial"
+  //   altText: "Nimble RPG App Legendary Tier Free Trial"
   // }
 ];

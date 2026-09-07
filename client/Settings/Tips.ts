@@ -16,6 +16,6 @@ export const tips = [
   "The Library Manager allows you to move, delete, or export multiple items at the same time. You can enable it in the Encounter Commands tab.",
   // "Want to contribute? Nimble RPG App is written in TypeScript and runs on node.js. Fork it on <a href='https://github.com/EddyWongGM/nimble-gm-tools' target='_blank'>GitHub.</a>",
   "Account Sync will let you access your Heroes and Encounters from any device. <a href='https://www.patreon.com/NimbleRPGApp' target='_blank'>Pledge on Patreon</a> to unlock this benefit!",
-  "Epic Nimble RPG App will let you enhance your Player View with combatant portraits and custom colors. This Patreon tier is coming soon!",
+  "Legendary Tier will let you enhance your Player View with combatant portraits and custom colors. This Patreon tier is coming soon!",
   // "I also made <a href='http://paragondashboard.com' target='_blank'>Paragon Campaign Dashboard</a>, a powerful, customizable virtual GM screen and campaign prep app."
 ];

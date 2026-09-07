@@ -24,7 +24,7 @@ export function DisplaysToggle(props: {
     props.requireEpicTierForPlayerViewToggle && !env.HasEpicInitiative;
 
   const epicTierNotice = showEpicTierNotice && (
-    <Info>This feature is available for Epic Tier subscribers.</Info>
+    <Info>This feature is available for Legendary Tier subscribers.</Info>
   );
 
   return (

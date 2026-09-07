@@ -88,14 +88,22 @@
 
   @media (max-width: @medium) {
     &,
-    & tbody {
+    & tbody,
+    & thead {
       display: block;
       width: 100%;
     }
+  }
+}
 
-    thead {
-      display: none;
-    }
+// The blanket ".combatants, .combatants * { position: static; }" rule above
+// silences a console warning but also stomps position: sticky - this needs
+// higher specificity than that descendant-selector rule to win.
+.combatants thead.combatant--header {
+  @media (max-width: @medium) {
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
 }
 
@@ -227,12 +235,25 @@
   }
 }
 
-.combatant__mobile-icon {
-  display: none;
-
+// When only HP and AC are in play (no optional stat columns enabled), there's
+// no horizontal-overflow risk to justify stacking icon above value - put them
+// back on one line instead of spending 3 lines per combatant on 2 numbers.
+.combatant.combatant--inline-stats {
   @media (max-width: @medium) {
-    display: block;
-    padding-right: @small-spacer;
+    // Only HP and AC ever reach this modifier (see hasOptionalStatColumn in
+    // CombatantRow.tsx), so name doesn't need the dedicated full-width row
+    // the many-column layout above requires - it can share HP/AC's row.
+    /* prettier-ignore */
+    grid-template:
+      "leftgutter image name hp ac"
+      "leftgutter image divider divider divider"
+      "leftgutter image tagsCommands tagsCommands tagsCommands" /
+      auto auto 1fr auto auto;
+
+    .combatant__name {
+      white-space: nowrap;
+      padding-right: @small-spacer;
+    }
   }
 }
 
@@ -257,6 +278,60 @@
 
   .fa-clickable {
     padding-left: @medium-spacer;
+  }
+}
+
+// combatant--header is also reused (deliberately, for the same black-bar
+// styling above) by PlayerViewCombatantHeader.tsx, which renders it on a
+// plain <div>, not a <thead> - a bare ".combatant--header" selector here
+// would leak this table-only grid/sticky layout into Player View too, so
+// everything below is qualified with the "thead" type selector to stay
+// scoped to the Initiative List's column header specifically.
+thead.combatant--header {
+  @media (max-width: @medium) {
+    // Own padding stacks with each th's `.combatants th` padding below,
+    // roughly doubling header height vs. a body row - the th padding alone
+    // is enough at this width.
+    padding: 0;
+
+    th {
+      padding: @small-spacer 5px;
+    }
+
+    tr {
+      display: grid;
+      align-items: center;
+      /* prettier-ignore */
+      grid-template:
+        "leftgutter image hp ac mana resources hitdice wounds itemsslots gold" /
+        auto auto auto auto auto auto auto auto auto auto;
+    }
+
+    // The many-column body row puts "name" on its own full-width row above
+    // the stats (see .combatant above) - the header only has one row to
+    // work with and no single dedicated column its width could align to
+    // without pushing every stat column over, so skip it here and let each
+    // row's own visible name serve as its label instead.
+    .combatant__name {
+      display: none;
+    }
+  }
+
+  &.combatant--inline-stats {
+    @media (max-width: @medium) {
+      tr {
+        /* prettier-ignore */
+        grid-template:
+          "leftgutter image name hp ac" /
+          auto auto 1fr auto auto;
+      }
+
+      // Inline-stats rows share name/hp/ac on one real row (see
+      // .combatant--inline-stats above), so the header can match it exactly.
+      .combatant__name {
+        display: block;
+      }
+    }
   }
 }
 
@@ -295,11 +370,17 @@
   height: 35px;
   width: 35px;
   object-fit: contain;
+
   margin: @extra-small-spacer;
   margin-right: 10px;
 
+  // combatant--header reuses this class directly on its <th> (rather than
+  // combatant__image-cell, which wraps the <img> in body rows) - since
+  // grid-area only takes effect on a direct grid child, the grid-area
+  // here only affects the header's <th>, not the body's nested <img>.
   .combatant--header & {
     height: auto;
+    grid-area: image;
   }
 }
 
@@ -376,7 +457,11 @@
   @media (max-width: @medium) {
     display: flex;
     flex-flow: row;
-    justify-content: flex-start;
+    // combatant__armor-badge (monsters) centers itself in its own 1.5em
+    // box, but the plain numeric AC value has no such box - centering the
+    // column itself (rather than hugging content to the start) is what
+    // lines both variants up with each other and with the header icon.
+    justify-content: center;
   }
 }
 

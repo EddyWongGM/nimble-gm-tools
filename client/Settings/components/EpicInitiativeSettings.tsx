@@ -20,7 +20,7 @@ export function EpicInitiativeSettings() {
 
   return (
     <div className="tab-content epicInitiative">
-      <h3>Epic Initiative</h3>
+      <h3>Legendary Tier</h3>
       <p>
         <strong>Thank you for supporting Nimble RPG App!</strong>
       </p>
@@ -88,7 +88,7 @@ export function EpicInitiativeSettings() {
 function loginMessage() {
   return (
     <div className="tab-content epicInitiativeLogin">
-      <h3>Epic Initiative</h3>
+      <h3>Legendary Tier</h3>
       <p>Log in with Patreon to access patron benefits.</p>
       {epicInitiativeFeatures()}
       <hr />
@@ -110,11 +110,11 @@ function loginMessage() {
 function upgradeMessage() {
   return (
     <div className="tab-content epicInitiativeLogin">
-      <h3>Epic Initiative</h3>
+      <h3>Legendary Tier</h3>
       <p>
-        You're logged in with Patreon, but you have not selected the Epic
-        Initiative reward level. If you have recently updated your pledge, try
-        logging out and back in again to propagate your rewards.
+        You're logged in with Patreon, but you have not selected the
+        Legendary Tier reward level. If you have recently updated your
+        pledge, try logging out and back in again to propagate your rewards.
       </p>
       {epicInitiativeFeatures()}
       <hr />

@@ -25,6 +25,15 @@ export function MovePrompt(props: {
           Version: process.env.VERSION
         });
         item.Path = pathInput;
+        const nestedStatBlock = (item as Listable & { StatBlock?: { Path: string } })
+          .StatBlock;
+        if (nestedStatBlock) {
+          // PersistentCharacter.Path is re-derived from StatBlock.Path
+          // whenever the stat block is saved elsewhere (see
+          // LibrariesCommander.UpdatePersistentCharacter), so both copies
+          // must move together or the folder move gets silently reverted.
+          nestedStatBlock.Path = pathInput;
+        }
         targetListing.SetValue(item);
         return await props.library.SaveEditedListing(targetListing, item);
       })
