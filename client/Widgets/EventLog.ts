@@ -52,6 +52,12 @@ export class EventLog {
     }
   };
 
+  public LogTemporaryHP = (amount: number, combatantNames: string) => {
+    if (amount > 0) {
+      this.AddEvent(`${amount} temporary hit points granted to ${combatantNames}.`);
+    }
+  };
+
   public LogGoldChange = (amount: number, combatantNames: string) => {
     if (amount > 0) {
       this.AddEvent(`${amount} gold added for ${combatantNames}.`);

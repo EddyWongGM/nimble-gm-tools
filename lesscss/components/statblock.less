@@ -37,6 +37,7 @@
 }
 
 .c-combatant-details__hp {
+  > * + .stat-label.TemporaryHP,
   > * + .stat-label.Mana,
   > * + .stat-label.Level {
     margin-left: @medium-spacer;
@@ -136,6 +137,24 @@ input[type="number"].c-combatant-details__item-quantity {
   height: 1.3rem;
   padding: 0 @extra-small-spacer;
   margin-left: @small-spacer;
+  font-size: inherit;
+  line-height: 1.3rem;
+}
+
+.c-combatant-details__stat-value--editable {
+  cursor: pointer;
+  border-bottom: 1px dotted var(--text-faded);
+
+  &:hover,
+  &:focus {
+    border-bottom-color: var(--text-face);
+  }
+}
+
+input[type="number"].c-combatant-details__stat-input {
+  width: 3.5em;
+  height: 1.3rem;
+  padding: 0 @extra-small-spacer;
   font-size: inherit;
   line-height: 1.3rem;
 }

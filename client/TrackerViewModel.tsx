@@ -587,7 +587,8 @@ export class TrackerViewModel {
       combatant,
       this.CombatantCommander,
       this.PromptQueue.Add,
-      this.EventLog.AddEvent
+      this.EventLog.AddEvent,
+      this.EventLog
     );
     return vm;
   };
