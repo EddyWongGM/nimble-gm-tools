@@ -598,7 +598,7 @@
           "Type": "Legendary/LV02",
           "Armor": "medium",
           "HP": {
-            "Value": 30,
+            "Value": 0,
             "Notes": ""
           },
           "AC": {
@@ -947,6 +947,556 @@
           }
         }
       }
+    ]
+  },
+  {
+    "Name": "3 Skeleton Warrior",
+    "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
+    "Source": "Nimble GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Skeleton Warrior",
+          "Source": "Nimble GMG",
+          "Type": "Undead/Corporeal Undead",
+          "Armor": "",          
+          "HP": {
+            "Value": 10,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1",
+          "Traits": [
+            {
+              "Name": "Unliving, Undying.",
+              "Content": "(1 use) On death: reset to 1 HP.",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Sickening Claw",
+              "Content": "1d4+8. On damage: Dazed.",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [
+            {
+              "Name": "",
+              "Content": "[fa-dove] Act first, targeting already Dazed heroes or ones who have not yet Defended this round.",
+              "Usage": ""
+            },
+            {
+              "Name": "",
+              "Content": "[fa-skull] Act last, targeting heroes who are Grappled, Prone, or not already Dazed.",
+              "Usage": ""
+            }
+          ],
+          "Description": "",
+          "Player": "",
+          "Version": "1.0.5",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 11,
+          "CRRating": "1/2",
+          "ScalesWithHeroCount": true
+        }
+      }
+    ]
+  },
+  {
+    "Name": "4.1 Venus Fly Trap",
+    "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
+    "Source": "Nimble GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Giant Venus Flytrap",
+          "Source": "Nimble GMG",
+          "Type": "",
+          "Armor": "",          
+          "HP": {
+            "Value": 20,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1",
+          "Traits": [
+            {
+              "Name": "Blind",
+              "Content": "Always attacks with disadvantage, attacks against it are made with advantage.",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "",
+              "Content": "Choose 1:",
+              "Usage": ""
+            },
+            {
+              "Name": "Tangle (2×)",
+              "Content": "(Reach 12) 1d6+2, Grappled (escape DC 12, or any fire or slashing damage).\n\n",
+              "Usage": ""
+            },
+            {
+              "Name": "Reel In",
+              "Content": "If any creature is Grappled, pull them adjacent, then Bite.",
+              "Usage": ""
+            },
+            {
+              "Name": "Bite",
+              "Content": "(Reach 3) 1d6+15 damage.",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "1.0.5",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 12,
+          "CRRating": "",
+          "ScalesWithHeroCount": true
+        }
+      }
+    ]
+  },
+  {
+    "Name": "4.2 Seedling",
+    "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
+    "Source": "Nimble GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Briarbane Seedling",
+          "Source": "Nimble GMG",
+          "Type": "Forest/Briarbanes",
+          "Armor": "heavy",          
+          "HP": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/2",
+          "Traits": [
+            {
+              "Name": "Small",
+              "Content": "",
+              "Usage": ""
+            },
+            {
+              "Name": "Peeling Bark",
+              "Content": "Damage degrades armor (H » M » None).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Thorn Seed",
+              "Content": "(Range 6) 2d6+2",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [
+            {
+              "Name": "",
+              "Content": "[fa-dove] Attack while heroes are adjacent. Attack Acidpods when they'll damage other Briarbanes.",
+              "Usage": ""
+            },
+            {
+              "Name": "",
+              "Content": "[fa-skull] Target Grappled heroes, or Acidpods that are in a good position to explode and hit multiple enemies.",
+              "Usage": ""
+            }
+          ],
+          "Description": "",
+          "Player": "",
+          "Version": "1.0.5",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 11,
+          "CRRating": "1/4",
+          "HPHeavyArmor": {
+            "Value": 8
+          }
+        }
+      }
+    ]
+  },
+  {
+    "Name": "5 Rootbreaker",
+    "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
+    "Source": "Nimble GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Briarbane Rootbreaker",
+          "Source": "Nimble GMG",
+          "Type": "Forest/Briarbanes",
+          "Armor": "heavy",          
+          "HP": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "5",
+          "Traits": [
+            {
+              "Name": "Large",
+              "Content": "",
+              "Usage": ""
+            },
+            {
+              "Name": "Peeling Bark",
+              "Content": "Damage degrades armor (H » M » None).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Slam",
+              "Content": "3d6+6. On crit: knockback 2.",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [
+            {
+              "Name": "",
+              "Content": "[fa-dove] Target Grappled heroes, likely breaking them free.",
+              "Usage": ""
+            },
+            {
+              "Name": "",
+              "Content": "[fa-skull] Angle their attacks to push heroes into each other or toward Acidpods.",
+              "Usage": ""
+            }
+          ],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 13,
+          "CRRating": "2",
+          "HPHeavyArmor": {
+            "Value": 50
+          }
+        }
+      }
+    ]
+  },
+  {
+    "Name": "6 Ceremony Room",
+    "Path": "Intro Nimble GMG/LV01 Intro - Tiny Rescue",
+    "Source": "Nimble GMG",
+    "Combatants": [
+      {
+        "Alias": "Ruby",
+        "Hidden": true,
+        "StatBlock": {
+          "Name": "Commoner",
+          "Source": "Nimble GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 4,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": ["6"],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/4",
+          "Traits": [],
+          "Actions": [],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      },
+      {
+        "Alias": "Pinky",
+        "StatBlock": {
+          "Name": "Goblin",
+          "Source": "Nimble GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 15,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": ["6"],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/4",
+          "Traits": [
+            {
+              "Name": "Small",
+              "Content": "",
+              "Usage": ""
+            },
+            {
+              "Name": "Haha, Missed Me!",
+              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Stab",
+              "Content": "Stab 1d6+2 (or Shoot, Range 8).",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }
+    ]
+  },
+  {
+    "Name": "7 Greenthumb",
+    "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
+    "Source": "Nimble GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Greenthumb, Lichling",
+          "Source": "Nimble GMG",
+          "Type": "Legendary/LV03",
+          "Armor": "",
+          "HP": {
+            "Value": 30,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [
+            {
+              "Name": "INT",
+              "Advantage": "+"
+            },
+            {
+              "Name": "WIL",
+              "Advantage": "+"
+            }         
+          ],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "3",
+          "Traits": [],
+          "Actions": [
+            {
+              "Name": "",
+              "Content": "After each hero’s turn, move 4 then choose one:",
+              "Usage": ""
+            },
+            {
+              "Name": "Briarmancy",
+              "Content": "(If you have no minions) Summon 1 minion/hero (size: 1d4). They act at the end of the round.\n",
+              "Usage": ""
+            },
+            {
+              "Name": "",
+              "Content": "OR:",
+              "Usage": ""
+            },
+            {
+              "Name": "Thorn Shot",
+              "Content": "(Range 8) 2d4+8.",
+              "Usage": ""
+            }
+          ],          
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [
+            {
+              "Name": "BLOODIED:",
+              "Content": "<b>Root.</b> All heroes are Restrained and suffer 2d4 damage on a failed DEX save (DC 11), half damage only on save. Escape: DC 11 STR or\nDEX save, or any slashing or fire damage.",
+              "Usage": ""
+            },
+            {
+              "Name": "LAST STAND:",
+              "Content": "<b>Bark Armor.</b> He gains gains H Armor and Damage degrades armor (H » M » None). He can also choose twice each turn.",
+              "Usage": ""
+            }          
+          ],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "legendary",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 11,
+          "HPMediumArmor": {
+            "Value": 0
+          },          
+          "LastStandHP": {
+            "Value": 30
+          }          
+        }
+      }      
     ]
   }
 ]

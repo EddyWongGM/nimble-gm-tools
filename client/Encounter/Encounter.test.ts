@@ -93,6 +93,41 @@ describe("Encounter", () => {
     expect(encounter.Combatants()[0].Tags()).toHaveLength(0);
   });
 
+  test("A Normal monster with ScalesWithHeroCount has its HP multiplied by the number of heroes already in the encounter", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const scalableMonster = {
+      ...StatBlock.Default(),
+      Player: "",
+      ScalesWithHeroCount: true,
+      HP: { Value: 10, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(scalableMonster);
+
+    const monsterCombatant = encounter.Combatants()[3];
+    expect(monsterCombatant.StatBlock().HP.Value).toBe(30);
+    expect(monsterCombatant.MaxHP()).toBe(30);
+    expect(monsterCombatant.Tags().map(t => t.Text)).toContain("HP ×3");
+  });
+
+  test("A Normal monster without ScalesWithHeroCount is not affected by hero count", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const monster = {
+      ...StatBlock.Default(),
+      Player: "",
+      HP: { Value: 10, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(monster);
+
+    expect(encounter.Combatants()[2].StatBlock().HP.Value).toBe(10);
+  });
+
   test("A monster with Medium Armor enters combat with its Medium Armor HP pool", () => {
     const monster = {
       ...StatBlock.Default(),
@@ -143,6 +178,24 @@ describe("Encounter", () => {
       HPHeavyArmor: { Value: 10, Notes: "" }
     };
     encounter.AddCombatantFromStatBlock(legendaryMonster);
+
+    expect(encounter.Combatants()[2].StatBlock().HP.Value).toBe(20);
+  });
+
+  test("Armor tier and the ScalesWithHeroCount multiplier compose", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const scalableMonster = {
+      ...StatBlock.Default(),
+      Player: "",
+      ScalesWithHeroCount: true,
+      Armor: "heavy" as const,
+      HP: { Value: 30, Notes: "" },
+      HPHeavyArmor: { Value: 10, Notes: "" }
+    };
+    encounter.AddCombatantFromStatBlock(scalableMonster);
 
     expect(encounter.Combatants()[2].StatBlock().HP.Value).toBe(20);
   });

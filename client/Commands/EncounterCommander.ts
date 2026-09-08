@@ -454,17 +454,18 @@ export class EncounterCommander {
 
     await Promise.all(persistentCharactersPromise);
 
-    // Legendary monsters are saved with HP already scaled to whatever party
-    // size the encounter was built for; rescale them to the party size
-    // actually present now that every PC has been loaded.
+    // Hero-count-scaled monsters (Legendary, or Normal monsters with
+    // ScalesWithHeroCount) are saved with HP already scaled to whatever
+    // party size the encounter was built for; rescale them to the party
+    // size actually present now that every PC has been loaded.
     const heroCount = Math.max(
       1,
       this.tracker.Encounter.Combatants().filter(c => c.IsPlayerCharacter())
         .length
     );
     this.tracker.Encounter.Combatants().forEach(c => {
-      if (StatBlock.IsLegendary(c.StatBlock())) {
-        c.RescaleLegendaryHP(heroCount);
+      if (StatBlock.IsHeroCountScaled(c.StatBlock())) {
+        c.RescaleHeroCountHP(heroCount);
       }
     });
 

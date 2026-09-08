@@ -60,6 +60,10 @@ export interface StatBlock extends Listable {
   HPMediumArmor?: ValueAndNotes;
   HPHeavyArmor?: ValueAndNotes;
   LastStandHP?: ValueAndNotes;
+  // Normal monster only (Player === "") - HP/HPMediumArmor/HPHeavyArmor are
+  // interpreted as "per hero" and multiplied by the party's hero count when
+  // added to an encounter, same mechanic Legendary monsters use.
+  ScalesWithHeroCount?: boolean;
   AC: ValueAndNotes;
   Mana?: ValueAndNotes;
   Resources?: ValueAndNotes;
@@ -344,6 +348,17 @@ export namespace StatBlock {
 
   export const IsTitan = (statBlock: StatBlock): boolean =>
     statBlock.Player == "titan";
+
+  // Whether this monster's authored HP (HP/HPMediumArmor/HPHeavyArmor) is
+  // "per hero" and should be multiplied by the party's hero count when
+  // added to an encounter. Legendary monsters always are; a Normal monster
+  // opts in via ScalesWithHeroCount. The `Player === ""` check is
+  // defense-in-depth against hand-edited/imported data setting the flag on
+  // a non-Normal stat block - the editor only ever shows the checkbox for
+  // Normal monsters.
+  export const IsHeroCountScaled = (statBlock: StatBlock): boolean =>
+    IsLegendary(statBlock) ||
+    (statBlock.Player === "" && !!statBlock.ScalesWithHeroCount);
 
   export const Default = (): StatBlock => ({
     Id: probablyUniqueString(),

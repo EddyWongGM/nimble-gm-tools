@@ -700,4 +700,38 @@ describe("Combatant", () => {
       expect(combatant.HasEnteredLastStand()).toBe(false);
     });
   });
+
+  describe("Hero-count HP scaling", () => {
+    test("ScaledHeroCount migrates from the old LegendaryHeroCount field name on load", () => {
+      const original = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "legendary",
+        HP: { Value: 20, Notes: "" }
+      });
+
+      const { ScaledHeroCount, ...legacyState } = original.GetState();
+      encounter.AddCombatantFromState({
+        ...legacyState,
+        Id: "legacy-id",
+        LegendaryHeroCount: 3
+      } as any);
+
+      const migrated = encounter
+        .Combatants()
+        .find(c => c.Id === "legacy-id");
+      expect(migrated.ScaledHeroCount).toBe(3);
+    });
+
+    test("RescaleHeroCountHP does nothing for a monster that was never hero-count-scaled", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        HP: { Value: 10, Notes: "" }
+      });
+
+      combatant.RescaleHeroCountHP(4);
+
+      expect(combatant.StatBlock().HP.Value).toBe(10);
+      expect(combatant.CurrentHP()).toBe(10);
+    });
+  });
 });

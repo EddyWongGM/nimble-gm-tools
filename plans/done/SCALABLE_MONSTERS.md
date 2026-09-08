@@ -138,3 +138,54 @@ isn't mistaken for a bug later.
 - Authored stat block field: `ScalesWithHeroCount` (boolean).
 - Per-combatant scaling state: `ScaledHeroCount` (number), replacing
   `LegendaryHeroCount`.
+
+## Post-implementation fix: first scale on load, not just rescale
+
+Found after implementation, via a real preload-content case
+(`preload-content/encounters_starter_set.json`'s "3 Skeleton Warrior"
+template, hand-authored with `ScalesWithHeroCount: true` and no
+`ScaledHeroCount`): `RescaleHeroCountHP` originally required an existing
+`ScaledHeroCount` baseline (`if (!oldHeroCount || ...) return;`), so it could
+only *rescale* a monster that had previously gone through
+`AddCombatantFromStatBlock`. A combatant loaded straight from a hand-authored
+saved/preload encounter - which restores `CombatantState` verbatim via
+`AddCombatantFromState`, never through `AddCombatantFromStatBlock` - has no
+baseline, so the guard bailed out and its flat authored `HP.Value` was never
+scaled at all, no matter the live party size. This affected Legendary
+monsters in preload content the same way (confirmed: Krogg in that same file,
+flat `HP.Value: 30`, no `ScaledHeroCount`, never scaled on load either) - not
+something newly introduced by this feature, just newly noticed because of it.
+
+Fixed in `client/Combatant/Combatant.ts` by defaulting the baseline to `1`
+instead of bailing out when absent:
+
+```ts
+public RescaleHeroCountHP = (newHeroCount: number) => {
+  if (!StatBlock.IsHeroCountScaled(this.StatBlock())) {
+    return;
+  }
+  const oldHeroCount = this.ScaledHeroCount ?? 1;
+  const heroCount = Math.max(1, newHeroCount);
+  // ...unchanged below
+};
+```
+
+A never-scaled monster's authored `HP.Value` already *is* the raw per-hero
+number, equivalent to having last been scaled for exactly 1 hero - so this
+also performs that monster's first scale, the moment a saved/preload
+encounter containing it is loaded.
+
+Explicitly confirmed with the user before making this change, since it's a
+shared code path: this also changes existing behavior for Krogg (the
+Legendary boss in `encounters_starter_set.json`) - he now scales by the live
+party's hero count on load instead of staying flat at his previously-baked 30
+HP. Chose "fix both" over a narrower Scalable-only fix, since the flat 30 HP
+was very likely the same undiscovered bug rather than an intentional fixed
+number (Legendary's entire design intent is to always scale per hero).
+
+Test added: `client/Commands/EncounterCommander.test.ts` -
+"LoadSavedEncounter performs a hero-count-scaled monster's first scale when
+it was never added via AddCombatantFromStatBlock (e.g. hand-authored preload
+content)", constructing a `SavedEncounter` by hand (not via
+`ObservableEncounterState()`, which always writes a real `ScaledHeroCount`
+and so can't exercise this path).

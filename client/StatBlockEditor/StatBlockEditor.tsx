@@ -331,6 +331,21 @@ export class StatBlockEditor extends React.Component<
                       encounter first, or the multiplier will under-count.
                     </Info>
                   )}
+                  {api.values.Player === "" && (
+                    <label className="c-statblock-editor__checkbox-label">
+                      <Field type="checkbox" name="ScalesWithHeroCount" />
+                      Scalable (HP × Hero Count)
+                    </label>
+                  )}
+                  {api.values.Player === "" &&
+                    api.values.ScalesWithHeroCount && (
+                      <Info>
+                        This monster's max HP is multiplied by the number of
+                        heroes already in the encounter, calculated once when
+                        it's added to the tracker. Add heroes to the
+                        encounter first, or the multiplier will under-count.
+                      </Info>
+                    )}
                   {this.props.editorTarget == "combatant" &&
                     api.values.Player !== "player" &&
                     api.values.Player !== "companion" && (

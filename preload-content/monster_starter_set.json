@@ -1675,5 +1675,98 @@
     "LastStandHP": {
       "Value": 30
     }
+  },
+  {
+    "Name": "Greenthumb, Lichling",
+    "Path": "Legendary/LV03",
+    "Source": "Nimble GMG",
+    "Type": "Legendary/LV03",
+    "Armor": "",
+    "HP": {
+      "Value": 30,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [
+      {
+        "Name": "INT",
+        "Advantage": "+"
+      },
+      {
+        "Name": "WIL",
+        "Advantage": "+"
+      }
+    ],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, move 4 then choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Briarmancy",
+        "Content": "(If you have no minions) Summon 1 minion/hero (size: 1d4). They act at the end of the round.\n",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "OR:",
+        "Usage": ""
+      },
+      {
+        "Name": "Thorn Shot",
+        "Content": "(Range 8) 2d4+8.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [
+      {
+        "Name": "BLOODIED:",
+        "Content": "<b>Root.</b> All heroes are Restrained and suffer 2d4 damage on a failed DEX save (DC 11), half damage only on save. Escape: DC 11 STR or\nDEX save, or any slashing or fire damage.",
+        "Usage": ""
+      },
+      {
+        "Name": "LAST STAND:",
+        "Content": "<b>Bark Armor.</b> He gains gains H Armor and Damage degrades armor (H » M » None). He can also choose twice each turn.",
+        "Usage": ""
+      }
+    ],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 11,
+    "HPMediumArmor": {
+      "Value": ""
+    },
+    "LastUpdateMs": 1787998819258,
+    "LastStandHP": {
+      "Value": 30
+    }
   }
 ]

@@ -258,15 +258,15 @@ export class Encounter {
         ...statBlock.HP,
         Value: GetOrRollMaximumHP(statBlock, variantMaximumHP)
       };
-      let legendaryHeroCount: number | null = null;
-      if (statBlock.Player === "legendary") {
-        legendaryHeroCount = Math.max(
+      let heroCountScaledFor: number | null = null;
+      if (StatBlock.IsHeroCountScaled(statBlock)) {
+        heroCountScaledFor = Math.max(
           1,
           this.combatants().filter(c => c.IsPlayerCharacter()).length
         );
         statBlock.HP = {
           ...statBlock.HP,
-          Value: statBlock.HP.Value * legendaryHeroCount
+          Value: statBlock.HP.Value * heroCountScaledFor
         };
       }
 
@@ -287,7 +287,7 @@ export class Encounter {
         RoundCounter: 0,
         ElapsedSeconds: 0,
         InterfaceVersion: process.env.VERSION || "unknown",
-        LegendaryHeroCount: legendaryHeroCount ?? undefined
+        ScaledHeroCount: heroCountScaledFor ?? undefined
       };
 
       const combatant = this.AddCombatantFromState(initialState);
@@ -295,9 +295,9 @@ export class Encounter {
       // caution-worthy "x1" when no heroes were in the encounter yet - as a
       // persistent tag rather than a one-off toast, since there's no
       // toast/notification system in this app to reuse.
-      if (legendaryHeroCount !== null) {
+      if (heroCountScaledFor !== null) {
         combatant.Tags.push(
-          new Tag(`HP ×${legendaryHeroCount}`, combatant, true)
+          new Tag(`HP ×${heroCountScaledFor}`, combatant, true)
         );
       }
     } catch (e) {

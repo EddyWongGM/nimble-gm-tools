@@ -73,6 +73,43 @@ describe("StatBlock", () => {
     });
   });
 
+  describe("IsHeroCountScaled", () => {
+    test("is true for a Legendary monster", () => {
+      expect(
+        StatBlock.IsHeroCountScaled({
+          ...StatBlock.Default(),
+          Player: "legendary"
+        })
+      ).toBe(true);
+    });
+
+    test("is true for a Normal monster with ScalesWithHeroCount set", () => {
+      expect(
+        StatBlock.IsHeroCountScaled({
+          ...StatBlock.Default(),
+          Player: "",
+          ScalesWithHeroCount: true
+        })
+      ).toBe(true);
+    });
+
+    test("is false for a Normal monster without ScalesWithHeroCount", () => {
+      expect(
+        StatBlock.IsHeroCountScaled({ ...StatBlock.Default(), Player: "" })
+      ).toBe(false);
+    });
+
+    test("is false for a companion with ScalesWithHeroCount set (not a valid combination, but should be ignored)", () => {
+      expect(
+        StatBlock.IsHeroCountScaled({
+          ...StatBlock.Default(),
+          Player: "companion",
+          ScalesWithHeroCount: true
+        })
+      ).toBe(false);
+    });
+  });
+
   describe("Update", () => {
     test("converts old-shape raw D&D scores (with Con/Cha) to modifiers", () => {
       const legacyStatBlock = {
