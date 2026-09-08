@@ -418,6 +418,30 @@ describe("EncounterCommander", () => {
     expect(pc.CurrentWounds()).toBe(0);
   });
 
+  test("Safe Rest clears N/Safe Rest charges but leaves N/Encounter charges alone", async () => {
+    const persistentCharacter = PersistentCharacter.Initialize({
+      ...StatBlock.Default(),
+      Player: "player",
+      Actions: [
+        { Name: "Fireball", Content: "", Usage: "1/Safe Rest" },
+        { Name: "Second Wind", Content: "", Usage: "1/Encounter" }
+      ]
+    });
+
+    const pc = await encounter.AddCombatantFromPersistentCharacter(
+      persistentCharacter,
+      () => {},
+      false
+    );
+
+    pc.AbilityChargesUsed({ Fireball: 1, "Second Wind": 1 });
+
+    encounterCommander.SafeRest();
+    confirmSafeRestPrompt(true);
+
+    expect(pc.AbilityChargesUsed()).toEqual({ "Second Wind": 1 });
+  });
+
   function buildSavedEncounterWithPersistentCharacter() {
     const npcStatBlock = { ...StatBlock.Default(), Name: "Goblin" };
     const persistentCharacter = PersistentCharacter.Initialize({

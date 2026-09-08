@@ -55,4 +55,73 @@ describe("StatBlock component", () => {
     expect(component.text()).not.toContain("Str");
     expect(component.text()).toContain("Perception++");
   });
+
+  test("A charge-tracked ability shows a solid pip per available charge and a hollow pip per used charge", () => {
+    const component = Enzyme.render(
+      <StatBlockComponent
+        statBlock={{
+          ...StatBlock.Default(),
+          Actions: [{ Name: "Fireball", Content: "", Usage: "3/Safe Rest" }]
+        }}
+        displayMode="active"
+        abilityChargesUsed={{ Fireball: 1 }}
+        onSetAbilityCharge={() => {}}
+      />
+    );
+    expect(component.find(".charge-pip.fas").length).toBe(2);
+    expect(component.find(".charge-pip.far").length).toBe(1);
+  });
+
+  test("Clicking a pip spends charges up to it", () => {
+    const onSetAbilityCharge = jest.fn();
+    const component = Enzyme.mount(
+      <StatBlockComponent
+        statBlock={{
+          ...StatBlock.Default(),
+          Actions: [{ Name: "Fireball", Content: "", Usage: "3/Safe Rest" }]
+        }}
+        displayMode="active"
+        abilityChargesUsed={{}}
+        onSetAbilityCharge={onSetAbilityCharge}
+      />
+    );
+    component.find(".charge-pip").at(1).simulate("click");
+    expect(onSetAbilityCharge).toHaveBeenCalledWith("Fireball", 2);
+  });
+
+  test("Clicking the last used pip again un-spends it", () => {
+    const onSetAbilityCharge = jest.fn();
+    const component = Enzyme.mount(
+      <StatBlockComponent
+        statBlock={{
+          ...StatBlock.Default(),
+          Actions: [{ Name: "Fireball", Content: "", Usage: "3/Safe Rest" }]
+        }}
+        displayMode="active"
+        abilityChargesUsed={{ Fireball: 2 }}
+        onSetAbilityCharge={onSetAbilityCharge}
+      />
+    );
+    component.find(".charge-pip").at(1).simulate("click");
+    expect(onSetAbilityCharge).toHaveBeenCalledWith("Fireball", 1);
+  });
+
+  test("Clicking any used pip frees itself, regardless of click order", () => {
+    const onSetAbilityCharge = jest.fn();
+    const component = Enzyme.mount(
+      <StatBlockComponent
+        statBlock={{
+          ...StatBlock.Default(),
+          Actions: [{ Name: "Fireball", Content: "", Usage: "3/Safe Rest" }]
+        }}
+        displayMode="active"
+        abilityChargesUsed={{ Fireball: 3 }}
+        onSetAbilityCharge={onSetAbilityCharge}
+      />
+    );
+    // Clicking the leftmost used pip first (not the rightmost one) should
+    // still flip that specific pip back to available, not some other pip's.
+    component.find(".charge-pip").at(0).simulate("click");
+    expect(onSetAbilityCharge).toHaveBeenCalledWith("Fireball", 0);
+  });
 });

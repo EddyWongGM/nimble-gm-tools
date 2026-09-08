@@ -15,6 +15,7 @@ export interface PersistentCharacter {
   CurrentHitDice?: number;
   CurrentWounds?: number;
   CurrentGold?: number;
+  AbilityChargesUsed?: Record<string, number>;
   StatBlock: StatBlock;
   Notes: string;
   Tags?: TagState[];

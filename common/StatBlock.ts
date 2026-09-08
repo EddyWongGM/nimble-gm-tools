@@ -39,6 +39,15 @@ export interface NameAndContent {
   Usage?: string;
 }
 
+// What a "2/Safe Rest" or "1/Encounter" Usage string means for charge
+// tracking: how many charges, and which player action clears them.
+export type ChargeResetTrigger = "safe-rest" | "encounter";
+
+export interface ChargeUsage {
+  Max: number;
+  ResetOn: ChargeResetTrigger;
+}
+
 export type InitiativeSpecialRoll = "advantage" | "disadvantage" | "take-ten";
 
 export type ArmorTier = "" | "medium" | "heavy";
@@ -196,6 +205,123 @@ export namespace StatBlock {
   // alongside the party, not the monsters, for turn-order/phase purposes.
   export const ActsInPlayerPhase = (statBlock: StatBlock): boolean =>
     IsPlayerCharacter(statBlock) || IsCompanion(statBlock);
+
+  // Same [Str]/[Dex]/[Int]/[Wis]/[Wil] convention TextEnricher resolves
+  // inline in ability text (see TextEnricher.tsx's abilityFieldsByAlias) -
+  // "Wil" is Nimble's display name for the Wis field.
+  const ABILITY_COUNT_ALIASES: Record<string, keyof AbilityScores> = {
+    str: "Str",
+    dex: "Dex",
+    int: "Int",
+    wis: "Wis",
+    wil: "Wis"
+  };
+
+  const PLAIN_COUNT_PATTERN = /^(\d+)$/;
+  const ABILITY_COUNT_PATTERN = /^\[(Str|Dex|Int|Wis|Wil)\]$/i;
+  const MULTIPLIED_ABILITY_COUNT_PATTERN =
+    /^(\d+)\s*[×x]\s*\[(Str|Dex|Int|Wis|Wil)\]$/i;
+
+  // Resolves a charge count expression - a plain number ("2"), a bare
+  // ability modifier ("[Dex]"), or a multiplied modifier ("2×[Wil]") - to a
+  // number. Ability-based expressions need the combatant's current
+  // Abilities to resolve; without them (e.g. read from a compendium listing
+  // with no combatant attached) they're left unresolved.
+  const ParseChargeCount = (
+    expression: string,
+    abilities: AbilityScores | undefined
+  ): number | null => {
+    const plain = expression.match(PLAIN_COUNT_PATTERN);
+    if (plain) {
+      return parseInt(plain[1]);
+    }
+    if (!abilities) {
+      return null;
+    }
+    const abilityOnly = expression.match(ABILITY_COUNT_PATTERN);
+    if (abilityOnly) {
+      return abilities[ABILITY_COUNT_ALIASES[abilityOnly[1].toLowerCase()]];
+    }
+    const multiplied = expression.match(MULTIPLIED_ABILITY_COUNT_PATTERN);
+    if (multiplied) {
+      const modifier = abilities[ABILITY_COUNT_ALIASES[multiplied[2].toLowerCase()]];
+      return parseInt(multiplied[1]) * modifier;
+    }
+    return null;
+  };
+
+  const USAGE_PATTERN = /^\s*(.+?)\s*\/\s*(Safe Rest|Encounter)\s*$/i;
+
+  // Recognizes the structured Usage conventions ("2/Safe Rest",
+  // "1/Encounter", "[Dex]/Safe Rest", "2×[Wil]/Encounter") that unlock
+  // charge tracking; anything else (prose, "Recharge 5-6", blank) is left
+  // as a plain display label. Pass the combatant's Abilities to resolve an
+  // ability-based count - without them, those forms fall back to null (same
+  // as not matching) rather than showing a wrong/stale count.
+  export const ParseChargeUsage = (
+    usage: string | undefined,
+    abilities?: AbilityScores
+  ): ChargeUsage | null => {
+    if (!usage) {
+      return null;
+    }
+    const match = usage.match(USAGE_PATTERN);
+    if (!match) {
+      return null;
+    }
+    const max = ParseChargeCount(match[1], abilities);
+    if (max === null) {
+      return null;
+    }
+    const resetOn: ChargeResetTrigger =
+      match[2].toLowerCase() === "encounter" ? "encounter" : "safe-rest";
+    return { Max: Math.max(0, max), ResetOn: resetOn };
+  };
+
+  // Every ability list that can carry a charge-tracked power. Traits are
+  // included even though they're rarely limited-use, since nothing stops an
+  // author from putting "1/Safe Rest" there.
+  export const AllPowers = (statBlock: StatBlock): NameAndContent[] => [
+    ...statBlock.Traits,
+    ...statBlock.Actions,
+    ...(statBlock.BonusActions ?? []),
+    ...statBlock.Reactions,
+    ...statBlock.LegendaryActions,
+    ...(statBlock.MythicActions ?? [])
+  ];
+
+  export const FindChargeUsage = (
+    statBlock: StatBlock,
+    abilityName: string
+  ): ChargeUsage | null => {
+    const power = AllPowers(statBlock).find(p => p.Name === abilityName);
+    return power ? ParseChargeUsage(power.Usage, statBlock.Abilities) : null;
+  };
+
+  // Drops every charge entry whose ability currently resolves to the given
+  // reset trigger - used when a Safe Rest is taken, or when the last
+  // monster leaves the encounter. Entries for abilities no longer on the
+  // stat block (renamed/removed since) are harmless leftovers and are left
+  // alone, since they can't match any trigger.
+  export const ClearAbilityCharges = (
+    used: Record<string, number> | undefined,
+    statBlock: StatBlock,
+    trigger: ChargeResetTrigger
+  ): Record<string, number> => {
+    const current = used ?? {};
+    if (Object.keys(current).length === 0) {
+      return current;
+    }
+    const next = { ...current };
+    let changed = false;
+    for (const name of Object.keys(next)) {
+      if (FindChargeUsage(statBlock, name)?.ResetOn === trigger) {
+        delete next[name];
+        changed = true;
+      }
+    }
+    return changed ? next : current;
+  };
 
   // Monsters can author their HP per Armor tier (it drops as armor
   // degrades); HP.Value itself may be a placeholder (even 0) when an

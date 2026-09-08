@@ -28,6 +28,8 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
+try {
+
 if ($Hidden -and -not $Relaunched) {
     $logDir = Join-Path $repoRoot "data"
     New-Item -ItemType Directory -Force -Path $logDir | Out-Null
@@ -53,7 +55,10 @@ if ($Relaunched) {
 
 if (-not (Test-Path (Join-Path $repoRoot "node_modules"))) {
     Write-Host "node_modules not found, running npm install..." -ForegroundColor Cyan
-    npm install
+    # npm/node routinely write benign warnings to stderr. With $ErrorActionPreference
+    # = "Stop" in scope, PowerShell 5.1 turns those into terminating errors, so we
+    # relax it just for this native call - $? below still reflects the real exit code.
+    & { $ErrorActionPreference = "Continue"; npm install }
     if (-not $?) {
         Write-Error "npm install failed."
         exit 1
@@ -123,7 +128,7 @@ if ($lanAddresses -and -not $Dev) {
 
 if (-not $Dev) {
     Write-Host "Building Nimble RPG app for production (npm run build)..." -ForegroundColor Cyan
-    npm run build
+    & { $ErrorActionPreference = "Continue"; npm run build }
     if (-not $?) {
         Write-Error "Build failed."
         exit 1
@@ -147,9 +152,23 @@ Start-Job -ScriptBlock {
 if ($Dev) {
     Write-Host "Starting Nimble RPG app in dev mode (npm run dev)..." -ForegroundColor Cyan
     Write-Host "It will be available at $baseUrl" -ForegroundColor Cyan
-    npm run dev
+    & { $ErrorActionPreference = "Continue"; npm run dev }
 } else {
     Write-Host "Starting Nimble RPG app (npm start)..." -ForegroundColor Cyan
     Write-Host "It will be available at $baseUrl" -ForegroundColor Cyan
-    npm start
+    & { $ErrorActionPreference = "Continue"; npm start }
+}
+
+} catch {
+    Write-Host ""
+    Write-Host "Nimble RPG app hit an error and could not continue:" -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor Red
+    Write-Host ""
+    if ($Relaunched) {
+        Write-Host "See $logPath for details." -ForegroundColor Red
+        Stop-Transcript | Out-Null
+    } else {
+        Read-Host "Press Enter to close this window"
+    }
+    exit 1
 }

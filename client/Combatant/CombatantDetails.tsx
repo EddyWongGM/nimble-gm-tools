@@ -63,6 +63,9 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
   const notes = useSubscription(
     props.combatantViewModel.Combatant.CurrentNotes
   );
+  const abilityChargesUsed = useSubscription(
+    props.combatantViewModel.Combatant.AbilityChargesUsed
+  );
   const statBlock = useSubscription(
     props.combatantViewModel.Combatant.StatBlock
   );
@@ -319,6 +322,13 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
             hideName
             hideTopRow
             hideAbilities
+            abilityChargesUsed={abilityChargesUsed}
+            onSetAbilityCharge={(abilityName, count) =>
+              props.combatantViewModel.SetAbilityChargesUsed(
+                abilityName,
+                count
+              )
+            }
           />
         )}
         {renderedNotes && (

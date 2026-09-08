@@ -84,6 +84,7 @@ export class Combatant {
   public IndexLabel = ko.observable(0);
   public Color = ko.observable("");
   public ReactionsSpent = ko.observable(0);
+  public AbilityChargesUsed = ko.observable<Record<string, number>>({});
   public IsPendingRemoval = ko.observable(false);
   public HasEnteredLastStand = ko.observable(false);
   public LegendaryHeroCount: number | null = null;
@@ -143,6 +144,7 @@ export class Combatant {
     this.HasTakenTurn(savedCombatant.HasTakenTurn || false);
     this.Color(savedCombatant.Color || "");
     this.ReactionsSpent(savedCombatant.ReactionsSpent || 0);
+    this.AbilityChargesUsed(savedCombatant.AbilityChargesUsed ?? {});
     // "Last Stage" was renamed to "Last Stand"; migrate the old field name
     // so in-progress encounters saved before the rename keep the flag.
     this.HasEnteredLastStand(
@@ -226,6 +228,12 @@ export class Combatant {
     this.CurrentGold.subscribe(async g => {
       return await updatePersistentCharacter(persistentCharacterId, {
         CurrentGold: g
+      });
+    });
+
+    this.AbilityChargesUsed.subscribe(async charges => {
+      return await updatePersistentCharacter(persistentCharacterId, {
+        AbilityChargesUsed: charges
       });
     });
 
@@ -650,6 +658,7 @@ export class Combatant {
       HasTakenTurn: this.HasTakenTurn(),
       Color: this.Color(),
       ReactionsSpent: this.ReactionsSpent(),
+      AbilityChargesUsed: this.AbilityChargesUsed(),
       HasEnteredLastStand: this.HasEnteredLastStand(),
       RoundCounter: this.CombatTimer.ElapsedRounds(),
       InterfaceVersion: process.env.VERSION || "unknown",

@@ -336,6 +336,7 @@ export class Encounter {
       CurrentHitDice: persistentCharacter.CurrentHitDice,
       CurrentWounds: persistentCharacter.CurrentWounds,
       CurrentGold: persistentCharacter.CurrentGold,
+      AbilityChargesUsed: persistentCharacter.AbilityChargesUsed,
       CurrentNotes: persistentCharacter.Notes,
       TemporaryHP: 0,
       Hidden: hideOnAdd,
@@ -382,6 +383,27 @@ export class Encounter {
 
     if (this.combatants().length == 0) {
       this.EncounterFlow.EndEncounter();
+    }
+
+    // Once every monster/NPC is gone, "N/Encounter" charges are spent -
+    // clear them for whoever's left (usually the party), regardless of
+    // which command triggered the removal (manual remove, Clear Encounter,
+    // Clean Encounter all funnel through here).
+    const noMonstersRemain = remainingCombatants.every(c =>
+      c.ActsInPlayerPhase()
+    );
+    if (noMonstersRemain) {
+      remainingCombatants
+        .filter(c => c.ActsInPlayerPhase())
+        .forEach(c =>
+          c.AbilityChargesUsed(
+            StatBlock.ClearAbilityCharges(
+              c.AbilityChargesUsed(),
+              c.StatBlock(),
+              "encounter"
+            )
+          )
+        );
     }
   };
 
@@ -559,6 +581,9 @@ export class Encounter {
         );
         combatant.CurrentWounds(persistentCharacter.CurrentWounds ?? 0);
         combatant.CurrentGold(persistentCharacter.CurrentGold ?? 0);
+        combatant.AbilityChargesUsed(
+          persistentCharacter.AbilityChargesUsed ?? {}
+        );
         combatant.CurrentNotes(persistentCharacter.Notes);
         combatant.AttachToPersistentCharacterLibrary(updatePersistentCharacter);
       }

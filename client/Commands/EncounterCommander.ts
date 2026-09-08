@@ -376,6 +376,13 @@ export class EncounterCommander {
       pc.CurrentMana(pc.MaxMana() ?? 0);
       pc.CurrentResources(pc.DefaultResources());
       pc.CurrentWounds(Math.max(0, pc.CurrentWounds() - 1));
+      pc.AbilityChargesUsed(
+        StatBlock.ClearAbilityCharges(
+          pc.AbilityChargesUsed(),
+          pc.StatBlock(),
+          "safe-rest"
+        )
+      );
     });
     this.tracker.EventLog.AddEvent("Heroes took a Safe Rest.");
     Metrics.TrackEvent(Metrics.Event.SafeRestPerformed);

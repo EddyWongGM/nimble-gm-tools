@@ -331,6 +331,23 @@ export class CombatantViewModel {
     }
   }
 
+  public SetAbilityChargesUsed(abilityName: string, count: number): void {
+    const usage = StatBlock.FindChargeUsage(
+      this.Combatant.StatBlock(),
+      abilityName
+    );
+    const max = usage?.Max ?? count;
+    const clamped = Math.max(0, Math.min(count, max));
+
+    const current = { ...this.Combatant.AbilityChargesUsed() };
+    if (clamped === 0) {
+      delete current[abilityName];
+    } else {
+      current[abilityName] = clamped;
+    }
+    this.Combatant.AbilityChargesUsed(current);
+  }
+
   public ToggleHasTakenTurn(): void {
     this.Combatant.HasTakenTurn(!this.Combatant.HasTakenTurn());
     NotifyTutorialOfAction("ToggleHasTakenTurn");

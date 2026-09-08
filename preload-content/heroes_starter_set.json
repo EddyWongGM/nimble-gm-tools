@@ -71,9 +71,9 @@
       },
       {
         "Name": "Relentless (1/Safe Rest)",
-        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
-        "Usage": ""
-      }
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }	
     ],
     "LegendaryActions": [],
     "MythicActions": [
@@ -193,9 +193,9 @@
       },
       {
         "Name": "Relentless (1/Safe Rest)",
-        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
-        "Usage": ""
-      }
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }	
     ],
     "LegendaryActions": [],
     "MythicActions": [
@@ -446,7 +446,7 @@
       {
         "Name": "Coordinated Strike! (1/encounter)",
         "Content": "(<b>1/encounter, 0 Actions</b>) You and an ally within Reach <b>6</b> both immediately make a weapon/unarmed attack or cast a cantrip for free.\n\n\nFor Ally it's not a Rushed attack, because it is not their turn.",
-        "Usage": ""
+        "Usage": "1/encounter"
       }
     ],
     "Actions": [
@@ -461,7 +461,7 @@
       {
         "Name": "Strength of Stone (1/encounter)",
         "Content": "If you get a Crit: force a reroll. (+2 Might)",
-        "Usage": ""
+        "Usage": "1/encounter"
       }
     ],
     "LegendaryActions": [],
@@ -528,7 +528,7 @@
       {
         "Name": "Coordinated Strike! (1/encounter)",
         "Content": "(<b>1/encounter, 0 Actions</b>) You and an ally within Reach <b>6</b> both immediately make a weapon/unarmed attack or cast a cantrip for free.\n\n\nFor Ally it's not a Rushed attack, because it is not their turn.",
-        "Usage": ""
+        "Usage": "1/encounter"
       },
       {
         "Name": "Fit for Any Battlefield",
@@ -553,7 +553,7 @@
       {
         "Name": "Strength of Stone (1/encounter)",
         "Content": "If you get a Crit: force a reroll. (+2 Might)",
-        "Usage": ""
+        "Usage": "1/encounter"
       }
     ],
     "LegendaryActions": [],
@@ -891,11 +891,11 @@
     ],
     "BonusActions": [],
     "Reactions": [
-	  {
-	    "Name": "Relentless",
-	    "Content": "(1/Safe Rest) When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
-	    "Usage": ""
-	  }	
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }	
 	],
     "LegendaryActions": [],
     "MythicActions": [
@@ -988,11 +988,11 @@
     ],
     "BonusActions": [],
     "Reactions": [
-	  {
-	    "Name": "Relentless",
-	    "Content": "(1/Safe Rest) When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
-	    "Usage": ""
-	  }	
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }		
 	],
     "LegendaryActions": [],
     "MythicActions": [
@@ -1103,7 +1103,7 @@
     "HitDice": {
       "Value": 1,
       "Notes": "d8"
-    }
+    }   
   },
   {
     "Name": "Shadowmancer LV2",
@@ -1198,7 +1198,10 @@
     "HitDice": {
       "Value": 2,
       "Notes": "d8"
-    }
+    },
+    "Resources": {
+      "Value": 2
+    } 
   },  
   {
     "Name": "Shepherd LV1",
@@ -1243,7 +1246,7 @@
       {
         "Name": "Searing Light",
         "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
-        "Usage": ""
+        "Usage": "[WIL]/Safe Rest"
       }
     ],
     "Actions": [
@@ -1329,7 +1332,7 @@
       {
         "Name": "Searing Light",
         "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
-        "Usage": ""
+        "Usage": "[WIL]/Safe Rest "
       }
     ],
     "Actions": [
@@ -1398,12 +1401,12 @@
     "Abilities": {
       "Str": -1,
       "Dex": 0,
-      "Int": 1,
-      "Wis": 1
+      "Int": 2,
+      "Wis": 2
     },
     "SaveAdvantages": {
-      "Str": "",
-      "Dex": "-",
+      "Str": "-",
+      "Dex": "",
       "Int": "",
       "Wis": "+"
     },
@@ -1418,9 +1421,9 @@
     "Challenge": "1",
     "Traits": [
       {
-        "Name": "Songweaver’s Inspiration (Free Reaction)",
-        "Content": "Reroll 1 die for atk or save. 4 (2×[WIL]) / Safe Rest.",
-        "Usage": ""
+        "Name": "Songweaver’s Inspiration",
+        "Content": "(Free Reaction) (2×[WIL])/Safe Rest\nReroll 1 die for attack or save. ",
+        "Usage": "2×[WIL]/Safe Rest"
       }
     ],
     "Actions": [
@@ -1440,13 +1443,13 @@
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "\\What? I’ve been around (1/location (GM’s rules))",
-        "Content": "You know a person who has information.\n• 1–5. They want you dead.\n• 6–12. You owe them money.\n• 13–19. They can be convinced to help you.\n• 20. Biggest fan/are madly in love with you.",
+        "Name": "What? I’ve been around",
+        "Content": "1/location (GM’s rules)\nYou know a person who has information.\n• <b>1–5.</b> They want you dead.\n• <b>6–12.</b> You owe them money.\n• <b>13–19.</b> They can be convinced to help you.\n• <b>20.</b> Biggest fan/are madly in love with you.",
         "Usage": ""
       },
       {
         "Name": "Song of Rest (1/day, when Field Rest)",
-        "Content": "Song: Anyone use HD heal +2 HP (WIL).",
+        "Content": "Song: Anyone use HD heal +[WIL] HP.",
         "Usage": ""
       },      
       {
@@ -1511,9 +1514,9 @@
     ],
     "Actions": [
       {
-        "Name": "Beastshift (2 shifts (DEX) / Safe Rest)",
+        "Name": "Beastshift ([DEX]/Safe Rest)",
         "Content": "Shift Harmless beast and speak to animals.\nLasts until 0 HP, cast spell, or until you end it.",
-        "Usage": ""
+        "Usage": "[DEX]/Safe Rest"
       },
       {
         "Name": "Spells",
@@ -1612,14 +1615,14 @@
       {
         "Name": "Elusive (1/Safe Rest)",
         "Content": "Failing Save, can succeed instead. (+1 Stealth)",
-        "Usage": ""
+        "Usage": "1/Safe Rest"
       }       
     ],
     "LegendaryActions": [],
     "MythicActions": [
       {
         "Name": "",
-        "Content": "• Iron Defense (No armor. Armor 4 (DEX+STR ))\n• Survivalist (always personal rations) Advantage vs poison saves. +1 max HD.",
+        "Content": "• Iron Defense (No armor. Armor [DEX]+[STR])\n• Survivalist (always personal rations) Advantage vs poison saves. +1 max HD.",
         "Usage": ""
       }  
     ],
@@ -1632,7 +1635,7 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1,
+      "Value": 2,
       "Notes": "d8"
     }
   }

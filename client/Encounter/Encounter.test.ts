@@ -430,6 +430,52 @@ describe("Encounter", () => {
 
     expect(encounter.Combatants()).toEqual([combatant3]);
   });
+
+  test("Removing the last monster clears N/Encounter charges for remaining PCs", () => {
+    const pc = addCombatantFromStatBlock(encounter, {
+      ...StatBlock.Default(),
+      Player: "player",
+      Actions: [{ Name: "Second Wind", Content: "", Usage: "1/Encounter" }]
+    });
+    pc.AbilityChargesUsed({ "Second Wind": 1 });
+    const monster = addCombatantFromStatBlock(encounter);
+
+    encounter.RemoveCombatant(monster);
+    encounter.FlushCombatants();
+
+    expect(pc.AbilityChargesUsed()).toEqual({});
+  });
+
+  test("N/Encounter charges persist while a monster remains", () => {
+    const pc = addCombatantFromStatBlock(encounter, {
+      ...StatBlock.Default(),
+      Player: "player",
+      Actions: [{ Name: "Second Wind", Content: "", Usage: "1/Encounter" }]
+    });
+    pc.AbilityChargesUsed({ "Second Wind": 1 });
+    const monster1 = addCombatantFromStatBlock(encounter);
+    addCombatantFromStatBlock(encounter);
+
+    encounter.RemoveCombatant(monster1);
+    encounter.FlushCombatants();
+
+    expect(pc.AbilityChargesUsed()).toEqual({ "Second Wind": 1 });
+  });
+
+  test("N/Safe Rest charges are untouched when the last monster is removed", () => {
+    const pc = addCombatantFromStatBlock(encounter, {
+      ...StatBlock.Default(),
+      Player: "player",
+      Actions: [{ Name: "Fireball", Content: "", Usage: "1/Safe Rest" }]
+    });
+    pc.AbilityChargesUsed({ Fireball: 1 });
+    const monster = addCombatantFromStatBlock(encounter);
+
+    encounter.RemoveCombatant(monster);
+    encounter.FlushCombatants();
+
+    expect(pc.AbilityChargesUsed()).toEqual({ Fireball: 1 });
+  });
 });
 
 describe("Tags", () => {

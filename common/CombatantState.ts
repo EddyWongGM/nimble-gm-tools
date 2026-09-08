@@ -41,6 +41,9 @@ export interface CombatantState {
   IndexLabel: number | null;
   Tags: TagState[];
   Items?: InventoryItem[];
+  // Charges spent on abilities with a "N/Safe Rest" or "N/Encounter" Usage,
+  // keyed by ability Name. Absence means 0 used; see StatBlock.ParseChargeUsage.
+  AbilityChargesUsed?: Record<string, number>;
   Hidden: boolean;
   KeepHidden?: boolean;
   RevealedAC: boolean;

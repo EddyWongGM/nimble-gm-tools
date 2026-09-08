@@ -76,8 +76,8 @@
       },
       {
         "Name": "Relentless (1/Safe Rest)",
-        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
-        "Usage": ""
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
       }
     ],
     "LegendaryActions": [],
@@ -360,11 +360,11 @@
     ],
     "BonusActions": [],
     "Reactions": [
-	  {
-	    "Name": "Relentless",
-	    "Content": "(1/Safe Rest) When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
-	    "Usage": ""
-	  }	
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }
 	],
     "LegendaryActions": [],
     "MythicActions": [

@@ -32,6 +32,13 @@ export function PowerField(props: PowerFieldProps) {
           innerRef={nameInput}
           autoComplete="off"
         />
+        <Field
+          type="text"
+          className="usage"
+          placeholder="Usage (e.g. 2/Safe Rest)"
+          name={`${props.powerType}[${props.index}].Usage`}
+          autoComplete="off"
+        />
         <span
           className="fa-clickable fa-trash"
           onClick={() => props.remove(props.index)}

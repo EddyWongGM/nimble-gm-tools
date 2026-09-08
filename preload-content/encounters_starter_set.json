@@ -766,7 +766,8 @@
         }
       }
     ]
-  }{
+  },
+  {
     "Name": "2.1 Tangler",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
@@ -863,7 +864,7 @@
     ]
   },
   {
-    "Name": "2.1 Seedling",
+    "Name": "2.2 Seedling",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
     "Combatants": [
