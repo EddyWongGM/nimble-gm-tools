@@ -197,6 +197,22 @@ export namespace StatBlock {
   export const ActsInPlayerPhase = (statBlock: StatBlock): boolean =>
     IsPlayerCharacter(statBlock) || IsCompanion(statBlock);
 
+  // Monsters can author their HP per Armor tier (it drops as armor
+  // degrades); HP.Value itself may be a placeholder (even 0) when an
+  // Armor tier is set, so any code reading a monster's starting HP must
+  // go through this rather than statBlock.HP directly.
+  export const ResolveArmorHP = (statBlock: StatBlock): ValueAndNotes => {
+    if (!ActsInPlayerPhase(statBlock)) {
+      if (statBlock.Armor === "medium" && statBlock.HPMediumArmor) {
+        return statBlock.HPMediumArmor;
+      }
+      if (statBlock.Armor === "heavy" && statBlock.HPHeavyArmor) {
+        return statBlock.HPHeavyArmor;
+      }
+    }
+    return statBlock.HP;
+  };
+
   export const IsLegendary = (statBlock: StatBlock): boolean =>
     statBlock.Player == "legendary";
 

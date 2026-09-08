@@ -253,13 +253,7 @@ export class Encounter {
         ...StatBlock.Default(),
         ...statBlockJsonWithoutItems
       };
-      if (!StatBlock.ActsInPlayerPhase(statBlock)) {
-        if (statBlock.Armor === "medium" && statBlock.HPMediumArmor) {
-          statBlock.HP = statBlock.HPMediumArmor;
-        } else if (statBlock.Armor === "heavy" && statBlock.HPHeavyArmor) {
-          statBlock.HP = statBlock.HPHeavyArmor;
-        }
-      }
+      statBlock.HP = StatBlock.ResolveArmorHP(statBlock);
       statBlock.HP = {
         ...statBlock.HP,
         Value: GetOrRollMaximumHP(statBlock, variantMaximumHP)

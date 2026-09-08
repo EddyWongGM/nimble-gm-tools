@@ -573,7 +573,7 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1,
+      "Value": 2,
       "Notes": "d10"
     }
   },  
@@ -827,7 +827,7 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1,
+      "Value": 2,
       "Notes": "d6"
     }
   },  
@@ -870,7 +870,13 @@
     "Senses": [],
     "Languages": [],
     "Challenge": "1",
-    "Traits": [],
+    "Traits": [
+      {
+        "Name": "Radiant Judgment (when attacked)",
+        "Content": "[A0] Roll 2d6 Judgment Dice (if none are currently rolled). They are expended on the next melee attack you make this encounter. On hit: deal that much additional radiant damage.",
+        "Usage": ""
+      }      
+    ],
     "Actions": [
       {
         "Name": "",
@@ -912,6 +918,103 @@
       "Notes": "d10"
     }
   },
+{
+    "Name": "Oathsworn LV2",
+    "Path": "Sample Heroes/Oathsworn",
+    "Source": "Sample Heroes",
+    "Type": "Oathsworn",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 14,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Radiant Judgment (when attacked)",
+        "Content": "[A0] Roll 2d6 Judgment Dice (if none are currently rolled). They are expended on the next melee attack you make this encounter. On hit: deal that much additional radiant damage.",
+        "Usage": ""
+      },
+      {
+        "Name": "Zealot",
+        "Content": "[A0] If melee attack. For each mana, max 1 (Tier):\n[dash] Condemning Strike. Deal +5 radiant damage.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrip:</b>\n[bullet] Rebuke, True Strike\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal",
+        "Usage": ""
+      },      
+      {
+        "Name": "Lay on Hands - Pool 5 (5×LVL)",
+        "Content": "[A1] Touch \\Heal\n— Safe Rest: recharge.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+	  {
+	    "Name": "Relentless",
+	    "Content": "(1/Safe Rest) When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+	    "Usage": ""
+	  }	
+	],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d10"
+    }
+  },  
   {
     "Name": "Shadowmancer LV1",
     "Path": "Sample Heroes/Shadowmancer",
@@ -955,7 +1058,7 @@
     "Actions": [
       {
         "Name": "Shadow Blast (1/turn)",
-        "Content": "[A1] Range 8, 1d12+ [KEY]",
+        "Content": "[A1] Range 8, 1d12 + [KEY]",
         "Usage": ""
       },
       {
@@ -963,6 +1066,11 @@
         "Content": "[A1] Summon 1 D12 Minion, Adjacent to yourself\n[tab] Minion: 1 HP, no dmg modifier, can't crit.",
         "Usage": ""
       },
+      {
+        "Name": "Command Shadows",
+        "Content": "[A1] (1/turn) Move ALL Shadows 6 & Attack, Reach 1",
+        "Usage": ""
+      },      
       {
         "Name": "",
         "Content": "[A1] Hand Scythe : 1d4 + [DEX]\n [tab] Vicious. +1 die when crit.",
@@ -975,7 +1083,7 @@
     "MythicActions": [
       {
         "Name": "Flameborn",
-        "Content": "[dash] 1 Neutral save Advantaged. Infernal if INT not neg.",
+        "Content": "[dash] 1 Neutral save Advantaged.\n [tab] Infernal if INT not neg.",
         "Usage": ""
       },
       {
@@ -997,6 +1105,101 @@
       "Notes": "d8"
     }
   },
+  {
+    "Name": "Shadowmancer LV2",
+    "Path": "Sample Heroes/Shadowmancer",
+    "Source": "Sample Heroes",
+    "Type": "Shadowmancer",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 3,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": -1,
+      "Dex": 2,
+      "Int": 2,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "+",
+      "Wis": "-"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Shadow Blast (1/turn)",
+        "Content": "[A1] Range 8, 1d12 + [KEY]",
+        "Usage": ""
+      },
+      {
+        "Name": "Summon Shadows (Max 1, Lowest INT/LVL)",
+        "Content": "[A1] Summon 1 D12 Minion, Adjacent to yourself\n[tab] Minion: 1 HP, no dmg modifier, can't crit.",
+        "Usage": ""
+      },
+      {
+        "Name": "Command Shadows",
+        "Content": "[A1] (1/turn) Move ALL Shadows 6 & Attack, Reach 1",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1</b>\n[bullet] Shadow Trap",
+        "Usage": ""
+      },      
+      {
+        "Name": "",
+        "Content": "[A1] Hand Scythe : 1d4 + [DEX]\n [tab] Vicious. +1 die when crit.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Flameborn",
+        "Content": "[dash] 1 Neutral save Advantaged.\n [tab] Infernal if INT not neg.",
+        "Usage": ""
+      },
+      {
+        "Name": "\\Fearless (immune to Frightened)",
+        "Content": "[dash] +1 Initiative, -1 Armor.",
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d8"
+    }
+  },  
   {
     "Name": "Shepherd LV1",
     "Path": "Sample Heroes/Shepherd",
@@ -1036,16 +1239,22 @@
     "Senses": [],
     "Languages": [],
     "Challenge": "1",
-    "Traits": [],
+    "Traits": [
+      {
+        "Name": "Searing Light",
+        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
+        "Usage": ""
+      }
+    ],
     "Actions": [
       {
         "Name": "",
-        "Content": "[A1] Mace : 1d6 + 2",
+        "Content": "[A1] Mace : 1d6 + [STR]",
         "Usage": ""
       },
       {
         "Name": "Spells",
-        "Content": "Cantrips: Searing Light, Rebuke, True Strike, Entice, Withering Touch",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch",
         "Usage": ""
       }
     ],
@@ -1077,6 +1286,97 @@
       "Notes": "d10"
     }
   },
+  {
+    "Name": "Shepherd LV2",
+    "Path": "Sample Heroes/Shepherd",
+    "Source": "Sample Heroes",
+    "Type": "Shepherd",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 13,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "-",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Searing Light",
+        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal, Shadow Trap, \n[bullet] Lifebinding Spirit",
+        "Usage": ""
+      },
+      {
+        "Name": "Lifebinding Spirit",
+        "Content": "[A1] (Reach 4) \n[tab] It attacks for 1d6+[WIL] (ignoring armor), \n[tab] or heals for the same amount.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "\\History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
+        "Usage": ""
+      },
+      {
+        "Name": "Tenacious",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d10"
+    }
+  },  
   {
     "Name": "Songweaver LV1",
     "Path": "Sample Heroes/Songweaver",

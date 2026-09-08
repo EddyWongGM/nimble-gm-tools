@@ -289,5 +289,102 @@
       "Value": 1,
       "Notes": "d6"
     }
+  },
+  {
+    "Name": "Oathsworn",
+    "Path": "",
+    "Source": "Tutorial",
+    "Type": "Oathsworn",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 14,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Radiant Judgment (when attacked)",
+        "Content": "[A0] Roll 2d6 Judgment Dice (if none are currently rolled). They are expended on the next melee attack you make this encounter. On hit: deal that much additional radiant damage.",
+        "Usage": ""
+      },
+      {
+        "Name": "Zealot",
+        "Content": "[A0] If melee attack. For each mana, max 1 (Tier):\n[dash] Condemning Strike. Deal +5 radiant damage.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrip:</b>\n[bullet] Rebuke, True Strike\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal",
+        "Usage": ""
+      },      
+      {
+        "Name": "Lay on Hands - Pool 5 (5×LVL)",
+        "Content": "[A1] Touch \\Heal\n— Safe Rest: recharge.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+	  {
+	    "Name": "Relentless",
+	    "Content": "(1/Safe Rest) When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+	    "Usage": ""
+	  }	
+	],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d10"
+    }
   }  
 ]
