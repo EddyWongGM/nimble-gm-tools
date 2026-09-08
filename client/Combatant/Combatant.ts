@@ -84,9 +84,10 @@ export class Combatant {
   public IndexLabel = ko.observable(0);
   public Color = ko.observable("");
   public ReactionsSpent = ko.observable(0);
+  public AbilityChargesUsed = ko.observable<Record<string, number>>({});
   public IsPendingRemoval = ko.observable(false);
   public HasEnteredLastStand = ko.observable(false);
-  public LegendaryHeroCount: number | null = null;
+  public ScaledHeroCount: number | null = null;
 
   public CombatTimer = new CombatTimer();
 
@@ -143,6 +144,7 @@ export class Combatant {
     this.HasTakenTurn(savedCombatant.HasTakenTurn || false);
     this.Color(savedCombatant.Color || "");
     this.ReactionsSpent(savedCombatant.ReactionsSpent || 0);
+    this.AbilityChargesUsed(savedCombatant.AbilityChargesUsed ?? {});
     // "Last Stage" was renamed to "Last Stand"; migrate the old field name
     // so in-progress encounters saved before the rename keep the flag.
     this.HasEnteredLastStand(
@@ -152,19 +154,30 @@ export class Combatant {
     );
     this.CombatTimer.SetElapsedRounds(savedCombatant.RoundCounter || 0);
     this.CombatTimer.SetElapsedSeconds(savedCombatant.ElapsedSeconds || 0);
-    this.LegendaryHeroCount = savedCombatant.LegendaryHeroCount ?? null;
+    // "LegendaryHeroCount" was renamed to "ScaledHeroCount" when the
+    // hero-count-scaling mechanic was generalized past Legendary monsters;
+    // migrate the old field name so already-saved encounters keep it.
+    this.ScaledHeroCount =
+      savedCombatant.ScaledHeroCount ??
+      (savedCombatant as any).LegendaryHeroCount ??
+      null;
   }
 
-  // Rescales a Legendary monster's HP to a new party size, recovering its
-  // per-hero base HP from the multiplier it was last scaled for. Treats the
-  // combatant as an undamaged template - CurrentHP is reset to the new max -
-  // which only makes sense right after loading a saved encounter, before any
-  // damage has been dealt.
-  public RescaleLegendaryHP = (newHeroCount: number) => {
-    const oldHeroCount = this.LegendaryHeroCount;
-    if (!oldHeroCount || !StatBlock.IsLegendary(this.StatBlock())) {
+  // Rescales a hero-count-scaled monster's HP to a new party size, recovering
+  // its per-hero base HP from the multiplier it was last scaled for. A
+  // combatant with no recorded ScaledHeroCount hasn't been scaled yet (e.g.
+  // loaded straight from a hand-authored preload/saved encounter that never
+  // went through AddCombatantFromStatBlock) - its authored HP.Value is
+  // already the raw per-hero number, equivalent to having last been scaled
+  // for 1 hero, so this also performs that monster's very first scale.
+  // Treats the combatant as an undamaged template - CurrentHP is reset to
+  // the new max - which only makes sense right after loading a saved
+  // encounter, before any damage has been dealt.
+  public RescaleHeroCountHP = (newHeroCount: number) => {
+    if (!StatBlock.IsHeroCountScaled(this.StatBlock())) {
       return;
     }
+    const oldHeroCount = this.ScaledHeroCount ?? 1;
     const heroCount = Math.max(1, newHeroCount);
     if (heroCount === oldHeroCount) {
       return;
@@ -176,7 +189,7 @@ export class Combatant {
       HP: { ...this.StatBlock().HP, Value: newHP }
     });
     this.CurrentHP(newHP);
-    this.LegendaryHeroCount = heroCount;
+    this.ScaledHeroCount = heroCount;
 
     const hpMultiplierTag = this.Tags().find(t => /^HP ×\d+$/.test(t.Text));
     if (hpMultiplierTag) {
@@ -226,6 +239,12 @@ export class Combatant {
     this.CurrentGold.subscribe(async g => {
       return await updatePersistentCharacter(persistentCharacterId, {
         CurrentGold: g
+      });
+    });
+
+    this.AbilityChargesUsed.subscribe(async charges => {
+      return await updatePersistentCharacter(persistentCharacterId, {
+        AbilityChargesUsed: charges
       });
     });
 
@@ -650,10 +669,11 @@ export class Combatant {
       HasTakenTurn: this.HasTakenTurn(),
       Color: this.Color(),
       ReactionsSpent: this.ReactionsSpent(),
+      AbilityChargesUsed: this.AbilityChargesUsed(),
       HasEnteredLastStand: this.HasEnteredLastStand(),
       RoundCounter: this.CombatTimer.ElapsedRounds(),
       InterfaceVersion: process.env.VERSION || "unknown",
-      LegendaryHeroCount: this.LegendaryHeroCount ?? undefined
+      ScaledHeroCount: this.ScaledHeroCount ?? undefined
     };
   };
 

@@ -22,12 +22,14 @@ specificity fight against.
 .combatant__portrait { display: none; }
 
 /* Enlarge combatant names */
-li.combatant { font-size: 1.4em; }
+li.combatant { font-size: 2em; }
 
 /* Distinguish player characters from monsters at a glance */
 /* (#playerview prefix required: player-view.less sets border-left on
    .combatant and .combatant.active) */
-#playerview .combatant.playercharacter { border-left: 4px solid gold; }
+#playerview .combatant.playercharacter { border-left: 16px solid lightgreen; }
+#playerview .combatant.companion { border-left: 16px solid lightgreen; }
+#playerview .combatant:not(.playercharacter):not(.companion) { border-left: 16px solid red; }
 
 /* Flag a specific status tag (e.g. Prone) */
 /* (#playerview prefix required: player-view.less sets background/color

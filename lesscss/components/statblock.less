@@ -366,6 +366,26 @@ input[type="number"].c-combatant-details__stat-input {
   margin-left: @small-spacer;
 }
 
+.charge-pips {
+  margin-right: @small-spacer;
+
+  .charge-pip {
+    cursor: pointer;
+    color: var(--red);
+    margin-right: @extra-small-spacer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    // Used charges (hollow pips) are grayed out - only the still-available
+    // ones (solid, .fas) keep the red accent color.
+    &.far {
+      color: var(--text-faded);
+    }
+  }
+}
+
 // Thin section-end rule instead of the site-wide flourish hr - matches the
 // subtle divider in the reference stat block instead of a heavy red bar.
 // Covers the combatant-details panel's own player-character divider

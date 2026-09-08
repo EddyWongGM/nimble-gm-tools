@@ -1,18 +1,23 @@
 [
-  {
+{
     "Name": "Berserker",
     "Path": "",
     "Source": "Tutorial",
     "Type": "Berserker",
     "HP": {
-      "Value": 20,
-      "Notes": "20 + 0d12"
+      "Value": 27,
+      "Notes": "20"
     },
     "AC": {
       "Value": 1,
       "Notes": ""
     },
-    "InitiativeModifier": 1,
+    "Resources": {
+      "Value": 99,
+      "Notes": ""
+    },
+    "ResourcesStartEmpty": true,
+    "InitiativeModifier": 0,
     "InitiativeAdvantage": false,
     "Speed": [
       "6"
@@ -23,6 +28,12 @@
       "Int": -1,
       "Wis": -1
     },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "",
+      "Int": "-",
+      "Wis": ""
+    },    
     "DamageVulnerabilities": [],
     "DamageResistances": [],
     "DamageImmunities": [],
@@ -31,18 +42,23 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "1",
+    "Challenge": "2",
     "Traits": [
       {
         "Name": "",
         "Content": "Max Fury Dice : 3▲",
+        "Usage": ""
+      },
+      {
+        "Name": "Intensifying Fury",
+        "Content": "At beginning of your turn, if raged, add 1▲Fury Die.",
         "Usage": ""
       }
     ],
     "Actions": [
       {
         "Name": "Rage (1/round) ",
-        "Content": "Roll 1d4▲. Rage adds STR based attacks. \n[tab] Fury Dice are Lost when your Rage ends.",
+        "Content": "[tab] Roll 1d4▲. Rage adds STR based attacks. \n[tab] Fury Dice are Lost when your Rage ends.",
         "Usage": ""
       },
       {
@@ -60,8 +76,8 @@
       },
       {
         "Name": "Relentless (1/Safe Rest)",
-        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
-        "Usage": ""
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
       }
     ],
     "LegendaryActions": [],
@@ -76,7 +92,34 @@
     "Player": "player",
     "Version": "3.16.6",
     "ImageURL": "",
-    "CustomFields": []
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d12"
+    },
+    "Items": [
+      {
+        "Name": "Battleaxe",
+        "Stackable": false,
+        "Quantity": 1,
+        "SlotCost": 1
+      },
+      {
+        "Name": "Rations (meat)",
+        "Stackable": true,
+        "Quantity": 1,
+        "SlotCost": 1
+      },
+      {
+        "Name": "Rope (50 ft.)",
+        "Stackable": true,
+        "Quantity": 1,
+        "SlotCost": 1
+      }
+    ]
   },
   {
     "Name": "Cheat",
@@ -84,14 +127,14 @@
     "Source": "Tutorial",
     "Type": "The Cheat",
     "HP": {
-      "Value": 10,
-      "Notes": "10+0d6"
+      "Value": 14,
+      "Notes": "10"
     },
     "AC": {
-      "Value": 5,
+      "Value": 6,
       "Notes": ""
     },
-    "InitiativeModifier": 3,
+    "InitiativeModifier": 1,
     "InitiativeAdvantage": false,
     "Speed": [
       "6"
@@ -102,6 +145,12 @@
       "Int": 2,
       "Wis": -1
     },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "",
+      "Wis": "-"
+    },    
     "DamageVulnerabilities": [],
     "DamageResistances": [],
     "DamageImmunities": [],
@@ -110,17 +159,17 @@
     "Skills": [],
     "Senses": [],
     "Languages": [],
-    "Challenge": "1",
+    "Challenge": "2",
     "Traits": [],
     "Actions": [
       {
-        "Name": "Vicious Opportunist (1/turn) (melee & distracted)",
-        "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
+        "Name": "\\Vicious Opportunist",
+        "Content": "<b>(1/turn)</b> When you HIT a Distracted target with a melee attack, you may change the Primary Die roll to whatever you like (changing it to the max value counts as a crit).",
         "Usage": ""
       },
       {
-        "Name": "Sneak Attack (1st Crit hit + 1d6 damage)",
-        "Content": "",
+        "Name": "Sneak Attack",
+        "Content": "<b>(1/turn)</b> When you crit, deal +1d6 damage.",
         "Usage": ""
       },
       {
@@ -134,7 +183,12 @@
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "Adaptable",
+        "Name": "Cheat",
+        "Content": "[dash] 1 / round, Move or Hide for free.\n[dash] 1 / Safe Rest: Change any skill check to 10+[INT]\n[dash] If rolling less then 10 on Initiative, \n[tab] change it to 10.\n[dash] Advantage on skill checks : games / gambling.",
+        "Usage": ""
+      },      
+      {
+        "Name": "Tenacious",
         "Content": "[tab] (+1 to all skills. +1 to Initiative)",
         "Usage": ""
       }
@@ -143,6 +197,194 @@
     "Player": "player",
     "Version": "3.16.5",
     "ImageURL": "",
-    "CustomFields": []
-  }
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d6"
+    }
+  },
+  {
+    "Name": "Mage",
+    "Path": "",
+    "Source": "Tutorial",
+    "Type": "Mage",
+    "HP": {
+      "Value": 14,
+      "Notes": "10"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "7"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 1,
+      "Int": 2,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "+",
+      "Wis": ""
+    },     
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Flame Dart, Heart's Fire\n[bullet] Ice Lance, Snowblind\n[bullet] Zap, Overload\n\n\n[tab] <b>Tier 1:</b>\n[bullet] Ignite\n[bullet] Frost Shield\n[bullet] Arc Lightning",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Staff 1d8 - [STR]",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Taste for the finer things",
+        "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "InitiativeSpecialRoll": "advantage",
+    "Mana": {
+      "Value": 8
+    },    
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d6"
+    }
+  },
+  {
+    "Name": "Oathsworn",
+    "Path": "",
+    "Source": "Tutorial",
+    "Type": "Oathsworn",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 14,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Radiant Judgment (when attacked)",
+        "Content": "[A0] Roll 2d6 Judgment Dice (if none are currently rolled). They are expended on the next melee attack you make this encounter. On hit: deal that much additional radiant damage.",
+        "Usage": ""
+      },
+      {
+        "Name": "Zealot",
+        "Content": "[A0] If melee attack. For each mana, max 1 (Tier):\n[dash] Condemning Strike. Deal +5 radiant damage.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrip:</b>\n[bullet] Rebuke, True Strike\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal",
+        "Usage": ""
+      },      
+      {
+        "Name": "Lay on Hands - Pool 5 (5×LVL)",
+        "Content": "[A1] Touch \\Heal\n— Safe Rest: recharge.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }
+	],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d10"
+    }
+  }  
 ]

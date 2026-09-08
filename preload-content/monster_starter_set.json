@@ -976,6 +976,421 @@
     "CRRating": "1/2"
   },  
   {
+    "Name": "Briarbane Seedling",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Forest/Briarbanes",
+    "Armor": "heavy",
+    "HP": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1/2",
+    "Traits": [
+      {
+        "Name": "Small",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Peeling Bark",
+        "Content": "Damage degrades armor (H » M » None).",
+        "Usage": ""
+      } 
+    ],
+    "Actions": [
+      {
+        "Name": "Thorn Seed",
+        "Content": "(Range 6) 2d6+2",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Attack while heroes are adjacent. Attack Acidpods when they'll damage other Briarbanes.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Target Grappled heroes, or Acidpods that are in a good position to explode and hit multiple enemies.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "1.0.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/4",
+    "HPHeavyArmor": {
+      "Value": 8
+    }
+  },
+  {
+    "Name": "Briarbane Acidpod",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Forest/Briarbanes",
+    "Armor": "heavy",    
+    "HP": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Small",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Peeling Bark",
+        "Content": "Damage degrades armor (H » M » None).",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Grab",
+        "Content": "DC 12 DEX save or Grappled.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Grab isolated or well-armored or high DEX heroes.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Grab heroes near their allies then shoot it with Seedlings for a big explosion! Combo with Tanglers to Pull heroes into a clump.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "1.0.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/2",
+    "HPHeavyArmor": {
+      "Value": 8
+    }
+  },
+  {
+    "Name": "Briarbane Tangler",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Forest/Briarbanes",
+    "Armor": "heavy",
+    "HP": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Peeling Bark",
+        "Content": "Damage degrades armor (H » M » None).",
+        "Usage": ""
+      }  
+    ],
+    "Actions": [
+      {
+        "Name": "Tangle (2×)",
+        "Content": "(Reach 6) 1d6+2, Grappled (escape DC 12, or any fire or slashing damage). ",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "OR:",
+        "Usage": ""
+      },
+      {
+        "Name": "Pull",
+        "Content": "Move a Grappled creature 4 spaces.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Remember!",
+        "Content": "Tiny/Small creatures are affected twice as much by forced movement; Large, half as much.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-dove] Separate them from their allies. They're far less deadly without other creatures taking advantage of their Grapple.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Act first amonsgt monsters to set up advantage on their attacks. Avoid heroes who deal fire or slashing damage.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "1.0.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 11,
+    "CRRating": "1/2",
+    "HPHeavyArmor": {
+      "Value": 20
+    }
+  },
+  {
+    "Name": "Briarbane Rootbreaker",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Forest/Briarbanes",
+    "Armor": "heavy",    
+    "HP": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "5",
+    "Traits": [
+      {
+        "Name": "Large",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Peeling Bark",
+        "Content": "Damage degrades armor (H » M » None).",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Slam",
+        "Content": "3d6+6. On crit: knockback 2.",
+        "Usage": ""
+      }
+    ],    
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Target Grappled heroes, likely breaking them free.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Angle their attacks to push heroes into each other or toward Acidpods.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 13,
+    "CRRating": "2",
+    "HPHeavyArmor": {
+      "Value": 50
+    }
+  },
+  {
+    "Name": "Briarbane Treant",
+    "Path": "",
+    "Source": "Nimble GMG",
+    "Type": "Forest/Briarbanes",
+    "Armor": "heavy",    
+    "HP": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "14",
+    "Traits": [
+      {
+        "Name": "Huge",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Peeling Bark",
+        "Content": "Damage degrades armor (H » M » None).",
+        "Usage": ""
+      },
+      {
+        "Name": "Enrage",
+        "Content": "Attack with advantage when unarmored.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Choose twice:",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Slam",
+        "Content": "(Reach 3) 2d6+10. On damage: Prone.",
+        "Usage": ""
+      },
+      {
+        "Name": "Stomp",
+        "Content": "(Hampered target) 2d6+20.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[fa-dove] Mostly use Slam, targeting well-armored heroes.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[fa-skull] Use Stomp as often as possible, including against heroes Grappled by allies.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "1.0.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "LastUpdateMs": 1787998819258,
+    "SaveDC": 15,
+    "CRRating": "9",
+    "HPHeavyArmor": {
+      "Value": 170
+    }    
+  },
+  {
     "Name": "Krogg, Goblin King",
     "Path": "Legendary/LV02",
     "Source": "Nimble GMG",
@@ -1243,6 +1658,99 @@
       {
         "Name": "LAST STAND:",
         "Content": "Grimbeak's attacks use d10s instead of d6s.",
+        "Usage": ""
+      }
+    ],
+    "MythicActions": [],
+    "Description": "",
+    "Player": "legendary",
+    "Version": "3.16.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "SaveDC": 11,
+    "HPMediumArmor": {
+      "Value": ""
+    },
+    "LastUpdateMs": 1787998819258,
+    "LastStandHP": {
+      "Value": 30
+    }
+  },
+  {
+    "Name": "Greenthumb, Lichling",
+    "Path": "Legendary/LV03",
+    "Source": "Nimble GMG",
+    "Type": "Legendary/LV03",
+    "Armor": "",
+    "HP": {
+      "Value": 30,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [
+      {
+        "Name": "INT",
+        "Advantage": "+"
+      },
+      {
+        "Name": "WIL",
+        "Advantage": "+"
+      }
+    ],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, move 4 then choose one:",
+        "Usage": ""
+      },
+      {
+        "Name": "Briarmancy",
+        "Content": "(If you have no minions) Summon 1 minion/hero (size: 1d4). They act at the end of the round.\n",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "OR:",
+        "Usage": ""
+      },
+      {
+        "Name": "Thorn Shot",
+        "Content": "(Range 8) 2d4+8.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [
+      {
+        "Name": "BLOODIED:",
+        "Content": "<b>Root.</b> All heroes are Restrained and suffer 2d4 damage on a failed DEX save (DC 11), half damage only on save. Escape: DC 11 STR or\nDEX save, or any slashing or fire damage.",
+        "Usage": ""
+      },
+      {
+        "Name": "LAST STAND:",
+        "Content": "<b>Bark Armor.</b> He gains gains H Armor and Damage degrades armor (H » M » None). He can also choose twice each turn.",
         "Usage": ""
       }
     ],

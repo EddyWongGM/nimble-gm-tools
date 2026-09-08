@@ -418,6 +418,30 @@ describe("EncounterCommander", () => {
     expect(pc.CurrentWounds()).toBe(0);
   });
 
+  test("Safe Rest clears N/Safe Rest charges but leaves N/Encounter charges alone", async () => {
+    const persistentCharacter = PersistentCharacter.Initialize({
+      ...StatBlock.Default(),
+      Player: "player",
+      Actions: [
+        { Name: "Fireball", Content: "", Usage: "1/Safe Rest" },
+        { Name: "Second Wind", Content: "", Usage: "1/Encounter" }
+      ]
+    });
+
+    const pc = await encounter.AddCombatantFromPersistentCharacter(
+      persistentCharacter,
+      () => {},
+      false
+    );
+
+    pc.AbilityChargesUsed({ Fireball: 1, "Second Wind": 1 });
+
+    encounterCommander.SafeRest();
+    confirmSafeRestPrompt(true);
+
+    expect(pc.AbilityChargesUsed()).toEqual({ "Second Wind": 1 });
+  });
+
   function buildSavedEncounterWithPersistentCharacter() {
     const npcStatBlock = { ...StatBlock.Default(), Name: "Goblin" };
     const persistentCharacter = PersistentCharacter.Initialize({
@@ -495,6 +519,174 @@ describe("EncounterCommander", () => {
     expect(legendaryCombatant.StatBlock().HP.Value).toBe(40);
     expect(legendaryCombatant.CurrentHP()).toBe(40);
     expect(legendaryCombatant.Tags().map(t => t.Text)).toContain("HP ×2");
+  });
+
+  test("LoadSavedEncounter rescales a ScalesWithHeroCount monster's HP to the party size actually loaded", async () => {
+    const oldEncounter = buildEncounter();
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    oldEncounter.AddCombatantFromStatBlock(hero);
+    oldEncounter.AddCombatantFromStatBlock(hero);
+    oldEncounter.AddCombatantFromStatBlock(hero);
+    oldEncounter.AddCombatantFromStatBlock({
+      ...StatBlock.Default(),
+      Player: "",
+      ScalesWithHeroCount: true,
+      HP: { Value: 10, Notes: "" }
+    });
+    const savedEncounter = oldEncounter.ObservableEncounterState();
+    // Saved with 3 heroes present (HP scaled to 30); simulate the party
+    // this time only having 2 heroes by dropping one saved hero.
+    savedEncounter.Combatants = savedEncounter.Combatants.filter(
+      (c, i) => i !== 0
+    );
+
+    await encounterCommander.LoadSavedEncounter(savedEncounter);
+
+    const scalableCombatant = encounter
+      .Combatants()
+      .find(c => c.StatBlock().ScalesWithHeroCount);
+    expect(scalableCombatant.StatBlock().HP.Value).toBe(20);
+    expect(scalableCombatant.CurrentHP()).toBe(20);
+    expect(scalableCombatant.Tags().map(t => t.Text)).toContain("HP ×2");
+  });
+
+  test("LoadSavedEncounter performs a hero-count-scaled monster's first scale when it was never added via AddCombatantFromStatBlock (e.g. hand-authored preload content)", async () => {
+    const savedEncounter: SavedEncounter = {
+      Id: "preloaded-encounter",
+      Name: "Preloaded Encounter",
+      Path: "",
+      Version: process.env.VERSION,
+      Combatants: [
+        {
+          Id: "hero-1",
+          StatBlock: { ...StatBlock.Default(), Player: "player" },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 10,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        },
+        {
+          Id: "hero-2",
+          StatBlock: { ...StatBlock.Default(), Player: "player" },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 10,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        },
+        {
+          Id: "skeleton-1",
+          // No ScaledHeroCount - matches a hand-authored preload encounter
+          // JSON file, which never went through AddCombatantFromStatBlock.
+          StatBlock: {
+            ...StatBlock.Default(),
+            Player: "",
+            ScalesWithHeroCount: true,
+            HP: { Value: 10, Notes: "" }
+          },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 10,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        }
+      ]
+    };
+
+    await encounterCommander.LoadSavedEncounter(savedEncounter);
+
+    const skeleton = encounter
+      .Combatants()
+      .find(c => c.StatBlock().ScalesWithHeroCount);
+    expect(skeleton.StatBlock().HP.Value).toBe(20);
+    expect(skeleton.CurrentHP()).toBe(20);
+    expect(skeleton.Tags().map(t => t.Text)).toContain("HP ×2");
+  });
+
+  test("LoadSavedEncounter's first scale uses the Armor-tier HP, not the placeholder unarmored HP, for a hero-count-scaled monster with Medium Armor (matches Krogg's shape in encounters_starter_set.json)", async () => {
+    const savedEncounter: SavedEncounter = {
+      Id: "preloaded-encounter",
+      Name: "Preloaded Encounter",
+      Path: "",
+      Version: process.env.VERSION,
+      Combatants: [
+        {
+          Id: "hero-1",
+          StatBlock: { ...StatBlock.Default(), Player: "player" },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 10,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        },
+        {
+          Id: "hero-2",
+          StatBlock: { ...StatBlock.Default(), Player: "player" },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 10,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        },
+        {
+          Id: "krogg-1",
+          // Shaped like Krogg in preload-content/encounters_starter_set.json:
+          // HP.Value is an unused placeholder (0) once an Armor tier is set -
+          // the real per-hero base lives in HPMediumArmor. No ScaledHeroCount,
+          // same as any hand-authored preload encounter.
+          StatBlock: {
+            ...StatBlock.Default(),
+            Player: "legendary",
+            Armor: "medium",
+            HP: { Value: 0, Notes: "" },
+            HPMediumArmor: { Value: 20, Notes: "" }
+          },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 0,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        }
+      ]
+    };
+
+    await encounterCommander.LoadSavedEncounter(savedEncounter);
+
+    const krogg = encounter
+      .Combatants()
+      .find(c => StatBlock.IsLegendary(c.StatBlock()));
+    // UpdateLegacySavedEncounter resolves the Armor tier (HPMediumArmor: 20)
+    // into StatBlock.HP.Value before the rescale-on-load step ever runs, so
+    // the first scale multiplies 20, not the 0 placeholder - matching what
+    // AddCombatantFromStatBlock would do for the same stat block live.
+    expect(krogg.StatBlock().HP.Value).toBe(40);
+    expect(krogg.CurrentHP()).toBe(40);
+    expect(krogg.Tags().map(t => t.Text)).toContain("HP ×2");
   });
 
   describe("Nimble phase commands", () => {

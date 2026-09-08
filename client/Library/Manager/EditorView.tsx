@@ -70,13 +70,6 @@ function RenderStatBlockEditor(
         props.libraries.StatBlocks.DeleteListing(statBlockListing.Meta().Id);
         props.closeEditor();
       }}
-      onSaveAsCharacter={statBlock => {
-        const persistentCharacter = PersistentCharacter.Initialize(statBlock);
-        props.libraries.PersistentCharacters.SaveNewListing(
-          persistentCharacter
-        );
-        props.closeEditor();
-      }}
       onSaveAsCopy={statBlock => {
         props.libraries.StatBlocks.SaveNewListing(statBlock);
         props.closeEditor();

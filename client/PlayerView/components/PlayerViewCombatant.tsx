@@ -174,6 +174,20 @@ export class PlayerViewCombatant extends React.Component<PlayerViewCombatantProp
         </div>
         {this.props.reactionTrackerVisible &&
           this.props.combatant.ReactionsSpent > 0 && <SpentReactionIndicator />}
+        {this.props.combatant.AbilityCharges &&
+          this.props.combatant.AbilityCharges.length > 0 && (
+            <div className="combatant__ability-charges">
+              {this.props.combatant.AbilityCharges.map((charge, index) => (
+                <div
+                  className="ability-charge"
+                  key={charge.Name + index}
+                  title={charge.Name}
+                >
+                  {charge.Name} ({charge.Max - charge.Used}/{charge.Max})
+                </div>
+              ))}
+            </div>
+          )}
       </li>
     );
   }

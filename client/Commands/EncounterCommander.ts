@@ -194,8 +194,6 @@ export class EncounterCommander {
       return;
     }
 
-    this.HideLibraries();
-
     if (this.tracker.Encounter.EncounterFlow.State() == "active") {
       return;
     }
@@ -378,6 +376,13 @@ export class EncounterCommander {
       pc.CurrentMana(pc.MaxMana() ?? 0);
       pc.CurrentResources(pc.DefaultResources());
       pc.CurrentWounds(Math.max(0, pc.CurrentWounds() - 1));
+      pc.AbilityChargesUsed(
+        StatBlock.ClearAbilityCharges(
+          pc.AbilityChargesUsed(),
+          pc.StatBlock(),
+          "safe-rest"
+        )
+      );
     });
     this.tracker.EventLog.AddEvent("Heroes took a Safe Rest.");
     Metrics.TrackEvent(Metrics.Event.SafeRestPerformed);
@@ -449,17 +454,18 @@ export class EncounterCommander {
 
     await Promise.all(persistentCharactersPromise);
 
-    // Legendary monsters are saved with HP already scaled to whatever party
-    // size the encounter was built for; rescale them to the party size
-    // actually present now that every PC has been loaded.
+    // Hero-count-scaled monsters (Legendary, or Normal monsters with
+    // ScalesWithHeroCount) are saved with HP already scaled to whatever
+    // party size the encounter was built for; rescale them to the party
+    // size actually present now that every PC has been loaded.
     const heroCount = Math.max(
       1,
       this.tracker.Encounter.Combatants().filter(c => c.IsPlayerCharacter())
         .length
     );
     this.tracker.Encounter.Combatants().forEach(c => {
-      if (StatBlock.IsLegendary(c.StatBlock())) {
-        c.RescaleLegendaryHP(heroCount);
+      if (StatBlock.IsHeroCountScaled(c.StatBlock())) {
+        c.RescaleHeroCountHP(heroCount);
       }
     });
 

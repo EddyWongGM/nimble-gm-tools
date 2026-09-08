@@ -180,8 +180,10 @@ export class LibrariesCommander {
           editorTarget: "library",
           statBlock: statBlockWithNewId,
           onSave: library.SaveNewListing,
-          onSaveAsCharacter: this.saveStatblockAsPersistentCharacter,
-          currentListings: library.GetAllListings()
+          onSaveAsCopy: library.SaveNewListing,
+          requireSaveAsCopy: true,
+          currentListings: library.GetAllListings(),
+          onDelete: this.deleteSavedStatBlock(listing.Meta().Id)
         });
       } else {
         this.tracker.EditStatBlock({
@@ -190,8 +192,7 @@ export class LibrariesCommander {
           onSave: s => library.SaveEditedListing(listing, s),
           currentListings: library.GetAllListings(),
           onDelete: this.deleteSavedStatBlock(listing.Meta().Id),
-          onSaveAsCopy: library.SaveNewListing,
-          onSaveAsCharacter: this.saveStatblockAsPersistentCharacter
+          onSaveAsCopy: library.SaveNewListing
         });
       }
     });

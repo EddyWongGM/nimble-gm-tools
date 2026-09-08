@@ -71,9 +71,9 @@
       },
       {
         "Name": "Relentless (1/Safe Rest)",
-        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
-        "Usage": ""
-      }
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }	
     ],
     "LegendaryActions": [],
     "MythicActions": [
@@ -193,9 +193,9 @@
       },
       {
         "Name": "Relentless (1/Safe Rest)",
-        "Content": "[tab] If 0 HP, HP becomes [LVL]. (+1 Might)",
-        "Usage": ""
-      }
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }	
     ],
     "LegendaryActions": [],
     "MythicActions": [
@@ -280,13 +280,13 @@
     "Traits": [],
     "Actions": [
       {
-        "Name": "\\Vicious Opportunist (1/turn) (melee & distracted)",
-        "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
+        "Name": "\\Vicious Opportunist",
+      "Content": "<b>(1/turn)</b> When you HIT a Distracted target with a melee attack, you may change the Primary Die roll to whatever you like (changing it to the max value counts as a crit).",
         "Usage": ""
       },
       {
-        "Name": "Sneak Attack (1st Crit hit + 1d6 damage)",
-        "Content": "",
+        "Name": "Sneak Attack",
+        "Content": "<b>(1/turn)</b> When you crit, deal +1d6 damage.",        
         "Usage": ""
       },
       {
@@ -318,7 +318,7 @@
       "Notes": "d6"
     }
   },
-{
+  {
     "Name": "Cheat LV2",
     "Path": "Sample Heroes/Cheat",
     "Source": "Sample Heroes",
@@ -360,13 +360,13 @@
     "Traits": [],
     "Actions": [
       {
-        "Name": "\\Vicious Opportunist (1/turn) (melee & distracted)",
-        "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
+        "Name": "\\Vicious Opportunist",
+        "Content": "<b>(1/turn)</b> When you HIT a Distracted target with a melee attack, you may change the Primary Die roll to whatever you like (changing it to the max value counts as a crit).",
         "Usage": ""
       },
       {
-        "Name": "Sneak Attack (1st Crit hit + 1d6 damage)",
-        "Content": "",
+        "Name": "Sneak Attack",
+        "Content": "<b>(1/turn)</b> When you crit, deal +1d6 damage.",
         "Usage": ""
       },
       {
@@ -381,7 +381,7 @@
     "MythicActions": [
       {
         "Name": "Cheat",
-        "Content": "[dash] 1 / round, Move or Hide for free.\n[dash] If initiative less then 10, change it to 10.\n[dash] 1 / day: Change any skill check to 12 (10 + [INT])\n[dash] Advantage on skill checks : games / gambling.",
+        "Content": "[dash] 1 / round, Move or Hide for free.\n[dash] 1 / Safe Rest: Change any skill check to 10+[INT]\n[dash] If rolling less then 10 on Initiative, \n[tab] change it to 10.\n[dash] Advantage on skill checks : games / gambling.",
         "Usage": ""
       },      
       {
@@ -445,8 +445,8 @@
     "Traits": [
       {
         "Name": "Coordinated Strike! (1/encounter)",
-        "Content": "Free: You & Ally in 6 spaces free attack.\nFor Ally it's not Rushed, because it is not their turn.",
-        "Usage": ""
+        "Content": "(<b>1/encounter, 0 Actions</b>) You and an ally within Reach <b>6</b> both immediately make a weapon/unarmed attack or cast a cantrip for free.\n\n\nFor Ally it's not a Rushed attack, because it is not their turn.",
+        "Usage": "1/encounter"
       }
     ],
     "Actions": [
@@ -461,7 +461,7 @@
       {
         "Name": "Strength of Stone (1/encounter)",
         "Content": "If you get a Crit: force a reroll. (+2 Might)",
-        "Usage": ""
+        "Usage": "1/encounter"
       }
     ],
     "LegendaryActions": [],
@@ -485,6 +485,98 @@
       "Notes": "d10"
     }
   },
+  {
+    "Name": "Commander LV2",
+    "Path": "Sample Heroes/Commander",
+    "Source": "Sample Heroes",
+    "Type": "Commander",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 13,
+      "Notes": "Chain Shirt"
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": 2,
+      "Wis": -1
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
+    },    
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Coordinated Strike! (1/encounter)",
+        "Content": "(<b>1/encounter, 0 Actions</b>) You and an ally within Reach <b>6</b> both immediately make a weapon/unarmed attack or cast a cantrip for free.\n\n\nFor Ally it's not a Rushed attack, because it is not their turn.",
+        "Usage": "1/encounter"
+      },
+      {
+        "Name": "Fit for Any Battlefield",
+        "Content": "Choose a Combat Tactic. When you roll Initiative, gain [STR] Combat Dice (each a d6), they are lost when combat ends if unspent.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+    {
+      "Name": "Weapons",
+      "Content": "[A1] Short Sword : 1d6 + [STR]\n[A1] Javelin : 1d6 + [STR] Range <b>8</b>",
+      "Usage": ""
+    },
+    {
+      "Name": "Combat Tactic",
+      "Content": "Whenever you attack, you may expend a Combat Die to add a special effect (max 1/attack).\n\n[bullet] <b>Lunging Strike</b>\n[tab] Gain +1 Reach on an attack and deal extra \n[tab] damage equal to 2× a roll of your Combat Die.",
+      "Usage": ""
+    }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "Strength of Stone (1/encounter)",
+        "Content": "If you get a Crit: force a reroll. (+2 Might)",
+        "Usage": "1/encounter"
+      }
+    ],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Home at Sea",
+        "Content": "Recover 2x Wounds & HP if on a ship / near water. You can act as captain. Adv. water related checks.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d10"
+    }
+  },  
   {
     "Name": "Hunter LV1",
     "Path": "Sample Heroes/Hunter",
@@ -591,7 +683,7 @@
     "InitiativeModifier": 0,
     "InitiativeAdvantage": true,
     "Speed": [
-      "6"
+      "7"
     ],
     "Abilities": {
       "Str": 0,
@@ -618,7 +710,7 @@
     "Actions": [
       {
         "Name": "Spells",
-        "Content": "Cantrips: Flame Dart, Heart's Fire, Ice Lance, Snowblind, Zap, Overload",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Flame Dart, Heart's Fire\n[bullet] Ice Lance, Snowblind\n[bullet] Zap, Overload",
         "Usage": ""
       },
       {
@@ -635,7 +727,12 @@
         "Name": "Taste for the finer things",
         "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
         "Usage": ""
-      }
+      },
+      {
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
+        "Usage": ""
+      }      
     ],
     "Description": "",
     "Player": "player",
@@ -650,6 +747,90 @@
       "Notes": "d6"
     }
   },
+  {
+    "Name": "Mage LV2",
+    "Path": "Sample Heroes/Mage",
+    "Source": "Sample Heroes",
+    "Type": "Mage",
+    "HP": {
+      "Value": 14,
+      "Notes": "10"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "7"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 1,
+      "Int": 2,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "+",
+      "Wis": ""
+    },     
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Flame Dart, Heart's Fire\n[bullet] Ice Lance, Snowblind\n[bullet] Zap, Overload\n\n\n[tab] <b>Tier 1:</b>\n[bullet] Ignite\n[bullet] Frost Shield\n[bullet] Arc Lightning",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Staff 1d8 - [STR]",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Taste for the finer things",
+        "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "InitiativeSpecialRoll": "advantage",
+    "Mana": {
+      "Value": 8
+    },    
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d6"
+    }
+  },  
   {
     "Name": "Oathsworn LV1",
     "Path": "Sample Heroes/Oathsworn",
@@ -689,7 +870,13 @@
     "Senses": [],
     "Languages": [],
     "Challenge": "1",
-    "Traits": [],
+    "Traits": [
+      {
+        "Name": "Radiant Judgment (when attacked)",
+        "Content": "[A0] Roll 2d6 Judgment Dice (if none are currently rolled). They are expended on the next melee attack you make this encounter. On hit: deal that much additional radiant damage.",
+        "Usage": ""
+      }      
+    ],
     "Actions": [
       {
         "Name": "",
@@ -704,11 +891,11 @@
     ],
     "BonusActions": [],
     "Reactions": [
-	  {
-	    "Name": "Relentless",
-	    "Content": "(1/Safe Rest) When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
-	    "Usage": ""
-	  }	
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }	
 	],
     "LegendaryActions": [],
     "MythicActions": [
@@ -731,6 +918,103 @@
       "Notes": "d10"
     }
   },
+{
+    "Name": "Oathsworn LV2",
+    "Path": "Sample Heroes/Oathsworn",
+    "Source": "Sample Heroes",
+    "Type": "Oathsworn",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 14,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Radiant Judgment (when attacked)",
+        "Content": "[A0] Roll 2d6 Judgment Dice (if none are currently rolled). They are expended on the next melee attack you make this encounter. On hit: deal that much additional radiant damage.",
+        "Usage": ""
+      },
+      {
+        "Name": "Zealot",
+        "Content": "[A0] If melee attack. For each mana, max 1 (Tier):\n[dash] Condemning Strike. Deal +5 radiant damage.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrip:</b>\n[bullet] Rebuke, True Strike\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal",
+        "Usage": ""
+      },      
+      {
+        "Name": "Lay on Hands - Pool 5 (5×LVL)",
+        "Content": "[A1] Touch \\Heal\n— Safe Rest: recharge.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "Relentless (1/Safe Rest)",
+        "Content": "When you would drop to 0 HP, you may set your HP to [LVL] instead. +1 Might. You know Goblin if your INT isn’t negative (but you call it Orcish, of course).",
+        "Usage": "1/Safe Rest"
+      }		
+	],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d10"
+    }
+  },  
   {
     "Name": "Shadowmancer LV1",
     "Path": "Sample Heroes/Shadowmancer",
@@ -774,7 +1058,7 @@
     "Actions": [
       {
         "Name": "Shadow Blast (1/turn)",
-        "Content": "[A1] Range 8, 1d12+ [KEY]",
+        "Content": "[A1] Range 8, 1d12 + [KEY]",
         "Usage": ""
       },
       {
@@ -782,6 +1066,11 @@
         "Content": "[A1] Summon 1 D12 Minion, Adjacent to yourself\n[tab] Minion: 1 HP, no dmg modifier, can't crit.",
         "Usage": ""
       },
+      {
+        "Name": "Command Shadows",
+        "Content": "[A1] (1/turn) Move ALL Shadows 6 & Attack, Reach 1",
+        "Usage": ""
+      },      
       {
         "Name": "",
         "Content": "[A1] Hand Scythe : 1d4 + [DEX]\n [tab] Vicious. +1 die when crit.",
@@ -794,7 +1083,7 @@
     "MythicActions": [
       {
         "Name": "Flameborn",
-        "Content": "[dash] 1 Neutral save Advantaged. Infernal if INT not neg.",
+        "Content": "[dash] 1 Neutral save Advantaged.\n [tab] Infernal if INT not neg.",
         "Usage": ""
       },
       {
@@ -814,8 +1103,106 @@
     "HitDice": {
       "Value": 1,
       "Notes": "d8"
-    }
+    }   
   },
+  {
+    "Name": "Shadowmancer LV2",
+    "Path": "Sample Heroes/Shadowmancer",
+    "Source": "Sample Heroes",
+    "Type": "Shadowmancer",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 3,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": -1,
+      "Dex": 2,
+      "Int": 2,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "+",
+      "Wis": "-"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Shadow Blast (1/turn)",
+        "Content": "[A1] Range 8, 1d12 + [KEY]",
+        "Usage": ""
+      },
+      {
+        "Name": "Summon Shadows (Max 1, Lowest INT/LVL)",
+        "Content": "[A1] Summon 1 D12 Minion, Adjacent to yourself\n[tab] Minion: 1 HP, no dmg modifier, can't crit.",
+        "Usage": ""
+      },
+      {
+        "Name": "Command Shadows",
+        "Content": "[A1] (1/turn) Move ALL Shadows 6 & Attack, Reach 1",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1</b>\n[bullet] Shadow Trap",
+        "Usage": ""
+      },      
+      {
+        "Name": "",
+        "Content": "[A1] Hand Scythe : 1d4 + [DEX]\n [tab] Vicious. +1 die when crit.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Flameborn",
+        "Content": "[dash] 1 Neutral save Advantaged.\n [tab] Infernal if INT not neg.",
+        "Usage": ""
+      },
+      {
+        "Name": "\\Fearless (immune to Frightened)",
+        "Content": "[dash] +1 Initiative, -1 Armor.",
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d8"
+    },
+    "Resources": {
+      "Value": 2
+    } 
+  },  
   {
     "Name": "Shepherd LV1",
     "Path": "Sample Heroes/Shepherd",
@@ -855,16 +1242,22 @@
     "Senses": [],
     "Languages": [],
     "Challenge": "1",
-    "Traits": [],
+    "Traits": [
+      {
+        "Name": "Searing Light",
+        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
+        "Usage": "[WIL]/Safe Rest"
+      }
+    ],
     "Actions": [
       {
         "Name": "",
-        "Content": "[A1] Mace : 1d6 + 2",
+        "Content": "[A1] Mace : 1d6 + [STR]",
         "Usage": ""
       },
       {
         "Name": "Spells",
-        "Content": "Cantrips: Searing Light, Rebuke, True Strike, Entice, Withering Touch",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch",
         "Usage": ""
       }
     ],
@@ -897,6 +1290,97 @@
     }
   },
   {
+    "Name": "Shepherd LV2",
+    "Path": "Sample Heroes/Shepherd",
+    "Source": "Sample Heroes",
+    "Type": "Shepherd",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 13,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "-",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Searing Light",
+        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
+        "Usage": "[WIL]/Safe Rest "
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "[A1] Mace : 1d6 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal, Shadow Trap, \n[bullet] Lifebinding Spirit",
+        "Usage": ""
+      },
+      {
+        "Name": "Lifebinding Spirit",
+        "Content": "[A1] (Reach 4) \n[tab] It attacks for 1d6+[WIL] (ignoring armor), \n[tab] or heals for the same amount.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "\\History Buff",
+        "Content": "Advantage on all Lore checks related to knowledge about items, facts, or events that happened more than 100 years ago.",
+        "Usage": ""
+      },
+      {
+        "Name": "Tenacious",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d10"
+    }
+  },  
+  {
     "Name": "Songweaver LV1",
     "Path": "Sample Heroes/Songweaver",
     "Source": "Sample Heroes",
@@ -917,12 +1401,12 @@
     "Abilities": {
       "Str": -1,
       "Dex": 0,
-      "Int": 1,
-      "Wis": 1
+      "Int": 2,
+      "Wis": 2
     },
     "SaveAdvantages": {
-      "Str": "",
-      "Dex": "-",
+      "Str": "-",
+      "Dex": "",
       "Int": "",
       "Wis": "+"
     },
@@ -937,9 +1421,9 @@
     "Challenge": "1",
     "Traits": [
       {
-        "Name": "Songweaver’s Inspiration (Free Reaction)",
-        "Content": "Reroll 1 die for atk or save. 4 (2×[WIL]) / Safe Rest.",
-        "Usage": ""
+        "Name": "Songweaver’s Inspiration",
+        "Content": "(Free Reaction) (2×[WIL])/Safe Rest\nReroll 1 die for attack or save. ",
+        "Usage": "2×[WIL]/Safe Rest"
       }
     ],
     "Actions": [
@@ -959,13 +1443,13 @@
     "LegendaryActions": [],
     "MythicActions": [
       {
-        "Name": "\\What? I’ve been around (1/location (GM’s rules))",
-        "Content": "You know a person who has information.\n• 1–5. They want you dead.\n• 6–12. You owe them money.\n• 13–19. They can be convinced to help you.\n• 20. Biggest fan/are madly in love with you.",
+        "Name": "What? I’ve been around",
+        "Content": "1/location (GM’s rules)\nYou know a person who has information.\n• <b>1–5.</b> They want you dead.\n• <b>6–12.</b> You owe them money.\n• <b>13–19.</b> They can be convinced to help you.\n• <b>20.</b> Biggest fan/are madly in love with you.",
         "Usage": ""
       },
       {
         "Name": "Song of Rest (1/day, when Field Rest)",
-        "Content": "Song: Anyone use HD heal +2 HP (WIL).",
+        "Content": "Song: Anyone use HD heal +[WIL] HP.",
         "Usage": ""
       },      
       {
@@ -1030,9 +1514,9 @@
     ],
     "Actions": [
       {
-        "Name": "Beastshift (2 shifts (DEX) / Safe Rest)",
+        "Name": "Beastshift ([DEX]/Safe Rest)",
         "Content": "Shift Harmless beast and speak to animals.\nLasts until 0 HP, cast spell, or until you end it.",
-        "Usage": ""
+        "Usage": "[DEX]/Safe Rest"
       },
       {
         "Name": "Spells",
@@ -1131,14 +1615,14 @@
       {
         "Name": "Elusive (1/Safe Rest)",
         "Content": "Failing Save, can succeed instead. (+1 Stealth)",
-        "Usage": ""
+        "Usage": "1/Safe Rest"
       }       
     ],
     "LegendaryActions": [],
     "MythicActions": [
       {
         "Name": "",
-        "Content": "• Iron Defense (No armor. Armor 4 (DEX+STR ))\n• Survivalist (always personal rations) Advantage vs poison saves. +1 max HD.",
+        "Content": "• Iron Defense (No armor. Armor [DEX]+[STR])\n• Survivalist (always personal rations) Advantage vs poison saves. +1 max HD.",
         "Usage": ""
       }  
     ],
@@ -1151,7 +1635,7 @@
       "Value": 5
     },
     "HitDice": {
-      "Value": 1,
+      "Value": 2,
       "Notes": "d8"
     }
   }

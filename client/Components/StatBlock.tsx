@@ -17,6 +17,44 @@ interface StatBlockProps {
   hideTopRow?: boolean;
   hideAbilities?: boolean;
   isLoading?: boolean;
+  abilityChargesUsed?: Record<string, number>;
+  onSetAbilityCharge?: (abilityName: string, count: number) => void;
+}
+
+// Clickable pips for a "N/Safe Rest" or "N/Encounter" ability - a solid pip
+// means that charge is still available, a hollow pip means it's been spent.
+// Charges fill left to right, so clicking any pip directly flips *that*
+// pip's own state - a hollow one frees itself (and every later pip, since
+// they're just a count, not independently trackable slots); a solid one
+// spends itself and everything before it.
+function ChargePips(props: {
+  used: number;
+  max: number;
+  onSetCharge: (count: number) => void;
+}) {
+  const pips = [];
+  for (let i = 0; i < props.max; i++) {
+    const isUsed = i < props.used;
+    const setCharge = () => props.onSetCharge(isUsed ? i : i + 1);
+    pips.push(
+      <span
+        key={i}
+        className={"charge-pip " + (isUsed ? "far fa-circle" : "fas fa-circle")}
+        role="button"
+        tabIndex={0}
+        aria-label={`Charge ${i + 1} of ${props.max}${isUsed ? " (used)" : ""}`}
+        aria-pressed={isUsed}
+        onClick={setCharge}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setCharge();
+          }
+        }}
+      />
+    );
+  }
+  return <span className="charge-pips">{pips}</span>;
 }
 
 export function AbilityScores(props: { statBlock: StatBlock }) {
@@ -251,23 +289,38 @@ function StatBlockComponentNoError(props: StatBlockProps) {
         {powerType.name !== "Traits" && (
           <h4 className="stat-label">{powerType.displayName}</h4>
         )}
-        {powerType.data.map((power, j) => (
-          <div key={j + power.Name}>
-            {power.Name?.length ? (
-              <span className="stat-label">
-                {textEnricher.EnrichInlineText(power.Name, statBlock)}
-              </span>
-            ) : null}
-            {power.Usage && <span className="stat-label">{power.Usage}</span>}
-            <span className="power-content">
-              {textEnricher.EnrichText(
-                power.Content,
-                undefined,
-                statBlock
+        {powerType.data.map((power, j) => {
+          const chargeUsage = StatBlock.ParseChargeUsage(
+            power.Usage,
+            statBlock.Abilities
+          );
+          const showChargePips = chargeUsage && props.abilityChargesUsed;
+          return (
+            <div key={j + power.Name}>
+              {power.Name?.length ? (
+                <span className="stat-label">
+                  {textEnricher.EnrichInlineText(power.Name, statBlock)}
+                </span>
+              ) : null}
+              {showChargePips ? (
+                <ChargePips
+                  used={props.abilityChargesUsed[power.Name] ?? 0}
+                  max={chargeUsage.Max}
+                  onSetCharge={count =>
+                    props.onSetAbilityCharge?.(power.Name, count)
+                  }
+                />
+              ) : (
+                power.Usage && (
+                  <span className="stat-label">{power.Usage}</span>
+                )
               )}
-            </span>
-          </div>
-        ))}
+              <span className="power-content">
+                {textEnricher.EnrichText(power.Content, undefined, statBlock)}
+              </span>
+            </div>
+          );
+        })}
         {powerType.name !== "Traits" && <hr />}
       </div>
     ));

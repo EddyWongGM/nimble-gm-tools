@@ -253,26 +253,20 @@ export class Encounter {
         ...StatBlock.Default(),
         ...statBlockJsonWithoutItems
       };
-      if (!StatBlock.ActsInPlayerPhase(statBlock)) {
-        if (statBlock.Armor === "medium" && statBlock.HPMediumArmor) {
-          statBlock.HP = statBlock.HPMediumArmor;
-        } else if (statBlock.Armor === "heavy" && statBlock.HPHeavyArmor) {
-          statBlock.HP = statBlock.HPHeavyArmor;
-        }
-      }
+      statBlock.HP = StatBlock.ResolveArmorHP(statBlock);
       statBlock.HP = {
         ...statBlock.HP,
         Value: GetOrRollMaximumHP(statBlock, variantMaximumHP)
       };
-      let legendaryHeroCount: number | null = null;
-      if (statBlock.Player === "legendary") {
-        legendaryHeroCount = Math.max(
+      let heroCountScaledFor: number | null = null;
+      if (StatBlock.IsHeroCountScaled(statBlock)) {
+        heroCountScaledFor = Math.max(
           1,
           this.combatants().filter(c => c.IsPlayerCharacter()).length
         );
         statBlock.HP = {
           ...statBlock.HP,
-          Value: statBlock.HP.Value * legendaryHeroCount
+          Value: statBlock.HP.Value * heroCountScaledFor
         };
       }
 
@@ -293,7 +287,7 @@ export class Encounter {
         RoundCounter: 0,
         ElapsedSeconds: 0,
         InterfaceVersion: process.env.VERSION || "unknown",
-        LegendaryHeroCount: legendaryHeroCount ?? undefined
+        ScaledHeroCount: heroCountScaledFor ?? undefined
       };
 
       const combatant = this.AddCombatantFromState(initialState);
@@ -301,9 +295,9 @@ export class Encounter {
       // caution-worthy "x1" when no heroes were in the encounter yet - as a
       // persistent tag rather than a one-off toast, since there's no
       // toast/notification system in this app to reuse.
-      if (legendaryHeroCount !== null) {
+      if (heroCountScaledFor !== null) {
         combatant.Tags.push(
-          new Tag(`HP ×${legendaryHeroCount}`, combatant, true)
+          new Tag(`HP ×${heroCountScaledFor}`, combatant, true)
         );
       }
     } catch (e) {
@@ -342,6 +336,7 @@ export class Encounter {
       CurrentHitDice: persistentCharacter.CurrentHitDice,
       CurrentWounds: persistentCharacter.CurrentWounds,
       CurrentGold: persistentCharacter.CurrentGold,
+      AbilityChargesUsed: persistentCharacter.AbilityChargesUsed,
       CurrentNotes: persistentCharacter.Notes,
       TemporaryHP: 0,
       Hidden: hideOnAdd,
@@ -388,6 +383,27 @@ export class Encounter {
 
     if (this.combatants().length == 0) {
       this.EncounterFlow.EndEncounter();
+    }
+
+    // Once every monster/NPC is gone, "N/Encounter" charges are spent -
+    // clear them for whoever's left (usually the party), regardless of
+    // which command triggered the removal (manual remove, Clear Encounter,
+    // Clean Encounter all funnel through here).
+    const noMonstersRemain = remainingCombatants.every(c =>
+      c.ActsInPlayerPhase()
+    );
+    if (noMonstersRemain) {
+      remainingCombatants
+        .filter(c => c.ActsInPlayerPhase())
+        .forEach(c =>
+          c.AbilityChargesUsed(
+            StatBlock.ClearAbilityCharges(
+              c.AbilityChargesUsed(),
+              c.StatBlock(),
+              "encounter"
+            )
+          )
+        );
     }
   };
 
@@ -565,6 +581,9 @@ export class Encounter {
         );
         combatant.CurrentWounds(persistentCharacter.CurrentWounds ?? 0);
         combatant.CurrentGold(persistentCharacter.CurrentGold ?? 0);
+        combatant.AbilityChargesUsed(
+          persistentCharacter.AbilityChargesUsed ?? {}
+        );
         combatant.CurrentNotes(persistentCharacter.Notes);
         combatant.AttachToPersistentCharacterLibrary(updatePersistentCharacter);
       }

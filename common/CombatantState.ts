@@ -41,6 +41,9 @@ export interface CombatantState {
   IndexLabel: number | null;
   Tags: TagState[];
   Items?: InventoryItem[];
+  // Charges spent on abilities with a "N/Safe Rest" or "N/Encounter" Usage,
+  // keyed by ability Name. Absence means 0 used; see StatBlock.ParseChargeUsage.
+  AbilityChargesUsed?: Record<string, number>;
   Hidden: boolean;
   KeepHidden?: boolean;
   RevealedAC: boolean;
@@ -49,8 +52,9 @@ export interface CombatantState {
   RoundCounter?: number;
   ElapsedSeconds?: number;
   InterfaceVersion: string;
-  // The hero count a Legendary monster's HP was last scaled for - lets a
-  // saved encounter's Legendary be rescaled to the current party size when
+  // The hero count a hero-count-scaled monster's HP was last scaled for
+  // (Legendary, or a Normal monster with ScalesWithHeroCount) - lets a
+  // saved encounter's combatant be rescaled to the current party size when
   // reloaded, by dividing out this multiplier to recover its base HP.
-  LegendaryHeroCount?: number;
+  ScaledHeroCount?: number;
 }

@@ -37,6 +37,8 @@ export interface StatBlockEditorProps {
   onSave: (statBlock: StatBlock) => void;
   onDelete?: () => void;
   onSaveAsCopy?: (statBlock: StatBlock) => void;
+  /** The statblock can't be saved in place (e.g. read-only bundled content) - force the "Save as a copy" toggle on and require a new name. */
+  requireSaveAsCopy?: boolean;
   onSaveAsCharacter?: (statBlock: StatBlock) => void;
   onClose: () => void;
   editorTarget: StatBlockEditorTarget;
@@ -128,7 +130,8 @@ export class StatBlockEditor extends React.Component<
           const initialValues = {
             ...this.props.statBlock,
             CustomFields: customFields,
-            StatBlockJSON: getAnonymizedStatBlockJSON(this.props.statBlock)
+            StatBlockJSON: getAnonymizedStatBlockJSON(this.props.statBlock),
+            SaveAs: this.props.requireSaveAsCopy
           };
 
           return (
@@ -157,6 +160,7 @@ export class StatBlockEditor extends React.Component<
                         this.props.editorTarget === "persistentcharacter"
                       }
                       allowSaveAsCopy={this.props.onSaveAsCopy !== undefined}
+                      requireSaveAsCopy={this.props.requireSaveAsCopy}
                       allowSaveAsCharacter={
                         this.props.onSaveAsCharacter !== undefined
                       }
@@ -327,6 +331,21 @@ export class StatBlockEditor extends React.Component<
                       encounter first, or the multiplier will under-count.
                     </Info>
                   )}
+                  {api.values.Player === "" && (
+                    <label className="c-statblock-editor__checkbox-label">
+                      <Field type="checkbox" name="ScalesWithHeroCount" />
+                      Scalable (HP × Hero Count)
+                    </label>
+                  )}
+                  {api.values.Player === "" &&
+                    api.values.ScalesWithHeroCount && (
+                      <Info>
+                        This monster's max HP is multiplied by the number of
+                        heroes already in the encounter, calculated once when
+                        it's added to the tracker. Add heroes to the
+                        encounter first, or the multiplier will under-count.
+                      </Info>
+                    )}
                   {this.props.editorTarget == "combatant" &&
                     api.values.Player !== "player" &&
                     api.values.Player !== "companion" && (

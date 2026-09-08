@@ -32,6 +32,11 @@
     flex-grow: 0;
   }
 
+  input.usage {
+    width: 10rem;
+    flex-grow: 0;
+  }
+
   input[name="SaveAs"] {
     margin: @medium-spacer @large-spacer @medium-spacer @small-spacer;
   }
@@ -165,10 +170,25 @@
   // A 2-column grid (not just a flex row) so that row 2's CR Rating lines
   // up under row 1's Source field - matching flex-basis percentages alone
   // can't guarantee that alignment once the rows have different content.
+  //
+  // minmax(0, 1fr) rather than a bare 1fr: grid tracks default to a min
+  // sizing of `auto`, which won't shrink a column below its content's
+  // min-content width. On a narrow center column that let CR Rating's
+  // input push its column past the container's edge instead of shrinking,
+  // rendering it partially off-screen.
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: @medium-spacer;
   align-items: center;
+
+  @media (max-width: @small) {
+    // Too narrow for two columns to stay legible - stack Type/Source/CR
+    // Rating full-width instead of cramming them side by side. @phone was
+    // too narrow a cutoff: this pane can render well below @small (a
+    // resized desktop window, not just a phone), and the fixed-width label
+    // inside each field (see below) still won't fit two-up above @phone.
+    grid-template-columns: 1fr;
+  }
 
   // .c-text-field's own `.label`/`input` sizing (flex-basis: 20%/80%)
   // assumes it's the only field on the line, filling the full row width.
@@ -177,6 +197,11 @@
   // rest of the cell instead.
   > .c-text-field {
     flex-wrap: nowrap;
+    // Grid/flex items default to `min-width: auto` too (same content-based
+    // floor as the track above) - without this the field itself refuses to
+    // shrink below its input's intrinsic width, which is what actually
+    // pushed CR Rating outside the frame regardless of the track fix above.
+    min-width: 0;
 
     .label {
       flex: 0 0 auto;
@@ -186,6 +211,7 @@
     input {
       flex: 1 1 auto;
       width: auto;
+      min-width: 0;
       // .c-statblock-editor's global `input { margin: @small-spacer 0 }`
       // adds an 8px margin-box on top of the input's own height. Grid row
       // tracks size to the tallest cell, so a row with CR Rating (which
@@ -357,6 +383,19 @@ span.c-statblock-editor__label {
   flex-wrap: wrap;
   flex-grow: 1;
   align-items: center;
+  // Same content-based min-width trap as .c-statblock-editor__identity-grid
+  // above - without this, this field can't shrink below its value/notes
+  // inputs' intrinsic width, which pushed it (and its stats-row sibling)
+  // past the panel edge on a narrow center column.
+  min-width: 0;
+
+  // .inline (the value/notes/select group) otherwise also refuses to shrink
+  // below its children's combined intrinsic width. Letting it wrap keeps
+  // those inputs stacking onto their own line instead of spilling out of
+  // frame once the row gets too narrow for them side by side.
+  > .inline {
+    min-width: 0;
+  }
 }
 
 .c-statblock-editor__error {
@@ -485,6 +524,29 @@ span.c-statblock-editor__label {
       flex: 1;
       min-width: 0;
     }
+
+    // On a narrow center column, 5.5rem labels plus each side's value/notes
+    // (or Initiative's select) don't fit two-up even after they shrink -
+    // stack Defense/Hit Points (or Wounds/Initiative) full-width instead of
+    // squeezing both halves past the panel edge. @phone was too narrow a
+    // cutoff - this pane can get this tight well before an actual phone
+    // width, e.g. a resized desktop window with the library/combatant
+    // panes also open.
+    @media (max-width: @small) {
+      flex-direction: column;
+    }
+  }
+
+  // Once stacked full-width (see @small above), Defense's Notes and
+  // Initiative's advantage/disadvantage select are secondary detail that
+  // still crowd the primary value input on a narrow column - drop them
+  // rather than force them onto their own line. Both remain editable at
+  // wider widths; any value already set stays saved, just not shown here.
+  @media (max-width: @small) {
+    .notes,
+    .c-statblock-editor__initiative-special-roll {
+      display: none;
+    }
   }
 
   // The initiative special-roll <select> has no width rule anywhere else,
@@ -492,6 +554,7 @@ span.c-statblock-editor__label {
   // which is wide enough to push this row past the panel width and wrap.
   select {
     width: 9rem;
+    min-width: 0;
   }
 
   // Hit Dice sits in a 2-up row alongside the number input, so it needs to

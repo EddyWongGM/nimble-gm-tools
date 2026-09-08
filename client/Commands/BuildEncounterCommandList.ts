@@ -46,7 +46,8 @@ export const BuildEncounterCommandList = (
       id: "toggle-all-monsters-hidden",
       description: "Hide/Reveal All Monsters",
       actionBinding: c.ToggleAllMonstersHidden,
-      fontAwesomeIcon: "eye-slash"
+      fontAwesomeIcon: "eye-slash",
+      defaultShowOnActionBar: false
     }),
     new Command({
       id: "toggle-hide-inventory-player-view",

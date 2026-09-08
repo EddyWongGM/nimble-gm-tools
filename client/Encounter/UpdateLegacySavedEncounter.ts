@@ -10,6 +10,7 @@ function updateLegacySavedCombatant(savedCombatant: any) {
     savedCombatant.StatBlock = savedCombatant["Statblock"];
   }
   savedCombatant.StatBlock = StatBlock.Update(savedCombatant.StatBlock);
+  savedCombatant.StatBlock.HP = StatBlock.ResolveArmorHP(savedCombatant.StatBlock);
   if (!savedCombatant.Id) {
     savedCombatant.Id = probablyUniqueString();
   }

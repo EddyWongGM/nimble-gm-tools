@@ -73,6 +73,29 @@ describe("UpdateLegacySavedEncounter", () => {
       }
     ]);
   });
+
+  test("A monster with an Armor tier loads with that tier's HP pool, not the placeholder HP.Value", () => {
+    const savedEncounter = {
+      Name: "Armored Encounter",
+      Combatants: [
+        {
+          Alias: "",
+          StatBlock: {
+            ...makev0_1StatBlock(),
+            Armor: "heavy",
+            HP: { Value: 0, Notes: "" },
+            HPHeavyArmor: { Value: 50, Notes: "" }
+          }
+        }
+      ]
+    };
+
+    const updatedEncounter = UpdateLegacySavedEncounter(savedEncounter);
+    const updatedCombatant = updatedEncounter.Combatants[0];
+
+    expect(updatedCombatant.StatBlock.HP.Value).toBe(50);
+    expect(updatedCombatant.CurrentHP).toBe(50);
+  });
 });
 
 describe("UpdateLegacyEncounterState", () => {
