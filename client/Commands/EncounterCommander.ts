@@ -194,8 +194,6 @@ export class EncounterCommander {
       return;
     }
 
-    this.HideLibraries();
-
     if (this.tracker.Encounter.EncounterFlow.State() == "active") {
       return;
     }

@@ -1,3 +1,12 @@
+// Above this width all three columns show side by side regardless of
+// LibrariesVisible, so the close button in the library pane header has
+// nothing to do - hide it rather than show a button that does nothing.
+@media (min-width: (@large + 1px)) {
+  .libraries__header .button--close {
+    display: none;
+  }
+}
+
 //Two columns
 @media (max-width: @large) {
   body > .login.button {

@@ -12,6 +12,7 @@ interface IdentityFieldsProps {
   formApi: FormikProps<any>;
   allowFolder: boolean;
   allowSaveAsCopy: boolean;
+  requireSaveAsCopy?: boolean;
   allowSaveAsCharacter: boolean;
   setEditorMode: (editorMode: "standard" | "json") => void;
   currentListings?: Listing<Listable>[];
@@ -64,7 +65,10 @@ export class IdentityFields extends React.Component<IdentityFieldsProps> {
             {this.props.allowSaveAsCopy && (
               <Toggle
                 fieldName="SaveAs"
-                disabled={this.props.formApi.values.SaveAsCharacter}
+                disabled={
+                  this.props.formApi.values.SaveAsCharacter ||
+                  this.props.requireSaveAsCopy
+                }
               >
                 Save as a copy
               </Toggle>

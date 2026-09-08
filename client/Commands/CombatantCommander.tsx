@@ -912,7 +912,9 @@ export class CombatantCommander {
         onSave: newStatBlock => {
           selectedCombatant.StatBlock(newStatBlock);
         },
-        onDelete: () => this.Remove()
+        onDelete: () => this.Remove(),
+        onSaveAsCopy: this.tracker.Libraries.StatBlocks.SaveNewListing,
+        currentListings: this.tracker.Libraries.StatBlocks.GetAllListings()
       });
     }
   };

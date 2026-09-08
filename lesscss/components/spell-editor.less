@@ -67,7 +67,7 @@
   // instead of each claiming a full-width row like Source/School.
   .c-spell-editor__small-fields {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0 @medium-spacer;
 
     // Rarity's stored/filtered value is lowercase ("common", "rare", ...) -
@@ -79,6 +79,10 @@
 
     .c-text-field {
       flex-wrap: nowrap;
+      // Grid items default to a content-based min-width floor - without
+      // this the fixed 9rem label below refuses to shrink and pushes
+      // Actions out from under Tier past the panel edge on a narrow column.
+      min-width: 0;
 
       // Same fixed label width as the full-width rows above (see rule
       // above) - both grid columns are equal width, so giving both columns'
@@ -91,7 +95,14 @@
       input,
       select {
         flex: 1;
+        min-width: 0;
       }
+    }
+
+    // Below this, the 9rem label alone eats most of a grid column - stack
+    // Tier above Actions instead of squeezing both onto one narrow row.
+    @media (max-width: @medium) {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -133,6 +144,16 @@
   .c-spell-editor__fields {
     flex: 1;
     min-width: 0;
+  }
+
+  // The preview's fixed 300px (see .spell-preview) leaves too little room
+  // for the fields column once the panel narrows - drop it rather than
+  // squeeze both side by side. It's a read-only rendering of the fields
+  // already on screen above it, so hiding it loses no editing ability.
+  @media (max-width: @medium) {
+    .spell-preview {
+      display: none;
+    }
   }
 
   .json-editor {
