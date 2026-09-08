@@ -280,13 +280,13 @@
     "Traits": [],
     "Actions": [
       {
-        "Name": "\\Vicious Opportunist (1/turn) (melee & distracted)",
-        "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
+        "Name": "\\Vicious Opportunist",
+      "Content": "<b>(1/turn)</b> When you HIT a Distracted target with a melee attack, you may change the Primary Die roll to whatever you like (changing it to the max value counts as a crit).",
         "Usage": ""
       },
       {
-        "Name": "Sneak Attack (1st Crit hit + 1d6 damage)",
-        "Content": "",
+        "Name": "Sneak Attack",
+        "Content": "<b>(1/turn)</b> When you crit, deal +1d6 damage.",        
         "Usage": ""
       },
       {
@@ -318,7 +318,7 @@
       "Notes": "d6"
     }
   },
-{
+  {
     "Name": "Cheat LV2",
     "Path": "Sample Heroes/Cheat",
     "Source": "Sample Heroes",
@@ -360,13 +360,13 @@
     "Traits": [],
     "Actions": [
       {
-        "Name": "\\Vicious Opportunist (1/turn) (melee & distracted)",
-        "Content": "[A0] May change Primary Die if it wasn't a miss.\n— Distracted: if adjacent to ally / Taunted by ally / \n[tab] if it cannot see you.",
+        "Name": "\\Vicious Opportunist",
+        "Content": "<b>(1/turn)</b> When you HIT a Distracted target with a melee attack, you may change the Primary Die roll to whatever you like (changing it to the max value counts as a crit).",
         "Usage": ""
       },
       {
-        "Name": "Sneak Attack (1st Crit hit + 1d6 damage)",
-        "Content": "",
+        "Name": "Sneak Attack",
+        "Content": "<b>(1/turn)</b> When you crit, deal +1d6 damage.",
         "Usage": ""
       },
       {
@@ -381,7 +381,7 @@
     "MythicActions": [
       {
         "Name": "Cheat",
-        "Content": "[dash] 1 / round, Move or Hide for free.\n[dash] If initiative less then 10, change it to 10.\n[dash] 1 / day: Change any skill check to 12 (10 + [INT])\n[dash] Advantage on skill checks : games / gambling.",
+        "Content": "[dash] 1 / round, Move or Hide for free.\n[dash] 1 / Safe Rest: Change any skill check to 10+[INT]\n[dash] If rolling less then 10 on Initiative, \n[tab] change it to 10.\n[dash] Advantage on skill checks : games / gambling.",
         "Usage": ""
       },      
       {
@@ -445,7 +445,7 @@
     "Traits": [
       {
         "Name": "Coordinated Strike! (1/encounter)",
-        "Content": "Free: You & Ally in 6 spaces free attack.\nFor Ally it's not Rushed, because it is not their turn.",
+        "Content": "(<b>1/encounter, 0 Actions</b>) You and an ally within Reach <b>6</b> both immediately make a weapon/unarmed attack or cast a cantrip for free.\n\n\nFor Ally it's not a Rushed attack, because it is not their turn.",
         "Usage": ""
       }
     ],
@@ -485,6 +485,98 @@
       "Notes": "d10"
     }
   },
+  {
+    "Name": "Commander LV2",
+    "Path": "Sample Heroes/Commander",
+    "Source": "Sample Heroes",
+    "Type": "Commander",
+    "HP": {
+      "Value": 23,
+      "Notes": "17"
+    },
+    "AC": {
+      "Value": 13,
+      "Notes": "Chain Shirt"
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 0,
+      "Int": 2,
+      "Wis": -1
+    },
+    "SaveAdvantages": {
+      "Str": "+",
+      "Dex": "-",
+      "Int": "",
+      "Wis": ""
+    },    
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+      {
+        "Name": "Coordinated Strike! (1/encounter)",
+        "Content": "(<b>1/encounter, 0 Actions</b>) You and an ally within Reach <b>6</b> both immediately make a weapon/unarmed attack or cast a cantrip for free.\n\n\nFor Ally it's not a Rushed attack, because it is not their turn.",
+        "Usage": ""
+      },
+      {
+        "Name": "Fit for Any Battlefield",
+        "Content": "Choose a Combat Tactic. When you roll Initiative, gain [STR] Combat Dice (each a d6), they are lost when combat ends if unspent.",
+        "Usage": ""
+      }
+    ],
+    "Actions": [
+    {
+      "Name": "Weapons",
+      "Content": "[A1] Short Sword : 1d6 + [STR]\n[A1] Javelin : 1d6 + [STR] Range <b>8</b>",
+      "Usage": ""
+    },
+    {
+      "Name": "Combat Tactic",
+      "Content": "Whenever you attack, you may expend a Combat Die to add a special effect (max 1/attack).\n\n[bullet] <b>Lunging Strike</b>\n[tab] Gain +1 Reach on an attack and deal extra \n[tab] damage equal to 2× a roll of your Combat Die.",
+      "Usage": ""
+    }
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "Strength of Stone (1/encounter)",
+        "Content": "If you get a Crit: force a reroll. (+2 Might)",
+        "Usage": ""
+      }
+    ],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Home at Sea",
+        "Content": "Recover 2x Wounds & HP if on a ship / near water. You can act as captain. Adv. water related checks.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d10"
+    }
+  },  
   {
     "Name": "Hunter LV1",
     "Path": "Sample Heroes/Hunter",
@@ -591,7 +683,7 @@
     "InitiativeModifier": 0,
     "InitiativeAdvantage": true,
     "Speed": [
-      "6"
+      "7"
     ],
     "Abilities": {
       "Str": 0,
@@ -618,7 +710,7 @@
     "Actions": [
       {
         "Name": "Spells",
-        "Content": "Cantrips: Flame Dart, Heart's Fire, Ice Lance, Snowblind, Zap, Overload",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Flame Dart, Heart's Fire\n[bullet] Ice Lance, Snowblind\n[bullet] Zap, Overload",
         "Usage": ""
       },
       {
@@ -635,7 +727,12 @@
         "Name": "Taste for the finer things",
         "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
         "Usage": ""
-      }
+      },
+      {
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
+        "Usage": ""
+      }      
     ],
     "Description": "",
     "Player": "player",
@@ -650,6 +747,90 @@
       "Notes": "d6"
     }
   },
+  {
+    "Name": "Mage LV2",
+    "Path": "Sample Heroes/Mage",
+    "Source": "Sample Heroes",
+    "Type": "Mage",
+    "HP": {
+      "Value": 14,
+      "Notes": "10"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "7"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 1,
+      "Int": 2,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "+",
+      "Wis": ""
+    },     
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Flame Dart, Heart's Fire\n[bullet] Ice Lance, Snowblind\n[bullet] Zap, Overload\n\n\n[tab] <b>Tier 1:</b>\n[bullet] Ignite\n[bullet] Frost Shield\n[bullet] Arc Lightning",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Staff 1d8 - [STR]",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Taste for the finer things",
+        "Content": "You always have up to date knowledge of the customs and dress of the upper classes and may even know many of their secrets. Advantage on Influence checks with the upper class.",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "InitiativeSpecialRoll": "advantage",
+    "Mana": {
+      "Value": 8
+    },    
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 1,
+      "Notes": "d6"
+    }
+  },  
   {
     "Name": "Oathsworn LV1",
     "Path": "Sample Heroes/Oathsworn",
