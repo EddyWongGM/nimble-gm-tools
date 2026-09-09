@@ -33,10 +33,12 @@ export function BannerHost(): JSX.Element {
             image_url: banner.src
           });
 
-          Metrics.TrackPatreonSignupIntent(Metrics.LeadSource.FooterBanner, {
-            link_url: banner.href,
-            creative_name: banner.src
-          });
+          if (banner.href.indexOf("patreon.com") !== -1) {
+            Metrics.TrackPatreonSignupIntent(Metrics.LeadSource.FooterBanner, {
+              link_url: banner.href,
+              creative_name: banner.src
+            });
+          }
         }}
         title="Support the free app on Patreon. Hidden for subscribed Patrons."
       >
@@ -47,6 +49,16 @@ export function BannerHost(): JSX.Element {
 }
 
 const Banners: { href: string; src: string; altText: string }[] = [
+  {
+    href: "https://www.patreon.com/join/NimbleRPGApp",
+    src: "/img/banner-support-patreon.png",
+    altText: "Support Nimble RPG App on Patreon"
+  },
+  {
+    href: "https://www.patreon.com/join/NimbleRPGApp",
+    src: "/img/banner-become-patron.png",
+    altText: "Become a Patron of Nimble RPG App"
+  },
   {
     href: "https://www.drivethrurpg.com/browse.php?affiliate_id=282190",
     src: "https://www.drivethrurpg.com/themes/dtrpg/images/728x90indies.png",
@@ -82,20 +94,4 @@ const Banners: { href: string; src: string; altText: string }[] = [
     src: "https://www.dmsguild.com/themes/dmg/images/affiliatebanner2.jpg",
     altText: "Eberron Adventures at DMsGuild.com"
   }
-  // ,
-  // {
-  //   href: "https://www.patreon.com/join/NimbleRPGApp",
-  //   src: "../img/banner-annual.png",
-  //   altText: "Nimble RPG App Legendary Tier Annual Subscriptions"
-  // },
-  // {
-  //   href: "https://www.patreon.com/join/NimbleRPGApp",
-  //   src: "../img/banner-features.png",
-  //   altText: "Nimble RPG App Legendary Tier Features"
-  // },
-  // {
-  //   href: "https://www.patreon.com/join/NimbleRPGApp",
-  //   src: "../img/banner-trial.png",
-  //   altText: "Nimble RPG App Legendary Tier Free Trial"
-  // }
 ];
