@@ -61,15 +61,15 @@ export function LibraryManagerRow(props: {
 function SourceIndicator(props: { origin: ListingOrigin; source?: string }) {
   if (props.origin === "server")
     return (
-      <Tippy content="Basic Rules">
-        <i className="fab fa-d-and-d c-listing-indicator" />
+      <Tippy content="Nimble Core Rules">
+        <i className="fas fa-dice-d20 c-listing-indicator" />
       </Tippy>
     );
 
   if (props.origin === "open5e")
     return (
-      <Tippy content="Basic Rules (Open5e)">
-        <span className="fab fa-d-and-d c-listing-indicator" />
+      <Tippy content="Nimble Core Rules (Open5e)">
+        <span className="fas fa-dice-d20 c-listing-indicator" />
       </Tippy>
     );
 

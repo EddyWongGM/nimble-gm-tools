@@ -1,8 +1,10 @@
 // Above this width all three columns show side by side regardless of
-// LibrariesVisible, so the close button in the library pane header has
-// nothing to do - hide it rather than show a button that does nothing.
+// LibrariesVisible, so the close button in the library reference pane header
+// has nothing to do - hide it rather than show a button that does nothing.
+// Scoped to .libraries (the reference pane) so it doesn't also hide the
+// Library Manager's close button, which is the only way to leave that view.
 @media (min-width: (@large + 1px)) {
-  .libraries__header .button--close {
+  .libraries > .libraries__header .button--close {
     display: none;
   }
 }
