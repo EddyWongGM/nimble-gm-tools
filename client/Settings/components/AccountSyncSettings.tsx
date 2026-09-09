@@ -66,7 +66,7 @@ export class AccountSyncSettings extends React.Component<
             this.getCounts(this.props.libraries.Encounters.GetAllListings())
           )}
           {this.syncCount(
-            "Compendium",
+            "Codex",
             this.getCounts(this.props.libraries.Spells.GetAllListings())
           )}          
         </div>

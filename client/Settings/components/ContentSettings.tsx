@@ -56,7 +56,7 @@ export function ContentSettings() {
       <Toggle fieldName="PreloadedEncounterSources.local-basic-rules">
         (WIP) Starter Set
       </Toggle>
-      <h2>Compendium</h2>
+      <h2>Codex</h2>
       <Toggle fieldName="PreloadedSpellSources.local-basic-rules">
         (WIP) Starter Set
       </Toggle>

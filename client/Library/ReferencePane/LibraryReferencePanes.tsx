@@ -159,7 +159,7 @@ function LibraryHeader(props: { selectedLibrary: SelectableTab }) {
     StatBlocks: "Add Names",
     PersistentCharacters: "Add Names",
     Encounters: "Load Encounters",
-    Spells: "Browse Compendium",
+    Spells: "Browse Codex",
     Scenes: "Manage Scenes"
   };
 

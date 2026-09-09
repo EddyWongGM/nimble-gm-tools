@@ -28,7 +28,7 @@ export const LibraryFriendlyNames = {
   PersistentCharacters: "Heroes",
   StatBlocks: "Monsters",
   Encounters: "Encounters",
-  Spells: "Compendium"
+  Spells: "Codex"
 };
 
 export const LibraryStoreNames: Record<LibraryType, string> = {

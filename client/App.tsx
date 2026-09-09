@@ -183,7 +183,7 @@ export function App(props: { tracker: TrackerViewModel }): JSX.Element {
                 <div className="post-tutorial-nudge">
                   <span>
                     Welcome back! Next time you run a session, try adding one
-                    of your own Heroes from the Compendium or "Add New" in the
+                    of your own Heroes from the Codex or "Add New" in the
                     Heroes tab.
                   </span>
                   <Button
