@@ -251,6 +251,16 @@
       auto auto 1fr auto auto;
 
     .combatant__name {
+      // Grid items default to min-width: auto, i.e. their content's
+      // min-content - combined with nowrap that's the full unwrapped name,
+      // so the "name" track (1fr) couldn't actually shrink below whatever
+      // the longest name needed and instead forced the whole row wider
+      // than the screen. min-width: 0 lets the track honor 1fr and
+      // actually shrink; overflow/ellipsis keeps a long name legible
+      // instead of just clipping wherever the row happens to end.
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
       padding-right: @small-spacer;
     }
