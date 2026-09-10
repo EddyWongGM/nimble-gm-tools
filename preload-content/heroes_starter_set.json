@@ -1484,7 +1484,7 @@
       "Value": 4,
       "Notes": ""
     },
-    "InitiativeModifier": 1,
+    "InitiativeModifier": 0,
     "InitiativeAdvantage": true,
     "Speed": [
       "7"
@@ -1520,7 +1520,7 @@
       },
       {
         "Name": "Spells",
-        "Content": "Cantrips Zap, Overload, Razor Wind, Breath of Life",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet]  Zap, Overload\n[bullet] Razor Wind, Breath of Life",
         "Usage": ""
       },
       {
@@ -1539,8 +1539,8 @@
         "Usage": ""
       },
       {
-        "Name": "Lithe (Adv. on Initiative, +1 speed)",
-        "Content": "",
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
         "Usage": ""
       }   
     ],
@@ -1557,6 +1557,97 @@
       "Notes": "d8"
     }
   },
+  {
+    "Name": "Stormshifter LV2",
+    "Path": "Sample Heroes/Stormshifter",
+    "Source": "Sample Heroes",
+    "Type": "Stormshifter",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 5,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "7"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 2,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+    ],
+    "Actions": [
+      {
+        "Name": "Beastshift ([DEX]/Safe Rest)",
+        "Content": "Shift Harmless beast and speak to animals.\nLasts until 0 HP, cast spell, or until you end it.",
+        "Usage": "[DEX]/Safe Rest"
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet]  Zap, Overload\n[bullet] Razor Wind, Breath of Life\n\n[tab] <b>Tier 1:</b>\n[bullet] Arc Lightning, Blustery Gale",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Staff : 1d8 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Fearsome Beast",
+        "Content": "<b>1 Action:</b> Transform into a Large beast. Gain [DEX]+[LVL] temp HP (until Beastshift ends)\n\n\n<b>Fearsome:</b> Whenever you Interpose or Defend, you may spend 1 mana to force them to reroll the attack (you must choose either result).\n\n\n<b>Gore.</b> 1 Action: 1d6+[LVL] damage, on hit: gain [LVL] Temp HP.",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Wild One (+1 Naturecraft)",
+        "Content": "Beasts more friendly. Field Rest: Adv HD in wild.",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
+        "Usage": ""
+      }   
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d8"
+    }
+  },  
   {
     "Name": "Zephyr LV1",
     "Path": "Sample Heroes/Zephyr",

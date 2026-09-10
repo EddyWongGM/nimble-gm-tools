@@ -133,26 +133,6 @@
     text-align: center;
   }
 
-  .combatant__ability-charges {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-grow: 1;
-    flex-basis: 0;
-    row-gap: @extra-small-spacer;
-
-    .ability-charge {
-      // Same fixed white-on-black treatment as .tag, for the same reason -
-      // stays legible on a projector/TV regardless of theme.
-      .colors(var(--white), var(--black));
-      margin-right: @large-spacer;
-      margin-bottom: @extra-small-spacer;
-      padding: @small-spacer @medium-spacer;
-      font-size: 0.75rem;
-      white-space: nowrap;
-    }
-  }
-
   .combat-footer {
     flex-direction: row;
     justify-content: flex-end;

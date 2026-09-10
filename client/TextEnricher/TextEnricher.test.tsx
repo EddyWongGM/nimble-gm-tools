@@ -155,6 +155,86 @@ describe("TextEnricher", () => {
     expect(rollDice).not.toHaveBeenCalled();
   });
 
+  test("Compound expression sums two tags into one rollable total", () => {
+    const rollDice = jest.fn();
+    const textEnricher = new TextEnricher(
+      rollDice,
+      () => {},
+      () => {},
+      () => [],
+      () => new RegExp("asdf"),
+      new DefaultRules()
+    );
+
+    const statBlock = {
+      ...StatBlock.Default(),
+      Challenge: "3",
+      Abilities: { Str: 0, Dex: 2, Int: 0, Wis: 0 }
+    };
+    const enrichedText = textEnricher.EnrichText(
+      "Reach [DEX]+[LVL]",
+      undefined,
+      statBlock
+    );
+    const tree = render(enrichedText);
+
+    expect(() => tree.getByText("5")).not.toThrow();
+    expect(() => tree.getByText("(DEX+LVL)")).not.toThrow();
+    expect(tree.queryByText("[DEX]")).toBeNull();
+
+    act(() => {
+      tree.getByText("5").click();
+    });
+    expect(rollDice).toHaveBeenCalledWith("+5");
+  });
+
+  test("Compound expression multiplies a coefficient into one rollable total", () => {
+    const rollDice = jest.fn();
+    const textEnricher = new TextEnricher(
+      rollDice,
+      () => {},
+      () => {},
+      () => [],
+      () => new RegExp("asdf"),
+      new DefaultRules()
+    );
+
+    const statBlock = {
+      ...StatBlock.Default(),
+      Abilities: { Str: 0, Dex: 0, Int: 0, Wis: 2 }
+    };
+    const enrichedText = textEnricher.EnrichText(
+      "Uses 2×[WIL]",
+      undefined,
+      statBlock
+    );
+    const tree = render(enrichedText);
+
+    expect(() => tree.getByText("4")).not.toThrow();
+    expect(() => tree.getByText("(2×WIL)")).not.toThrow();
+
+    act(() => {
+      tree.getByText("4").click();
+    });
+    expect(rollDice).toHaveBeenCalledWith("+4");
+  });
+
+  test("Compound expression falls back to plain text without a stat block", () => {
+    const textEnricher = new TextEnricher(
+      () => {},
+      () => {},
+      () => {},
+      () => [],
+      () => new RegExp("asdf"),
+      new DefaultRules()
+    );
+
+    const enrichedText = textEnricher.EnrichText("Reach [DEX]+[LVL]");
+    const tree = render(enrichedText);
+
+    expect(() => tree.getByText("Reach [DEX]+[LVL]")).not.toThrow();
+  });
+
   test("KEY tag labels Wisdom as WIL, matching the app's Wis->Wil display name", () => {
     const textEnricher = new TextEnricher(
       () => {},

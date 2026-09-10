@@ -292,7 +292,8 @@ function StatBlockComponentNoError(props: StatBlockProps) {
         {powerType.data.map((power, j) => {
           const chargeUsage = StatBlock.ParseChargeUsage(
             power.Usage,
-            statBlock.Abilities
+            statBlock.Abilities,
+            StatBlock.ResolveLevel(statBlock)
           );
           const showChargePips = chargeUsage && props.abilityChargesUsed;
           return (

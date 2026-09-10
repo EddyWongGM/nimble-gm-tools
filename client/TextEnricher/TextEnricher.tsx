@@ -10,6 +10,12 @@ import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import remarkBreaks from "remark-breaks";
 
+import {
+  AbilityExpressionPattern,
+  EvaluateAbilityExpression,
+  FormatAbilityExpressionLabel,
+  ParseAbilityExpression
+} from "../../common/AbilityExpression";
 import { AbilityScores, StatBlock } from "../../common/StatBlock";
 import { Spell } from "../../common/Spell";
 import {
@@ -274,6 +280,34 @@ export class TextEnricher {
             </span>
           )
       },
+      // Compound expressions like "2×[Wil]+[LVL]" or "[Dex]+[LVL]" - must
+      // run before abilityTag below so it claims the whole expression
+      // before that pattern's single-tag regex splits it into separate,
+      // independently-rolled pills. A bare single tag ("[Wil]") isn't
+      // matched here - that's still abilityTag's job.
+      abilityExpression: {
+        pattern: AbilityExpressionPattern,
+        matcherFn: (rawText, processed, key) => {
+          const terms = ParseAbilityExpression(rawText);
+          if (!terms) {
+            return <React.Fragment key={key}>{rawText}</React.Fragment>;
+          }
+          const level = statBlock && StatBlock.ResolveLevel(statBlock);
+          const total = EvaluateAbilityExpression(
+            terms,
+            statBlock?.Abilities,
+            level
+          );
+          if (total === null) {
+            return <React.Fragment key={key}>{rawText}</React.Fragment>;
+          }
+          return this.renderAbilityTag(
+            key,
+            total,
+            FormatAbilityExpressionLabel(terms)
+          );
+        }
+      },
       abilityTag: {
         pattern: /(\[(?:Str|Dex|Int|Wis|Wil|LVL|KEY)\])/gi,
         matcherFn: (rawText, processed, key) => {
@@ -281,18 +315,12 @@ export class TextEnricher {
           const upperName = typedName.toUpperCase();
 
           if (upperName === "LVL") {
-            if (!statBlock?.Challenge) {
-              return <React.Fragment key={key}>{rawText}</React.Fragment>;
-            }
             // Challenge can be a fractional CR string (e.g. "1/2") on
-            // legacy imported monsters, or other non-numeric text - only
-            // treat it as a rollable modifier when it's a clean whole
-            // number. Number() (unlike parseInt) rejects the whole string
-            // rather than silently truncating "1/2" to 1, so this falls
-            // back to plain, non-interactive text instead of rolling a
-            // truncated or NaN modifier.
-            const level = Number(statBlock.Challenge);
-            if (!Number.isInteger(level)) {
+            // legacy imported monsters, or other non-numeric text -
+            // ResolveLevel only treats a clean whole number as a level, so
+            // this falls back to plain, non-interactive text otherwise.
+            const level = statBlock && StatBlock.ResolveLevel(statBlock);
+            if (level === undefined) {
               return <React.Fragment key={key}>{rawText}</React.Fragment>;
             }
             return this.renderTagWithLabel(
