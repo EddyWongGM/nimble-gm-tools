@@ -37,9 +37,29 @@
     overflow-y: auto;
 
     .left-column {
-      display: block !important;
+      // flex (not block!) - overriding display:none from the
+      // .encounter-view.show-* hide rules below still needs !important to
+      // win, but forcing display:block here was itself a bug: every div in
+      // this app defaults to display:flex; flex-direction:column (see
+      // layout/base.less), which is what lets PaneHeader/Tabs stay pinned
+      // while .library's own ul{flex:1; overflow-y:auto} scrolls
+      // internally beneath them. display:block strips that flex-column
+      // context entirely, so nothing has a bounded height for the list to
+      // scroll *within* - the header/tabs/list just stack as plain blocks
+      // with no working scrollbar anywhere (confirmed live: scrolling did
+      // nothing at all, not just landing in the wrong position).
+      display: flex !important;
       width: 100% !important;
       max-width: 100% !important;
+      // Without a bounded height, PaneHeader/Tabs/.library (its flex-column
+      // children) just take their natural stacked size - .library's own
+      // flex: 1 has no surplus space to grow into, so its ul never
+      // overflows its own box and never actually scrolls. Filling
+      // .c-library-manager's own (viewport-bound) height here gives
+      // .library something real to fill, restoring the header-pinned,
+      // list-scrolls-internally behavior every other .library user in the
+      // app already gets.
+      height: 100%;
     }
 
     // Panes are stacked full-width now, so the drag-to-resize handles have

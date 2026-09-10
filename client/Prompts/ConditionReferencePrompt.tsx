@@ -29,6 +29,7 @@ export function ConditionReferencePrompt(
     ),
     autoFocusSelector: "button",
     initialValues: {},
-    onSubmit: () => true
+    onSubmit: () => true,
+    hideCancelButton: true
   };
 }

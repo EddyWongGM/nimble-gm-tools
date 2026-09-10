@@ -14,7 +14,8 @@ export function SpellPrompt(
     autoFocusSelector: "button",
     children: <SpellPromptComponent spellListing={spellListing} />,
     initialValues: {},
-    onSubmit: () => true
+    onSubmit: () => true,
+    hideCancelButton: true
   };
 }
 

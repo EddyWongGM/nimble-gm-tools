@@ -376,6 +376,7 @@ export class TrackerViewModel {
         autoFocusSelector: ".submit",
         initialValues: {},
         onSubmit: () => true,
+        hideCancelButton: true,
         children: (
           <span className="not-logged-in-for-import">
             {"Please login with "}
@@ -402,6 +403,7 @@ export class TrackerViewModel {
         autoFocusSelector: ".submit",
         initialValues: {},
         onSubmit: () => true,
+        hideCancelButton: true,
         children: (
           <span className="no-epic-initiative-for-import">
             {"The D&D Beyond Importer is available for "}

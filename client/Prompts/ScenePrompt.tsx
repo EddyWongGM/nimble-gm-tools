@@ -11,7 +11,8 @@ export function ScenePrompt(
     autoFocusSelector: "button",
     children: <ScenePromptComponent scene={scene} />,
     initialValues: {},
-    onSubmit: () => true
+    onSubmit: () => true,
+    hideCancelButton: true
   };
 }
 
