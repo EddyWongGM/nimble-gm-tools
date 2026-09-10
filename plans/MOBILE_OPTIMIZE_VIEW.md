@@ -222,21 +222,59 @@ as #2's `1fr` track and the ruled-out `auto`-column theory above — just one
 level higher in the tree, on the outer column layout rather than inside
 the table.
 
-**Fix:** added `min-width: 0;` to `.center-column` in
+**First fix (incomplete):** added `min-width: 0;` to `.center-column` in
 `lesscss/pages/tracker.less`. This is also why the `.prompts`/`.prompt`
 `max-width: 100%` fix from #1 didn't fully resolve things on its own — that
 caps a child's width *relative to its parent*, but doesn't help when the
 parent itself is the one being forced wider by a *different* child's
-min-content demand. With `.center-column` now able to actually shrink to
-the real viewport width, its existing `overflow-x: hidden` can do its job
-and clip anything that still doesn't fit, instead of the whole layout
-chain inflating to avoid clipping it.
+min-content demand.
+
+**Deployed, re-tested live, and still reproduced** — same symptom (the
+AC/shield header and value pushed toward/past the right edge) via the same
+real interaction (select a Mage → open a spell from its info panel → popup
+shows). This time `getComputedStyle(document.querySelector('.center-column')).minWidth`
+confirmed the fix *was* live (`'0px'`), so the trap had to be one level up
+again. Walked it with the same clientWidth technique, one measurement at a
+time, with the popup open:
+
+| element | clientWidth |
+|---|---|
+| `.right-column` `scrollWidth` | `0` (hidden this state, not the cause) |
+| `.encounter-view` | `508` |
+| `#app__container` | `508` |
+| `#tracker` | `430` (correct — matches viewport) |
+
+`#tracker`, `#app__container`, and `.encounter-view` share one rule
+([lesscss/pages/tracker.less:1-6](../lesscss/pages/tracker.less#L1-L6))
+that gives all three `flex: 1` but, like `.center-column` before the first
+fix, no `min-width` override. `#tracker` measured correctly because
+nothing above *it* forces it wide — but `#app__container` and
+`.encounter-view`, each independently a `flex: 1` item with the default
+`min-width: auto`, were still individually capable of being forced wider
+than the space their own parent would otherwise give them, one level above
+where `.center-column` was already fixed. Same underlying trap, just not
+fully stamped out on the first pass — fixing the innermost flex item
+doesn't fix an ancestor that has the identical unset property.
+
+**Fix:** added the same `min-width: 0;` to the shared
+`#tracker, #app__container, .encounter-view` rule in `tracker.less`
+(harmless on `#tracker`, which didn't need it, but keeps the chain
+consistent). With `.center-column`, `.encounter-view`, and
+`#app__container` all now able to actually shrink to the real viewport
+width, `.center-column`'s existing `overflow-x: hidden` can finally do its
+job and clip anything that still doesn't fit, instead of the whole layout
+chain inflating to avoid clipping it. **Not yet re-verified live** — the
+previous "fixed" claim for this same bug turned out to be premature, so
+this specifically still needs the same clientWidth check repeated (expect
+`.encounter-view`/`#app__container` back to `430` with the popup open) plus
+a visual check that the AC/shield header stays on-screen.
 
 Worth a look later: `.left-column`/`.right-column` (same file) likely have
 the identical latent gap (no `min-width` override either) — not touched
-here since they weren't implicated in this specific bug, but the same
-"content forces the column wider than viewport" failure mode could apply
-to them too under different content.
+here since they weren't implicated in this specific bug (confirmed hidden,
+`scrollWidth: 0`, in the state that was tested), but the same "content
+forces the column wider than viewport" failure mode could apply to them
+too under different content/state.
 
 ## Still open / not investigated
 
