@@ -1343,7 +1343,7 @@
       },
       {
         "Name": "Spells",
-        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal, Shadow Trap, \n[bullet] Lifebinding Spirit",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal, Shadow Trap\n[bullet] Lifebinding Spirit",
         "Usage": ""
       },
       {
@@ -1555,7 +1555,10 @@
     "HitDice": {
       "Value": 1,
       "Notes": "d8"
-    }
+    },
+    "Resources": {
+      "Value": 2
+    }    
   },
   {
     "Name": "Stormshifter LV2",
@@ -1616,7 +1619,7 @@
       },
       {
         "Name": "Fearsome Beast",
-        "Content": "<b>1 Action:</b> Transform into a Large beast. Gain [DEX]+[LVL] temp HP (until Beastshift ends)\n\n\n<b>Fearsome:</b> Whenever you Interpose or Defend, you may spend 1 mana to force them to reroll the attack (you must choose either result).\n\n\n<b>Gore.</b> 1 Action: 1d6+[LVL] damage, on hit: gain [LVL] Temp HP.",
+        "Content": "<b>1 Action:</b> Transform into a Large beast. \nGain [DEX]+[LVL] temp HP (until Beastshift ends)\n\n\n<b>Fearsome:</b> Whenever you Interpose or Defend, you may spend 1 mana to force them to reroll the attack (you must choose either result).\n\n\n<b>Gore.</b> 1 Action: 1d6+[LVL] damage,\non hit: gain [LVL] Temp HP.",
         "Usage": ""
       }      
     ],
@@ -1646,7 +1649,10 @@
     "HitDice": {
       "Value": 2,
       "Notes": "d8"
-    }
+    },
+    "Resources": {
+      "Value": 2
+    } 
   },  
   {
     "Name": "Zephyr LV1",
