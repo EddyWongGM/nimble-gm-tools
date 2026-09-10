@@ -176,6 +176,49 @@ without that, stacked content taller than the viewport would just be
 clipped instead of scrollable; and drops the editor's hardcoded `720px`
 so it doesn't force overflow once stacked full-width.
 
+## 4. Selecting a combatant pushed AC/HP off-screen (unrelated to the name column)
+
+Confirmed with before/after screenshots from the user, not just static
+reading — this turned out to be a different bug than #2/#2b above, despite
+looking similar (both are "the row got wider than the screen").
+
+Before selecting: header shows Name/HP/AC, all three fit. After tapping a
+combatant (which selects it and opens one of its spell cards below) the row
+gets a `.selected` green border, the AC header cell is no longer visible —
+not hidden, *pushed past the right edge* (a shield-icon fragment is visible
+right at the cut-off edge) — and HP's value area shrinks too.
+
+`.combatant__commands` ([combatants.less:723-732](../lesscss/components/combatants.less#L723-L732))
+is `display: none` until the row is `.selected`, at which point it switches
+to `display: flex` and renders one button per applicable command
+([CombatantRow.tsx:484-490](../client/InitiativeList/CombatantRow.tsx#L484-L490)) — so this content doesn't exist in the layout at all until
+selection. It lives in the `tagsCommands` grid-area, which — in both the
+`combatant--inline-stats` and general grid templates — spans the *same*
+`auto`/`1fr` columns that `name`/`hp`/`ac` also use in the rows above it.
+
+`.combatant__tags-commands-wrapper` already has `flex-flow: row wrap`, so
+it was reasonable to assume it couldn't force extra width — that assumption
+was wrong. A wrapping flex container's **max-content size** (what an
+ancestor grid's `auto` columns use to decide how big to grow) is, by
+spec, computed as if wrapping never happens — the sum of every child laid
+out on one line. `flex-wrap` only changes behavior once a width has
+already been assigned to the container; it has no effect on what width the
+grid *asks for* while computing that width in the first place. So the
+moment selection revealed a row of command buttons, that row's full
+single-line width got fed into the same shared columns name/hp/ac live in,
+forcing them wider than the screen — explaining exactly what the
+screenshots show.
+
+**Fix:** on `.combatant__tags-commands-cell`
+([combatants.less:635-646](../lesscss/components/combatants.less#L635-L646)),
+replaced `width: 100%` with `width: 1px; min-width: 100%;` at the same
+`@media (max-width: @medium)` breakpoint. `width: 1px` reports a
+near-zero size for the grid's sizing pass (instead of the wrapping
+container's full max-content), so it stops forcing the shared columns
+wider; `min-width: 100%` then stretches the cell back to fill whatever
+width the row actually ends up with, once that's been determined by
+everything else.
+
 ## Still open / not investigated
 
 - The combat footer's `.footer-bar` (round counter / encounter-difficulty
