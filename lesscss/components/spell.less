@@ -115,4 +115,20 @@
     font-style: italic;
     font-size: small;
   }
+
+  @media (max-width: @phone) {
+    // At full width Upcast and Source comfortably share one row. At phone
+    // width, Source's flex-shrink: 0 (needed so its own text never wraps
+    // mid-word) instead forces the row - and the card containing it -
+    // wider than the screen when Upcast is also present. Stack them so
+    // each gets the full row instead.
+    .spell-footer {
+      flex-wrap: wrap;
+    }
+
+    .spell-upcast,
+    .spell-source {
+      flex-basis: 100%;
+    }
+  }
 }
