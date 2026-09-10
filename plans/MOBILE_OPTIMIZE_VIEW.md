@@ -308,6 +308,123 @@ here since they weren't implicated in this specific bug (confirmed hidden,
 forces the column wider than viewport" failure mode could apply to them
 too under different content/state.
 
+## 4b. Library row actions (rename/move/delete/etc.) only ever revealed on hover, which touch doesn't have
+
+Not an overflow bug — a discoverability dead end. Raised as a design
+question first: on a touchscreen there's no cursor to hover a row with, so
+is it bad design to just always show these icons at phone width? Answer:
+no — hover-only affordances are a known accessibility/usability gap on
+touch, and always-showing them below a touch-relevant threshold is the
+standard fix, not a compromise.
+
+[client/Library/Components/ListingRow.tsx](../client/Library/Components/ListingRow.tsx)
+renders each row's rename/delete/edit/move/preview/boss/minion buttons via
+`ListingButton`, all wrapped in `.c-listing-*` classes
+([listing.less:41-59](../lesscss/components/listing.less#L41-L59)) that sit
+at `opacity: 0` until `.c-listing:hover` or `:focus-within` — i.e. never,
+on a device with no hover state and no reason to have focused the row
+first. `:focus-within` already gave keyboard users a way in; touch had
+none.
+
+**Fix:** added a media query revealing them unconditionally —
+`@media (max-width: @medium), (hover: none), (pointer: coarse)`. Both
+conditions are included deliberately: `(hover: none)`/`(pointer: coarse)`
+is the semantically correct target (an actual touchscreen, at any viewport
+width), but `@medium` is included too since it's what this codebase's
+entire mobile pass otherwise relies on, and since Chrome DevTools' plain
+"Responsive" sizing mode (used throughout this session's live testing)
+doesn't reliably flip the touch media features on its own — without it,
+this fix could compile correctly and still visually not appear during the
+same width-resize testing used for every other fix in this doc.
+
+Not addressed: tap-target size. `.c-listing-button`'s existing padding
+(`@medium-spacer` = 8px around a ~16px icon, ~32px total) is on the small
+side of the ~44px commonly recommended minimum touch target — left alone
+here since `.c-listing-button` is a shared, general-purpose class (not
+library-row-specific), so enlarging it has a wider blast radius than this
+visibility fix and deserves its own look rather than a drive-by change.
+**Not yet verified live.**
+
+## 5. StatBlock editor: a keyword's "+" add button overlapped the next column's label
+
+Found live via screenshot at 430px width, editing a monster: the "Damage
+Vulnerabilities" row's `+` button rendered on top of "Damage Resistances"
+(the adjacent column), not next to its own label.
+
+[client/StatBlockEditor/components/SortableList.tsx:49-55](../client/StatBlockEditor/components/SortableList.tsx#L49-L55) —
+when a keyword list (Speed/Senses/Damage Vulnerabilities/etc.) is empty, it
+renders `<span className="c-statblock-editor__label">{label}{addButton}</span>`
+— label text and the add button as inline-flex siblings on one line
+([lesscss/components/statblock-editor.less:301-314](../lesscss/components/statblock-editor.less#L301-L314)).
+`.c-statblock-editor__keywords` is a 2-up CSS grid
+([statblock-editor.less:439-448](../lesscss/components/statblock-editor.less#L439-L448))
+narrow enough on phone that a two-word label like "Damage Vulnerabilities"
+has to wrap. Plain text can still shrink to wrap (its min-content is just
+its widest word), but the 50px button can't shrink at all and the row
+never had `flex-wrap` set (defaults to nowrap) — so the row's combined
+minimum (widest word + button) stayed wider than the ~185px column even
+after the label text wrapped, and the excess rendered past the column
+boundary into the neighboring grid cell. Same "flex min-content" family of
+bug as #2/#4, just on a label+button row instead of a name column or a
+layout column.
+
+**Fix:** added `flex-wrap: wrap;` to `span.c-statblock-editor__label`
+([statblock-editor.less](../lesscss/components/statblock-editor.less)) so
+the button drops to its own line below the label instead of forcing the
+row wider than its column. **Not yet verified live.**
+
+## 6. StatBlock editor: a Trait/Action's Usage field rendered outside the card
+
+Same screenshot: the "Usage (e.g. ...)" field on a Trait row (Parry,
+Sneak, etc.) was cut off at the card's right edge instead of wrapping or
+shrinking into view.
+
+[client/StatBlockEditor/components/PowerField.tsx:24-47](../client/StatBlockEditor/components/PowerField.tsx#L24-L47)
+renders one `.inline` row per Trait/Action: a grab-handle, a Name input
+(general `input` rule — `flex-grow: 1`, 12rem baseline), a Usage input
+(`input.usage` — fixed `width: 10rem`, `flex-grow: 0`), a delete icon, and
+(on the last row) the add button. `.inline` is `display: flex;
+flex-direction: row;` with no `flex-wrap` — on a phone-width card, Name +
+Usage + the icons don't fit on one line even after the inputs shrink, and
+with nothing allowed to wrap, Usage simply overflowed past the card's
+right edge into the viewport.
+
+**Fix:** scoped to where the problem actually is, not the shared base
+`.inline` class (which `KeywordField.tsx` also uses for its single-input
+row, elsewhere, without this problem) — added
+`.c-statblock-editor__power-group .inline { flex-wrap: wrap; }`
+([statblock-editor.less](../lesscss/components/statblock-editor.less)).
+**Not yet verified live.**
+
+## Known gap, not yet fixed: prompts have no visible way to cancel
+
+Found live: opening the "Save Encounter As" prompt at 430px width showed
+the label + input but no visible button to back out of it.
+[client/Prompts/PendingPrompts.tsx:37-41](../client/Prompts/PendingPrompts.tsx#L37-L41)
+shows this isn't Save-Encounter-specific or mobile-specific — every prompt
+(`Prompt` in `PendingPrompts.tsx`, used for Save Encounter, Add Spell,
+Scene reveal, roll-initiative, add-item/add-tag, etc.) can only be
+canceled via the `Escape` key. That's always been true; it just never
+showed up as a problem before because desktop always has an Escape key,
+and touch devices don't.
+
+**Planned fix (approved, not yet implemented):** add a visible close (X)
+button to the shared `Prompt` component, wired to the same `onCancel` the
+Escape handler already calls — fixes every prompt at once, on every
+screen size, rather than special-casing Save Encounter or gating it to
+phone width. Positioning needs care: `.prompt`'s own flex layout
+(`justify-content: space-between`, exactly 2 children assumed — content,
+then each prompt's own inline `SubmitButton`) can't just take a 3rd flex
+child without risking misalignment across every different prompt variant's
+internal layout (roll-initiative, add-item, add-tag, spell, scene, etc.
+all lay out their own content very differently). Current plan: a small
+button positioned *outside* `.prompt`'s padding box (small negative
+top/left offset, `.prompt` given `position: relative`) — clear of both the
+existing corner-overlapping submit button used by `.prompt-spell`/
+`.prompt-scene` (top-right, via `transform: translateX(-100%)`) and of
+each variant's own top-left content, since it never enters their padding
+box at all.
+
 ## Still open / not investigated
 
 - The combat footer's `.footer-bar` (round counter / encounter-difficulty

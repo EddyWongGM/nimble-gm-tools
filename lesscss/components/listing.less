@@ -45,6 +45,17 @@
   .c-listing-move {
     transition: opacity @transition-hover;
     opacity: 0;
+
+    // These only ever reveal on hover/focus below - fine on desktop (the
+    // cursor can land on a row without clicking anything), but touch has
+    // no hover state to land in first, so on a touchscreen they'd stay
+    // invisible forever, not just until the first tap. (hover: none) /
+    // (pointer: coarse) target that directly; @medium is included too so
+    // this also shows up narrowing a desktop browser in DevTools, which
+    // doesn't always flip those touch media features on its own.
+    @media (max-width: @medium), (hover: none), (pointer: coarse) {
+      opacity: 1;
+    }
   }
 
   &:hover,
