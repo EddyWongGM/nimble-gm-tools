@@ -1,10 +1,10 @@
 # Mobile view: overflow findings
 
-**Status:** three fixes applied (CSS only), not yet verified on a real device
-or in a live narrow-viewport browser — no browser/screenshot tool was
-available in the session that made these changes, so everything below was
-diagnosed by reading the LESS/TSX and confirmed only by `lessc` compiling
-without error, not by rendering.
+**Status:** four issues found and fixed (CSS only). #4 (the layout-width
+trap) is confirmed fixed live, against a deployed dev build, by the user —
+the rest (#1, #2/#2b, #3) still only have `lessc`-compiles-clean
+confirmation, not a live/visual check, since no browser/screenshot tool was
+available in the session that made those changes.
 
 ## Context
 
@@ -176,6 +176,37 @@ without that, stacked content taller than the viewport would just be
 clipped instead of scrollable; and drops the editor's hardcoded `720px`
 so it doesn't force overflow once stacked full-width.
 
+### 3b. That fix's own `overflow-y: auto` exposed a second dead end: the close button scrolled out of view
+
+Found live: after the #3 fix, opening Library Manager at 430px showed the
+item list (Filter box + Bandit/Goblin/etc.) but no "Library Manager" title
+bar or close (X) button above it — looked like the same dead end again.
+Confirmed via DevTools this wasn't a hiding/visibility issue — the header
+was in the DOM (`document.querySelector('.libraries__header')` returned a
+real element with the close button inside it) — it was a *position* issue:
+`getBoundingClientRect()` on it returned `top: -87.5`, i.e. scrolled 87.5px
+above the viewport.
+
+Root cause: [client/Library/Components/LibraryFilter.tsx:11-13](../client/Library/Components/LibraryFilter.tsx#L11-L13)
+has always called `inputRef.current.focus()` on mount to autofocus the
+filter box. `.focus()` defaults to scrolling the focused element into
+view. That was a no-op everywhere this used to render (no scrollable
+ancestor for it to scroll), but #3's own `overflow-y: auto` on
+`.c-library-manager` made it a real scroll container — so on mount, the
+browser scrolled the now-focused filter input into view, dragging the
+header (rendered above it) off the top edge with nothing left to scroll
+back with.
+
+**Fix:** changed the call to `inputRef.current.focus({ preventScroll:
+true })` — stops the browser from scrolling on focus at all, so the
+autofocus behavior is preserved everywhere without the side effect.
+Deliberately fixed at the source (the focus call) rather than papering
+over it with a `position: sticky` header — this way any *other* future
+cause of that container scrolling can't reproduce the same dead end.
+**Not yet re-verified live** — needs the same phone-width open-Library-
+Manager check, confirming the title bar and close button are visible
+without scrolling.
+
 ## 4. Opening the spell prompt forced the whole layout wider than the viewport
 
 Confirmed with a live before/after debugging session (screenshots plus
@@ -263,11 +294,12 @@ consistent). With `.center-column`, `.encounter-view`, and
 `#app__container` all now able to actually shrink to the real viewport
 width, `.center-column`'s existing `overflow-x: hidden` can finally do its
 job and clip anything that still doesn't fit, instead of the whole layout
-chain inflating to avoid clipping it. **Not yet re-verified live** — the
-previous "fixed" claim for this same bug turned out to be premature, so
-this specifically still needs the same clientWidth check repeated (expect
-`.encounter-view`/`#app__container` back to `430` with the popup open) plus
-a visual check that the AC/shield header stays on-screen.
+chain inflating to avoid clipping it.
+
+**Confirmed fixed** — user re-tested against the redeployed dev build
+(same repro: select Mage → open spell → popup shows) and confirmed the
+AC/shield header now stays on-screen. Unlike the first ("center-column
+only") fix, this one held.
 
 Worth a look later: `.left-column`/`.right-column` (same file) likely have
 the identical latent gap (no `min-width` override either) — not touched
