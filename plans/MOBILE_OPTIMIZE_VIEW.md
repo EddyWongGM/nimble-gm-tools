@@ -176,48 +176,67 @@ without that, stacked content taller than the viewport would just be
 clipped instead of scrollable; and drops the editor's hardcoded `720px`
 so it doesn't force overflow once stacked full-width.
 
-## 4. Selecting a combatant pushed AC/HP off-screen (unrelated to the name column)
+## 4. Opening the spell prompt forced the whole layout wider than the viewport
 
-Confirmed with before/after screenshots from the user, not just static
-reading — this turned out to be a different bug than #2/#2b above, despite
-looking similar (both are "the row got wider than the screen").
+Confirmed with a live before/after debugging session (screenshots plus
+Console measurements against the deployed dev build), not just static
+reading. This is the real cause of what looked, from the outside, like #2/
+#2b's "name/row got wider than the screen" symptom recurring — a distinct
+bug, one level higher up in the layout, that neither of those fixes
+(nor a first, wrong-culprit attempt below) actually touched.
 
-Before selecting: header shows Name/HP/AC, all three fit. After tapping a
-combatant (which selects it and opens one of its spell cards below) the row
-gets a `.selected` green border, the AC header cell is no longer visible —
-not hidden, *pushed past the right edge* (a shield-icon fragment is visible
-right at the cut-off edge) — and HP's value area shrinks too.
+**Wrong turn first, kept here so it isn't re-investigated:** the initial
+hypothesis was that `.combatant__commands` (hidden until a row is
+`.selected`, then `display: flex`, in the `tagsCommands` grid-area shared
+with `name`/`hp`/`ac`'s columns) was forcing those shared grid tracks wider
+once revealed — reasoning that a wrapping flex container's *max-content*
+size is spec'd as if wrap never happens, so `flex-wrap` alone wouldn't
+protect the grid from it. That reasoning is correct in general, but a
+direct measurement disproved it as the actual cause here: with DevTools
+open on the deployed build, `getComputedStyle(document.querySelector('.combatant')).gridTemplateColumns`
+was **identical** before and after selecting the row
+(`22.39px 10px 225.28px 64px 51px` both times). The `.combatant__tags-commands-cell`
+`width: 1px; min-width: 100%` fix built on that theory was reverted — it
+compiled fine but (correctly, per this measurement) had no effect, which
+is exactly what the user reported after deploying it.
 
-`.combatant__commands` ([combatants.less:723-732](../lesscss/components/combatants.less#L723-L732))
-is `display: none` until the row is `.selected`, at which point it switches
-to `display: flex` and renders one button per applicable command
-([CombatantRow.tsx:484-490](../client/InitiativeList/CombatantRow.tsx#L484-L490)) — so this content doesn't exist in the layout at all until
-selection. It lives in the `tagsCommands` grid-area, which — in both the
-`combatant--inline-stats` and general grid templates — spans the *same*
-`auto`/`1fr` columns that `name`/`hp`/`ac` also use in the rows above it.
+**Actual cause, found by walking the measurement up the DOM tree:**
+`document.querySelector('.encounter-view').clientWidth` read **430px**
+with the table alone, but **469px** once the spell prompt was showing —
+39px wider than the viewport itself
+(`window.innerWidth` stayed constant at 430px throughout, and
+`.encounter-view`'s own class list, `show-center-right-left`, was also
+identical in both states, ruling out a layout-priority swap). `.encounter-view`
+had genuinely rendered wider than the screen; the AC/HP content wasn't
+being pushed by a sibling, it was riding along with an oversized ancestor.
 
-`.combatant__tags-commands-wrapper` already has `flex-flow: row wrap`, so
-it was reasonable to assume it couldn't force extra width — that assumption
-was wrong. A wrapping flex container's **max-content size** (what an
-ancestor grid's `auto` columns use to decide how big to grow) is, by
-spec, computed as if wrapping never happens — the sum of every child laid
-out on one line. `flex-wrap` only changes behavior once a width has
-already been assigned to the container; it has no effect on what width the
-grid *asks for* while computing that width in the first place. So the
-moment selection revealed a row of command buttons, that row's full
-single-line width got fed into the same shared columns name/hp/ac live in,
-forcing them wider than the screen — explaining exactly what the
-screenshots show.
+Root cause: `.center-column` ([lesscss/pages/tracker.less](../lesscss/pages/tracker.less))
+is a `flex: 1` child of `.encounter-view` with no `min-width` set. Flex
+items default to `min-width: auto` — content's min-content size — so once
+the spell prompt card's content needed more than 430px, `.center-column`
+(and, propagating up, `.encounter-view` itself, since it has the same
+default) was forced to *grow* to fit that content instead of shrinking and
+letting the already-present `overflow-x: hidden` on `.center-column` clip
+the excess. This is the same underlying "flexbox/grid min-width:auto trap"
+as #2's `1fr` track and the ruled-out `auto`-column theory above — just one
+level higher in the tree, on the outer column layout rather than inside
+the table.
 
-**Fix:** on `.combatant__tags-commands-cell`
-([combatants.less:635-646](../lesscss/components/combatants.less#L635-L646)),
-replaced `width: 100%` with `width: 1px; min-width: 100%;` at the same
-`@media (max-width: @medium)` breakpoint. `width: 1px` reports a
-near-zero size for the grid's sizing pass (instead of the wrapping
-container's full max-content), so it stops forcing the shared columns
-wider; `min-width: 100%` then stretches the cell back to fill whatever
-width the row actually ends up with, once that's been determined by
-everything else.
+**Fix:** added `min-width: 0;` to `.center-column` in
+`lesscss/pages/tracker.less`. This is also why the `.prompts`/`.prompt`
+`max-width: 100%` fix from #1 didn't fully resolve things on its own — that
+caps a child's width *relative to its parent*, but doesn't help when the
+parent itself is the one being forced wider by a *different* child's
+min-content demand. With `.center-column` now able to actually shrink to
+the real viewport width, its existing `overflow-x: hidden` can do its job
+and clip anything that still doesn't fit, instead of the whole layout
+chain inflating to avoid clipping it.
+
+Worth a look later: `.left-column`/`.right-column` (same file) likely have
+the identical latent gap (no `min-width` override either) — not touched
+here since they weren't implicated in this specific bug, but the same
+"content forces the column wider than viewport" failure mode could apply
+to them too under different content.
 
 ## Still open / not investigated
 

@@ -641,20 +641,7 @@ thead.combatant--header {
 
   @media (max-width: @medium) {
     border-right: none;
-    // .combatant__commands (revealed only once this row is .selected -
-    // see combatant__commands below) wraps via flex-wrap, but a wrapping
-    // flex container's max-content size - what the grid's "auto"/1fr
-    // columns above it (name/hp/ac) use to size themselves - is still the
-    // sum of every command button laid out on one line, as if wrap never
-    // happens: flex-wrap only changes what happens once a width is
-    // already given, not what width the grid asks for while computing
-    // that width in the first place. That forced the shared columns wider
-    // than the screen the instant a combatant got selected, pushing name/
-    // hp/ac off the right edge. width: 1px reports a near-zero size for
-    // that sizing pass instead; min-width: 100% then stretches this cell
-    // back to fill whatever width the row actually ends up with.
-    width: 1px;
-    min-width: 100%;
+    width: 100%;
   }
 }
 

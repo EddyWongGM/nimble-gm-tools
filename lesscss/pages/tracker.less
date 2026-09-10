@@ -11,6 +11,13 @@
 
   .center-column {
     flex: 1;
+    // Flex items default to min-width: auto, i.e. they can't shrink below
+    // their content's min-content size. Without this, a wide-enough child
+    // (e.g. the spell prompt card) forces .center-column - and, since it
+    // has no min-width either, .encounter-view above it - wider than the
+    // actual viewport instead of shrinking and letting overflow-x: hidden
+    // below clip the excess, pushing content past the real screen edge.
+    min-width: 0;
     margin: @large-spacer;
     overflow-y: auto;
     overflow-x: hidden;
