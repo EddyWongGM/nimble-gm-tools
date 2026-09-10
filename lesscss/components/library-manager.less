@@ -23,48 +23,61 @@
   width: 720px;
 }
 
+// Library Manager used to reuse the Reference Pane's .left-column class
+// purely for its card styling, but base/responsive.less hides .left-column
+// based on the Tracker's interfacePriority (librariesVisible/prompt/
+// selection state) - state that's unrelated to Library Manager and can
+// easily not be "show-left-center-right" when Library Manager is opened
+// via its toolbar icon while the center column (not the Reference Pane)
+// was showing, silently hiding the header/list with no way back short of
+// closing the whole manager. Fixed by giving Library Manager its own class
+// with its own copy of the card styling (matching tracker.less's
+// .left-column, .right-column block) instead of sharing a class name with
+// a component whose visibility this one has no relationship to.
+.c-library-manager__left {
+  .card-bg(@larger-spacer, @larger-spacer);
+  margin: @large-spacer;
+  padding: @large-spacer;
+
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    background: var(--red) center;
+    background-size: 100% 100%;
+    height: 6px;
+    position: absolute;
+  }
+
+  &:before {
+    top: 0px;
+    left: -3px;
+    right: -3px;
+  }
+
+  &:after {
+    bottom: -6px;
+    left: -3px;
+    right: -3px;
+  }
+}
+
 @media (max-width: @large) {
-  // .left-column is reused here purely for its card styling (see
-  // LibraryManager.tsx) - Library Manager has no left/center/right
-  // priority state of its own. But base/responsive.less has rules that
-  // hide .left-column based on the Tracker's interfacePriority
-  // (librariesVisible/prompt/selection state), which is unrelated to
-  // Library Manager and can easily not be "show-left-center-right" when
-  // Library Manager is opened via its toolbar icon - silently hiding the
-  // item list with no way back short of closing the whole manager.
   .c-library-manager {
     flex-flow: column;
     overflow-y: auto;
 
-    .left-column {
-      // flex (not block!) - overriding display:none from the
-      // .encounter-view.show-* hide rules below still needs !important to
-      // win, but forcing display:block here was itself a bug: every div in
-      // this app defaults to display:flex; flex-direction:column (see
-      // layout/base.less), which is what lets PaneHeader/Tabs stay pinned
-      // while .library's own ul{flex:1; overflow-y:auto} scrolls
-      // internally beneath them. display:block strips that flex-column
-      // context entirely, so nothing has a bounded height for the list to
-      // scroll *within* - the header/tabs/list just stack as plain blocks
-      // with no working scrollbar anywhere (confirmed live: scrolling did
-      // nothing at all, not just landing in the wrong position).
-      display: flex !important;
+    .c-library-manager__left {
+      // Overrides LibraryManager.tsx's inline width style - stylesheet
+      // !important is the one thing that beats an inline style.
       width: 100% !important;
       max-width: 100% !important;
-      // Without a bounded height, PaneHeader/Tabs/.library (its flex-column
-      // children) just take their natural stacked size - .library's own
-      // flex: 1 has no surplus space to grow into, so its ul never
-      // overflows its own box and never actually scrolls. Filling
-      // .c-library-manager's own (viewport-bound) height here gives
-      // .library something real to fill, restoring the header-pinned,
-      // list-scrolls-internally behavior every other .library user in the
-      // app already gets.
       height: 100%;
     }
 
     // Panes are stacked full-width now, so the drag-to-resize handles have
-    // nothing meaningful left to do (.left-column's width is pinned above,
-    // and .c-library-manager__center is pinned below).
+    // nothing meaningful left to do (.c-library-manager__left's width is
+    // pinned above, and .c-library-manager__center is pinned below).
     .vertical-resizer {
       display: none;
     }
