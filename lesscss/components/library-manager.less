@@ -41,6 +41,19 @@
       width: 100% !important;
       max-width: 100% !important;
     }
+
+    // Panes are stacked full-width now, so the drag-to-resize handles have
+    // nothing meaningful left to do (.left-column's width is pinned above,
+    // and .c-library-manager__center is pinned below).
+    .vertical-resizer {
+      display: none;
+    }
+  }
+
+  .c-library-manager__center {
+    // Overrides LibraryManager.tsx's inline width style - stylesheet
+    // !important is the one thing that beats an inline style.
+    width: 100% !important;
   }
 
   .c-library-manager__editor {

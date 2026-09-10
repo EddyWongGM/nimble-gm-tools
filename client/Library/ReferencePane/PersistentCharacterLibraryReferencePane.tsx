@@ -5,7 +5,7 @@ import { linkComponentToObservables } from "../../Combatant/linkComponentToObser
 import { LibrariesCommander } from "../../Commands/LibrariesCommander";
 import { StatBlockComponent } from "../../Components/StatBlock";
 import { GetAlphaSortableLevelString } from "../../Utility/GetAlphaSortableLevelString";
-import { Listing } from "../Listing";
+import { IsPreloadedOrigin, Listing } from "../Listing";
 import { ListingGroup } from "../Components/BuildListingTree";
 import { LibraryReferencePane } from "./LibraryReferencePane";
 import { ListingRow } from "../Components/ListingRow";
@@ -57,13 +57,29 @@ export class PersistentCharacterLibraryReferencePane extends React.Component<Per
     onPreviewOut
   ) => {
     const listingMeta = l.Meta();
+    // Sample Heroes (and other preloaded content) are read-only: offer an
+    // explicit "duplicate to your library" action instead of an Edit button
+    // that would otherwise silently fork a copy the first time Save is hit.
+    const isPreloaded = IsPreloadedOrigin(l.Origin);
     return (
       <ListingRow
         key={listingMeta.Id + listingMeta.Path + listingMeta.Name}
         name={listingMeta.Name}
         showCount
         onAdd={this.loadSavedStatBlock}
-        onEdit={this.editStatBlock}
+        onEdit={isPreloaded ? undefined : this.editStatBlock}
+        extraButtons={
+          isPreloaded
+            ? [
+                {
+                  title: "Duplicate to your library",
+                  buttonClass: "edit",
+                  faClass: "copy",
+                  onClick: this.editStatBlock
+                }
+              ]
+            : undefined
+        }
         onPreview={onPreview}
         onPreviewOut={onPreviewOut}
         listing={l}

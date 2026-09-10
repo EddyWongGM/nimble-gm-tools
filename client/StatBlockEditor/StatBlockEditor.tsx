@@ -267,7 +267,12 @@ export class StatBlockEditor extends React.Component<
 
     if (actsInPlayerPhase) {
       fields.push(
-        <ValueAndNotesField key="mana" label="Mana" fieldName="Mana" />,
+        <ValueAndNotesField
+          key="mana"
+          label="Mana"
+          fieldName="Mana"
+          hideNotes
+        />,
         <ValueAndNotesField
           key="resources"
           label="Resources"

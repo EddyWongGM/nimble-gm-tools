@@ -1556,12 +1556,7 @@
         "Name": "What? I’ve been around",
         "Content": "1/location (GM’s rules)\nYou know a person who has information.\n• <b>1–5.</b> They want you dead.\n• <b>6–12.</b> You owe them money.\n• <b>13–19.</b> They can be convinced to help you.\n• <b>20.</b> Biggest fan/are madly in love with you.",
         "Usage": ""
-      },
-      {
-        "Name": "Song of Rest (1/day, when Field Rest)",
-        "Content": "Song: Anyone use HD heal +[WIL] HP.",
-        "Usage": ""
-      },      
+      },     
       {
         "Name": "Tenacious",
         "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
@@ -1578,6 +1573,108 @@
     },
     "HitDice": {
       "Value": 1,
+      "Notes": "d8"
+    }
+  },
+    {
+    "Name": "Songweaver LV2",
+    "Path": "Sample Heroes/Songweaver",
+    "Source": "Sample Heroes",
+    "Type": "Songweaver",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": -1,
+      "Dex": 0,
+      "Int": 2,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Songweaver’s Inspiration",
+        "Content": "(Free Reaction) (2×[WIL])/Safe Rest\nReroll 1 die for attack or save. ",
+        "Usage": "2×[WIL]/Safe Rest"
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Spells",
+        "Content": "Cantrips: Breath of Life, Flame Dart, Heart's Fire, Razor Wind, Vicious Mockery\n\nTier 1: Blustery Gale, Ignite",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Dagger : 1d4 + [DEX]",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "What? I’ve been around",
+        "Content": "1/location (GM’s rules)\nYou know a person who has information.\n• <b>1–5.</b> They want you dead.\n• <b>6–12.</b> You owe them money.\n• <b>13–19.</b> They can be convinced to help you.\n• <b>20.</b> Biggest fan/are madly in love with you.",
+        "Usage": ""
+      },
+      {
+        "Name": "Song of Rest (1/day, when Field Rest)",
+        "Content": "Song: Anyone use HD heal +[WIL] HP.",
+        "Usage": ""
+      },
+      {
+        "Name": "Jack of All Trades (Safe Rest: Move Skill point)",
+        "Content": "",
+        "Usage": ""
+      },      
+      {
+        "Name": "Tenacious",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Mana": {
+      "Value": 8
+    },
+    "Resources": {
+      "Value": 4
+    },
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
       "Notes": "d8"
     }
   },

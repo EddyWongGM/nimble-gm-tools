@@ -9,7 +9,7 @@ import { SavedEncounterEditor } from "../../StatBlockEditor/SavedEncounterEditor
 import { SpellEditor } from "../../StatBlockEditor/SpellEditor";
 import { StatBlockEditor } from "../../StatBlockEditor/StatBlockEditor";
 import { GetDefaultForLibrary, LibraryType } from "../Libraries";
-import { Listing } from "../Listing";
+import { IsPreloadedOrigin, Listing } from "../Listing";
 import { LibraryManagerProps } from "./LibraryManager";
 
 type EditorViewProps = LibraryManagerProps & {
@@ -35,7 +35,7 @@ export function EditorView(props: EditorViewProps) {
   }
 
   if (editorType === "PersistentCharacters") {
-    return RenderPersistentCharacterEditor(loadedTarget, props);
+    return RenderPersistentCharacterEditor(editorTarget, loadedTarget, props);
   }
 
   if (editorType === "Spells") {
@@ -81,12 +81,39 @@ function RenderStatBlockEditor(
 }
 
 function RenderPersistentCharacterEditor(
+  editorTarget: Listing<Listable>,
   loadedTarget: Listable,
   props: EditorViewProps
 ) {
   const persistentCharacter = loadedTarget as PersistentCharacter;
   const hpDown =
     persistentCharacter.StatBlock.HP.Value - persistentCharacter.CurrentHP;
+
+  const saveAsNewPersistentCharacter = (statBlock: StatBlock) => {
+    const newPersistentCharacter = PersistentCharacter.Initialize(statBlock);
+    props.libraries.PersistentCharacters.SaveNewListing(
+      newPersistentCharacter
+    );
+    props.closeEditor();
+  };
+
+  // Sample Heroes (and other preloaded content) are read-only: force the
+  // "Save as a copy" toggle instead of letting a plain Save silently fork a
+  // duplicate, so the user consciously duplicates before editing.
+  if (IsPreloadedOrigin(editorTarget.Origin)) {
+    return (
+      <StatBlockEditor
+        statBlock={persistentCharacter.StatBlock}
+        editorTarget="persistentcharacter"
+        onSave={saveAsNewPersistentCharacter}
+        onSaveAsCopy={saveAsNewPersistentCharacter}
+        requireSaveAsCopy
+        currentListings={props.libraries.PersistentCharacters.GetAllListings()}
+        onClose={props.closeEditor}
+      />
+    );
+  }
+
   return (
     <StatBlockEditor
       statBlock={persistentCharacter.StatBlock}
@@ -105,15 +132,7 @@ function RenderPersistentCharacterEditor(
         );
         props.closeEditor();
       }}
-      onSaveAsCopy={statBlock => {
-        const newPersistentCharacter = PersistentCharacter.Initialize(
-          statBlock
-        );
-        props.libraries.PersistentCharacters.SaveNewListing(
-          newPersistentCharacter
-        );
-        props.closeEditor();
-      }}
+      onSaveAsCopy={saveAsNewPersistentCharacter}
       currentListings={props.libraries.PersistentCharacters.GetAllListings()}
       onClose={props.closeEditor}
     />

@@ -1,5 +1,6 @@
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
+import { Button } from "../Components/Button";
 
 export interface PromptProps<T extends object> {
   onSubmit: (submittedValues: T) => boolean;
@@ -40,6 +41,19 @@ class Prompt<T extends object> extends React.Component<
               }
             }}
           >
+            {
+              // Escape has always been the only way to cancel a prompt
+              // without submitting it - fine with a keyboard, but touch
+              // devices have no Escape key and no way to trigger this.
+              // Visible on every prompt (not just phone width) since the
+              // gap exists on desktop too, just masked there by Escape.
+            }
+            <Button
+              additionalClassNames="prompt__cancel"
+              fontAwesomeIcon="times"
+              tooltip="Cancel"
+              onClick={() => this.props.onCancel()}
+            />
             {this.props.children}
           </form>
         )}

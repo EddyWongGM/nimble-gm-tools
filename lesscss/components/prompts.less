@@ -24,6 +24,8 @@
   align-items: flex-start;
   justify-content: space-between;
   min-height: @prompt-minimum-height;
+  // Anchors .prompt__cancel below.
+  position: relative;
 
   div,
   p,
@@ -33,6 +35,20 @@
 
   button {
     margin: @small-spacer;
+  }
+
+  // Sits outside .prompt's own padding box (negative offset, not inset
+  // within it) specifically so it can't collide with any prompt variant's
+  // own top-left content - e.g. .spell-badge in SpellPrompt - regardless
+  // of what a given prompt renders there. .prompt-spell/.prompt-scene's
+  // submit button already overlaps the top-RIGHT corner (via
+  // transform: translateX(-100%) in spell.less/libraries.less), so this
+  // uses the opposite corner to stay clear of that too.
+  .prompt__cancel {
+    position: absolute;
+    top: -0.75rem;
+    left: -0.75rem;
+    margin: 0;
   }
 
   div.default-query {
