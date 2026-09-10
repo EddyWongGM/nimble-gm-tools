@@ -412,6 +412,19 @@ thead.combatant--header {
     width: 100%;
     padding-right: 0;
     white-space: normal;
+
+    // Can't switch to nowrap + ellipsis the way combatant--inline-stats
+    // does - this "name" spans several grid-template-columns: auto tracks
+    // shared with the stat-column row below it (hp/ac/mana/etc, each its
+    // own fixed-width track). Nowrap text's min-content would force those
+    // shared auto tracks - and the whole row - wider, the same overflow
+    // this exists to prevent. Keeping the wrap (safe for shared auto
+    // tracks) and clamping to 2 lines still bounds a very long name
+    // instead of leaving it unbounded vertically.
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 

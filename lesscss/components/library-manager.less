@@ -22,3 +22,28 @@
   margin: @large-spacer;
   width: 720px;
 }
+
+@media (max-width: @large) {
+  // .left-column is reused here purely for its card styling (see
+  // LibraryManager.tsx) - Library Manager has no left/center/right
+  // priority state of its own. But base/responsive.less has rules that
+  // hide .left-column based on the Tracker's interfacePriority
+  // (librariesVisible/prompt/selection state), which is unrelated to
+  // Library Manager and can easily not be "show-left-center-right" when
+  // Library Manager is opened via its toolbar icon - silently hiding the
+  // item list with no way back short of closing the whole manager.
+  .c-library-manager {
+    flex-flow: column;
+    overflow-y: auto;
+
+    .left-column {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+
+  .c-library-manager__editor {
+    width: 100%;
+  }
+}
