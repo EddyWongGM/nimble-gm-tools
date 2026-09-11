@@ -63,9 +63,13 @@ export const TutorialSteps: TutorialStep[] = [
       "Let's add a few monsters to the view.<br /><strong>Click on any monster</strong> to add one to the encounter pane.",
     RaiseSelector: ".left-column, .combatants",
     CalculatePosition: elements => {
-      const location = getLocation(elements[0]);
+      // Positioned beside (not below) the combatants table, since newly
+      // added monsters appear at the bottom of the list and a position
+      // below would end up covering the rows the user is adding.
+      const element = _.last(elements);
+      const location = getLocation(element);
       const left = location.left + location.width + 10;
-      const top = location.top + 200;
+      const top = location.top + 5;
       return { left, top };
     }
   },
