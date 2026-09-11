@@ -75,14 +75,14 @@ function PlayerViewPromptComponent(props: PlayerViewPromptComponentProps) {
               other features for the Player View.{" "}
             </label>
             <a
-              href="https://www.patreon.com/bePatron?c=716070&amp;rid=1937132"
+              href="https://www.patreon.com/join/nimblerpgapp"
               target="_blank"
               onClick={() =>
                 Metrics.TrackPatreonSignupIntent(
                   Metrics.LeadSource.PlayerViewCustomizationGate,
                   {
                     link_url:
-                      "https://www.patreon.com/bePatron?c=716070&rid=1937132"
+                      "https://www.patreon.com/join/nimblerpgapp"
                   }
                 )
               }
