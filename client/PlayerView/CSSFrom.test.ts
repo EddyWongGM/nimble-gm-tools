@@ -50,11 +50,14 @@ describe("CSSFrom", () => {
     );
   });
 
-  test("below Epic Tier, stat colors are neutralized to --text-face at :root even with nothing customized", () => {
+  test("below Epic Tier, stat colors are neutralized to --black at :root and --white-2 under .dark-mode, even with nothing customized", () => {
     const css = CSSFrom(customStyles, undefined, undefined, false);
 
     expect(css).toContain(
-      ":root { --stat-hp: var(--text-face); --stat-mana: var(--text-face)"
+      ":root { --stat-hp: var(--black); --stat-mana: var(--black)"
+    );
+    expect(css).toContain(
+      ".dark-mode { --stat-hp: var(--white-2); --stat-mana: var(--white-2)"
     );
     expect(css).not.toMatch(/--stat-mana: #/);
   });
@@ -78,7 +81,8 @@ describe("CSSFrom", () => {
       false
     );
 
-    expect(css).toContain("--stat-mana: var(--text-face);");
+    expect(css).toContain("--stat-mana: var(--black);");
+    expect(css).toContain("--stat-mana: var(--white-2);");
     expect(css).not.toContain("#123456");
   });
 
