@@ -1174,6 +1174,22 @@
     "Source": "Core Rules Spells"
   },
   {
+    "Name": "Lifebinding Spirit",
+    "Actions": 1,
+    "Classes": [""],
+    "Components": "",
+    "Description": "Summon a spirit companion that follows you and is immune to harm (max 1). It can:\n<b>Harm:</b> It attacks for 1d8+STR (ignoring Armor).\n<b>Mend:</b> (WIL/Safe Rest, Reach 4) It restores WIL d8 HP to a Dying creature.\n",
+    "EntryType": "spell",
+    "Tier": 0,
+    "Path": "Spells/Radiant",
+    "DistanceType": "Reach",
+    "Distance": "4",
+    "CastCondition": "",
+    "Upcast": "+STR damage every 5 levels.",    
+    "School": "Radiant",
+    "Source": "Core Rules Spells"
+  },  
+  {
     "Name": "Rebuke",
     "Actions": 1,
     "Classes": [""],
