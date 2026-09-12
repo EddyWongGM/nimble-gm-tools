@@ -16,10 +16,10 @@ export default [
     Name: "Saviël Jansen",
     Github: "",
     PatreonId: "29887780"
-  },  
-  {
-    Name: "Tim van Bokhorst",
-    Github: "",
-    PatreonId: "5493359"
   }  
+  // {
+  //   Name: "Tim van Bokhorst",
+  //   Github: "",
+  //   PatreonId: "5493359"
+  // }  
 ];
