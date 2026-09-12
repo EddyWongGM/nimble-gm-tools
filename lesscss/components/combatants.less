@@ -269,7 +269,9 @@
 
 .combatant--header {
   // Always a black bar with white text, regardless of site theme - unlike
-  // other elements that deliberately invert with --page-bg-inverted.
+  // other elements using --page-bg-inverted, which still inverts (dark bar)
+  // in light mode but in dark mode now matches --card-background-white
+  // instead of staying literally inverted (see colors.less).
   .colors(var(--white), var(--black), var(--black));
   padding: @medium-spacer;
 
