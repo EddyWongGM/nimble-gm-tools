@@ -13,7 +13,7 @@
   margin: @larger-spacer auto;
   left: 0;
   right: 0;
-  max-width: 550px;
+  max-width: 700px;
   max-height: 90%;
 
   .button,
@@ -253,6 +253,52 @@
     > select {
       margin: @small-spacer;
       min-width: 150px;
+    }
+  }
+
+  .learning-center {
+    &__progress {
+      font-weight: bold;
+      margin: 0 0 @medium-spacer;
+    }
+
+    &__group {
+      margin-bottom: @small-spacer;
+
+      > summary {
+        cursor: pointer;
+        font-weight: bold;
+        padding: @small-spacer 0;
+      }
+    }
+
+    &__item {
+      margin-left: @medium-spacer;
+
+      > summary {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: @extra-small-spacer 0;
+      }
+    }
+
+    &__checkbox {
+      display: inline-flex;
+      margin-right: @small-spacer;
+    }
+
+    &__body {
+      margin: 0 0 @small-spacer (@medium-spacer + @small-spacer);
+      color: var(--text-faded);
+
+      p {
+        margin: 0 0 @small-spacer;
+      }
+    }
+
+    &__show-me {
+      display: inline-block;
     }
   }
 }

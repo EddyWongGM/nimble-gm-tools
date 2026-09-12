@@ -15,9 +15,11 @@ import { OptionsSettings } from "./OptionsSettings";
 import { useContext, useState, useCallback } from "react";
 import { SettingsContext } from "../SettingsContext";
 import { ContentSettings } from "./ContentSettings";
+import { LearningCenter } from "./LearningCenter";
 
 const SettingsTab = {
   About: "About",
+  Discover: "Discover",
   Commands: "Commands",
   Options: "Options",
   Content: "Content",
@@ -84,6 +86,9 @@ export function SettingsPane(props: SettingsPaneProps) {
           reviewPrivacyPolicy={props.reviewPrivacyPolicy}
         />
       );
+    }
+    if (currentTab == SettingsTab.Discover) {
+      return <LearningCenter goToTab={setCurrentTab} />;
     }
     if (currentTab == SettingsTab.Commands) {
       return (

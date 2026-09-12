@@ -103,9 +103,9 @@
         "SlotCost": 1
       },
       {
-        "Name": "Rations (meat)",
+        "Name": "Food",
         "Stackable": true,
-        "Quantity": 1,
+        "Quantity": 2,
         "SlotCost": 1
       },
       {

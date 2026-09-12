@@ -22,9 +22,11 @@
 
     // The prompt's submit (checkmark) button floats over the card's
     // top-right corner (see > .c-button above) - reserve room in the title
-    // row so "X Actions" doesn't render underneath it.
+    // row so "X Actions" doesn't render underneath it. The button itself
+    // is ~4.5rem wide; add extra so text wraps with a visible gap instead
+    // of butting right up against it.
     h3 {
-      padding-right: 4.5rem;
+      padding-right: 6rem;
     }
   }
 }
