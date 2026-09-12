@@ -643,7 +643,7 @@ describe("Combatant", () => {
     });
   });
 
-  describe("Legendary last stand", () => {
+  describe("Last stand", () => {
     test("ApplyDamage drops a Legendary monster to its Last Stand HP instead of defeating it, the first time it hits 0", () => {
       const combatant = addCombatantFromStatBlock(encounter, {
         ...StatBlock.Default(),
@@ -692,6 +692,52 @@ describe("Combatant", () => {
         ...StatBlock.Default(),
         HP: { Value: 10, Notes: "" },
         LastStandHP: { Value: 4, Notes: "" }
+      });
+
+      combatant.ApplyDamage(10);
+
+      expect(combatant.CurrentHP()).toBe(0);
+      expect(combatant.HasEnteredLastStand()).toBe(false);
+    });
+
+    test("ApplyDamage drops a Normal monster with HasLastStand to its Last Stand HP instead of defeating it, the first time it hits 0", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "",
+        HasLastStand: true,
+        HP: { Value: 10, Notes: "" },
+        LastStandHP: { Value: 4, Notes: "" }
+      });
+
+      combatant.ApplyDamage(10);
+
+      expect(combatant.CurrentHP()).toBe(4);
+      expect(combatant.HasEnteredLastStand()).toBe(true);
+      expect(combatant.Tags().map(t => t.Text)).toContain("Last Stand");
+    });
+
+    test("ApplyDamage defeats a HasLastStand monster normally the second time it hits 0", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "",
+        HasLastStand: true,
+        HP: { Value: 10, Notes: "" },
+        LastStandHP: { Value: 4, Notes: "" }
+      });
+
+      combatant.ApplyDamage(10);
+      combatant.ApplyDamage(4);
+
+      expect(combatant.CurrentHP()).toBe(0);
+      expect(combatant.HasEnteredLastStand()).toBe(true);
+    });
+
+    test("ApplyDamage does not trigger a last stand for a HasLastStand monster without an authored Last Stand HP", () => {
+      const combatant = addCombatantFromStatBlock(encounter, {
+        ...StatBlock.Default(),
+        Player: "",
+        HasLastStand: true,
+        HP: { Value: 10, Notes: "" }
       });
 
       combatant.ApplyDamage(10);

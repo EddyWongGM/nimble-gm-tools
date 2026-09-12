@@ -427,7 +427,7 @@ export class Combatant {
     const lastStandHP = this.StatBlock().LastStandHP?.Value ?? 0;
     if (
       currHP <= 0 &&
-      this.StatBlock().Player === "legendary" &&
+      StatBlock.IsSoloMonster(this.StatBlock()) &&
       !this.HasEnteredLastStand() &&
       lastStandHP > 0
     ) {

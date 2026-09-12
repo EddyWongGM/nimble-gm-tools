@@ -110,6 +110,52 @@ describe("StatBlock", () => {
     });
   });
 
+  describe("IsSoloMonster", () => {
+    test("is true for a Legendary monster", () => {
+      expect(
+        StatBlock.IsSoloMonster({
+          ...StatBlock.Default(),
+          Player: "legendary"
+        })
+      ).toBe(true);
+    });
+
+    test("is true for a Normal monster with HasLastStand set", () => {
+      expect(
+        StatBlock.IsSoloMonster({
+          ...StatBlock.Default(),
+          Player: "",
+          HasLastStand: true
+        })
+      ).toBe(true);
+    });
+
+    test("is false for a Normal monster without HasLastStand", () => {
+      expect(
+        StatBlock.IsSoloMonster({ ...StatBlock.Default(), Player: "" })
+      ).toBe(false);
+    });
+
+    test("is false for a Titan (Titan gets its own separate solo treatment, not via HasLastStand)", () => {
+      expect(
+        StatBlock.IsSoloMonster({
+          ...StatBlock.Default(),
+          Player: "titan"
+        })
+      ).toBe(false);
+    });
+
+    test("is false for a companion with HasLastStand set (not a valid combination, but should be ignored)", () => {
+      expect(
+        StatBlock.IsSoloMonster({
+          ...StatBlock.Default(),
+          Player: "companion",
+          HasLastStand: true
+        })
+      ).toBe(false);
+    });
+  });
+
   describe("IsCountScaledByHeroes", () => {
     test("is true for a Normal monster with ScalesCountWithHeroCount set", () => {
       expect(

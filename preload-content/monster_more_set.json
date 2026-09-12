@@ -1,0 +1,85 @@
+[
+  {
+    "Name": "Banshee",
+    "Path": "",
+    "Source": "Nimble M&M",
+    "Type": "Undead/Incorporeal Haunts",
+    "HP": {
+      "Value": 70,
+      "Notes": ""
+    },
+    "AC": {
+      "Value": 0,
+      "Notes": ""
+    },
+    "InitiativeModifier": -99,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "Fly 6"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 0,
+      "Int": 0,
+      "Wis": 0
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "3",
+    "Traits": [],
+    "Actions": [
+      {
+        "Name": "",
+        "Content": "After each hero’s turn, choose 1:\n",
+        "Usage": ""
+      },
+      {
+        "Name": "Deathly Wail",
+        "Content": "(1 use, Reach 12). DC 13 WIL save or drop to 0 HP, on save lose half your max HP. Advantage on the save if their hearing is adequately protected.\n\n",
+        "Usage": ""
+      },
+      {
+        "Name": "Horrible Glare.",
+        "Content": "(Reach 8) 1d10, Frightened 1 round.",
+        "Usage": ""
+      },
+      {
+        "Name": "Ghastly Touch",
+        "Content": "Fly 4 then 2d10.",
+        "Usage": ""
+      }
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "BLOODIED ",
+        "Content": "Hold fast hope! Any Dying heroes gain 1 HP and 1 action.",
+        "Usage": ""
+      },
+      {
+        "Name": "LAST STAND",
+        "Content": "Deathly Wail Recharges, use it immediately.",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "",
+    "Version": "1.2.1",
+    "ImageURL": "",
+    "CustomFields": [],
+    "HasLastStand": true,
+    "LastStandHP": {
+      "Value": 30
+    },
+    "SaveDC": 13,
+    "CRRating": ""
+  }
+]

@@ -338,6 +338,34 @@ describe("StatBlockEditor", () => {
     );
   });
 
+  test("Shows and saves Last Stand HP field once a Normal monster has Last Stand checked", async () => {
+    simulate(`input[name="HasLastStand"]`, "change", {
+      target: { name: "HasLastStand", type: "checkbox", checked: true }
+    });
+
+    simulate(`input[name="LastStandHP.Value"]`, "change", {
+      target: { name: "LastStandHP.Value", value: "10" }
+    });
+
+    await submitEditor();
+
+    expect(saveCallback).toHaveBeenCalledWith(
+      expect.objectContaining({
+        Player: "",
+        HasLastStand: true,
+        LastStandHP: expect.objectContaining({ Value: 10 })
+      })
+    );
+  });
+
+  test("Shows the Last Stand info tooltip once a Normal monster has Last Stand checked", () => {
+    simulate(`input[name="HasLastStand"]`, "change", {
+      target: { name: "HasLastStand", type: "checkbox", checked: true }
+    });
+
+    expect(editor.find(".c-info")).toHaveLength(1);
+  });
+
   test("calls saveAs when Save as a copy is checked", async () => {
     simulate(`input[name="Name"]`, "change", {
       target: { name: "Name", value: "Snarf" }

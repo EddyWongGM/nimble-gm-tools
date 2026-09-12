@@ -109,10 +109,13 @@ export const TutorialSteps: TutorialStep[] = [
     RaiseSelector: ".combatants, .combatant__has-taken-turn",
     AwaitAction: "ToggleHasTakenTurn",
     CalculatePosition: elements => {
-      const element = elements[0];
-      const location = getLocation(element);
-      const left = location.left + location.width + 10;
-      const top = location.top + 5;
+      // Positioned below the combatants table (elements[0]) and left-aligned
+      // to it, so the widget doesn't cover the list or the checkboxes it's
+      // pointing at.
+      const container = elements[0];
+      const location = getLocation(container);
+      const left = location.left;
+      const top = location.top + location.height + 10;
       return { left, top };
     }
   },

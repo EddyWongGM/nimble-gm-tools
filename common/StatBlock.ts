@@ -77,6 +77,11 @@ export interface StatBlock extends Listable {
   // 2 = a swarm (2/hero), 0.5 = a tougher threat (1 monster per 2 heroes).
   // Only meaningful when ScalesCountWithHeroCount is set; defaults to 1.
   MonstersPerHero?: number;
+  // Normal monster only (Player === "") - grants this monster Legendary's
+  // solo-boss treatment (Last Stand, exempt from forced monster numbering,
+  // solo difficulty-calc treatment) without hero-count HP scaling. HP stays
+  // fixed, authored like any other Normal monster's HP.
+  HasLastStand?: boolean;
   AC: ValueAndNotes;
   Mana?: ValueAndNotes;
   Resources?: ValueAndNotes;
@@ -365,15 +370,24 @@ export namespace StatBlock {
   export const IsRoomInfo = (statBlock: StatBlock): boolean =>
     statBlock.Player == "room";
 
-  // Legendary monsters and Rooms are both excluded from the
-  // Rules.AlwaysNumberMonsters sequence - Legendaries are solo/unique by
-  // design, Rooms aren't monsters at all - so they neither take a number
-  // from it nor consume one that would otherwise go to a real monster.
-  // Centralized here (rather than repeating both checks at each of the
-  // four call sites that need this) so a future exemption, or a fix to
-  // this one, can't be applied to only some of them by mistake.
+  // Whether this monster gets Legendary's solo-boss treatment: Last Stand,
+  // exemption from forced monster numbering, and solo difficulty-calc
+  // treatment. Legendary monsters always do; a Normal monster opts in via
+  // HasLastStand - unlike Legendary, this does not imply hero-count HP
+  // scaling (see IsHeroCountScaled), which stays a fully separate flag.
+  export const IsSoloMonster = (statBlock: StatBlock): boolean =>
+    IsLegendary(statBlock) ||
+    (statBlock.Player === "" && !!statBlock.HasLastStand);
+
+  // Solo-boss monsters and Rooms are both excluded from the
+  // Rules.AlwaysNumberMonsters sequence - solo bosses are unique by design,
+  // Rooms aren't monsters at all - so they neither take a number from it nor
+  // consume one that would otherwise go to a real monster. Centralized here
+  // (rather than repeating both checks at each of the four call sites that
+  // need this) so a future exemption, or a fix to this one, can't be
+  // applied to only some of them by mistake.
   export const IsExemptFromMonsterNumbering = (statBlock: StatBlock): boolean =>
-    IsLegendary(statBlock) || IsRoomInfo(statBlock);
+    IsSoloMonster(statBlock) || IsRoomInfo(statBlock);
 
   // Whether this monster's authored HP (HP/HPMediumArmor/HPHeavyArmor) is
   // "per hero" and should be multiplied by the party's hero count when

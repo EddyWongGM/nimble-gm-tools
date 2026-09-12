@@ -43,6 +43,16 @@
   outline-offset: -3px;
 }
 
+.tutorial-focus.combatant__has-taken-turn {
+  // Lives in a table cell with overflow: hidden - a positive outline-offset
+  // (like the other tutorial-focus rules use) draws outside the checkbox's
+  // own box and gets clipped by that ancestor. Keeping the outline inset
+  // instead means it stays within the checkbox's box, where it can't be
+  // cut off.
+  outline: 2px solid var(--button-face-green);
+  outline-offset: -1px;
+}
+
 .post-tutorial-nudge {
   .card-bg-2(0, @medium-spacer);
   position: fixed;

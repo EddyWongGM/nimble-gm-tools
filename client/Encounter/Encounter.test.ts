@@ -249,6 +249,24 @@ describe("Encounter", () => {
     expect(encounter.Difficulty().MonsterLevelTotal).toBe(0);
   });
 
+  test("A Normal monster with HasLastStand is judged solo for difficulty, same as Legendary - its Challenge replaces rather than adds to the other monsters' summed level total", () => {
+    const hero = { ...StatBlock.Default(), Player: "player", Challenge: "4" };
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const goblin = { ...StatBlock.Default(), Challenge: "1" };
+    encounter.AddCombatantFromStatBlock(goblin);
+
+    const soloBoss = {
+      ...StatBlock.Default(),
+      Player: "",
+      HasLastStand: true,
+      Challenge: "5"
+    };
+    encounter.AddCombatantFromStatBlock(soloBoss);
+
+    expect(encounter.Difficulty().MonsterLevelTotal).toBe(5);
+  });
+
   test("A monster with Medium Armor enters combat with its Medium Armor HP pool", () => {
     const monster = {
       ...StatBlock.Default(),

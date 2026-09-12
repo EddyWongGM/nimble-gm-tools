@@ -191,7 +191,10 @@ export class StatBlockEditor extends React.Component<
   // stats layout - so when an optional field (Hit Dice, Wounds) doesn't
   // apply, later fields (notably Initiative) shift up to fill the gap
   // instead of leaving an empty cell and an extra near-empty row below.
-  private statFields = (player: string): JSX.Element[][] => {
+  private statFields = (
+    player: string,
+    hasLastStand: boolean
+  ): JSX.Element[][] => {
     const actsInPlayerPhase = player == "player" || player == "companion";
 
     const rows: JSX.Element[][] = [];
@@ -258,7 +261,7 @@ export class StatBlockEditor extends React.Component<
       ]);
     }
 
-    if (player === "legendary") {
+    if (player === "legendary" || (player === "" && hasLastStand)) {
       fields.push(
         <ValueAndNotesField
           key="laststandhp"
@@ -384,6 +387,24 @@ export class StatBlockEditor extends React.Component<
                         </Info>
                       </>
                     )}
+                  {api.values.Player === "" && (
+                    <label className="c-statblock-editor__checkbox-label">
+                      <Field type="checkbox" name="HasLastStand" />
+                      Last Stand (solo boss)
+                    </label>
+                  )}
+                  {api.values.Player === "" && api.values.HasLastStand && (
+                    <Info>
+                      This monster gets a Legendary-style Last Stand: the
+                      first time it would drop to 0 HP, it instead drops to
+                      its Last Stand HP and keeps fighting. It's also exempt
+                      from forced monster numbering and is judged solo
+                      against the party's average level for encounter
+                      difficulty, like a boss fight. Unlike Legendary, its
+                      HP does not scale with hero count — author it as a
+                      fixed number.
+                    </Info>
+                  )}
                   {api.values.Player === "room" && (
                     <Info>
                       A Room isn't a monster — it's an info card for
@@ -431,7 +452,7 @@ export class StatBlockEditor extends React.Component<
         )}
         {!isRoom && (
           <div className="c-statblock-editor__stats">
-            {this.statFields(api.values.Player).map((pair, i) => (
+            {this.statFields(api.values.Player, api.values.HasLastStand).map((pair, i) => (
               <div className="c-statblock-editor__stats-row" key={i}>
                 {pair}
               </div>

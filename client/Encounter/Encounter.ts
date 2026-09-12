@@ -80,12 +80,12 @@ export class Encounter {
         .filter(c => c.StatBlock().Challenge)
         .map(c => c.StatBlock().Challenge.toString());
 
-      // Legendary/Titan monsters are calculated on their own (their level
-      // against the party's average level), not folded into the normal
-      // monster-level total - see plans/private/ENCOUNTER_DIFFICULTY.md.
+      // Legendary/Titan/solo-boss monsters are calculated on their own
+      // (their level against the party's average level), not folded into
+      // the normal monster-level total - see plans/private/ENCOUNTER_DIFFICULTY.md.
       const legendaryCombatant = monsterCombatants.find(
         c =>
-          StatBlock.IsLegendary(c.StatBlock()) ||
+          StatBlock.IsSoloMonster(c.StatBlock()) ||
           StatBlock.IsTitan(c.StatBlock())
       );
       if (legendaryCombatant) {
