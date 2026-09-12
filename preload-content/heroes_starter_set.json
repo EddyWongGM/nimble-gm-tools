@@ -1354,8 +1354,8 @@
     "Challenge": "1",
     "Traits": [
       {
-        "Name": "Searing Light",
-        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
+        "Name": "Lifebinding Spirit",
+        "Content": "[A1] (Reach 4) \n<b>Harm:</b> Attacks 1d8+[STR] (ignore Armor).\n<b>Mend:</b> ([WIL]/Safe Rest) It restores [WIL]d8 HP to a Dying creature.",
         "Usage": "[WIL]/Safe Rest"
       }
     ],
@@ -1440,9 +1440,9 @@
     "Challenge": "2",
     "Traits": [
       {
-        "Name": "Searing Light",
-        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
-        "Usage": "[WIL]/Safe Rest "
+        "Name": "Lifebinding Spirit",
+        "Content": "[A1] (Reach 4) \n<b>Harm:</b> Attacks 1d8+[STR] (ignore Armor).\n<b>Mend:</b> ([WIL]/Safe Rest) It restores [WIL]d8 HP to a Dying creature.",
+        "Usage": "[WIL]/Safe Rest"
       }
     ],
     "Actions": [
