@@ -956,6 +956,8 @@
     "Combatants": [
       {
         "Alias": "",
+        "Hidden": true,
+        "KeepHidden": true,        
         "StatBlock": {
           "Name": "Hall of Tombs",
           "Source": "Locations",
@@ -1005,6 +1007,7 @@
       },
       {
         "Alias": "",
+        "Hidden": true,        
         "StatBlock": {
           "Name": "Skeleton Warrior",
           "Source": "Nimble GMG",
@@ -1082,8 +1085,10 @@
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
     "Combatants": [
-{
+      {
         "Alias": "",
+        "Hidden": true,
+        "KeepHidden": true,          
         "StatBlock": {
           "Name": "Venus Fly Trap Room",
           "Source": "Locations/LV03 Intro - Garden of Death",
@@ -1133,6 +1138,7 @@
       },
       {
         "Alias": "",
+        "Hidden": true,
         "StatBlock": {
           "Name": "Giant Venus Flytrap",
           "Source": "Nimble GMG",
@@ -1385,9 +1391,57 @@
     "Name": "5 Ceremony Room",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
-    "Combatants": [      
+    "Combatants": [
+      {
+        "Alias": "",
+        "Hidden": true,
+        "StatBlock": {
+          "Name": "Ceremony Room",
+          "Source": "Locations/LV03 Intro - Garden of Death",
+          "Type": "Locations",
+          "Armor": "",          
+          "HP": {
+            "Value": 1,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": 0,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "",
+          "Traits": [],
+          "Actions": [],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "*Ceremonial weapons and shields hang on the walls (unusable, merely decorative).*\n\n• Large stone block in the center of the room (to prepare bodies for burial).\n• You feel the heavy, thudding footsteps of Rootbreakers (1 for every 2 heroes) and the scratchy voice of a goblin (Pinky): \"Hey! Get back here! If you escape He’s going to sacrifice MEEEEEE!!\"\n• You see a pale goblin with a pinkish hue, chasing after a girl, no older than 10 years old, bright red hair.\nMatches the picture in Marla’s Locket (Ruby).\n• She runs to the tallest hero, hiding behind them, and sticks her tongue out at Pinky, who stops in his tracks.\n\n\n**Parley With Pinky**. A pink goblin, frail and overwhelmingly anxious (literally vibrating).\n\n**Pinky is Greenthumb’s assistant**. *He left his goblin den to learn magic from Greenthumb, but is now afraid Greenthumb will use him as a sacrifice to become a lich. Pinky wants Greenthumb’s praise and approval (which he will never get), to become a real wizard, and information about his brother Sprig.*\n\n\n• Pinky knows enough botanical magic to control the monsters with him in the room, and he will defend himself if attacked, but doesn’t particularly want to come to blows.\n• He has a Cloak of Lesser Windform. He will use it to flee combat if things get too scary, or will offer it to them in exchange for his own life or information about his brother.\n\n\n**Fight or Parley?** If the players want to fight, let them fight! But this is also a great opportunity for the players to parley. If they spoke to his brother Sprig in the goblin cave, he’d very much like to hear how he’s doing. If they can come to terms, Pinky has a key to the iron door where Ruby’s sister, Pearl, is being kept. He will give it to the heroes if they can defeat Greenthumb (or right away, if they threaten him).",
+          "Player": "room",
+          "Version": "1.0.5",
+          "ImageURL": "",
+          "CustomFields": []          
+        }
+      },           
       {
         "Alias": "Pinky",
+        "Hidden": true,
         "StatBlock": {
           "Name": "Goblin",
           "Source": "Nimble GMG",
