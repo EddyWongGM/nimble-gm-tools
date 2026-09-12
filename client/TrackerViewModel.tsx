@@ -279,9 +279,10 @@ export class TrackerViewModel {
         ...StatBlock.Default(),
         ...(newStatBlock || persistentCharacter.StatBlock),
         Id: probablyUniqueString(),
-        // Drop the Sample Heroes folder path so the duplicate lands in the
-        // user's library root rather than a nested folder they didn't create.
-        Path: ""
+        // Drop the Sample Heroes folder path and name so the duplicate lands
+        // in the user's library root and prompts them to name their own copy.
+        Path: "",
+        Name: ""
       };
 
       this.StatBlockEditorProps({
