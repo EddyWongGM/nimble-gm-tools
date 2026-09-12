@@ -1296,7 +1296,7 @@
     ]
   },
   {
-    "Name": "5 Rootbreaker",
+    "Name": "5.1 Rootbreaker",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
     "Combatants": [
@@ -1382,56 +1382,10 @@
     ]
   },
   {
-    "Name": "6 Ceremony Room",
+    "Name": "5 Ceremony Room",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
-    "Combatants": [
-      {
-        "Alias": "Ruby",
-        "Hidden": true,
-        "StatBlock": {
-          "Name": "Commoner",
-          "Source": "Nimble GMG",
-          "Type": "Goblins",
-          "HP": {
-            "Value": 4,
-            "Notes": ""
-          },
-          "AC": {
-            "Value": 0,
-            "Notes": ""
-          },
-          "InitiativeModifier": -99,
-          "InitiativeAdvantage": false,
-          "Speed": ["6"],
-          "Abilities": {
-            "Str": 0,
-            "Dex": 0,
-            "Int": 0,
-            "Wis": 0
-          },
-          "DamageVulnerabilities": [],
-          "DamageResistances": [],
-          "DamageImmunities": [],
-          "ConditionImmunities": [],
-          "Saves": [],
-          "Skills": [],
-          "Senses": [],
-          "Languages": [],
-          "Challenge": "1/4",
-          "Traits": [],
-          "Actions": [],
-          "BonusActions": [],
-          "Reactions": [],
-          "LegendaryActions": [],
-          "MythicActions": [],
-          "Description": "",
-          "Player": "",
-          "Version": "3.16.1",
-          "ImageURL": "",
-          "CustomFields": []
-        }
-      },
+    "Combatants": [      
       {
         "Alias": "Pinky",
         "StatBlock": {
@@ -1493,7 +1447,53 @@
           "ImageURL": "",
           "CustomFields": []
         }
-      }
+      },
+{
+        "Alias": "Ruby",
+        "Hidden": true,
+        "StatBlock": {
+          "Name": "Commoner",
+          "Source": "Nimble GMG",
+          "Type": "Goblins",
+          "HP": {
+            "Value": 4,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": ["6"],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "1/4",
+          "Traits": [],
+          "Actions": [],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": []
+        }
+      }      
     ]
   },
   {
