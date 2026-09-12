@@ -278,7 +278,9 @@ export class Encounter {
         CurrentHP: statBlock.HP.Value,
         CurrentNotes: AutoPopulatedNotes(statBlock),
         TemporaryHP: 0,
-        Hidden: hideOnAdd,
+        // A Room combatant always starts hidden, regardless of the GM's
+        // general "hide on add" setting - see StatBlock.IsRoomInfo.
+        Hidden: hideOnAdd || StatBlock.IsRoomInfo(statBlock),
         RevealedAC: false,
         RevealedHitDice: true,
         Initiative: 0,

@@ -40,6 +40,12 @@ export class LauncherViewModel {
 
   public GeneratedEncounterId = env.EncounterId;
   public JoinEncounterInput = ko.observable<string>("");
+  public PatreonLoginUrl = env.PatreonLoginUrl;
+
+  public TrackPatreonLogin = (): boolean => {
+    Metrics.TrackPatreonLoginStarted(Metrics.LeadSource.LandingPageLogin);
+    return true;
+  };
 
   public StartEncounter = (): void => {
     const encounterId = this.JoinEncounterInput().split("/").pop();

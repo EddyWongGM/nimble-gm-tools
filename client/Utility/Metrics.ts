@@ -90,6 +90,7 @@ enum MetricLeadSource {
   EpicTabUnlockEpic = "epic_tab_unlock_epic",
   FooterBanner = "footer_banner",
   ImporterLoginFail = "importer_login_fail",
+  LandingPageLogin = "landing_page_login",
   PlayerViewCustomizationGate = "player_view_customization_gate",
   StickyPatreonLogin = "sticky_patreon_login"
 }

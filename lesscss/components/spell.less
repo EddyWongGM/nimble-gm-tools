@@ -29,6 +29,45 @@
   }
 }
 
+// Same "go full width, checkmark floats over the top-right corner" shape
+// as .prompt-spell above, for the Room-description card (RoomInfoPrompt).
+.prompt-room-info {
+  flex-direction: inherit;
+  align-items: flex-start;
+  width: 100%;
+
+  > .c-button {
+    transform: translateX(-100%);
+    margin-left: 0;
+  }
+
+  .room-info {
+    min-width: 100%;
+
+    h3 {
+      padding-right: 4.5rem;
+    }
+  }
+}
+
+.room-info {
+  &__description {
+    margin: 0 0 @medium-spacer;
+  }
+
+  &__notes {
+    strong {
+      display: block;
+      margin-bottom: @extra-small-spacer;
+    }
+  }
+
+  &__empty {
+    color: var(--text-faded);
+    font-style: italic;
+  }
+}
+
 .spell {
   flex-grow: 1;
   flex-flow: row;

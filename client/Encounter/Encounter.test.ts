@@ -128,6 +128,31 @@ describe("Encounter", () => {
     expect(encounter.Combatants()[2].StatBlock().HP.Value).toBe(10);
   });
 
+  test("A Room combatant (Player: room) is always Hidden, regardless of hideOnAdd", () => {
+    const room = {
+      ...StatBlock.Default(),
+      Player: "room",
+      Challenge: ""
+    };
+    encounter.AddCombatantFromStatBlock(room, false);
+
+    expect(encounter.Combatants()[0].Hidden()).toBe(true);
+  });
+
+  test("A Room combatant does not count toward encounter difficulty", () => {
+    const hero = { ...StatBlock.Default(), Player: "player", Challenge: "4" };
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const room = {
+      ...StatBlock.Default(),
+      Player: "room",
+      Challenge: ""
+    };
+    encounter.AddCombatantFromStatBlock(room);
+
+    expect(encounter.Difficulty().MonsterLevelTotal).toBe(0);
+  });
+
   test("A monster with Medium Armor enters combat with its Medium Armor HP pool", () => {
     const monster = {
       ...StatBlock.Default(),

@@ -19,7 +19,7 @@ function MoveEncounterPromptComponent(props: MoveEncounterPromptProps) {
   return (
     <StandardPromptLayout
       className={promptClassName}
-      label="Move or rename encounter"
+      label="Move or rename location"
     >
       <span className="fas fa-folder" />
       <AutocompleteTextInput

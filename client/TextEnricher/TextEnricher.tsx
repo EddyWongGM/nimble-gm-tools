@@ -155,7 +155,39 @@ export class TextEnricher {
       Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents
     > = {
       p: ({ children }) => {
-        return <p>{this.applyReplacer(replacer, children)}</p>;
+        const lines = splitIntoLines(children);
+        if (lines.length <= 1) {
+          return (
+            <p
+              className={
+                isBulletLine(lines[0]) ? "text-enricher-bullet-line" : undefined
+              }
+            >
+              {this.applyReplacer(replacer, children)}
+            </p>
+          );
+        }
+        // A hand-typed bullet list is usually several "· " lines inside one
+        // markdown paragraph (a single soft-wrapped block of text, not
+        // separate paragraphs) - each needs its own hanging indent, not
+        // just the paragraph's first line, so each line becomes its own
+        // block-level span rather than relying on text-indent/padding on
+        // the outer <p> (which only ever affects that one first line).
+        return (
+          <p>
+            {lines.map((line, i) => (
+              <span
+                key={i}
+                className={
+                  "text-enricher-line" +
+                  (isBulletLine(line) ? " text-enricher-bullet-line" : "")
+                }
+              >
+                {this.applyReplacer(replacer, line)}
+              </span>
+            ))}
+          </p>
+        );
       },
       li: ({ children }) => {
         return <li>{this.applyReplacer(replacer, children)}</li>;
@@ -504,6 +536,54 @@ export class TextEnricher {
 
     return ReactReplace(replaceConfig);
   }
+}
+
+// Splits a paragraph's children into "lines" - React.Children.toArray
+// doesn't split strings itself, so a soft-wrapped multi-line paragraph
+// (several "\n"-separated lines authors typed as one block, e.g. a
+// hand-typed bullet list) normally arrives as one string child with
+// literal "\n" characters still embedded, not as separate <br>-delimited
+// children (remark-breaks was expected to produce real <br> elements here
+// but, at least in this environment, doesn't - see the investigation in
+// plans/ROOMS.md's list-alignment section). Handles both shapes: an
+// embedded "\n" within a string child, and a literal <br> element, so
+// this keeps working correctly if that ever changes.
+function splitIntoLines(
+  children: React.ReactNode | React.ReactNode[]
+): React.ReactNode[][] {
+  const lines: React.ReactNode[][] = [[]];
+
+  React.Children.forEach(children, child => {
+    if (React.isValidElement(child) && child.type === "br") {
+      lines.push([]);
+      return;
+    }
+    if (isString(child) && child.includes("\n")) {
+      child.split("\n").forEach((part, index) => {
+        if (index > 0) {
+          lines.push([]);
+        }
+        if (part.length > 0) {
+          lines[lines.length - 1].push(part);
+        }
+      });
+      return;
+    }
+    lines[lines.length - 1].push(child);
+  });
+
+  return lines;
+}
+
+// Authors commonly hand-type "· " or "• " as a bullet rather than real
+// markdown list syntax ("- "/"* ") - often specifically to avoid a real
+// list's own styling/indentation. A plain line/paragraph gets no hanging
+// indent by default, so a long bullet's wrapped line falls back to the
+// margin instead of aligning under the text after the bullet - flagging
+// it here lets the `p` renderer apply one, per line.
+function isBulletLine(line: React.ReactNode[]): boolean {
+  const first = line?.[0];
+  return isString(first) && /^\s*[·•]\s/.test(first);
 }
 
 // CommonMark collapses any run of blank lines into a single paragraph

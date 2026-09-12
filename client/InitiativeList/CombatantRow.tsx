@@ -151,6 +151,9 @@ export function CombatantRow(props: CombatantRowProps) {
             <span className="combatant__hidden-icon fas fa-eye-slash" />
           </Tippy>
         )}
+        {StatBlockNamespace.IsRoomInfo(props.combatantState.StatBlock) && (
+          <RoomInfoPreview combatantState={props.combatantState} />
+        )}
         <button
           className="combatant__selection-button"
           onClick={e => {
@@ -164,33 +167,35 @@ export function CombatantRow(props: CombatantRowProps) {
       </td>
 
       <td className="combatant__hp">
-        <div
-          className="combatant__hp-outer"
-          onClick={event => {
-            commandContext.ApplyDamageToCombatant(props.combatantState.Id);
-            event.stopPropagation();
-          }}
-        >
-          <div className="combatant__hp-inner" style={getHPStyle(props)}>
-            <span className="screen-reader-only">Health</span>
-            {renderHPText(props)}
-            {DisplayHPBar && (
-              <span
-                className={
-                  "combatant__hp-bar" +
-                  (props.combatantState.HasEnteredLastStand
-                    ? " combatant__hp-bar--last-stand"
-                    : "")
-                }
-              >
+        {!StatBlockNamespace.IsRoomInfo(props.combatantState.StatBlock) && (
+          <div
+            className="combatant__hp-outer"
+            onClick={event => {
+              commandContext.ApplyDamageToCombatant(props.combatantState.Id);
+              event.stopPropagation();
+            }}
+          >
+            <div className="combatant__hp-inner" style={getHPStyle(props)}>
+              <span className="screen-reader-only">Health</span>
+              {renderHPText(props)}
+              {DisplayHPBar && (
                 <span
-                  className="combatant__hp-bar--filled"
-                  style={renderHPBarStyle(props)}
-                />
-              </span>
-            )}
+                  className={
+                    "combatant__hp-bar" +
+                    (props.combatantState.HasEnteredLastStand
+                      ? " combatant__hp-bar--last-stand"
+                      : "")
+                  }
+                >
+                  <span
+                    className="combatant__hp-bar--filled"
+                    style={renderHPBarStyle(props)}
+                  />
+                </span>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </td>
 
       <td className="combatant__ac">
@@ -474,6 +479,30 @@ function CombatantColorPicker(props: { combatantState: CombatantState }) {
       ) : (
         <span className="combatant__color far fa-circle" />
       )}
+    </Tippy>
+  );
+}
+
+// A Room combatant's Description (read-aloud) and CurrentNotes (GM notes)
+// are otherwise only visible in the right column via CombatantDetails -
+// this opens the same content as an in-place card in the center column
+// instead (RoomInfoPrompt, via PendingPrompts - the same mechanism used
+// for e.g. the Companions rules-reference card), without leaving the
+// initiative list or disturbing whatever's currently selected (see
+// plans/ROOMS.md's "Viewing a Room's description as an in-place card"
+// section for the decision not to couple this with selection).
+function RoomInfoPreview(props: { combatantState: CombatantState }) {
+  const commandContext = React.useContext(CommandContext);
+
+  return (
+    <Tippy content="View Room Description">
+      <span
+        className="combatant__room-info-preview fas fa-search"
+        onClick={e => {
+          e.stopPropagation();
+          commandContext.ShowRoomInfo(props.combatantState.Id);
+        }}
+      />
     </Tippy>
   );
 }

@@ -158,7 +158,7 @@ function LibraryHeader(props: { selectedLibrary: SelectableTab }) {
   const headerTexts: Record<SelectableTab, string> = {
     StatBlocks: "Add Names",
     PersistentCharacters: "Add Names",
-    Encounters: "Load Encounters",
+    Encounters: "Load Locations",
     Spells: "Browse Codex",
     Scenes: "Manage Scenes"
   };
@@ -169,7 +169,7 @@ function LibraryHeader(props: { selectedLibrary: SelectableTab }) {
     PersistentCharacters:
       "Each Hero can each only be added to the View once, and they will be persistent across different Encounters.",
     Encounters:
-      "Loading an Encounter adds all of the Names saved in it. Heroes who are already present are not duplicated.",
+      "Loading a Location adds all of the Names saved in it. Heroes who are already present are not duplicated.",
     Spells: null,
     Scenes:
       "Click a saved scene to set it as the Player View background image."

@@ -348,6 +348,25 @@ export namespace StatBlock {
   export const IsTitan = (statBlock: StatBlock): boolean =>
     statBlock.Player == "titan";
 
+  // Marks a non-fighting "Room" combatant (read-aloud text lives in
+  // Description, GM notes in CombatantState.CurrentNotes) rather than a
+  // real monster: excluded from CR/difficulty math, hidden from Player
+  // View by default, HP display suppressed. It can still take a turn if
+  // used as an active hazard (e.g. rising water) - this only means "not a
+  // monster," not "never acts."
+  export const IsRoomInfo = (statBlock: StatBlock): boolean =>
+    statBlock.Player == "room";
+
+  // Legendary monsters and Rooms are both excluded from the
+  // Rules.AlwaysNumberMonsters sequence - Legendaries are solo/unique by
+  // design, Rooms aren't monsters at all - so they neither take a number
+  // from it nor consume one that would otherwise go to a real monster.
+  // Centralized here (rather than repeating both checks at each of the
+  // four call sites that need this) so a future exemption, or a fix to
+  // this one, can't be applied to only some of them by mistake.
+  export const IsExemptFromMonsterNumbering = (statBlock: StatBlock): boolean =>
+    IsLegendary(statBlock) || IsRoomInfo(statBlock);
+
   // Whether this monster's authored HP (HP/HPMediumArmor/HPHeavyArmor) is
   // "per hero" and should be multiplied by the party's hero count when
   // added to an encounter. Legendary monsters always are; a Normal monster

@@ -60,7 +60,7 @@ function GetIndexLabel(combatant: Combatant): number | undefined {
   if (
     CurrentSettings().Rules.AlwaysNumberMonsters &&
     !combatant.ActsInPlayerPhase() &&
-    !StatBlock.IsLegendary(combatant.StatBlock())
+    !StatBlock.IsExemptFromMonsterNumbering(combatant.StatBlock())
   ) {
     return combatant.IndexLabel();
   }

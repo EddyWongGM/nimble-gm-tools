@@ -4,7 +4,10 @@
 trap) is confirmed fixed live, against a deployed dev build, by the user —
 the rest (#1, #2/#2b, #3) still only have `lessc`-compiles-clean
 confirmation, not a live/visual check, since no browser/screenshot tool was
-available in the session that made those changes.
+available in the session that made those changes. A follow-up code review
+of the whole pass (§8) found and fixed four more issues (8a-8d,
+`lessc`/`tsc` clean, not yet live-verified) and ruled out a fifth (8e) as
+intentional.
 
 ## Context
 
@@ -343,7 +346,7 @@ side of the ~44px commonly recommended minimum touch target — left alone
 here since `.c-listing-button` is a shared, general-purpose class (not
 library-row-specific), so enlarging it has a wider blast radius than this
 visibility fix and deserves its own look rather than a drive-by change.
-**Not yet verified live.**
+**Confirmed fixed** — user re-tested live and confirmed the icons now show.
 
 ## 5. StatBlock editor: a keyword's "+" add button overlapped the next column's label
 
@@ -396,34 +399,278 @@ row, elsewhere, without this problem) — added
 ([statblock-editor.less](../lesscss/components/statblock-editor.less)).
 **Not yet verified live.**
 
-## Known gap, not yet fixed: prompts have no visible way to cancel
+## 7. Prompts had no visible way to cancel
 
 Found live: opening the "Save Encounter As" prompt at 430px width showed
 the label + input but no visible button to back out of it.
 [client/Prompts/PendingPrompts.tsx:37-41](../client/Prompts/PendingPrompts.tsx#L37-L41)
 shows this isn't Save-Encounter-specific or mobile-specific — every prompt
 (`Prompt` in `PendingPrompts.tsx`, used for Save Encounter, Add Spell,
-Scene reveal, roll-initiative, add-item/add-tag, etc.) can only be
+Scene reveal, roll-initiative, add-item/add-tag, etc.) could only be
 canceled via the `Escape` key. That's always been true; it just never
 showed up as a problem before because desktop always has an Escape key,
 and touch devices don't.
 
-**Planned fix (approved, not yet implemented):** add a visible close (X)
-button to the shared `Prompt` component, wired to the same `onCancel` the
-Escape handler already calls — fixes every prompt at once, on every
-screen size, rather than special-casing Save Encounter or gating it to
-phone width. Positioning needs care: `.prompt`'s own flex layout
-(`justify-content: space-between`, exactly 2 children assumed — content,
-then each prompt's own inline `SubmitButton`) can't just take a 3rd flex
-child without risking misalignment across every different prompt variant's
-internal layout (roll-initiative, add-item, add-tag, spell, scene, etc.
-all lay out their own content very differently). Current plan: a small
-button positioned *outside* `.prompt`'s padding box (small negative
-top/left offset, `.prompt` given `position: relative`) — clear of both the
-existing corner-overlapping submit button used by `.prompt-spell`/
-`.prompt-scene` (top-right, via `transform: translateX(-100%)`) and of
-each variant's own top-left content, since it never enters their padding
-box at all.
+**Fix:** added a visible close (X) button to the shared `Prompt` component
+([client/Prompts/PendingPrompts.tsx](../client/Prompts/PendingPrompts.tsx)),
+wired to the same `onCancel` the Escape handler already calls — fixes
+every prompt at once, on every screen size, rather than special-casing
+Save Encounter or gating it to phone width.
+
+Positioning needed care: `.prompt`'s own flex layout
+(`justify-content: space-between`, built assuming exactly 2 children —
+content, then each prompt's own inline `SubmitButton`) couldn't just take
+a 3rd flex child without risking misalignment across every different
+prompt variant's internal layout (roll-initiative, add-item, add-tag,
+spell, scene, etc. all lay out their own content very differently).
+Instead ([lesscss/components/prompts.less](../lesscss/components/prompts.less)),
+the button is positioned *outside* `.prompt`'s padding box entirely (small
+negative top/left offset, `.prompt` given `position: relative`) — clear of
+both the existing corner-overlapping submit button used by
+`.prompt-spell`/`.prompt-scene` (top-right, via
+`transform: translateX(-100%)`) and of each variant's own top-left
+content, since it never enters their padding box at all regardless of what
+they render there. **Not yet verified live.**
+
+## 8. Code review findings on the full mobile pass (`729ca2c3..6f5bb169`)
+
+A full correctness/cleanup review of every commit in this doc (three
+independent research passes, each finding spot-verified against the current
+tree) turned up four issues distinct from anything above, plus one that
+turned out not to be a bug (8e). 8a-8d are fixed below; none of the fixes
+touch the mobile-layout approach itself. Not yet verified live/compiled
+against a running dev build — only `lessc`/`tsc` clean.
+
+### 8a. Mana field's Notes input reappeared by accident
+
+[client/StatBlockEditor/StatBlockEditor.tsx:270](../client/StatBlockEditor/StatBlockEditor.tsx#L270) —
+commit `92e817b5` ("Adjust layout for spell components on narrow screens",
+otherwise entirely `.spell-footer`/`.prompt` CSS) dropped the `hideNotes`
+prop from the Mana `ValueAndNotesField`. Every structurally identical
+sibling field (HP, armor-tier HP, Last Stand HP, Resources, Wounds) still
+passes `hideNotes`, and `StatBlock.Mana` is typed identically to
+`Resources`/`Wounds` — nothing about the layout change required this.
+Two independent review passes flagged it separately, which is a good sign
+it's real rather than a misread.
+
+**Effect:** Mana now shows an editable free-text Notes input in
+StatBlockEditor that no other stat row shows — an unexplained UI
+inconsistency riding along in a CSS-only commit.
+
+**Fix:** added `hideNotes` back to that JSX line. **Not yet verified live.**
+
+### 8b. `.c-library-manager__center` was missed by the #3 mobile-stack fix
+
+[client/Library/Manager/LibraryManager.tsx:90-99](../client/Library/Manager/LibraryManager.tsx#L90-L99)
+sets `.c-library-manager__center`'s width via an inline
+`style={{ width: centerColumnWidth }}` (defaults to `600`, adjustable only
+by dragging the `VerticalResizer` between it and the left column).
+[lesscss/components/library-manager.less](../lesscss/components/library-manager.less)'s
+`@media (max-width: @large)` block (added for #3) stacks the three panes
+and forces `.left-column` to 100% width and `.c-library-manager__editor` to
+`width: 100%`, but never touches `.c-library-manager__center` — and an
+inline style wins over an external stylesheet rule that isn't `!important`
+regardless, so even adding a plain CSS override here wouldn't be enough.
+
+**Effect:** at phone width, the center pane (`SelectedItemsManager`) still
+renders at whatever `centerColumnWidth` last was (600px by default),
+forcing horizontal overflow in the now-vertically-stacked layout — the
+same class of bug #3 fixed for the other two panes, just missed on this
+one.
+
+**Fix:** added `.c-library-manager__center { width: 100% !important; }` to
+the same media query (mirroring `.left-column`'s treatment — `!important`
+in a stylesheet is the one thing that overrides an element's inline
+style). **Not yet verified live.**
+
+### 8c. The left/center resizer handle is dead weight in the stacked mobile layout
+
+Same file — two `VerticalResizer` drag handles exist between
+left/center and center/editor
+([client/Layout/VerticalResizer.tsx](../client/Layout/VerticalResizer.tsx),
+a horizontal-drag-only control). Once `@media (max-width: @large)` stacks
+the panes into full-width rows (#3's fix), the left/center handle sits
+between two full-width blocks: dragging it still calls
+`setLeftColumnWidth`, but `.left-column`'s width is pinned to `100%
+!important` by the same media query, so the drag has no visible effect —
+just a confusing thin element between stacked sections. (The center/editor
+handle isn't dead the same way — until 8b is fixed, it's actually the
+only way to shrink the overflowing center pane back into view.)
+
+**Fix:** hid both resizer handles at this breakpoint with
+`.c-library-manager .vertical-resizer { display: none; }` inside the same
+media query — safe to do together with 8b since that fix removes the need
+for manual resizing on mobile entirely. **Not yet verified live.**
+
+### 8d. `.combatant__name`'s 2-line clamp is a bare selector shared with Player View
+
+[lesscss/components/combatants.less:402-428](../lesscss/components/combatants.less#L402-L428) —
+the `-webkit-line-clamp: 2` fix from #2b targets the bare `.combatant__name`
+selector, not scoped to the Tracker's initiative table. Player View reuses
+the same class name
+([client/PlayerView/components/PlayerViewCombatant.tsx:57-64](../client/PlayerView/components/PlayerViewCombatant.tsx#L57-L64)),
+but there `.combatant__name` wraps *multiple sibling elements* — a color
+dot `<span>`, a taken-turn icon, an index-label `<strong>`, then the name
+text — not plain text the way the Tracker's cell renders it.
+`-webkit-line-clamp` clamps the box's rendered lines across all of its
+children jointly, so at `@medium` width in Player View, the icons/label can
+eat into the 2-line budget before the name text does, truncating names that
+never had a truncation problem in the Tracker.
+
+**Fix:** scoped the clamp rule under `#tracker &` (the `#tracker` div only
+exists on the GM Tracker page — `client/Index.ts:20` vs. `#playerview` at
+`:45` — so this can't leak into Player View's separate page/bundle) instead
+of the bare `.combatant__name` selector; the base `display: block; width:
+100%; white-space: normal;` rule stays unscoped since that part is safe for
+both. **Not yet verified live** — needs the same `@medium`-width check in
+Player View with a combatant that has a color dot + taken-turn icon + long
+name, confirming the name still wraps/clamps correctly in the Tracker and
+is untouched in Player View.
+
+### 8e. Not a bug: Hunter LV2's Resources value
+
+[preload-content/heroes_starter_set.json:775-778](../preload-content/heroes_starter_set.json#L775) —
+`"Resources": { "Value": 99 }` differs from every other new LV2 hero's
+`"Value": 2`, but is paired with `"ResourcesStartEmpty": true`. Confirmed
+intentional by the user: Hunter's Resources pool starts at 0 (`Value` is
+the cap it fills toward, not a starting amount, per
+[Combatant.ts:370-371](../client/Combatant/Combatant.ts#L370)'s
+`ResourcesStartEmpty ? 0 : MaxResources()`).
+
+Checking the render path confirms *why* it has to be a real positive
+number rather than left blank: [CombatantRow.tsx:645-677](../client/InitiativeList/CombatantRow.tsx#L645)'s
+`renderResourcesText`/`renderResourcesBarStyle` both early-return blank
+(`""` / `width: 0%`) whenever `Resources.Value` is falsy — so an empty or
+`0` `Value` would make the whole resources counter invisible, not just
+"start at 0". `99` is what keeps `maxResources` truthy so the GM still
+sees a clickable `0` counter that starts empty and fills up, same pattern
+every other `ResourcesStartEmpty` statblock needs, just with the cap
+un-narratively high (Hunter's "TotH Charges" isn't meant to hard-cap in
+the 2-5 range the way other classes' Resources do). No change needed.
+
+## 9. Fix #7's cancel (X) button: redundant on some prompts, misplaced on others
+
+Found live, on the rebuilt dev deploy, checking fix #7 (the universal
+`.prompt__cancel` X added to every prompt): three different prompts each
+showed a real problem, all traced back to the same design gap in that fix.
+
+**Redundant, not just cosmetic — actually identical, on prompts whose
+submit already just dismisses:** [SpellPrompt.tsx](../client/Prompts/SpellPrompt.tsx)'s
+`onSubmit: () => true` has no effect beyond closing the prompt (confirmed
+via [PendingPrompts.tsx](../client/Prompts/PendingPrompts.tsx): submit
+calls `onSubmit`, and if it returns truthy, closes the prompt the same way
+Cancel does) — there's no data being submitted, so the checkmark and the
+new X are two buttons that do the exact same thing. The same is true of
+[ScenePrompt.tsx](../client/Prompts/ScenePrompt.tsx),
+[CombatStatsPrompt.tsx](../client/Prompts/CombatStatsPrompt.tsx),
+[ConditionReferencePrompt.tsx](../client/Prompts/ConditionReferencePrompt.tsx),
+`ShowDiceRollPrompt` in
+[RollDicePrompt.tsx](../client/Prompts/RollDicePrompt.tsx), and the two
+Patreon-gate notices in
+[TrackerViewModel.tsx:375-429](../client/TrackerViewModel.tsx#L375) — all
+unconditional `onSubmit: () => true` with their own visible submit
+button already serving as the sole dismissal.
+
+**Misplaced, on the rest:** confirmed live on "Save Encounter As" (the X
+overlapping the "Save Encounter As" label text) and on "Launch Player
+View" (the X overlapping the "Player View launched..." message). Root
+cause: `.prompt__cancel` ([lesscss/components/prompts.less](../lesscss/components/prompts.less))
+is a full-size button (`@button-inner: 2.6rem`) anchored at `top:
+-0.75rem; left: -0.75rem`, so even though its own origin sits just
+outside the card's padding box (as the existing comment there intended),
+its footprint still reaches about `1.85rem` past that edge — squarely on
+top of any content that starts flush in the top-left corner. SpellPrompt/
+ScenePrompt never showed this because their own content (`.spell-badge`
+etc.) was already shaped to leave that corner clear; nothing else in the
+codebase was.
+
+Unlike SpellPrompt, `PlayerViewPrompt` isn't purely redundant: for Epic
+Tier users it also has a real `Background Image URL` field, and submit
+saves that value while cancel discards it
+([PlayerViewPrompt.tsx:189-192](../client/Prompts/PlayerViewPrompt.tsx#L189)) —
+so its X had to stay, just repositioned. Same for "Save Encounter As" and
+every other prompt with real form fields (Add Item, Add Tag, Roll
+Initiative, etc.).
+
+**Fix:**
+- Added `hideCancelButton?: boolean` to `PromptProps`
+  ([PendingPrompts.tsx](../client/Prompts/PendingPrompts.tsx)) — when set,
+  the shared `Prompt` wrapper skips rendering `.prompt__cancel` entirely,
+  and skips adding the `prompt--has-cancel` class (below). Set it on all
+  seven no-op prompts listed above.
+- For every prompt that still shows the X, reserved the space it actually
+  needs: `.prompt.prompt--has-cancel` now gets `padding-top`/`padding-left`
+  increased by the button's ~1.85rem overhang
+  ([prompts.less](../lesscss/components/prompts.less)), scoped to that
+  modifier class (applied by `Prompt` only when `hideCancelButton` isn't
+  set) so the seven no-cancel prompts keep their original tighter layout
+  instead of gaining dead whitespace they don't need.
+- `lessc`/`tsc` clean; `client/Prompts`, `client/StatBlockEditor`, and
+  `client/InitiativeList` test suites all still pass.
+- **Not yet verified live** — needs the same phone-width check on Save
+  Encounter As and Launch Player View to confirm the label/message text no
+  longer collides with the X, and a check that Spell/Scene/Combat-Stats/
+  Condition-Reference/Roll-result prompts still close correctly from their
+  own checkmark now that the X is gone.
+
+## 10. Library Manager "escape" bug (#3) recurred: `display: block` broke its internal list scroll
+
+Live report, on the rebuilt dev deploy, opening Library Manager via the
+standalone toolbar icon at phone width: same symptom as #3/#3b (item list
+visible, no header/close button), but this time scrolling the list did
+**nothing at all** — not just landing at the wrong position, no scroll
+happened. Ruled out (by re-reading the current code) before looking
+further: the #3b autofocus-scroll fix (`preventScroll: true` in
+[LibraryFilter.tsx](../client/Library/Components/LibraryFilter.tsx)) is
+already in place, and `LibraryManager` fully unmounts on close (`App.tsx`
+conditionally renders `<LibraryManager>` vs `<ThreeColumnLayout>`), so
+there's no stale scroll position carried over from a previous open either.
+
+**Root cause:** [lesscss/components/library-manager.less](../lesscss/components/library-manager.less)'s
+`@media (max-width: @large)` block sets `.left-column { display: block
+!important; ... }` — needed to beat `base/responsive.less`'s
+`.encounter-view.show-* .left-column { display: none; }` (see #3's own
+comment on why). But this app gives every `<div>` `display: flex;
+flex-direction: column;` by default
+([lesscss/layout/base.less:38-40](../lesscss/layout/base.less#L38)), and
+that's what normally keeps `PaneHeader`/`Tabs` pinned while `.library`'s
+own `ul { flex: 1; overflow-y: auto; }`
+([lesscss/components/libraries.less:45-52](../lesscss/components/libraries.less#L45))
+scrolls just the list beneath them. Forcing `display: block` strips that
+flex-column context entirely: with no flex-column parent, `.library`'s
+`flex: 1` has no surplus space to grow into, so its `ul` just takes its
+own natural (unbounded) height instead of a bounded box — meaning it never
+actually overflows its own box, so there's nothing for `overflow-y: auto`
+to ever scroll. Header, tabs, and the full unclipped list end up stacked
+as plain blocks with zero working scroll region anywhere inside
+`.left-column`, matching "scrolling does nothing" exactly.
+
+**Fix:**
+- Changed `.left-column`'s override to `display: flex !important` instead
+  of `block` — `!important` still beats the `display: none` hide rule
+  (`!important` wins regardless of the hide rule's higher selector
+  specificity), but now preserves the flex-column behavior every other
+  `.library` consumer in the app already relies on.
+- Added `height: 100%;` alongside it — `display: flex` alone isn't enough,
+  because `.left-column` also needs an actual *bounded* height (not just
+  the existing `max-height: 100%` cap) for `.library`'s `flex: 1` to have
+  real space to fill and for its internal scroll to activate. `100%`
+  resolves against `.c-library-manager`'s own height, which is itself
+  bounds by `align-items: stretch` on its row-direction ancestor
+  (`.encounter-view`) before the mobile media query switches it to
+  `flex-flow: column`.
+- Net effect: `.left-column` now fills the full available height and
+  scrolls its own header-pinned list internally (matching the reference
+  pane's normal behavior everywhere else in the app), while still leaving
+  `.c-library-manager`'s outer `overflow-y: auto` to reach the center/
+  editor panes stacked below it — the original #3 design intent, just
+  with a working internal scroll region instead of relying on one
+  unbounded outer scroll for everything.
+- `lessc` clean; `client/Library` and `client/StatBlockEditor` test suites
+  still pass. **Not yet verified live** — needs the exact repro (toolbar
+  icon → Library Manager at phone width after closing the reference pane)
+  to confirm the header/close button now stay visible and the list
+  scrolls on its own beneath them.
 
 ## Still open / not investigated
 

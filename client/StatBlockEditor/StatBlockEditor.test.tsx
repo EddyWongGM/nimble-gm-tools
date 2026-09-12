@@ -394,6 +394,89 @@ describe("StatBlockEditor", () => {
     );
   });
 
+  describe("Room stat block", () => {
+    // Each click must be its own act()+update() - the toggle's onClick
+    // closes over the value from the last commit, so batching multiple
+    // simulated clicks into one act() call (with no render in between)
+    // makes them all read the same stale value instead of advancing
+    // through the cycle once per click.
+    function clickPlayerToggle() {
+      const tierToggle = editor
+        .find(EnumToggle)
+        .filterWhere(w => w.prop("fieldName") === "Player");
+      act(() => {
+        tierToggle.find("button").simulate("click");
+      });
+      editor.update();
+    }
+
+    function cycleToRoom() {
+      clickPlayerToggle(); // Normal -> Legendary
+      clickPlayerToggle(); // Legendary -> Titan
+      clickPlayerToggle(); // Titan -> Room
+    }
+
+    test("Clears Challenge and Armor at save time when converted to a Room", async () => {
+      simulate(`input[name="Challenge"]`, "change", {
+        target: { name: "Challenge", value: "4" }
+      });
+      const armorToggle = editor
+        .find(EnumToggle)
+        .filterWhere(w => w.prop("fieldName") === "Armor");
+      act(() => {
+        armorToggle.find("button").simulate("click");
+      });
+      editor.update();
+
+      cycleToRoom();
+
+      await submitEditor();
+
+      expect(saveCallback).toHaveBeenCalledWith(
+        expect.objectContaining({ Player: "room", Challenge: "", Armor: "" })
+      );
+    });
+
+    test("Previewing Room via the cyclic toggle and switching back preserves Challenge/Armor", async () => {
+      simulate(`input[name="Challenge"]`, "change", {
+        target: { name: "Challenge", value: "4" }
+      });
+      const armorToggle = editor
+        .find(EnumToggle)
+        .filterWhere(w => w.prop("fieldName") === "Armor");
+      act(() => {
+        armorToggle.find("button").simulate("click");
+      });
+      editor.update();
+
+      cycleToRoom();
+      clickPlayerToggle(); // Room -> Normal
+
+      await submitEditor();
+
+      expect(saveCallback).toHaveBeenCalledWith(
+        expect.objectContaining({
+          Player: "",
+          Challenge: "4",
+          Armor: "medium"
+        })
+      );
+    });
+
+    test("Hides combat-mechanic fields and enlarges Description for a Room", () => {
+      cycleToRoom();
+
+      expect(editor.find(`.c-statblock-editor__stats`)).toHaveLength(0);
+      expect(editor.find(`.c-statblock-editor__saves`)).toHaveLength(0);
+      expect(editor.find(`.c-statblock-editor__skills`)).toHaveLength(0);
+      expect(editor.find(`.c-statblock-editor__keywords`)).toHaveLength(0);
+      expect(editor.find(`.c-statblock-editor__powers`)).toHaveLength(0);
+      expect(
+        editor.find(`textarea[name="Description"].c-statblock-editor__textarea--large`)
+      ).toHaveLength(1);
+    });
+  });
+
   describe("Player character stat block", () => {
     test("Shows a single Defense/Hit Points row and no Armor toggle, unlike a monster", () => {
       const playerStatBlock = {

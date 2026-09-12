@@ -26,7 +26,7 @@ function SaveEncounterPromptComponent(props: { autocompletePaths: string[] }) {
       <div className="p-save-encounter">
         <div className="p-save-encounter__basic">
           <label>
-            <div className="p-save-encounter__label">Save Encounter As</div>
+            <div className="p-save-encounter__label">Save Location As</div>
             <Field
               id={fieldLabelId}
               name="Name"
@@ -168,7 +168,7 @@ export function SaveEncounterPrompt(
       };
 
       saveEncounterToLibrary(savedEncounter);
-      logEvent(`Encounter saved as ${model.Name}.`);
+      logEvent(`Location saved as ${model.Name}.`);
       Metrics.TrackEvent(Metrics.Event.EncounterSaved, { name: model.Name });
       return true;
     }

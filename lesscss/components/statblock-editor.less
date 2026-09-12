@@ -624,6 +624,14 @@ span.c-statblock-editor__label {
   flex-grow: 1;
 }
 
+// A Room's Description is its primary content (read-aloud text), not an
+// afterthought below a full stat block - give it noticeably more room than
+// a monster's flavor-text Description gets by default.
+.c-statblock-editor__textarea--large {
+  width: 100%;
+  height: 300px;
+}
+
 .grab-handle {
   padding: 0.75rem;
   cursor: grab;

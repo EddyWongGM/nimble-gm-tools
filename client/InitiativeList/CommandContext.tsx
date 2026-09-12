@@ -20,6 +20,7 @@ export const CommandContext = React.createContext({
     droppedOntoCombatantId: string | null
   ) => {},
   SetCombatantColor: (combatantId: string, color: string) => {},
+  ShowRoomInfo: (combatantId: string) => {},
   ToggleCombatantSpentReaction: (combatantId: string) => {},
   ToggleCombatantHasTakenTurn: (combatantId: string) => {},
   ResetHasTakenTurnForAllCombatants: () => {},
