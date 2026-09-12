@@ -278,7 +278,10 @@ export class TrackerViewModel {
       const statBlockCopy: StatBlock = {
         ...StatBlock.Default(),
         ...(newStatBlock || persistentCharacter.StatBlock),
-        Id: probablyUniqueString()
+        Id: probablyUniqueString(),
+        // Drop the Sample Heroes folder path so the duplicate lands in the
+        // user's library root rather than a nested folder they didn't create.
+        Path: ""
       };
 
       this.StatBlockEditorProps({

@@ -1117,6 +1117,9 @@
     "Version": "3.16.5",
     "ImageURL": "",
     "CustomFields": [],
+    "Mana": {
+      "Value": 4
+    },    
     "Wounds": {
       "Value": 5
     },
@@ -1482,6 +1485,9 @@
     "Version": "3.16.5",
     "ImageURL": "",
     "CustomFields": [],
+    "Mana": {
+      "Value": 11
+    },    
     "Wounds": {
       "Value": 5
     },
@@ -1850,6 +1856,9 @@
     "Version": "3.16.5",
     "ImageURL": "",
     "CustomFields": [],
+    "Mana": {
+      "Value": 6
+    },    
     "Wounds": {
       "Value": 5
     },
