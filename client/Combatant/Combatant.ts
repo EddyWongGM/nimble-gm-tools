@@ -88,6 +88,7 @@ export class Combatant {
   public IsPendingRemoval = ko.observable(false);
   public HasEnteredLastStand = ko.observable(false);
   public ScaledHeroCount: number | null = null;
+  public ScaledGroupId: string | null = null;
 
   public CombatTimer = new CombatTimer();
 
@@ -161,6 +162,7 @@ export class Combatant {
       savedCombatant.ScaledHeroCount ??
       (savedCombatant as any).LegendaryHeroCount ??
       null;
+    this.ScaledGroupId = savedCombatant.ScaledGroupId ?? null;
   }
 
   // Rescales a hero-count-scaled monster's HP to a new party size, recovering
@@ -674,7 +676,8 @@ export class Combatant {
       HasEnteredLastStand: this.HasEnteredLastStand(),
       RoundCounter: this.CombatTimer.ElapsedRounds(),
       InterfaceVersion: process.env.VERSION || "unknown",
-      ScaledHeroCount: this.ScaledHeroCount ?? undefined
+      ScaledHeroCount: this.ScaledHeroCount ?? undefined,
+      ScaledGroupId: this.ScaledGroupId ?? undefined
     };
   };
 

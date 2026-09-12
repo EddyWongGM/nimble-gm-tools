@@ -1,6 +1,6 @@
 [
   {
-    "Name": "A Goblin Minions x 2",
+    "Name": "A Goblin Minions",
     "Path": "Intro Nimble GMG/LV01 Intro - Tiny Rescue",
     "Source": "Nimble GMG",
     "Combatants": [
@@ -14,68 +14,8 @@
             "Value": 1,
             "Notes": ""
           },
-          "AC": {
-            "Value": 0,
-            "Notes": ""
-          },
-          "InitiativeModifier": -99,
-          "InitiativeAdvantage": false,
-          "Speed": ["6"],
-          "Abilities": {
-            "Str": 0,
-            "Dex": 0,
-            "Int": 0,
-            "Wis": 0
-          },
-          "DamageVulnerabilities": [],
-          "DamageResistances": [],
-          "DamageImmunities": [],
-          "ConditionImmunities": [],
-          "Saves": [],
-          "Skills": [],
-          "Senses": [],
-          "Languages": [],
-          "Challenge": "1/4",
-          "Traits": [
-            {
-              "Name": "Small",
-              "Content": "",
-              "Usage": ""
-            },
-            {
-              "Name": "Haha, Missed Me!",
-              "Content": "Whenever an attack misses you, deal <b>2</b> psychic damage in return (ignoring armor).",
-              "Usage": ""
-            }
-          ],
-          "Actions": [
-            {
-              "Name": "Stab",
-              "Content": "1d6 (cannot crit, follow minion rules)",
-              "Usage": ""
-            }
-          ],
-          "BonusActions": [],
-          "Reactions": [],
-          "LegendaryActions": [],
-          "MythicActions": [],
-          "Description": "",
-          "Player": "",
-          "Version": "3.16.1",
-          "ImageURL": "",
-          "CustomFields": []
-        }
-      },
-      {
-        "Alias": "",
-        "StatBlock": {
-          "Name": "Goblin Minion",
-          "Source": "Nimble GMG",
-          "Type": "Goblins",
-          "HP": {
-            "Value": 1,
-            "Notes": ""
-          },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 2,          
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -145,6 +85,8 @@
             "Value": 12,
             "Notes": ""
           },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 1,           
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -321,7 +263,7 @@
     ]
   },  
   {
-    "Name": "1 Atrium (1/Hero)",
+    "Name": "1 Atrium",
     "Path": "Intro Nimble GMG/LV02 Intro - Crystal Crag",
     "Source": "Nimble GMG",
     "Combatants": [
@@ -335,6 +277,8 @@
             "Value": 15,
             "Notes": ""
           },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 1,           
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -385,7 +329,7 @@
     ]
   },
   {
-    "Name": "2 Spider (1/Hero)",
+    "Name": "2 Spider",
     "Path": "Intro Nimble GMG/LV02 Intro - Crystal Crag",
     "Source": "Nimble GMG",
     "Combatants": [
@@ -399,6 +343,8 @@
             "Value": 18,
             "Notes": ""
           },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 1,           
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -458,7 +404,7 @@
     ]
   },
   {
-    "Name": "3 Goblin (1/Hero)",
+    "Name": "3 Goblin",
     "Path": "Intro Nimble GMG/LV02 Intro - Crystal Crag",
     "Source": "Nimble GMG",
     "Combatants": [
@@ -472,6 +418,8 @@
             "Value": 15,
             "Notes": ""
           },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 1,           
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -697,6 +645,8 @@
             "Value": 0,
             "Notes": ""
           },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 0.5,           
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -879,6 +829,8 @@
             "Value": 0,
             "Notes": ""
           },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 1,         
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -1231,6 +1183,8 @@
             "Value": 0,
             "Notes": ""
           },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 1,
           "AC": {
             "Value": 0,
             "Notes": ""
@@ -1296,92 +1250,6 @@
           "CRRating": "1/4",
           "HPHeavyArmor": {
             "Value": 8
-          }
-        }
-      }
-    ]
-  },
-  {
-    "Name": "5.1 Rootbreaker",
-    "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
-    "Source": "Nimble GMG",
-    "Combatants": [
-      {
-        "Alias": "",
-        "StatBlock": {
-          "Name": "Briarbane Rootbreaker",
-          "Source": "Nimble GMG",
-          "Type": "Forest/Briarbanes",
-          "Armor": "heavy",          
-          "HP": {
-            "Value": 0,
-            "Notes": ""
-          },
-          "AC": {
-            "Value": 0,
-            "Notes": ""
-          },
-          "InitiativeModifier": -99,
-          "InitiativeAdvantage": false,
-          "Speed": [],
-          "Abilities": {
-            "Str": 0,
-            "Dex": 0,
-            "Int": 0,
-            "Wis": 0
-          },
-          "DamageVulnerabilities": [],
-          "DamageResistances": [],
-          "DamageImmunities": [],
-          "ConditionImmunities": [],
-          "Saves": [],
-          "Skills": [],
-          "Senses": [],
-          "Languages": [],
-          "Challenge": "5",
-          "Traits": [
-            {
-              "Name": "Large",
-              "Content": "",
-              "Usage": ""
-            },
-            {
-              "Name": "Peeling Bark",
-              "Content": "Damage degrades armor (H » M » None).",
-              "Usage": ""
-            }
-          ],
-          "Actions": [
-            {
-              "Name": "Slam",
-              "Content": "3d6+6. On crit: knockback 2.",
-              "Usage": ""
-            }
-          ],
-          "BonusActions": [],
-          "Reactions": [],
-          "LegendaryActions": [],
-          "MythicActions": [
-            {
-              "Name": "",
-              "Content": "[fa-dove] Target Grappled heroes, likely breaking them free.",
-              "Usage": ""
-            },
-            {
-              "Name": "",
-              "Content": "[fa-skull] Angle their attacks to push heroes into each other or toward Acidpods.",
-              "Usage": ""
-            }
-          ],
-          "Description": "",
-          "Player": "",
-          "Version": "3.16.1",
-          "ImageURL": "",
-          "CustomFields": [],
-          "SaveDC": 13,
-          "CRRating": "2",
-          "HPHeavyArmor": {
-            "Value": 50
           }
         }
       }
@@ -1550,6 +1418,95 @@
       }      
     ]
   },
+  {
+    "Name": "5.1 Rootbreaker",
+    "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
+    "Source": "Nimble GMG",
+    "Combatants": [
+      {
+        "Alias": "",
+        "Hidden": true,        
+        "StatBlock": {
+          "Name": "Briarbane Rootbreaker",
+          "Source": "Nimble GMG",
+          "Type": "Forest/Briarbanes",
+          "Armor": "heavy",          
+          "HP": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "ScalesCountWithHeroCount": true,
+          "MonstersPerHero": 0.5,           
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": -99,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "5",
+          "Traits": [
+            {
+              "Name": "Large",
+              "Content": "",
+              "Usage": ""
+            },
+            {
+              "Name": "Peeling Bark",
+              "Content": "Damage degrades armor (H » M » None).",
+              "Usage": ""
+            }
+          ],
+          "Actions": [
+            {
+              "Name": "Slam",
+              "Content": "3d6+6. On crit: knockback 2.",
+              "Usage": ""
+            }
+          ],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [
+            {
+              "Name": "",
+              "Content": "[fa-dove] Target Grappled heroes, likely breaking them free.",
+              "Usage": ""
+            },
+            {
+              "Name": "",
+              "Content": "[fa-skull] Angle their attacks to push heroes into each other or toward Acidpods.",
+              "Usage": ""
+            }
+          ],
+          "Description": "",
+          "Player": "",
+          "Version": "3.16.1",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 13,
+          "CRRating": "2",
+          "HPHeavyArmor": {
+            "Value": 50
+          }
+        }
+      }
+    ]
+  },  
   {
     "Name": "7 Greenthumb",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",

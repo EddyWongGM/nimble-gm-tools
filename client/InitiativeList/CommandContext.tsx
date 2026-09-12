@@ -27,5 +27,6 @@ export const CommandContext = React.createContext({
   CombatantsPendingRemove: [] as Combatant[],
   RestoreCombatants: () => {},
   FlushCombatants: () => {},
+  CleanEncounter: () => {},
   CombatantCommands: [] as Command[]
 });

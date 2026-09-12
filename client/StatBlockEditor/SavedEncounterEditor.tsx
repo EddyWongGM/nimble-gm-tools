@@ -71,7 +71,7 @@ export function SavedEncounterEditor(props: {
           >
             <div className="c-statblock-editor__title-row">
               <h2 className="c-statblock-editor__title">
-                Edit Saved Location
+                Edit Saved Adventure
               </h2>
               <Button
                 onClick={props.onClose}
@@ -85,7 +85,7 @@ export function SavedEncounterEditor(props: {
               />
             </div>
 
-            <TextField label="Saved Location Name" fieldName="Name" />
+            <TextField label="Saved Adventure Name" fieldName="Name" />
             <TextField label="Folder" fieldName="Path" />
 
             <div className="c-statblock-editor__mode-toggle">

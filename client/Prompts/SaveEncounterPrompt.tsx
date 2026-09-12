@@ -26,7 +26,7 @@ function SaveEncounterPromptComponent(props: { autocompletePaths: string[] }) {
       <div className="p-save-encounter">
         <div className="p-save-encounter__basic">
           <label>
-            <div className="p-save-encounter__label">Save Location As</div>
+            <div className="p-save-encounter__label">Save Adventure As</div>
             <Field
               id={fieldLabelId}
               name="Name"
@@ -108,6 +108,34 @@ interface SaveEncounterModel {
   NonCharacterCombatants: CombatantInclusionModel[];
 }
 
+// Collapses a live count-scaled group (combatants sharing ScaledGroupId,
+// produced by one ScalesCountWithHeroCount expansion - see
+// plans/SCALABLE_MONSTER_COUNT.md) back down to a single reusable template
+// before it's saved to the library. Without this, saving would persist
+// however many copies happen to exist live right now as independent
+// templates, each still flagged to scale - so reloading for a different
+// party size would multiply instead of scaling. Only used for the
+// save-to-library path; the in-progress-session autosave must keep every
+// live combatant exactly as it is.
+export function CollapseScaledGroups(
+  combatants: CombatantState[]
+): CombatantState[] {
+  const seenGroupIds = new Set<string>();
+  return combatants.reduce<CombatantState[]>((kept, c) => {
+    if (!c.ScaledGroupId) {
+      kept.push(c);
+      return kept;
+    }
+    if (seenGroupIds.has(c.ScaledGroupId)) {
+      return kept;
+    }
+    seenGroupIds.add(c.ScaledGroupId);
+    const { ScaledGroupId: _scaledGroupId, ...withoutGroupId } = c;
+    kept.push(withoutGroupId as CombatantState);
+    return kept;
+  }, []);
+}
+
 export function SaveEncounterPrompt(
   encounterState: EncounterState<CombatantState>,
   backgroundImageUrl: string,
@@ -160,15 +188,15 @@ export function SaveEncounterPrompt(
         Name: model.Name,
         Path: model.Path,
         Id: id,
-        Combatants: encounterState.Combatants.filter(
-          c => inclusionByCombatantId[c.Id]
+        Combatants: CollapseScaledGroups(
+          encounterState.Combatants.filter(c => inclusionByCombatantId[c.Id])
         ),
         BackgroundImageUrl: model.BackgroundImageUrl,
         Version: process.env.VERSION
       };
 
       saveEncounterToLibrary(savedEncounter);
-      logEvent(`Location saved as ${model.Name}.`);
+      logEvent(`Adventure saved as ${model.Name}.`);
       Metrics.TrackEvent(Metrics.Event.EncounterSaved, { name: model.Name });
       return true;
     }

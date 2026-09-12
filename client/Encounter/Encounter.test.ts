@@ -128,6 +128,102 @@ describe("Encounter", () => {
     expect(encounter.Combatants()[2].StatBlock().HP.Value).toBe(10);
   });
 
+  test("A Normal monster with ScalesCountWithHeroCount adds multiple copies, scaled by hero count", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const swarmMonster = {
+      ...StatBlock.Default(),
+      Player: "",
+      ScalesCountWithHeroCount: true,
+      MonstersPerHero: 2,
+      Name: "Goblin"
+    };
+    encounter.AddCombatantFromStatBlock(swarmMonster);
+
+    const goblins = encounter
+      .Combatants()
+      .filter(c => c.StatBlock().Name === "Goblin");
+    expect(goblins).toHaveLength(8);
+  });
+
+  test("ScalesCountWithHeroCount rounds a fractional ratio down, in favor of the heroes", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const toughMonster = {
+      ...StatBlock.Default(),
+      Player: "",
+      ScalesCountWithHeroCount: true,
+      MonstersPerHero: 0.5,
+      Name: "Ogre"
+    };
+    encounter.AddCombatantFromStatBlock(toughMonster);
+
+    const ogres = encounter
+      .Combatants()
+      .filter(c => c.StatBlock().Name === "Ogre");
+    expect(ogres).toHaveLength(1); // floor(0.5 * 3) = 1
+  });
+
+  test("A monster with both ScalesWithHeroCount and ScalesCountWithHeroCount scales both HP and count", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const monster = {
+      ...StatBlock.Default(),
+      Player: "",
+      ScalesWithHeroCount: true,
+      ScalesCountWithHeroCount: true,
+      MonstersPerHero: 2,
+      HP: { Value: 5, Notes: "" },
+      Name: "Skeleton"
+    };
+    encounter.AddCombatantFromStatBlock(monster);
+
+    const skeletons = encounter
+      .Combatants()
+      .filter(c => c.StatBlock().Name === "Skeleton");
+    expect(skeletons).toHaveLength(4); // 2 heroes * 2/hero
+    skeletons.forEach(s => {
+      expect(s.StatBlock().HP.Value).toBe(10); // 5 * 2 heroes, per copy
+    });
+  });
+
+  test("Copies added by ScalesCountWithHeroCount share a ScaledGroupId", () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const swarmMonster = {
+      ...StatBlock.Default(),
+      Player: "",
+      ScalesCountWithHeroCount: true,
+      MonstersPerHero: 2,
+      Name: "Goblin"
+    };
+    encounter.AddCombatantFromStatBlock(swarmMonster);
+
+    const goblins = encounter
+      .Combatants()
+      .filter(c => c.StatBlock().Name === "Goblin");
+    expect(goblins).toHaveLength(4);
+    const groupIds = new Set(goblins.map(g => g.ScaledGroupId));
+    expect(groupIds.size).toBe(1);
+    expect([...groupIds][0]).toBeTruthy();
+  });
+
+  test("A monster that isn't count-scaled has no ScaledGroupId", () => {
+    encounter.AddCombatantFromStatBlock(StatBlock.Default());
+    expect(encounter.Combatants()[0].ScaledGroupId).toBeFalsy();
+  });
+
   test("A Room combatant (Player: room) is always Hidden, regardless of hideOnAdd", () => {
     const room = {
       ...StatBlock.Default(),

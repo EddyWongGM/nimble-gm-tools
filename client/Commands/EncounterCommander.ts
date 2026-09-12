@@ -346,20 +346,27 @@ export class EncounterCommander {
 
   public CleanEncounter = (): boolean => {
     if (confirm("Remove NPCs and end encounter?")) {
-      const npcViewModels = this.tracker
-        .CombatantViewModels()
-        .filter(c => !c.Combatant.ActsInPlayerPhase());
-      this.tracker.CombatantCommander.Deselect();
-      this.tracker.Encounter.EncounterFlow.EndEncounter();
-      npcViewModels.forEach(vm =>
-        this.tracker.Encounter.RemoveCombatant(vm.Combatant)
-      );
-      this.tracker.Encounter.CombatantCountsByName({});
-      this.tracker.Encounter.SaveEncounterDefaults(null);
-      Metrics.TrackEvent(Metrics.Event.EncounterCleaned);
+      this.CleanEncounterConfirmed();
     }
 
     return false;
+  };
+
+  // Shares CleanEncounter's logic with the "all monsters defeated" card,
+  // whose own buttons already ask the question - a second native confirm()
+  // on top of that would be redundant.
+  public CleanEncounterConfirmed = (): void => {
+    const npcViewModels = this.tracker
+      .CombatantViewModels()
+      .filter(c => !c.Combatant.ActsInPlayerPhase());
+    this.tracker.CombatantCommander.Deselect();
+    this.tracker.Encounter.EncounterFlow.EndEncounter();
+    npcViewModels.forEach(vm =>
+      this.tracker.Encounter.RemoveCombatant(vm.Combatant)
+    );
+    this.tracker.Encounter.CombatantCountsByName({});
+    this.tracker.Encounter.SaveEncounterDefaults(null);
+    Metrics.TrackEvent(Metrics.Event.EncounterCleaned);
   };
 
   public SafeRest = (): void => {
@@ -407,11 +414,11 @@ export class EncounterCommander {
       c => c.IndexLabel
     );
 
-    nonCharacterCombatantsInLabelOrder.forEach(c => {
+    const newlyLoadedCombatants = nonCharacterCombatantsInLabelOrder.map(c =>
       this.tracker.Encounter.AddCombatantFromState(
         hideOnAdd ? { ...c, Hidden: true } : c
-      );
-    });
+      )
+    );
 
     const persistentCharacters = savedEncounter.Combatants.filter(
       c => c.PersistentCharacterId
@@ -466,6 +473,40 @@ export class EncounterCommander {
     this.tracker.Encounter.Combatants().forEach(c => {
       if (StatBlock.IsHeroCountScaled(c.StatBlock())) {
         c.RescaleHeroCountHP(heroCount);
+      }
+    });
+
+    // Count-scaled monsters (ScalesCountWithHeroCount) are saved as a
+    // single template combatant (any pre-existing duplicates were already
+    // collapsed to one when the encounter was saved - see
+    // SaveEncounterPrompt); top it up to the target count for the party
+    // actually present, and mark the whole expanded group with a shared
+    // ScaledGroupId so a later re-save can collapse it back to one template.
+    // Scoped to just-loaded combatants (not the whole live tracker) -
+    // otherwise loading a second saved encounter into an already-populated
+    // tracker would re-expand monsters left over from an earlier load on
+    // top of their already-correct count.
+    const countScaledOriginals = newlyLoadedCombatants.filter(c =>
+      StatBlock.IsCountScaledByHeroes(c.StatBlock())
+    );
+    countScaledOriginals.forEach(c => {
+      const targetCount = StatBlock.GetHeroScaledMonsterCount(
+        c.StatBlock(),
+        heroCount
+      );
+      if (targetCount <= 1) {
+        return;
+      }
+      const groupId = c.Id;
+      c.ScaledGroupId = groupId;
+      for (let i = 1; i < targetCount; i++) {
+        const copy = this.tracker.Encounter.AddSingleCombatantFromStatBlock(
+          c.StatBlock(),
+          hideOnAdd || c.Hidden()
+        );
+        if (copy) {
+          copy.ScaledGroupId = groupId;
+        }
       }
     });
 

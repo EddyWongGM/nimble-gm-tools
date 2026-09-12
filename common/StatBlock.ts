@@ -69,6 +69,14 @@ export interface StatBlock extends Listable {
   // interpreted as "per hero" and multiplied by the party's hero count when
   // added to an encounter, same mechanic Legendary monsters use.
   ScalesWithHeroCount?: boolean;
+  // Normal monster only (Player === "") - this stat block adds multiple
+  // copies of itself when added to an encounter, scaled by the party's hero
+  // count, instead of a single fixed copy.
+  ScalesCountWithHeroCount?: boolean;
+  // Copies added per hero. 1 = the traditional 1-monster-per-hero encounter,
+  // 2 = a swarm (2/hero), 0.5 = a tougher threat (1 monster per 2 heroes).
+  // Only meaningful when ScalesCountWithHeroCount is set; defaults to 1.
+  MonstersPerHero?: number;
   AC: ValueAndNotes;
   Mana?: ValueAndNotes;
   Resources?: ValueAndNotes;
@@ -378,6 +386,28 @@ export namespace StatBlock {
     IsLegendary(statBlock) ||
     (statBlock.Player === "" && !!statBlock.ScalesWithHeroCount);
 
+  // Whether this monster is added as multiple copies scaled by the party's
+  // hero count, rather than a single fixed copy. Normal monsters only - see
+  // ScalesCountWithHeroCount.
+  export const IsCountScaledByHeroes = (statBlock: StatBlock): boolean =>
+    statBlock.Player === "" && !!statBlock.ScalesCountWithHeroCount;
+
+  // How many copies of this stat block should exist for a given hero count.
+  // Rounds down and never returns less than 1 - Nimble's rounding convention
+  // favors the heroes, so a party size that doesn't divide evenly into the
+  // ratio gets fewer enemies, never more, and a monster the GM placed in the
+  // encounter can't round away to zero copies.
+  export const GetHeroScaledMonsterCount = (
+    statBlock: StatBlock,
+    heroCount: number
+  ): number => {
+    if (!IsCountScaledByHeroes(statBlock)) {
+      return 1;
+    }
+    const ratio = statBlock.MonstersPerHero ?? 1;
+    return Math.max(1, Math.floor(ratio * Math.max(1, heroCount)));
+  };
+
   export const Default = (): StatBlock => ({
     Id: probablyUniqueString(),
     Name: "",
@@ -386,6 +416,7 @@ export namespace StatBlock {
     Type: "",
     Armor: "",
     HP: { Value: 1, Notes: "(1d1+0)" },
+    MonstersPerHero: 1,
     AC: { Value: 0, Notes: "" },
     InitiativeModifier: 0,
     InitiativeAdvantage: false,

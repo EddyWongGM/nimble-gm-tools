@@ -11,5 +11,15 @@ export default [
     Name: "Eddy Wong",
     Github: "",
     PatreonId: "7741033"
+  },  
+  {
+    Name: "Saviël Jansen",
+    Github: "",
+    PatreonId: "29887780"
+  },  
+  {
+    Name: "Tim van Bokhorst",
+    Github: "",
+    PatreonId: "5493359"
   }  
 ];

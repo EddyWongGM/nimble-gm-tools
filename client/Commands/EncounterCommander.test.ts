@@ -550,6 +550,153 @@ describe("EncounterCommander", () => {
     expect(scalableCombatant.Tags().map(t => t.Text)).toContain("HP ×2");
   });
 
+  test("LoadSavedEncounter expands a single authored ScalesCountWithHeroCount template to the target count for the party actually loaded", async () => {
+    const savedEncounter: SavedEncounter = {
+      Id: "preloaded-encounter",
+      Name: "Preloaded Encounter",
+      Path: "",
+      Version: process.env.VERSION,
+      Combatants: [
+        {
+          Id: "hero-1",
+          StatBlock: { ...StatBlock.Default(), Player: "player" },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 10,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        },
+        {
+          Id: "hero-2",
+          StatBlock: { ...StatBlock.Default(), Player: "player" },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 10,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        },
+        {
+          // A single authored template, as the app's collapse-on-save
+          // guarantees (see SaveEncounterPrompt.test.tsx) - the loader
+          // expands it to the target count for the party actually present.
+          Id: "goblin-template",
+          StatBlock: {
+            ...StatBlock.Default(),
+            Player: "",
+            ScalesCountWithHeroCount: true,
+            MonstersPerHero: 2,
+            Name: "Goblin"
+          },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 1,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        }
+      ]
+    };
+
+    await encounterCommander.LoadSavedEncounter(savedEncounter);
+
+    const goblins = encounter
+      .Combatants()
+      .filter(c => c.StatBlock().Name === "Goblin");
+    expect(goblins).toHaveLength(4); // 2 heroes * 2/hero
+    const groupIds = new Set(goblins.map(g => g.ScaledGroupId));
+    expect(groupIds.size).toBe(1);
+    expect([...groupIds][0]).toBeTruthy();
+  });
+
+  test("Loading a second saved encounter into an already-populated tracker doesn't re-expand a count-scaled monster left over from the first load", async () => {
+    const hero = { ...StatBlock.Default(), Player: "player" };
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+    encounter.AddCombatantFromStatBlock(hero);
+
+    const seedlingEncounter: SavedEncounter = {
+      Id: "seedling-encounter",
+      Name: "4.1 Seedling",
+      Path: "",
+      Version: process.env.VERSION,
+      Combatants: [
+        {
+          Id: "seedling-template",
+          StatBlock: {
+            ...StatBlock.Default(),
+            Player: "",
+            ScalesCountWithHeroCount: true,
+            MonstersPerHero: 1,
+            Name: "Briarbane Seedling"
+          },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 1,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        }
+      ]
+    };
+    const flytrapEncounter: SavedEncounter = {
+      Id: "flytrap-encounter",
+      Name: "4 Venus Fly Trap",
+      Path: "",
+      Version: process.env.VERSION,
+      Combatants: [
+        {
+          Id: "flytrap-1",
+          StatBlock: {
+            ...StatBlock.Default(),
+            Player: "",
+            Name: "Giant Venus Flytrap"
+          },
+          Alias: "",
+          IndexLabel: null,
+          CurrentHP: 1,
+          TemporaryHP: 0,
+          Initiative: 0,
+          Tags: [],
+          Hidden: false,
+          RevealedAC: false,
+          InterfaceVersion: process.env.VERSION
+        }
+      ]
+    };
+
+    // Load additively, as a GM combining two prepared encounters into one
+    // live tracker - loading the first with 3 heroes present correctly
+    // expands to 3 Seedlings.
+    await encounterCommander.LoadSavedEncounter(seedlingEncounter);
+    expect(
+      encounter.Combatants().filter(c => c.StatBlock().Name === "Briarbane Seedling")
+    ).toHaveLength(3);
+
+    // Loading the second, unrelated encounter on top must not touch the
+    // Seedlings already sitting in the tracker from the first load.
+    await encounterCommander.LoadSavedEncounter(flytrapEncounter);
+    expect(
+      encounter.Combatants().filter(c => c.StatBlock().Name === "Briarbane Seedling")
+    ).toHaveLength(3);
+    expect(
+      encounter.Combatants().filter(c => c.StatBlock().Name === "Giant Venus Flytrap")
+    ).toHaveLength(1);
+  });
+
   test("LoadSavedEncounter performs a hero-count-scaled monster's first scale when it was never added via AddCombatantFromStatBlock (e.g. hand-authored preload content)", async () => {
     const savedEncounter: SavedEncounter = {
       Id: "preloaded-encounter",
