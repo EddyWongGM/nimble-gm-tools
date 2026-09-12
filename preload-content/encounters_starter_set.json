@@ -950,10 +950,59 @@
     ]
   },
   {
-    "Name": "3 Skeleton Warrior",
+    "Name": "3 Hall of Tombs",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
     "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Hall of Tombs",
+          "Source": "Locations",
+          "Type": "Locations",
+          "Armor": "",          
+          "HP": {
+            "Value": 1,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": 0,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "",
+          "Traits": [],
+          "Actions": [],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "CRACKED walls. 4 stone tombs, 1 is empty.\n\n• A skeleton wrapped in RED thorns lies in a heap in the center of the room. A trail of plant matter leads to the Empty Tomb.\n• Skeleton holds a silver sword (20gp). DC 12 Examination or Lore check: this is a Dwarf, died in battle.\n• If the skeleton is disturbed or the sword is taken from its hands, the thorns it is wrapped in recoil and retract back into a crack in the wall.\n\n<b>Cracks.</b> It’s important to foreshadow the connection between the vines and the cracked walls; this will become important later when the place begins to fall apart!\n\n4 stone coffins rest in alcoves:\n1. Empty Tomb. Vines seem to have pushed its large stone lid to the side.\n2. Overgrown Tomb. Wrapped in RED VINES. DC 14 Might check to remove the vines (advantage if a slashing weapon is used) to open the coffin.\nInside: A small silver dwarven charm (10 gp).\n3. Scratching Tomb. Image of a warrior carved on the stone lid. DC 12 Perception check to hear SCRATCHING sounds from within. Inside: A hostile skeleton (use Ghoul statblock, it has 10 HP/hero) covered in RED VINES, gold belt buckle (20 gp).\n4. Undisturbed Tomb: Decorated in a Griffon crest. Carved stone hands hold an empty bowl on the (immovable) lid.\n\nSecret: filling the bowl with anything valuable causes the lid to open, revealing secret stairs.\nLeads to Acid Flooded Room.\n\nOn Puzzles. The above is only one possible solution to the puzzle. If the players are taking the world seriously, coming up with ideas that make sense, LET THEIR IDEAS WORK! Reward creativity, even if it isn’t exactly the right answer.",
+          "Player": "",
+          "Version": "1.0.5",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 11,
+          "CRRating": "1/2",
+          "ScalesWithHeroCount": true
+        }
+      },
       {
         "Alias": "",
         "StatBlock": {
