@@ -321,6 +321,30 @@ body.hide-rollable-underline .rollable {
   margin: @small-spacer;
 }
 
+// OptionsSettings' per-stat info icons (Mana/Resources/Hit Dice/Wounds/
+// Inventory/Gold) - reading the --stat-* vars directly means these
+// automatically match a GM's Stat Colors picker and stay a neutral color
+// below Legendary Tier, without any tier check here (StatColorCSSFrom
+// already neutralizes the vars themselves in that case).
+.c-info--mana {
+  color: var(--stat-mana);
+}
+.c-info--resources {
+  color: var(--stat-resources);
+}
+.c-info--hitdice {
+  color: var(--stat-hitdice);
+}
+.c-info--wounds {
+  color: var(--stat-wounds);
+}
+.c-info--inventory {
+  color: var(--stat-inventory);
+}
+.c-info--gold {
+  color: var(--stat-gold);
+}
+
 .tippy-content a {
   color: inherit;
 }

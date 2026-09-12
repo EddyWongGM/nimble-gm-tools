@@ -4,10 +4,13 @@ import * as React from "react";
 export function Info(props: {
   children: React.ReactChild;
   tippyProps?: Omit<TippyProps, "content" | "children">;
+  className?: string;
 }) {
   return (
     <Tippy content={props.children} {...props.tippyProps}>
-      <i className="c-info fas fa-info-circle" />
+      <i
+        className={`c-info fas fa-info-circle${props.className ? ` ${props.className}` : ""}`}
+      />
     </Tippy>
   );
 }

@@ -361,6 +361,29 @@ export class StatBlockEditor extends React.Component<
                         encounter first, or the multiplier will under-count.
                       </Info>
                     )}
+                  {api.values.Player === "" && (
+                    <label className="c-statblock-editor__checkbox-label">
+                      <Field type="checkbox" name="ScalesCountWithHeroCount" />
+                      Scalable count (copies × Hero Count)
+                    </label>
+                  )}
+                  {api.values.Player === "" &&
+                    api.values.ScalesCountWithHeroCount && (
+                      <>
+                        <NumberField
+                          label="Monsters per hero"
+                          fieldName="MonstersPerHero"
+                        />
+                        <Info>
+                          This monster is added as multiple copies, scaled by
+                          the number of heroes already in the encounter:
+                          copies = floor(Monsters per hero × heroes), rounded
+                          down, minimum 1. Use 2 for a swarm (2 per hero), 0.5
+                          for a tougher threat (1 per 2 heroes). Add heroes to
+                          the encounter first, or the count will under-scale.
+                        </Info>
+                      </>
+                    )}
                   {api.values.Player === "room" && (
                     <Info>
                       A Room isn't a monster — it's an info card for

@@ -1,4 +1,4 @@
-import { ArrayHelpers, Field, FormikProps, useField } from "formik";
+import { ArrayHelpers, Field, FormikProps } from "formik";
 import * as React from "react";
 
 import { StatBlock } from "../../../common/StatBlock";
@@ -7,6 +7,7 @@ import { KeywordField } from "./KeywordField";
 import { NameAndAdvantageField } from "./NameAndAdvantageField";
 import { PowerField } from "./PowerField";
 import { SortableList } from "./SortableList";
+import { useFormattableTextareaField } from "./useFormattableTextareaField";
 
 type FormApi = FormikProps<any>;
 
@@ -210,93 +211,8 @@ export function PowerFields(props: {
   );
 }
 
-// Ctrl/Cmd+B/I/U toggle these markers around the current selection, matching
-// the shortcuts authors expect from other text editors - TextEnricher
-// already renders "**bold**"/"*italic*" via CommonMark and "<u>...</u>"
-// via its sanitize allowlist.
-const formatShortcuts: Record<string, { open: string; close: string }> = {
-  b: { open: "**", close: "**" },
-  i: { open: "*", close: "*" },
-  u: { open: "<u>", close: "</u>" }
-};
-
-function toggleWrapMarkers(
-  value: string,
-  selectionStart: number,
-  selectionEnd: number,
-  open: string,
-  close: string
-): { newValue: string; newStart: number; newEnd: number } {
-  const before = value.slice(
-    Math.max(0, selectionStart - open.length),
-    selectionStart
-  );
-  const after = value.slice(selectionEnd, selectionEnd + close.length);
-  const selected = value.slice(selectionStart, selectionEnd);
-
-  if (before === open && after === close) {
-    // Selection is already wrapped by surrounding markers - remove them.
-    return {
-      newValue:
-        value.slice(0, selectionStart - open.length) +
-        selected +
-        value.slice(selectionEnd + close.length),
-      newStart: selectionStart - open.length,
-      newEnd: selectionEnd - open.length
-    };
-  }
-
-  if (
-    selected.length >= open.length + close.length &&
-    selected.startsWith(open) &&
-    selected.endsWith(close)
-  ) {
-    // The markers themselves were part of the selection - remove them.
-    const stripped = selected.slice(open.length, selected.length - close.length);
-    return {
-      newValue:
-        value.slice(0, selectionStart) + stripped + value.slice(selectionEnd),
-      newStart: selectionStart,
-      newEnd: selectionStart + stripped.length
-    };
-  }
-
-  return {
-    newValue:
-      value.slice(0, selectionStart) +
-      open +
-      selected +
-      close +
-      value.slice(selectionEnd),
-    newStart: selectionStart + open.length,
-    newEnd: selectionEnd + open.length
-  };
-}
-
 export const DescriptionField = (props: { large?: boolean }) => {
-  const [field, , helpers] = useField("Description");
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const shortcut = formatShortcuts[e.key.toLowerCase()];
-    if (!(e.ctrlKey || e.metaKey) || !shortcut) {
-      return;
-    }
-    e.preventDefault();
-
-    const textarea = e.currentTarget;
-    const { newValue, newStart, newEnd } = toggleWrapMarkers(
-      textarea.value,
-      textarea.selectionStart,
-      textarea.selectionEnd,
-      shortcut.open,
-      shortcut.close
-    );
-    helpers.setValue(newValue);
-    requestAnimationFrame(() => {
-      textarea.selectionStart = newStart;
-      textarea.selectionEnd = newEnd;
-    });
-  };
+  const formattableField = useFormattableTextareaField("Description");
 
   return (
     <label className="c-statblock-editor__description">
@@ -307,11 +223,7 @@ export const DescriptionField = (props: { large?: boolean }) => {
             "c-statblock-editor__textarea" +
             (props.large ? " c-statblock-editor__textarea--large" : "")
           }
-          name="Description"
-          value={field.value ?? ""}
-          onChange={e => helpers.setValue(e.target.value)}
-          onBlur={field.onBlur}
-          onKeyDown={handleKeyDown}
+          {...formattableField}
         />
       </div>
     </label>

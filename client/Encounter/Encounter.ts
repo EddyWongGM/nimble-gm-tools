@@ -238,11 +238,16 @@ export class Encounter {
     return combatant;
   };
 
-  public AddCombatantFromStatBlock = (
+  // Adds exactly one combatant from a stat block - the primitive both
+  // AddCombatantFromStatBlock's count-scaling loop and
+  // AddSingleCombatantFromStatBlock (used to top up a count-scaled group on
+  // saved-encounter load) build on, so neither path re-triggers count
+  // expansion.
+  private addOneCombatantFromStatBlock = (
     statBlockJson: Record<string, unknown>,
     hideOnAdd = false,
     variantMaximumHP: VariantMaximumHP = VariantMaximumHP.DEFAULT
-  ): void => {
+  ): Combatant | null => {
     try {
       const { Items: startingItems, ...statBlockJsonWithoutItems } =
         statBlockJson as { Items?: InventoryItem[] } & Record<
@@ -302,13 +307,59 @@ export class Encounter {
           new Tag(`HP ×${heroCountScaledFor}`, combatant, true)
         );
       }
+      return combatant;
     } catch (e) {
       console.warn("Couldn't add statblock: " + e);
       console.warn(JSON.stringify(statBlockJson));
       Sentry.captureException(e);
       Sentry.captureMessage(JSON.stringify(statBlockJson));
+      return null;
     }
   };
+
+  public AddCombatantFromStatBlock = (
+    statBlockJson: Record<string, unknown>,
+    hideOnAdd = false,
+    variantMaximumHP: VariantMaximumHP = VariantMaximumHP.DEFAULT
+  ): void => {
+    const { Items: _startingItems, ...statBlockJsonWithoutItems } =
+      statBlockJson as { Items?: InventoryItem[] } & Record<string, unknown>;
+    const previewStatBlock: StatBlock = {
+      ...StatBlock.Default(),
+      ...statBlockJsonWithoutItems
+    };
+    const heroCount = Math.max(
+      1,
+      this.combatants().filter(c => c.IsPlayerCharacter()).length
+    );
+    const count = StatBlock.GetHeroScaledMonsterCount(
+      previewStatBlock,
+      heroCount
+    );
+    const groupId = count > 1 ? probablyUniqueString() : null;
+
+    for (let i = 0; i < count; i++) {
+      const combatant = this.addOneCombatantFromStatBlock(
+        statBlockJson,
+        hideOnAdd,
+        variantMaximumHP
+      );
+      if (combatant && groupId) {
+        combatant.ScaledGroupId = groupId;
+      }
+    }
+  };
+
+  // Adds exactly one combatant from a stat block, bypassing count-scaling
+  // expansion - used by EncounterCommander.LoadSavedEncounter to top up an
+  // already-loaded count-scaled template to its target count without
+  // re-triggering AddCombatantFromStatBlock's own expansion.
+  public AddSingleCombatantFromStatBlock = (
+    statBlockJson: Record<string, unknown>,
+    hideOnAdd = false,
+    variantMaximumHP: VariantMaximumHP = VariantMaximumHP.DEFAULT
+  ): Combatant | null =>
+    this.addOneCombatantFromStatBlock(statBlockJson, hideOnAdd, variantMaximumHP);
 
   public CanAddCombatant = (persistentCharacterId: string) => {
     return !this.combatants().some(

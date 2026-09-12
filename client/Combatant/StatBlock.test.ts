@@ -110,6 +110,101 @@ describe("StatBlock", () => {
     });
   });
 
+  describe("IsCountScaledByHeroes", () => {
+    test("is true for a Normal monster with ScalesCountWithHeroCount set", () => {
+      expect(
+        StatBlock.IsCountScaledByHeroes({
+          ...StatBlock.Default(),
+          Player: "",
+          ScalesCountWithHeroCount: true
+        })
+      ).toBe(true);
+    });
+
+    test("is false for a Normal monster without ScalesCountWithHeroCount", () => {
+      expect(
+        StatBlock.IsCountScaledByHeroes({ ...StatBlock.Default(), Player: "" })
+      ).toBe(false);
+    });
+
+    test("is false for a Legendary monster with ScalesCountWithHeroCount set (Normal only)", () => {
+      expect(
+        StatBlock.IsCountScaledByHeroes({
+          ...StatBlock.Default(),
+          Player: "legendary",
+          ScalesCountWithHeroCount: true
+        })
+      ).toBe(false);
+    });
+  });
+
+  describe("GetHeroScaledMonsterCount", () => {
+    test("returns 1 for a monster that isn't count-scaled, regardless of hero count", () => {
+      expect(
+        StatBlock.GetHeroScaledMonsterCount(
+          { ...StatBlock.Default(), Player: "" },
+          4
+        )
+      ).toBe(1);
+    });
+
+    test("multiplies MonstersPerHero by hero count for a whole ratio", () => {
+      expect(
+        StatBlock.GetHeroScaledMonsterCount(
+          {
+            ...StatBlock.Default(),
+            Player: "",
+            ScalesCountWithHeroCount: true,
+            MonstersPerHero: 2
+          },
+          4
+        )
+      ).toBe(8);
+    });
+
+    test("rounds a fractional ratio down, in favor of the heroes", () => {
+      expect(
+        StatBlock.GetHeroScaledMonsterCount(
+          {
+            ...StatBlock.Default(),
+            Player: "",
+            ScalesCountWithHeroCount: true,
+            MonstersPerHero: 0.5
+          },
+          3
+        )
+      ).toBe(1); // floor(0.5 * 3) = 1, not 2
+    });
+
+    test("never returns less than 1, even when the ratio rounds to zero", () => {
+      expect(
+        StatBlock.GetHeroScaledMonsterCount(
+          {
+            ...StatBlock.Default(),
+            Player: "",
+            ScalesCountWithHeroCount: true,
+            MonstersPerHero: 0.5
+          },
+          1
+        )
+      ).toBe(1); // floor(0.5 * 1) = 0, clamped up to 1
+    });
+
+    test("defaults MonstersPerHero to 1 when unset", () => {
+      expect(
+        StatBlock.GetHeroScaledMonsterCount(
+          {
+            ...StatBlock.Default(),
+            Player: "",
+            ScalesCountWithHeroCount: true,
+            MonstersPerHero: undefined
+          },
+          5
+        )
+      ).toBe(5);
+    });
+  });
+
   describe("Update", () => {
     test("converts old-shape raw D&D scores (with Con/Cha) to modifiers", () => {
       const legacyStatBlock = {

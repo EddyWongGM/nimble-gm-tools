@@ -28,9 +28,13 @@
   // (plans/private/COLOR_CUSTOMIZATION.md) recolored links and "Opt In"/"Repeat
   // Tutorial" buttons as a side effect the first time this was tried. Only these
   // --stat-* vars should ever be touched by that feature; --green/--blue/etc.
-  // above must stay untouched by it. Only a single definition is needed (not
-  // repeated per theme block below) since each is a live reference to the hue
-  // var, which already resolves per-theme on its own.
+  // above must stay untouched by it. This block's definitions ARE repeated
+  // inside .dark-mode below (unlike most other aliases in this file) -
+  // a var()-aliased custom property substitutes at the element where it's
+  // declared, not where it's read, so a single :root-only definition would
+  // permanently bake in :root's own (light-mode) hue values and inherit
+  // that fixed value into .dark-mode unchanged. Confirmed live via
+  // getComputedStyle before this was fixed.
   //
   // --stat-hp deliberately points at --green-bright rather than plain --green -
   // --green alone (as used by --text-link/--button-face-green) reads as dull/
@@ -116,6 +120,26 @@
   --gold: #ffd94d;
   --parchment: #dbab7a;
   --magenta: #ec5fc0;
+
+  // Re-declare the --stat-* aliases (see :root's copy above) so they
+  // re-resolve against THIS block's hue values. A custom property whose
+  // specified value is `var(--x)` gets substituted once, at the element
+  // where it's declared - :root's single declaration bakes in :root's own
+  // (light-mode) --blue/--green/etc permanently, and that baked value just
+  // inherits down into .dark-mode unchanged, since --stat-mana is never
+  // redeclared there to trigger a fresh substitution. Confirmed live via
+  // getComputedStyle: without this block, Legendary Tier's default
+  // (uncustomized) stat colors stayed pinned to their light-mode hues even
+  // under .dark-mode. --stat-hp is the one exception that intentionally
+  // matches :root - --green-bright isn't redefined per-theme, so omitting
+  // it here would make no difference, but it's included for consistency.
+  --stat-hp: var(--green-bright);
+  --stat-mana: var(--blue);
+  --stat-resources: var(--magenta);
+  --stat-hitdice: var(--orange);
+  --stat-wounds: var(--wound-red);
+  --stat-inventory: var(--parchment);
+  --stat-gold: var(--gold);
 
   --text-face: var(--white-2);
   --text-inverted: var(--black);

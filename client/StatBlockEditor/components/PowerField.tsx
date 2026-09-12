@@ -3,6 +3,7 @@ import * as _ from "lodash";
 
 import * as React from "react";
 import { useDrag } from "react-dnd";
+import { useFormattableTextareaField } from "./useFormattableTextareaField";
 import { useFocusIfEmpty } from "./useFocus";
 
 interface PowerFieldProps {
@@ -15,6 +16,9 @@ interface PowerFieldProps {
 
 export function PowerField(props: PowerFieldProps) {
   const nameInput = useFocusIfEmpty();
+  const contentField = useFormattableTextareaField(
+    `${props.powerType}[${props.index}].Content`
+  );
 
   const [, drag, preview] = useDrag({
     item: { index: props.index, type: props.powerType }
@@ -46,11 +50,10 @@ export function PowerField(props: PowerFieldProps) {
         {props.trailingAddButton}
       </div>
       <div className="inline">
-        <Field
+        <textarea
           className="c-statblock-editor__textarea"
-          component="textarea"
           placeholder="Details"
-          name={`${props.powerType}[${props.index}].Content`}
+          {...contentField}
         />
       </div>
     </>

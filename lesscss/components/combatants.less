@@ -453,7 +453,6 @@ thead.combatant--header {
 
 .combatant__hidden-icon,
 .combatant__color,
-.combatant__room-info-preview,
 .combatant__has-taken-turn,
 .combatant__has-taken-turn-icon {
   margin-right: @medium-spacer;
@@ -765,4 +764,16 @@ thead.combatant--header {
   justify-content: flex-end;
   gap: @large-spacer;
   padding: @medium-spacer;
+}
+
+.all-monsters-defeated {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: @large-spacer;
+  padding: @medium-spacer;
+  margin: @medium-spacer;
+  .card-bg-2(@medium-spacer, @medium-spacer);
 }

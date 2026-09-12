@@ -211,6 +211,10 @@ export function InitiativeListHost(props: { tracker: TrackerViewModel }) {
     tracker.Encounter.CombatantsPendingRemove
   );
 
+  const cleanEncounter = useCallback(() => {
+    tracker.EncounterCommander.CleanEncounterConfirmed();
+  }, [tracker]);
+
   return (
     <CommandContext.Provider
       value={{
@@ -234,7 +238,8 @@ export function InitiativeListHost(props: { tracker: TrackerViewModel }) {
         CombatantsPendingRemove: combatantsPendingRemove,
         RestoreCombatants: tracker.CombatantCommander.RestoreCombatants,
         FlushCombatants:
-          tracker.CombatantCommander.FlushCombatants
+          tracker.CombatantCommander.FlushCombatants,
+        CleanEncounter: cleanEncounter
       }}
     >
       <InitiativeList

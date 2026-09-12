@@ -33,7 +33,7 @@ const conditionsRegex = concatenatedStringRegex(_.keys(Conditions2025), {
   allowEscape: true
 });
 
-// Allows raw <b>/<i>/<u> (and their standard markdown-producible
+// Allows raw <b>/<i>/<u>/<s> (and their standard markdown-producible
 // equivalents) in description text, on top of react-markdown's normal
 // CommonMark output - everything else raw HTML is stripped so authors
 // can't smuggle in scripts, event handlers, or arbitrary links/images via
@@ -47,6 +47,7 @@ const descriptionSanitizeSchema: Schema = {
     "em",
     "i",
     "u",
+    "s",
     "blockquote",
     "code",
     "pre",
@@ -206,6 +207,9 @@ export class TextEnricher {
       },
       u: ({ children }) => {
         return <u>{this.applyReplacer(replacer, children)}</u>;
+      },
+      s: ({ children }) => {
+        return <s>{this.applyReplacer(replacer, children)}</s>;
       }
     };
 

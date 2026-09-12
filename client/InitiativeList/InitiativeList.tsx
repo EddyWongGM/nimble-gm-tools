@@ -8,6 +8,7 @@ import { CombatantRow } from "./CombatantRow";
 import { CommandContext } from "./CommandContext";
 import { InitiativeListHeader } from "./InitiativeListHeader";
 import { RestoreCombatants } from "./RestoreCombatants";
+import { AllMonstersDefeated } from "./AllMonstersDefeated";
 import { SettingsContext } from "../Settings/SettingsContext";
 
 export function InitiativeList(props: {
@@ -40,6 +41,11 @@ export function InitiativeList(props: {
     settings.Rules.EnableGold &&
     encounterState.Combatants.some(c => StatBlock.IsPlayerCharacter(c.StatBlock));
   const anyHasTakenTurn = encounterState.Combatants.some(c => c.HasTakenTurn);
+  const monsters = encounterState.Combatants.filter(
+    c => !StatBlock.ActsInPlayerPhase(c.StatBlock)
+  );
+  const allMonstersDefeated =
+    monsters.length > 0 && monsters.every(c => c.CurrentHP <= 0);
   // HP and AC always show; the mobile stacked icon-over-value layout only
   // earns its keep once optional columns are also in play and horizontal
   // space is actually tight (see combatant--inline-stats in combatants.less).
@@ -125,6 +131,7 @@ export function InitiativeList(props: {
           })}
         </tbody>
       </table>
+      <AllMonstersDefeated allMonstersDefeated={allMonstersDefeated} />
       <RestoreCombatants />
     </div>
   );

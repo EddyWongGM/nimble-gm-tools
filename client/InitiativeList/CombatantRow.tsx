@@ -151,9 +151,6 @@ export function CombatantRow(props: CombatantRowProps) {
             <span className="combatant__hidden-icon fas fa-eye-slash" />
           </Tippy>
         )}
-        {StatBlockNamespace.IsRoomInfo(props.combatantState.StatBlock) && (
-          <RoomInfoPreview combatantState={props.combatantState} />
-        )}
         <button
           className="combatant__selection-button"
           onClick={e => {
@@ -167,6 +164,9 @@ export function CombatantRow(props: CombatantRowProps) {
       </td>
 
       <td className="combatant__hp">
+        {StatBlockNamespace.IsRoomInfo(props.combatantState.StatBlock) && (
+          <RoomInfoPreview combatantState={props.combatantState} />
+        )}
         {!StatBlockNamespace.IsRoomInfo(props.combatantState.StatBlock) && (
           <div
             className="combatant__hp-outer"
@@ -497,7 +497,7 @@ function RoomInfoPreview(props: { combatantState: CombatantState }) {
   return (
     <Tippy content="View Room Description">
       <span
-        className="combatant__room-info-preview fas fa-search"
+        className="combatant__room-info-preview fas fa-file-alt"
         onClick={e => {
           e.stopPropagation();
           commandContext.ShowRoomInfo(props.combatantState.Id);

@@ -31,7 +31,7 @@ export class EncounterLibraryReferencePane extends React.Component<EncounterLibr
         listingGroups={this.listingGroups}
         onRenameFolder={this.renameFolder}
         addNewItem={this.props.librariesCommander.SaveEncounter}
-        addNewText="Save Current Location"
+        addNewText="Save Current Adventure"
         renderPreview={this.renderPreview}
       />
     );

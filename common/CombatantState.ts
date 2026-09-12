@@ -57,4 +57,9 @@ export interface CombatantState {
   // saved encounter's combatant be rescaled to the current party size when
   // reloaded, by dividing out this multiplier to recover its base HP.
   ScaledHeroCount?: number;
+  // Shared by every combatant produced by one ScalesCountWithHeroCount
+  // expansion (see plans/SCALABLE_MONSTER_COUNT.md). Lets "Save Encounter"
+  // collapse a currently-expanded group back to a single reusable template
+  // instead of baking in however many copies happen to exist live right now.
+  ScaledGroupId?: string;
 }

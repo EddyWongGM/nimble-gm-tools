@@ -57,7 +57,7 @@ export function OptionsSettings(props: {
         invertPlayerView
       >
         Mana
-        <Info>
+        <Info className="c-info--mana">
           Encounter View toggle controls the Mana feature entirely.
         </Info>
       </DisplaysToggle>
@@ -67,7 +67,7 @@ export function OptionsSettings(props: {
         invertPlayerView
       >
         Resources
-        <Info>
+        <Info className="c-info--resources">
           Encounter View toggle controls the Resources feature entirely.
         </Info>
       </DisplaysToggle>
@@ -77,7 +77,7 @@ export function OptionsSettings(props: {
         invertPlayerView
       >
         Hit Dice
-        <Info>
+        <Info className="c-info--hitdice">
           Encounter View toggle controls the Hit Dice feature entirely.
         </Info>
       </DisplaysToggle>
@@ -87,7 +87,7 @@ export function OptionsSettings(props: {
         invertPlayerView
       >
         Wounds
-        <Info>
+        <Info className="c-info--wounds">
           Encounter View toggle controls the Wounds feature entirely.
         </Info>
       </DisplaysToggle>
@@ -97,7 +97,7 @@ export function OptionsSettings(props: {
         invertPlayerView
       >
         Inventory
-        <Info>
+        <Info className="c-info--inventory">
           Encounter View toggle controls the Inventory feature entirely.
         </Info>
       </DisplaysToggle>
@@ -107,7 +107,7 @@ export function OptionsSettings(props: {
         invertPlayerView
       >
         Gold
-        <Info>
+        <Info className="c-info--gold">
           Encounter View toggle controls the Gold feature entirely.
         </Info>
       </DisplaysToggle>
