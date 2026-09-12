@@ -56,3 +56,22 @@ h4 {
   margin: @extra-small-spacer @extra-small-spacer @medium-spacer;
   font-size: @font-size-h4;
 }
+
+// A multi-line paragraph (several "\n"-separated lines authors typed as
+// one block) gets each line wrapped in its own .text-enricher-line span so
+// it reliably starts on a new line regardless of whether remark-breaks
+// produced a real <br> - see TextEnricher.tsx's `splitIntoLines`.
+.text-enricher-line {
+  display: block;
+}
+
+// Applied (in addition to .text-enricher-line, or alone on a single-line
+// paragraph) to a line whose first content is a hand-typed bullet
+// ("· "/"• ", not a real markdown list) - shifts the bullet itself back
+// out to the margin while a wrapped continuation of that same line lands
+// at the padded position, aligned under the text rather than back at the
+// margin (see TextEnricher.tsx's `isBulletLine`).
+.text-enricher-bullet-line {
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}

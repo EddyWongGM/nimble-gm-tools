@@ -97,8 +97,23 @@ export function Tutorial(props: {
     if (!tutorialWidget) {
       return;
     }
-    tutorialWidget.style.setProperty("left", position.left + "px");
-    tutorialWidget.style.setProperty("top", position.top + "px");
+    // The widget is position: fixed, so its box can be measured here (its
+    // content already reflects this step's message) and clamped to the
+    // viewport - CalculatePosition only aims the widget at nearby elements
+    // and doesn't know how close those elements are to the window's edge.
+    const margin = 8;
+    const maxLeft = Math.max(
+      margin,
+      window.innerWidth - tutorialWidget.offsetWidth - margin
+    );
+    const maxTop = Math.max(
+      margin,
+      window.innerHeight - tutorialWidget.offsetHeight - margin
+    );
+    const left = Math.min(Math.max(position.left, margin), maxLeft);
+    const top = Math.min(Math.max(position.top, margin), maxTop);
+    tutorialWidget.style.setProperty("left", left + "px");
+    tutorialWidget.style.setProperty("top", top + "px");
     // librariesVisible/isCombatantSelected are included so a step that hides
     // the Library pane or clears the selection (see the effect above)
     // re-measures once that change actually lands and the Combatants list's

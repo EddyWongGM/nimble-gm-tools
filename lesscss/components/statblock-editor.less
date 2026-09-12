@@ -301,6 +301,14 @@
 span.c-statblock-editor__label {
   display: inline-flex;
   align-items: flex-start;
+  // Text + button default to nowrap, i.e. one line - the label text can
+  // still wrap word-by-word to shrink (its min-content is just its widest
+  // word), but the button can't shrink at all, so on a narrow keyword
+  // column (see .c-statblock-editor__keyword-group's 2-up grid) their
+  // combined minimum was still wider than the column and overflowed into
+  // the next one. Letting the row itself wrap drops the button to its own
+  // line instead, capping the row at whichever of the two is wider.
+  flex-wrap: wrap;
 
   // .c-add-button's own top/bottom margin (meant for its usual full-width,
   // block-level placement below a list of entries) still pushes it down
@@ -461,6 +469,17 @@ span.c-statblock-editor__label {
     margin-top: 0;
     border-top: none;
   }
+
+  // PowerField's row (grab-handle, Name, Usage, delete, add-button) is the
+  // only .inline with two inputs side by side - Name (flex-grow: 1,
+  // 12rem baseline) plus Usage (fixed 10rem) plus the icons don't fit a
+  // narrow card even after shrinking, and .inline defaults to nowrap, so
+  // Usage rendered past the card's right edge instead of onto its own
+  // line. Scoped here (not on the base .inline rule) since KeywordField's
+  // single-input row, elsewhere reusing .inline, doesn't have this problem.
+  .inline {
+    flex-wrap: wrap;
+  }
 }
 
 .c-statblock-editor__stats {
@@ -603,6 +622,14 @@ span.c-statblock-editor__label {
   width: 18rem;
   height: 100px;
   flex-grow: 1;
+}
+
+// A Room's Description is its primary content (read-aloud text), not an
+// afterthought below a full stat block - give it noticeably more room than
+// a monster's flavor-text Description gets by default.
+.c-statblock-editor__textarea--large {
+  width: 100%;
+  height: 300px;
 }
 
 .grab-handle {

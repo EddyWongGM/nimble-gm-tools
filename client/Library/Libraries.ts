@@ -27,8 +27,8 @@ export type UpdatePersistentCharacter = (
 export const LibraryFriendlyNames = {
   PersistentCharacters: "Heroes",
   StatBlocks: "Monsters",
-  Encounters: "Encounters",
-  Spells: "Compendium"
+  Encounters: "Locations",
+  Spells: "Codex"
 };
 
 export const LibraryStoreNames: Record<LibraryType, string> = {

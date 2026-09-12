@@ -77,6 +77,18 @@
     max-height: 100%;
   }
 
+  // .prompt-spell's submit button intentionally overlaps the card's
+  // top-right corner (see spell.less) - that only lands inside the card
+  // if .prompt itself never grows wider than the viewport. Neither had a
+  // width cap, so on a narrow screen the button (and the card's own
+  // right-edge content, e.g. the Source line) could render past the
+  // visible edge instead of just scrolling to.
+  .prompts,
+  .prompt {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
   .encounter-view.show-left-center-right {
     .left-column {
       // Override user setting from draggable border

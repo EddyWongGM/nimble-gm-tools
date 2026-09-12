@@ -668,6 +668,116 @@
     }
   },
   {
+    "Name": "Hunter LV2",
+    "Path": "Sample Heroes/Hunter",
+    "Source": "Sample Heroes",
+    "Type": "Hunter",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 6,
+      "Notes": "Ox Hides"
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": false,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 1,
+      "Dex": 2,
+      "Int": 0,
+      "Wis": 1
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "-",
+      "Wis": ""
+    },     
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Gain TotH charge on",
+        "Content": "[A0] VS quarry: Melee hit / Range Crit / Quarry dies.",
+        "Usage": ""
+      },
+      {
+        "Name": "TotH Charges (Use 1 charge and can't miss)",
+        "Content": "[A0] Use charge can't earn new charge. Combat end: all lost",
+        "Usage": ""
+      }      
+    ],
+    "Actions": [
+      {
+        "Name": "Hunter’s Mark",
+        "Content": "[A1] Mark Quarry for 1 day (til you mark other).\n[dash] Quarry can’t hide from you.\n[dash] Before atk: Advantage OR +1 (LVL) damage",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Long  Bow 1d8 + [DEX] , Range 12\n[dash] If adjacent, ranged attacks: Disadvantage.",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Hand axe : 1d6 + [STR], Thrown 4",
+        "Usage": ""
+      },
+      {
+        "Name": "Roll & Strike (if 0 TotH charges)",
+        "Content": "[A1] Move 0-9 speed to a target. If adj., free melee atk.\n\n[A1][R1] Multishot\n[A1][R1] Sharpshooter",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Taste for the Finer Things",
+        "Content": "Advantage on Influence checks with the upper class.",
+        "Usage": ""
+      },
+      {
+        "Name": "Forager (Advantage finding food/water in wild)",
+        "Content": "",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe (Advantage on Initiative, +1 speed)",
+        "Content": "",
+        "Usage": ""
+      }
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d8"
+    },
+    "ResourcesStartEmpty": true,
+    "Resources": {
+      "Value": 99
+    }    
+  },  
+  {
     "Name": "Mage LV1",
     "Path": "Sample Heroes/Mage",
     "Source": "Sample Heroes",
@@ -1244,8 +1354,8 @@
     "Challenge": "1",
     "Traits": [
       {
-        "Name": "Searing Light",
-        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
+        "Name": "Lifebinding Spirit",
+        "Content": "[A1] (Reach 4) \n<b>Harm:</b> Attacks 1d8+[STR] (ignore Armor).\n<b>Mend:</b> ([WIL]/Safe Rest) It restores [WIL]d8 HP to a Dying creature.",
         "Usage": "[WIL]/Safe Rest"
       }
     ],
@@ -1330,9 +1440,9 @@
     "Challenge": "2",
     "Traits": [
       {
-        "Name": "Searing Light",
-        "Content": "[tab] ([WIL]/Safe Rest) (Reach 6)\n[tab] Action: \\Heal or Inflict grievous injuries:\n[bullet] \\Heal [WIL]d8 HP to a Dying creature. \n[tab] OR:\n[bullet] Inflict [WIL]d8 radiant damage\n[tab] to an undead or Bloodied enemy.",
-        "Usage": "[WIL]/Safe Rest "
+        "Name": "Lifebinding Spirit",
+        "Content": "[A1] (Reach 4) \n<b>Harm:</b> Attacks 1d8+[STR] (ignore Armor).\n<b>Mend:</b> ([WIL]/Safe Rest) It restores [WIL]d8 HP to a Dying creature.",
+        "Usage": "[WIL]/Safe Rest"
       }
     ],
     "Actions": [
@@ -1343,7 +1453,7 @@
       },
       {
         "Name": "Spells",
-        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal, Shadow Trap, \n[bullet] Lifebinding Spirit",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal, Shadow Trap\n[bullet] Lifebinding Spirit",
         "Usage": ""
       },
       {
@@ -1446,12 +1556,7 @@
         "Name": "What? I’ve been around",
         "Content": "1/location (GM’s rules)\nYou know a person who has information.\n• <b>1–5.</b> They want you dead.\n• <b>6–12.</b> You owe them money.\n• <b>13–19.</b> They can be convinced to help you.\n• <b>20.</b> Biggest fan/are madly in love with you.",
         "Usage": ""
-      },
-      {
-        "Name": "Song of Rest (1/day, when Field Rest)",
-        "Content": "Song: Anyone use HD heal +[WIL] HP.",
-        "Usage": ""
-      },      
+      },     
       {
         "Name": "Tenacious",
         "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
@@ -1471,6 +1576,108 @@
       "Notes": "d8"
     }
   },
+    {
+    "Name": "Songweaver LV2",
+    "Path": "Sample Heroes/Songweaver",
+    "Source": "Sample Heroes",
+    "Type": "Songweaver",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 1,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": -1,
+      "Dex": 0,
+      "Int": 2,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+      {
+        "Name": "Songweaver’s Inspiration",
+        "Content": "(Free Reaction) (2×[WIL])/Safe Rest\nReroll 1 die for attack or save. ",
+        "Usage": "2×[WIL]/Safe Rest"
+      }
+    ],
+    "Actions": [
+      {
+        "Name": "Spells",
+        "Content": "Cantrips: Breath of Life, Flame Dart, Heart's Fire, Razor Wind, Vicious Mockery\n\nTier 1: Blustery Gale, Ignite",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Dagger : 1d4 + [DEX]",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "What? I’ve been around",
+        "Content": "1/location (GM’s rules)\nYou know a person who has information.\n• <b>1–5.</b> They want you dead.\n• <b>6–12.</b> You owe them money.\n• <b>13–19.</b> They can be convinced to help you.\n• <b>20.</b> Biggest fan/are madly in love with you.",
+        "Usage": ""
+      },
+      {
+        "Name": "Song of Rest (1/day, when Field Rest)",
+        "Content": "Song: Anyone use HD heal +[WIL] HP.",
+        "Usage": ""
+      },
+      {
+        "Name": "Jack of All Trades (Safe Rest: Move Skill point)",
+        "Content": "",
+        "Usage": ""
+      },      
+      {
+        "Name": "Tenacious",
+        "Content": "[tab] (+1 to all skills. +1 to Initiative)",                
+        "Usage": ""
+      }      
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Mana": {
+      "Value": 8
+    },
+    "Resources": {
+      "Value": 4
+    },
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d8"
+    }
+  },
   {
     "Name": "Stormshifter LV1",
     "Path": "Sample Heroes/Stormshifter",
@@ -1484,7 +1691,7 @@
       "Value": 4,
       "Notes": ""
     },
-    "InitiativeModifier": 1,
+    "InitiativeModifier": 0,
     "InitiativeAdvantage": true,
     "Speed": [
       "7"
@@ -1520,7 +1727,7 @@
       },
       {
         "Name": "Spells",
-        "Content": "Cantrips Zap, Overload, Razor Wind, Breath of Life",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet]  Zap, Overload\n[bullet] Razor Wind, Breath of Life",
         "Usage": ""
       },
       {
@@ -1539,8 +1746,8 @@
         "Usage": ""
       },
       {
-        "Name": "Lithe (Adv. on Initiative, +1 speed)",
-        "Content": "",
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
         "Usage": ""
       }   
     ],
@@ -1555,8 +1762,105 @@
     "HitDice": {
       "Value": 1,
       "Notes": "d8"
-    }
+    },
+    "Resources": {
+      "Value": 2
+    }    
   },
+  {
+    "Name": "Stormshifter LV2",
+    "Path": "Sample Heroes/Stormshifter",
+    "Source": "Sample Heroes",
+    "Type": "Stormshifter",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 5,
+      "Notes": ""
+    },
+    "InitiativeModifier": 0,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "7"
+    ],
+    "Abilities": {
+      "Str": 0,
+      "Dex": 2,
+      "Int": -1,
+      "Wis": 2
+    },
+    "SaveAdvantages": {
+      "Str": "-",
+      "Dex": "",
+      "Int": "",
+      "Wis": "+"
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "2",
+    "Traits": [
+    ],
+    "Actions": [
+      {
+        "Name": "Beastshift ([DEX]/Safe Rest)",
+        "Content": "Shift Harmless beast and speak to animals.\nLasts until 0 HP, cast spell, or until you end it.",
+        "Usage": "[DEX]/Safe Rest"
+      },
+      {
+        "Name": "Spells",
+        "Content": "[tab] <b>Cantrips:</b>\n[bullet]  Zap, Overload\n[bullet] Razor Wind, Breath of Life\n\n[tab] <b>Tier 1:</b>\n[bullet] Arc Lightning, Blustery Gale",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "[A1] Staff : 1d8 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "Fearsome Beast",
+        "Content": "<b>1 Action:</b> Transform into a Large beast. \nGain [DEX]+[LVL] temp HP (until Beastshift ends)\n\n\n<b>Fearsome:</b> Whenever you Interpose or Defend, you may spend 1 mana to force them to reroll the attack (you must choose either result).\n\n\n<b>Gore.</b> 1 Action: 1d6+[LVL] damage,\non hit: gain [LVL] Temp HP.",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "Wild One (+1 Naturecraft)",
+        "Content": "Beasts more friendly. Field Rest: Adv HD in wild.",
+        "Usage": ""
+      },
+      {
+        "Name": "Lithe",
+        "Content": "Advantage on Initiative, +1 speed",
+        "Usage": ""
+      }   
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 2,
+      "Notes": "d8"
+    },
+    "Resources": {
+      "Value": 2
+    } 
+  },  
   {
     "Name": "Zephyr LV1",
     "Path": "Sample Heroes/Zephyr",
@@ -1638,5 +1942,95 @@
       "Value": 2,
       "Notes": "d8"
     }
-  }
+  },
+  {
+    "Name": "Zephyr LV2",
+    "Path": "Sample Heroes/Zephyr",
+    "Source": "Sample Heroes",
+    "Type": "Zephyr",
+    "HP": {
+      "Value": 18,
+      "Notes": "13"
+    },
+    "AC": {
+      "Value": 4,
+      "Notes": ""
+    },
+    "InitiativeModifier": 2,
+    "InitiativeAdvantage": true,
+    "Speed": [
+      "6"
+    ],
+    "Abilities": {
+      "Str": 2,
+      "Dex": 2,
+      "Int": -1,
+      "Wis": 0
+    },
+    "SaveAdvantages": {
+      "Str": "",
+      "Dex": "+",
+      "Int": "-",
+      "Wis": ""
+    },
+    "DamageVulnerabilities": [],
+    "DamageResistances": [],
+    "DamageImmunities": [],
+    "ConditionImmunities": [],
+    "Saves": [],
+    "Skills": [],
+    "Senses": [],
+    "Languages": [],
+    "Challenge": "1",
+    "Traits": [
+    ],
+    "Actions": [
+      {
+        "Name": "Burst of Speed (1/turn)",
+        "Content": "On initiative, +[DEX] [R1] Bursts\nSpend [R1] to use for free:\n[R1] Slipstream. Defend, the attack misses.\n[R1] Whirling Def. Defend, +Armor ALL atk this round.\n[R1] Swiftstrike. Attack, ignore disadv. for Rushed Atks\n[R1] Windstep. Move, ignoring difficult terrain.",
+        "Usage": ""
+      },      
+      {
+        "Name": "",
+        "Content": "Staff : 1d8 + [STR]",
+        "Usage": ""
+      },
+      {
+        "Name": "",
+        "Content": "Swift Fists : 1d4 + [STR] No disadvantage",
+        "Usage": ""
+      }      
+    ],
+    "BonusActions": [],
+    "Reactions": [
+      {
+        "Name": "Elusive (1/Safe Rest)",
+        "Content": "Failing Save, can succeed instead. (+1 Stealth)",
+        "Usage": "1/Safe Rest"
+      }       
+    ],
+    "LegendaryActions": [],
+    "MythicActions": [
+      {
+        "Name": "",
+        "Content": "[bullet] Swift Feet (No armor, +2 speed & +[LVL] initiative)\n[bullet] Iron Defense (No armor. Armor [DEX]+[STR])\n[bullet] Survivalist (always personal rations) Advantage vs poison saves. +1 max HD.",
+        "Usage": ""
+      }  
+    ],
+    "Description": "",
+    "Player": "player",
+    "Version": "3.16.5",
+    "ImageURL": "",
+    "CustomFields": [],
+    "Wounds": {
+      "Value": 5
+    },
+    "HitDice": {
+      "Value": 3,
+      "Notes": "d8"
+    },
+    "Resources": {
+      "Value": 2
+    }    
+  }  
 ]

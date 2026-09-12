@@ -11,10 +11,10 @@ import { Info } from "../Components/Info";
 import { Listing } from "../Library/Listing";
 import { ConvertStringsToNumbersWhereNeeded } from "./ConvertStringsToNumbersWhereNeeded";
 import { EnumToggle } from "./EnumToggle";
+import { getAnonymizedJSON, validateEditedJSON } from "./JsonEditorMode";
 import { IdentityFields } from "./components/IdentityFields";
 import {
   abilityScoreField,
-  getAnonymizedStatBlockJSON,
   DescriptionField,
   HitDiceField,
   InitiativeField,
@@ -130,7 +130,11 @@ export class StatBlockEditor extends React.Component<
           const initialValues = {
             ...this.props.statBlock,
             CustomFields: customFields,
-            StatBlockJSON: getAnonymizedStatBlockJSON(this.props.statBlock),
+            StatBlockJSON: getAnonymizedJSON(this.props.statBlock, [
+              "Name",
+              "Path",
+              "Id"
+            ]),
             SaveAs: this.props.requireSaveAsCopy
           };
 
@@ -267,7 +271,12 @@ export class StatBlockEditor extends React.Component<
 
     if (actsInPlayerPhase) {
       fields.push(
-        <ValueAndNotesField key="mana" label="Mana" fieldName="Mana" hideNotes />,
+        <ValueAndNotesField
+          key="mana"
+          label="Mana"
+          fieldName="Mana"
+          hideNotes
+        />,
         <ValueAndNotesField
           key="resources"
           label="Resources"
@@ -294,6 +303,10 @@ export class StatBlockEditor extends React.Component<
 
   private fieldEditor = (api: FormikProps<any>) => {
     const settings = React.useContext(SettingsContext);
+    // A Room isn't a monster - none of the combat-mechanic fields below
+    // (stats, Saves/Skills, keywords, Traits/Actions/etc.) apply to it, so
+    // hide them and lead with a larger Description field instead.
+    const isRoom = api.values.Player === "room";
     return (
       <>
         <div className="c-statblock-editor__headers">
@@ -309,7 +322,8 @@ export class StatBlockEditor extends React.Component<
               <>
                 <div className="c-statblock-editor__type-and-armor">
                   {api.values.Player !== "player" &&
-                    api.values.Player !== "companion" && (
+                    api.values.Player !== "companion" &&
+                    api.values.Player !== "room" && (
                       <EnumToggle
                         labelsByOption={StatBlock.ArmorDisplayNames}
                         fieldName="Armor"
@@ -319,7 +333,8 @@ export class StatBlockEditor extends React.Component<
                     labelsByOption={{
                       "": "Normal",
                       legendary: "Legendary",
-                      titan: "Titan"
+                      titan: "Titan",
+                      room: "Room"
                     }}
                     fieldName="Player"
                   />
@@ -346,9 +361,19 @@ export class StatBlockEditor extends React.Component<
                         encounter first, or the multiplier will under-count.
                       </Info>
                     )}
+                  {api.values.Player === "room" && (
+                    <Info>
+                      A Room isn't a monster — it's an info card for
+                      non-combat content (read-aloud text, GM notes). It
+                      won't count toward encounter difficulty and will be
+                      hidden from Player View by default. Its HP is not
+                      shown.
+                    </Info>
+                  )}
                   {this.props.editorTarget == "combatant" &&
                     api.values.Player !== "player" &&
-                    api.values.Player !== "companion" && (
+                    api.values.Player !== "companion" &&
+                    api.values.Player !== "room" && (
                       <Info>
                         This Name's HP was already set for its Armor tier
                         when it entered combat. Changing Armor here won't
@@ -381,13 +406,15 @@ export class StatBlockEditor extends React.Component<
             )}
           </div>
         )}
-        <div className="c-statblock-editor__stats">
-          {this.statFields(api.values.Player).map((pair, i) => (
-            <div className="c-statblock-editor__stats-row" key={i}>
-              {pair}
-            </div>
-          ))}
-        </div>
+        {!isRoom && (
+          <div className="c-statblock-editor__stats">
+            {this.statFields(api.values.Player).map((pair, i) => (
+              <div className="c-statblock-editor__stats-row" key={i}>
+                {pair}
+              </div>
+            ))}
+          </div>
+        )}
         {settings.StatBlock.CustomFields.length > 0 && (
           <div className="c-statblock-editor__custom-fields">
             <h2>Custom Fields</h2>
@@ -405,58 +432,67 @@ export class StatBlockEditor extends React.Component<
             })}
           </div>
         )}
-        {api.values.Player !== "player" && api.values.Player !== "companion" && (
-          <>
-            <div className="c-statblock-editor__saves">
-              <NameAndAdvantageFields api={api} modifierType="Saves" />
-            </div>
-            <div className="c-statblock-editor__skills">
-              <NameAndAdvantageFields api={api} modifierType="Skills" />
-            </div>
-          </>
+        {!isRoom &&
+          api.values.Player !== "player" &&
+          api.values.Player !== "companion" && (
+            <>
+              <div className="c-statblock-editor__saves">
+                <NameAndAdvantageFields api={api} modifierType="Saves" />
+              </div>
+              <div className="c-statblock-editor__skills">
+                <NameAndAdvantageFields api={api} modifierType="Skills" />
+              </div>
+            </>
+          )}
+        {!isRoom && (
+          <div className="c-statblock-editor__keywords">
+            {[
+              { type: "Speed", label: "Speed" },
+              { type: "Senses", label: "Senses" },
+              {
+                type: "DamageVulnerabilities",
+                label: "Damage Vulnerabilities"
+              },
+              { type: "DamageResistances", label: "Damage Resistances" },
+              { type: "DamageImmunities", label: "Damage Immunities" },
+              { type: "ConditionImmunities", label: "Condition Immunities" },
+              { type: "Languages", label: "Languages" }
+            ].map(({ type, label }) => (
+              <div key={type} className="c-statblock-editor__keyword-group">
+                <KeywordFields api={api} keywordType={type} label={label} />
+              </div>
+            ))}
+          </div>
         )}
-        <div className="c-statblock-editor__keywords">
-          {[
-            { type: "Speed", label: "Speed" },
-            { type: "Senses", label: "Senses" },
-            { type: "DamageVulnerabilities", label: "Damage Vulnerabilities" },
-            { type: "DamageResistances", label: "Damage Resistances" },
-            { type: "DamageImmunities", label: "Damage Immunities" },
-            { type: "ConditionImmunities", label: "Condition Immunities" },
-            { type: "Languages", label: "Languages" }
-          ].map(({ type, label }) => (
-            <div key={type} className="c-statblock-editor__keyword-group">
-              <KeywordFields api={api} keywordType={type} label={label} />
-            </div>
-          ))}
-        </div>
-        <div className="c-statblock-editor__powers">
-          {[
-            { type: "Traits", label: "Traits" },
-            { type: "Actions", label: "Actions" },
-            { type: "Reactions", label: "Reactions" },
-            // Only clutter the form with Special once the statblock is
-            // marked Legendary or Titan, or already has some (e.g. imported
-            // from a source that doesn't use this toggle). Field name stays
-            // "LegendaryActions" so it keeps matching the stored data shape
-            // and shared styling - only the visible label changes, same as
-            // Other/MythicActions below.
-            ...(api.values.Player === "legendary" ||
-            api.values.Player === "titan" ||
-            api.values.LegendaryActions?.length > 0
-              ? [{ type: "LegendaryActions", label: "Special" }]
-              : []),
-            // name stays "MythicActions" so the field/className keeps
-            // matching the shared styling and stored data shape - only the
-            // visible label changes, same as the read-only StatBlock view.
-            { type: "MythicActions", label: "Other" }
-          ].map(({ type, label }) => (
-            <div key={type} className="c-statblock-editor__power-group">
-              <PowerFields api={api} powerType={type} label={label} />
-            </div>
-          ))}
-        </div>
-        <DescriptionField />
+        {!isRoom && (
+          <div className="c-statblock-editor__powers">
+            {[
+              { type: "Traits", label: "Traits" },
+              { type: "Actions", label: "Actions" },
+              { type: "Reactions", label: "Reactions" },
+              // Only clutter the form with Special once the statblock is
+              // marked Legendary or Titan, or already has some (e.g. imported
+              // from a source that doesn't use this toggle). Field name stays
+              // "LegendaryActions" so it keeps matching the stored data shape
+              // and shared styling - only the visible label changes, same as
+              // Other/MythicActions below.
+              ...(api.values.Player === "legendary" ||
+              api.values.Player === "titan" ||
+              api.values.LegendaryActions?.length > 0
+                ? [{ type: "LegendaryActions", label: "Special" }]
+                : []),
+              // name stays "MythicActions" so the field/className keeps
+              // matching the shared styling and stored data shape - only the
+              // visible label changes, same as the read-only StatBlock view.
+              { type: "MythicActions", label: "Other" }
+            ].map(({ type, label }) => (
+              <div key={type} className="c-statblock-editor__power-group">
+                <PowerFields api={api} powerType={type} label={label} />
+              </div>
+            ))}
+          </div>
+        )}
+        <DescriptionField large={isRoom} />
       </>
     );
   };
@@ -504,6 +540,17 @@ export class StatBlockEditor extends React.Component<
     });
 
     ConvertStringsToNumbersWhereNeeded(editedStatBlock);
+
+    // A Room isn't a monster - normalize Challenge/Armor at save time
+    // (rather than live in the form, which would destroy a monster's
+    // existing values the moment a GM previews "Room" on the cyclic
+    // Player toggle and switches back) so it's excluded from difficulty
+    // math (see StatBlock.IsRoomInfo) and doesn't inherit a stale
+    // armor-tier HP value through StatBlock.ResolveArmorHP.
+    if (StatBlock.IsRoomInfo(editedStatBlock)) {
+      editedStatBlock.Challenge = "";
+      editedStatBlock.Armor = "";
+    }
 
     if (SaveAsCharacter && this.props.onSaveAsCharacter) {
       editedStatBlock.Id = probablyUniqueString();
@@ -567,10 +614,9 @@ export class StatBlockEditor extends React.Component<
     }
 
     if (this.state.editorMode === "json") {
-      try {
-        JSON.parse(values.StatBlockJSON);
-      } catch (e) {
-        errors.JSONParseError = e.message;
+      const jsonError = validateEditedJSON(values.StatBlockJSON);
+      if (jsonError) {
+        errors.JSONParseError = jsonError;
       }
     }
 

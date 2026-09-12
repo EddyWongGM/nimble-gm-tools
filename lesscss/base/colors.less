@@ -56,8 +56,8 @@
   --black: #131b20;
   --grey: #1d2a2f;
   --grey-2: #364e59;
-  --light-grey: #708a96;
-  --lighter-grey: #8dabb9;
+  --light-grey: #5a6e78;
+  --lighter-grey: #718994;
 
   --text-face: var(--black);
   --text-link: var(--green);
@@ -71,6 +71,7 @@
   --page-background-white: var(--white-2);
   --card-background-white: var(--off-white);
   --page-bg-inverted: var(--grey);
+  --page-bg-inverted-text: var(--text-inverted);
   --zebra-white: var(--white-2);
   --accent-white: var(--white-3);
   --tab-face-white: var(--white-2);
@@ -101,6 +102,12 @@
   --surface-khaki: #4a463a;
   --surface-khaki-light: #38352c;
 
+  // Darker than the root --grey-2 (#364e59) - used here as
+  // --card-background-white/--tab-face-white, which only need to contrast
+  // against light text (--text-face: --white-2), so going darker is safe
+  // and reads less washed-out against the near-black page background.
+  --grey-2: #22323a;
+
   --wound-red: #f0453b;
   --blue: #4da3ff;
   --green: #57c98a;
@@ -120,7 +127,13 @@
 
   --page-background-white: var(--grey);
   --card-background-white: var(--grey-2);
-  --page-bg-inverted: var(--light-grey);
+  // No longer actually "inverted" in dark mode - matches
+  // --card-background-white/--grey-2 so the footer merges with the
+  // panes/cards instead of popping as a lighter bar (see combatants.less'
+  // .combatant--header comment, which still deliberately opts out of this
+  // to stay a fixed black bar).
+  --page-bg-inverted: var(--grey-2);
+  --page-bg-inverted-text: var(--text-face);
   --zebra-white: var(--grey);
   --accent-white: var(--black);
   --tab-face-white: var(--grey-2);
@@ -220,6 +233,14 @@ input[type="checkbox"] {
   color: var(--button-text-disabled);
   background-color: var(--button-face-disabled);
   border-color: var(--dark-border);
+}
+
+div.awesomplete > ul {
+  background: var(--input-bg);
+}
+
+div.awesomplete > ul:before {
+  background: var(--input-bg);
 }
 
 div.awesomplete li {

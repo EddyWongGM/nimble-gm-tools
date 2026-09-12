@@ -3,6 +3,14 @@
 .encounter-view {
   flex: 1;
   flex-direction: row;
+  // Same flex min-width: auto trap .center-column has below (see its own
+  // comment) - #app__container/.encounter-view are flex: 1 items too, so
+  // without this they independently get forced wider than their parent's
+  // available space by their own descendants' content (confirmed live: with
+  // .center-column already at min-width: 0, .encounter-view and
+  // #app__container still measured 508px against a 430px #tracker/viewport
+  // once the spell prompt was open).
+  min-width: 0;
 }
 
 .encounter-view {
@@ -11,6 +19,13 @@
 
   .center-column {
     flex: 1;
+    // Flex items default to min-width: auto, i.e. they can't shrink below
+    // their content's min-content size. Without this, a wide-enough child
+    // (e.g. the spell prompt card) forces .center-column - and, since it
+    // has no min-width either, .encounter-view above it - wider than the
+    // actual viewport instead of shrinking and letting overflow-x: hidden
+    // below clip the excess, pushing content past the real screen edge.
+    min-width: 0;
     margin: @large-spacer;
     overflow-y: auto;
     overflow-x: hidden;

@@ -24,6 +24,8 @@
   align-items: flex-start;
   justify-content: space-between;
   min-height: @prompt-minimum-height;
+  // Anchors .prompt__cancel below.
+  position: relative;
 
   div,
   p,
@@ -33,6 +35,34 @@
 
   button {
     margin: @small-spacer;
+  }
+
+  // Sits outside .prompt's own padding box (negative offset, not inset
+  // within it) specifically so it can't collide with any prompt variant's
+  // own top-left content - e.g. .spell-badge in SpellPrompt - regardless
+  // of what a given prompt renders there. .prompt-spell/.prompt-scene's
+  // submit button already overlaps the top-RIGHT corner (via
+  // transform: translateX(-100%) in spell.less/libraries.less), so this
+  // uses the opposite corner to stay clear of that too.
+  .prompt__cancel {
+    position: absolute;
+    top: -0.75rem;
+    left: -0.75rem;
+    margin: 0;
+  }
+
+  // The cancel button is a full-size button (2.6rem) anchored at
+  // -0.75rem, so its footprint reaches ~1.85rem past the padding edge -
+  // enough to sit on top of any prompt variant's own top-left content
+  // (e.g. Save Encounter As's label, the Player View launch message) that
+  // isn't specifically shaped to leave room for it the way SpellPrompt's
+  // top-right submit button is. Reserving that space only when the button
+  // actually renders (&.prompt--has-cancel) covers every such prompt at
+  // once instead of each variant leaving its own gap, without adding dead
+  // whitespace to the prompts that opted the button out entirely.
+  &.prompt--has-cancel {
+    padding-top: (@large-spacer + 1.85rem);
+    padding-left: (@large-spacer + 1.85rem);
   }
 
   div.default-query {

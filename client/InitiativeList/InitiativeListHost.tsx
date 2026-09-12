@@ -5,6 +5,7 @@ import { InitiativeList } from "./InitiativeList";
 import { CommandContext } from "./CommandContext";
 import { useCallback } from "react";
 import { TagState } from "../../common/CombatantState";
+import { RoomInfoPrompt } from "../Prompts/RoomInfoPrompt";
 
 export function InitiativeListHost(props: { tracker: TrackerViewModel }) {
   const { tracker } = props;
@@ -170,6 +171,18 @@ export function InitiativeListHost(props: { tracker: TrackerViewModel }) {
     [tracker]
   );
 
+  const showRoomInfo = useCallback(
+    (combatantId: string) => {
+      const combatant = tracker.Encounter.Combatants().find(
+        c => c.Id == combatantId
+      );
+      if (combatant !== undefined) {
+        tracker.PromptQueue.Add(RoomInfoPrompt(combatant));
+      }
+    },
+    [tracker]
+  );
+
   const toggleCombatantSpentReaction = useCallback(
     (combatantId: string) => {
       const combatantViewModel = tracker
@@ -214,6 +227,7 @@ export function InitiativeListHost(props: { tracker: TrackerViewModel }) {
         CombatantCommands: tracker.CombatantCommander.Commands,
         MoveCombatantFromDrag: moveCombatantFromDrag,
         SetCombatantColor: setCombatantColor,
+        ShowRoomInfo: showRoomInfo,
         ToggleCombatantSpentReaction: toggleCombatantSpentReaction,
         ToggleCombatantHasTakenTurn: toggleCombatantHasTakenTurn,
         ResetHasTakenTurnForAllCombatants: resetHasTakenTurnForAllCombatants,

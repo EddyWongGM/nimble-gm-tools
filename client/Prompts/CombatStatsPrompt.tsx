@@ -13,6 +13,7 @@ export const CombatStatsPrompt = (stats: CombatStats): PromptProps<{}> => {
 
   return {
     onSubmit: () => true,
+    hideCancelButton: true,
 
     initialValues: {},
 

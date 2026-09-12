@@ -55,7 +55,10 @@ export function LibraryManager(props: LibraryManagerProps): JSX.Element {
   return (
     <ListingSelectionContext.Provider value={selection}>
       <div className="c-library-manager">
-        <div className="left-column" style={{ width: leftColumnWidth }}>
+        <div
+          className="c-library-manager__left"
+          style={{ width: leftColumnWidth }}
+        >
           <PaneHeader
             title="Library Manager"
             fontAwesomeIcon="book-open"

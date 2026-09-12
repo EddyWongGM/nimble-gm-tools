@@ -55,6 +55,7 @@ export const ShowDiceRollPrompt = (
   rollResult: RollResult
 ) => ({
   onSubmit: () => true,
+  hideCancelButton: true,
   initialValues: {},
   autoFocusSelector: ".response",
   children: (

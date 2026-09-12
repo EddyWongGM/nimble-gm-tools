@@ -1,11 +1,5 @@
 import { TagState } from "./CombatantState";
 
-export interface PlayerViewAbilityCharge {
-  Name: string;
-  Used: number;
-  Max: number;
-}
-
 export interface PlayerViewCombatantState {
   Name: string;
   IndexLabel?: number;
@@ -35,5 +29,4 @@ export interface PlayerViewCombatantState {
   Color?: string;
   ReactionsSpent?: number;
   HasTakenTurn?: boolean;
-  AbilityCharges?: PlayerViewAbilityCharge[];
 }

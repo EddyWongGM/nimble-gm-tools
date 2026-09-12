@@ -49,29 +49,8 @@ export function ToPlayerViewCombatantState(
         : undefined,
     Color: combatant.Color(),
     ReactionsSpent: combatant.ReactionsSpent(),
-    HasTakenTurn: combatant.HasTakenTurn(),
-    AbilityCharges: GetAbilityCharges(combatant)
+    HasTakenTurn: combatant.HasTakenTurn()
   };
-}
-
-// Only a PC/companion's own charges are shown to players - a monster's
-// remaining charges are GM information, same as its HP verbosity defaults.
-function GetAbilityCharges(combatant: Combatant) {
-  if (!combatant.ActsInPlayerPhase()) {
-    return undefined;
-  }
-  const statBlock = combatant.StatBlock();
-  const used = combatant.AbilityChargesUsed();
-  const charges = StatBlock.AllPowers(statBlock)
-    .map(power => {
-      const usage = StatBlock.ParseChargeUsage(power.Usage, statBlock.Abilities);
-      if (!usage) {
-        return null;
-      }
-      return { Name: power.Name, Used: used[power.Name] ?? 0, Max: usage.Max };
-    })
-    .filter(charge => charge !== null);
-  return charges.length > 0 ? charges : undefined;
 }
 
 function GetIndexLabel(combatant: Combatant): number | undefined {
@@ -81,7 +60,7 @@ function GetIndexLabel(combatant: Combatant): number | undefined {
   if (
     CurrentSettings().Rules.AlwaysNumberMonsters &&
     !combatant.ActsInPlayerPhase() &&
-    !StatBlock.IsLegendary(combatant.StatBlock())
+    !StatBlock.IsExemptFromMonsterNumbering(combatant.StatBlock())
   ) {
     return combatant.IndexLabel();
   }

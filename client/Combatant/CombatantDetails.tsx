@@ -123,32 +123,38 @@ export function CombatantDetails(props: CombatantDetailsProps): JSX.Element {
         </>
       )}
       <div className="c-combatant-details__hp">
-        <span className="stat-label CurrentHP">HP</span>
-        <span>
-          <EditableStat
-            value={currentHp}
-            ariaLabel={`Apply damage or healing to ${name}`}
-            onCommit={delta => props.combatantViewModel.ApplyHPDelta(delta)}
-          />
-          {DisplayHPBar && (
-            <span className="combatant__hp-bar">
-              <span
-                className="combatant__hp-bar--filled"
-                style={renderHPBarStyle(currentHPPercentage)}
+        {!StatBlock.IsRoomInfo(statBlock) && (
+          <>
+            <span className="stat-label CurrentHP">HP</span>
+            <span>
+              <EditableStat
+                value={currentHp}
+                ariaLabel={`Apply damage or healing to ${name}`}
+                onCommit={delta =>
+                  props.combatantViewModel.ApplyHPDelta(delta)
+                }
+              />
+              {DisplayHPBar && (
+                <span className="combatant__hp-bar">
+                  <span
+                    className="combatant__hp-bar--filled"
+                    style={renderHPBarStyle(currentHPPercentage)}
+                  />
+                </span>
+              )}
+            </span>
+            <span className="stat-label TemporaryHP">Temp HP</span>
+            <span>
+              <EditableStat
+                value={currentTemporaryHP.toString()}
+                ariaLabel={`Grant temporary HP to ${name}`}
+                onCommit={amount =>
+                  props.combatantViewModel.ApplyTemporaryHPGrant(amount)
+                }
               />
             </span>
-          )}
-        </span>
-        <span className="stat-label TemporaryHP">Temp HP</span>
-        <span>
-          <EditableStat
-            value={currentTemporaryHP.toString()}
-            ariaLabel={`Grant temporary HP to ${name}`}
-            onCommit={amount =>
-              props.combatantViewModel.ApplyTemporaryHPGrant(amount)
-            }
-          />
-        </span>
+          </>
+        )}
         {currentMana && (
           <>
             <span className="stat-label Mana">Mana</span>

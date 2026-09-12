@@ -1,3 +1,8 @@
+import {
+  AbilityExpressionTerm,
+  EvaluateAbilityExpression,
+  ParseAbilityExpression
+} from "./AbilityExpression";
 import { Listable, FilterDimensions } from "./Listable";
 import { GetModifierFromScore, probablyUniqueString } from "./Toolbox";
 
@@ -210,61 +215,49 @@ export namespace StatBlock {
   export const ActsInPlayerPhase = (statBlock: StatBlock): boolean =>
     IsPlayerCharacter(statBlock) || IsCompanion(statBlock);
 
-  // Same [Str]/[Dex]/[Int]/[Wis]/[Wil] convention TextEnricher resolves
-  // inline in ability text (see TextEnricher.tsx's abilityFieldsByAlias) -
-  // "Wil" is Nimble's display name for the Wis field.
-  const ABILITY_COUNT_ALIASES: Record<string, keyof AbilityScores> = {
-    str: "Str",
-    dex: "Dex",
-    int: "Int",
-    wis: "Wis",
-    wil: "Wis"
+  // Resolves [LVL] the same way inline Content text does (TextEnricher) -
+  // Challenge is free text and can be a fractional CR string ("1/2") on
+  // legacy monsters, so only a clean whole number counts as a level.
+  export const ResolveLevel = (statBlock: StatBlock): number | undefined => {
+    if (!statBlock.Challenge) {
+      return undefined;
+    }
+    const level = Number(statBlock.Challenge);
+    return Number.isInteger(level) ? level : undefined;
   };
 
-  const PLAIN_COUNT_PATTERN = /^(\d+)$/;
-  const ABILITY_COUNT_PATTERN = /^\[(Str|Dex|Int|Wis|Wil)\]$/i;
-  const MULTIPLIED_ABILITY_COUNT_PATTERN =
-    /^(\d+)\s*[×x]\s*\[(Str|Dex|Int|Wis|Wil)\]$/i;
-
   // Resolves a charge count expression - a plain number ("2"), a bare
-  // ability modifier ("[Dex]"), or a multiplied modifier ("2×[Wil]") - to a
-  // number. Ability-based expressions need the combatant's current
-  // Abilities to resolve; without them (e.g. read from a compendium listing
+  // ability/[LVL] modifier ("[Dex]"), or a sum of number-times-modifier
+  // terms ("2×[Wil]", "[Dex]+[LVL]", "2×[Wil]+[LVL]") - to a number.
+  // Ability- or level-based terms need the combatant's current Abilities/
+  // level to resolve; without them (e.g. read from a compendium listing
   // with no combatant attached) they're left unresolved.
   const ParseChargeCount = (
     expression: string,
-    abilities: AbilityScores | undefined
+    abilities: AbilityScores | undefined,
+    level: number | undefined
   ): number | null => {
-    const plain = expression.match(PLAIN_COUNT_PATTERN);
-    if (plain) {
-      return parseInt(plain[1]);
-    }
-    if (!abilities) {
+    const terms: AbilityExpressionTerm[] | null =
+      ParseAbilityExpression(expression);
+    if (!terms) {
       return null;
     }
-    const abilityOnly = expression.match(ABILITY_COUNT_PATTERN);
-    if (abilityOnly) {
-      return abilities[ABILITY_COUNT_ALIASES[abilityOnly[1].toLowerCase()]];
-    }
-    const multiplied = expression.match(MULTIPLIED_ABILITY_COUNT_PATTERN);
-    if (multiplied) {
-      const modifier = abilities[ABILITY_COUNT_ALIASES[multiplied[2].toLowerCase()]];
-      return parseInt(multiplied[1]) * modifier;
-    }
-    return null;
+    return EvaluateAbilityExpression(terms, abilities, level);
   };
 
   const USAGE_PATTERN = /^\s*(.+?)\s*\/\s*(Safe Rest|Encounter)\s*$/i;
 
   // Recognizes the structured Usage conventions ("2/Safe Rest",
-  // "1/Encounter", "[Dex]/Safe Rest", "2×[Wil]/Encounter") that unlock
-  // charge tracking; anything else (prose, "Recharge 5-6", blank) is left
-  // as a plain display label. Pass the combatant's Abilities to resolve an
-  // ability-based count - without them, those forms fall back to null (same
-  // as not matching) rather than showing a wrong/stale count.
+  // "1/Encounter", "[Dex]/Safe Rest", "2×[Wil]+[LVL]/Encounter") that
+  // unlock charge tracking; anything else (prose, "Recharge 5-6", blank) is
+  // left as a plain display label. Pass the combatant's Abilities/level to
+  // resolve an ability- or level-based count - without them, those forms
+  // fall back to null (same as not matching) rather than showing a wrong/
+  // stale count.
   export const ParseChargeUsage = (
     usage: string | undefined,
-    abilities?: AbilityScores
+    abilities?: AbilityScores,
+    level?: number
   ): ChargeUsage | null => {
     if (!usage) {
       return null;
@@ -273,7 +266,7 @@ export namespace StatBlock {
     if (!match) {
       return null;
     }
-    const max = ParseChargeCount(match[1], abilities);
+    const max = ParseChargeCount(match[1], abilities, level);
     if (max === null) {
       return null;
     }
@@ -299,7 +292,13 @@ export namespace StatBlock {
     abilityName: string
   ): ChargeUsage | null => {
     const power = AllPowers(statBlock).find(p => p.Name === abilityName);
-    return power ? ParseChargeUsage(power.Usage, statBlock.Abilities) : null;
+    return power
+      ? ParseChargeUsage(
+          power.Usage,
+          statBlock.Abilities,
+          ResolveLevel(statBlock)
+        )
+      : null;
   };
 
   // Drops every charge entry whose ability currently resolves to the given
@@ -348,6 +347,25 @@ export namespace StatBlock {
 
   export const IsTitan = (statBlock: StatBlock): boolean =>
     statBlock.Player == "titan";
+
+  // Marks a non-fighting "Room" combatant (read-aloud text lives in
+  // Description, GM notes in CombatantState.CurrentNotes) rather than a
+  // real monster: excluded from CR/difficulty math, hidden from Player
+  // View by default, HP display suppressed. It can still take a turn if
+  // used as an active hazard (e.g. rising water) - this only means "not a
+  // monster," not "never acts."
+  export const IsRoomInfo = (statBlock: StatBlock): boolean =>
+    statBlock.Player == "room";
+
+  // Legendary monsters and Rooms are both excluded from the
+  // Rules.AlwaysNumberMonsters sequence - Legendaries are solo/unique by
+  // design, Rooms aren't monsters at all - so they neither take a number
+  // from it nor consume one that would otherwise go to a real monster.
+  // Centralized here (rather than repeating both checks at each of the
+  // four call sites that need this) so a future exemption, or a fix to
+  // this one, can't be applied to only some of them by mistake.
+  export const IsExemptFromMonsterNumbering = (statBlock: StatBlock): boolean =>
+    IsLegendary(statBlock) || IsRoomInfo(statBlock);
 
   // Whether this monster's authored HP (HP/HPMediumArmor/HPHeavyArmor) is
   // "per hero" and should be multiplied by the party's hero count when

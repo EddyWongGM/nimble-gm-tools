@@ -1,5 +1,6 @@
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
+import { Button } from "../Components/Button";
 
 export interface PromptProps<T extends object> {
   onSubmit: (submittedValues: T) => boolean;
@@ -11,6 +12,11 @@ export interface PromptProps<T extends object> {
   // for side effects that should happen on any dismissal, not just a
   // successful submit.
   onCancel?: () => void;
+  // Set when this prompt's own submit button already just dismisses it
+  // unconditionally (onSubmit always returns true with no other effect) -
+  // the separate Cancel (X) button would be a redundant, visually
+  // colliding duplicate of that same action rather than a distinct choice.
+  hideCancelButton?: boolean;
 }
 
 class Prompt<T extends object> extends React.Component<
@@ -32,7 +38,10 @@ class Prompt<T extends object> extends React.Component<
         {(props: FormikProps<any>) => (
           <form
             ref={r => (this.formElement = r)}
-            className="prompt"
+            className={
+              "prompt" +
+              (this.props.hideCancelButton ? "" : " prompt--has-cancel")
+            }
             onSubmit={props.handleSubmit}
             onKeyUp={(e: React.KeyboardEvent<HTMLFormElement>) => {
               if (e.key == "Escape") {
@@ -40,6 +49,23 @@ class Prompt<T extends object> extends React.Component<
               }
             }}
           >
+            {
+              // Escape has always been the only way to cancel a prompt
+              // without submitting it - fine with a keyboard, but touch
+              // devices have no Escape key and no way to trigger this.
+              // Visible on every prompt (not just phone width) since the
+              // gap exists on desktop too, just masked there by Escape.
+              // Skipped when the prompt's own submit button already does
+              // the exact same thing (see hideCancelButton).
+            }
+            {!this.props.hideCancelButton && (
+              <Button
+                additionalClassNames="prompt__cancel"
+                fontAwesomeIcon="times"
+                tooltip="Cancel"
+                onClick={() => this.props.onCancel()}
+              />
+            )}
             {this.props.children}
           </form>
         )}

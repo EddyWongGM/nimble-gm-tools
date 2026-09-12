@@ -950,10 +950,59 @@
     ]
   },
   {
-    "Name": "3 Skeleton Warrior",
+    "Name": "3 Hall of Tombs",
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
     "Combatants": [
+      {
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Hall of Tombs",
+          "Source": "Locations",
+          "Type": "Locations",
+          "Armor": "",          
+          "HP": {
+            "Value": 1,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": 0,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "",
+          "Traits": [],
+          "Actions": [],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "<i>CRACKED walls. 4 stone tombs, 1 is empty.</i>\n\n\n• A skeleton wrapped in RED thorns lies in a heap in the center of the room. A trail of plant matter leads to the Empty Tomb.\n• Skeleton holds a silver sword (20gp). DC 12 Examination or Lore check: this is a Dwarf, died in battle.\n• If the skeleton is disturbed or the sword is taken from its hands, the thorns it is wrapped in recoil and retract back into a crack in the wall.\n\n\n<b>Cracks.</b> It’s important to foreshadow the connection between the vines and the cracked walls; this will become important later when the place begins to fall apart!\n\n\n4 stone coffins rest in alcoves:\n1. <b>Empty Tomb.</b> Vines seem to have pushed its large stone lid to the side.\n 2. <b>Overgrown Tomb.</b> Wrapped in RED VINES. DC 14 Might check to remove the vines (advantage if a slashing weapon is used) to open the coffin.\nInside: A small silver dwarven charm (10 gp).\n 3. <b>Scratching Tomb.</b> Image of a warrior carved on the stone lid. DC 12 Perception check to hear SCRATCHING sounds from within. Inside: A hostile skeleton (use Ghoul statblock, it has 10 HP/hero) covered in RED VINES, gold belt buckle (20 gp).\n 4. <b>Undisturbed Tomb:</b> Decorated in a Griffon crest. Carved stone hands hold an empty bowl on the (immovable) lid.\nSecret: filling the bowl with anything valuable causes the lid to open, revealing secret stairs.\nLeads to Acid Flooded Room.\n\n\nOn Puzzles. The above is only one possible solution to the puzzle. If the players are taking the world seriously, coming up with ideas that make sense, LET THEIR IDEAS WORK! Reward creativity, even if it isn’t exactly the right answer.",
+          "Player": "",
+          "Version": "1.0.5",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 11,
+          "CRRating": "1/2",
+          "ScalesWithHeroCount": true
+        }
+      },
       {
         "Alias": "",
         "StatBlock": {
@@ -1033,6 +1082,55 @@
     "Path": "Intro Nimble GMG/LV03 Intro - Garden of Death",
     "Source": "Nimble GMG",
     "Combatants": [
+{
+        "Alias": "",
+        "StatBlock": {
+          "Name": "Venus Fly Trap Room",
+          "Source": "Locations/LV03 Intro - Garden of Death",
+          "Type": "Locations",
+          "Armor": "",          
+          "HP": {
+            "Value": 1,
+            "Notes": ""
+          },
+          "AC": {
+            "Value": 0,
+            "Notes": ""
+          },
+          "InitiativeModifier": 0,
+          "InitiativeAdvantage": false,
+          "Speed": [],
+          "Abilities": {
+            "Str": 0,
+            "Dex": 0,
+            "Int": 0,
+            "Wis": 0
+          },
+          "DamageVulnerabilities": [],
+          "DamageResistances": [],
+          "DamageImmunities": [],
+          "ConditionImmunities": [],
+          "Saves": [],
+          "Skills": [],
+          "Senses": [],
+          "Languages": [],
+          "Challenge": "",
+          "Traits": [],
+          "Actions": [],
+          "BonusActions": [],
+          "Reactions": [],
+          "LegendaryActions": [],
+          "MythicActions": [],
+          "Description": "<i>Large dome-shaped chamber. Dozens of tombstones jut out from the dense foliage on the floor.</i>\n\n\n• Giant Venus Flytrap in the center of the room. When heroes enter it begins swaying its head and leaves, blindly looking for prey. Stuck in its teeth: An iron key hanging from a chain (unlocks door to Storage Room).\n• About a dozen smaller plants grow throughout the room. A few are closed around what you can assume to be unlucky (or foolish) goblins. One is closed around a treasure (Healing Potion).\n• Players can willingly enter combat for the treasures, or attempt to sneak past. If any hero fails a DC 10 Stealth check, they are noticed and combat begins!\n• 1 Giant Venus Flytrap; +1 Seedling/hero.",
+          "Player": "",
+          "Version": "1.0.5",
+          "ImageURL": "",
+          "CustomFields": [],
+          "SaveDC": 11,
+          "CRRating": "1/2",
+          "ScalesWithHeroCount": true
+        }
+      },
       {
         "Alias": "",
         "StatBlock": {

@@ -8,7 +8,11 @@ import { TagState } from "../common/CombatantState";
 import { PersistentCharacter } from "../common/PersistentCharacter";
 import { Settings } from "../common/Settings";
 import { StatBlock } from "../common/StatBlock";
-import { Omit, ParseJSONOrDefault } from "../common/Toolbox";
+import {
+  Omit,
+  ParseJSONOrDefault,
+  probablyUniqueString
+} from "../common/Toolbox";
 import { AccountClient } from "./Account/AccountClient";
 import { Combatant } from "./Combatant/Combatant";
 import { CombatantViewModel } from "./Combatant/CombatantViewModel";
@@ -28,6 +32,7 @@ import {
   LibraryType,
   loadTutorialHeroes
 } from "./Library/Libraries";
+import { IsPreloadedOrigin } from "./Library/Listing";
 import { PlayerViewClient } from "./PlayerView/PlayerViewClient";
 import { DefaultRules } from "./Rules/Rules";
 import {
@@ -259,6 +264,35 @@ export class TrackerViewModel {
     const hpDown =
       persistentCharacter.StatBlock.HP.Value - persistentCharacter.CurrentHP;
 
+    const saveAsNewPersistentCharacter = (statBlock: StatBlock) =>
+      this.Libraries.PersistentCharacters.SaveNewListing(
+        PersistentCharacter.Initialize(statBlock)
+      );
+
+    if (IsPreloadedOrigin(persistentCharacterListing.Origin)) {
+      // Sample Heroes are read-only reference content: editing one always
+      // duplicates it into the user's own library rather than overwriting
+      // the shared preloaded entry, and the editor makes that explicit via
+      // the disabled, pre-checked "Save as a copy" toggle instead of
+      // silently forking on a plain Save.
+      const statBlockCopy: StatBlock = {
+        ...StatBlock.Default(),
+        ...(newStatBlock || persistentCharacter.StatBlock),
+        Id: probablyUniqueString()
+      };
+
+      this.StatBlockEditorProps({
+        statBlock: statBlockCopy,
+        editorTarget: "persistentcharacter",
+        onSave: saveAsNewPersistentCharacter,
+        onSaveAsCopy: saveAsNewPersistentCharacter,
+        requireSaveAsCopy: true,
+        onClose: () => this.StatBlockEditorProps(null),
+        currentListings: this.Libraries.PersistentCharacters.GetAllListings()
+      });
+      return;
+    }
+
     this.StatBlockEditorProps({
       statBlock: newStatBlock || persistentCharacter.StatBlock,
       editorTarget: "persistentcharacter",
@@ -272,10 +306,7 @@ export class TrackerViewModel {
         this.Libraries.PersistentCharacters.DeleteListing(
           persistentCharacterId
         ),
-      onSaveAsCopy: (statBlock: StatBlock) =>
-        this.Libraries.PersistentCharacters.SaveNewListing(
-          PersistentCharacter.Initialize(statBlock)
-        ),
+      onSaveAsCopy: saveAsNewPersistentCharacter,
       onClose: () => this.StatBlockEditorProps(null),
       currentListings: this.Libraries.PersistentCharacters.GetAllListings()
     });
@@ -345,6 +376,7 @@ export class TrackerViewModel {
         autoFocusSelector: ".submit",
         initialValues: {},
         onSubmit: () => true,
+        hideCancelButton: true,
         children: (
           <span className="not-logged-in-for-import">
             {"Please login with "}
@@ -371,6 +403,7 @@ export class TrackerViewModel {
         autoFocusSelector: ".submit",
         initialValues: {},
         onSubmit: () => true,
+        hideCancelButton: true,
         children: (
           <span className="no-epic-initiative-for-import">
             {"The D&D Beyond Importer is available for "}

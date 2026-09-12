@@ -144,9 +144,23 @@ export const STAT_COLOR_CSS_VARS: [StatColorField, string][] = [
  * downgrade before resetEpicInitiativeSettings runs) are ignored in that
  * case, not just unset fields. The neutral value differs by selector:
  * `.combatant--header`/`.c-toolbar` are always a black bar regardless of
- * site theme, so they need a fixed `var(--white)` - the same theme-relative
- * `var(--text-face)` used at :root would resolve to black in light mode,
- * i.e. a black icon on that always-black bar (confirmed live).
+ * site theme, so they need a fixed `var(--white)`.
+ *
+ * :root gets a separate light-mode (`var(--black)`) and dark-mode
+ * (`var(--white-2)`) declaration instead of the theme-relative
+ * `var(--text-face)` alias used elsewhere - dark mode is toggled via a
+ * `.dark-mode` class on <body> (Settings.ts/ReactPlayerView.tsx), never on
+ * <html>, so a `--stat-mana: var(--text-face)` declared at :root resolves
+ * `--text-face` against :root's OWN value (always the light-mode --black)
+ * and bakes that in as a literal - `.dark-mode` redefining --text-face
+ * further down the tree can't retroactively change it, since --stat-mana
+ * itself is never redeclared between :root and the combatant text (a known
+ * CSS custom-property gotcha: aliasing `--a: var(--b)` resolves --b at the
+ * element where --a is declared, not at the element that later consumes
+ * --a). Confirmed live: mana/resources/etc rendered near-black in dark
+ * mode instead of the intended off-white. `--black`/`--white-2` are
+ * literal constants (never redefined per-theme in colors.less), so
+ * declaring them directly under :root/.dark-mode avoids the same trap.
  */
 export function StatColorCSSFrom(
   customStyles: PlayerViewCustomStyles,
@@ -161,13 +175,17 @@ export function StatColorCSSFrom(
           ([, cssVar]) => `${cssVar}: ${neutralValue};`
         ).join(" ");
 
-  const rootBlock = declarationBlock("var(--text-face)");
+  const rootBlock = declarationBlock("var(--black)");
+  const darkModeBlock = hasEpicInitiative
+    ? ""
+    : declarationBlock("var(--white-2)");
   const blackBarBlock = declarationBlock("var(--white)");
   if (!rootBlock && !blackBarBlock) {
     return "";
   }
   return (
     `:root { ${rootBlock} } ` +
+    (darkModeBlock ? `.dark-mode { ${darkModeBlock} } ` : "") +
     `.combatant--header { ${blackBarBlock} } ` +
     `.c-toolbar { ${blackBarBlock} }`
   );

@@ -22,7 +22,7 @@ const SettingsTab = {
   Options: "Options",
   Content: "Content",
   Account: "Account",
-  EpicTier: "Legendary Tier"
+  EpicTier: "Legendary"
 };
 
 // TEMP for local testing only - re-comment this line and restore the

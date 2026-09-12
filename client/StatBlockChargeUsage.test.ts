@@ -40,6 +40,25 @@ describe("StatBlock.ParseChargeUsage", () => {
       expect(StatBlock.ParseChargeUsage(usage)).toBeNull();
     }
   );
+
+  test.each([
+    ["[Dex]+[LVL]/Safe Rest", { Max: 5, ResetOn: "safe-rest" }],
+    ["2×[Wil]+[LVL]/Encounter", { Max: 0, ResetOn: "encounter" }], // 2×-1 + 2, clamped to 0
+    ["[LVL]/Safe Rest", { Max: 2, ResetOn: "safe-rest" }]
+  ])(
+    "resolves %s against the combatant's Abilities and level",
+    (usage, expected) => {
+      expect(StatBlock.ParseChargeUsage(usage, abilities, 2)).toEqual(
+        expected
+      );
+    }
+  );
+
+  test("does not resolve a LVL-based expression without a level", () => {
+    expect(
+      StatBlock.ParseChargeUsage("[Dex]+[LVL]/Safe Rest", abilities)
+    ).toBeNull();
+  });
 });
 
 describe("StatBlock.ClearAbilityCharges", () => {
