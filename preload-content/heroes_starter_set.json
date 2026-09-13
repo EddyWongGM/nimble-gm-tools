@@ -1458,11 +1458,6 @@
         "Name": "Spells",
         "Content": "[tab] <b>Cantrips:</b>\n[bullet] Rebuke, True Strike\n[bullet] Entice, Withering Touch\n\n[tab] <b>Tier 1:</b>\n[bullet] Heal, Shadow Trap\n[bullet] Lifebinding Spirit",
         "Usage": ""
-      },
-      {
-        "Name": "Lifebinding Spirit",
-        "Content": "[A1] (Reach 4) \n[tab] It attacks for 1d6+[WIL] (ignoring armor), \n[tab] or heals for the same amount.",
-        "Usage": ""
       }
     ],
     "BonusActions": [],
